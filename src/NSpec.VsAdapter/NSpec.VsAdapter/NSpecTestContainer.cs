@@ -22,7 +22,14 @@ namespace NSpec.VsAdapter
             this.debugEngines = debugEngines;
             this.fileService = fileService;
 
-            timeStamp = emptyStamp;
+            if (fileService.Exists(sourcePath))
+            {
+                timeStamp = fileService.LastModified(sourcePath);
+            }
+            else
+            {
+                timeStamp = DateTime.MinValue;
+            }
         }
 
         private NSpecTestContainer(NSpecTestContainer other)
@@ -68,35 +75,24 @@ namespace NSpec.VsAdapter
 
         public int CompareTo(ITestContainer other)
         {
-            const int nonMatching = -1;
-            const int matching = 0;
+            const int isSmaller = -1;
+            const int isEqual = 0;
 
             NSpecTestContainer otherContainer = other as NSpecTestContainer;
 
             if (otherContainer == null)
             {
-                return nonMatching;
+                return isSmaller;
             }
 
             int sourceCompare = String.Compare(sourcePath, otherContainer.Source, StringComparison.OrdinalIgnoreCase);
 
-            if (sourceCompare != 0)
+            if (sourceCompare != isEqual)
             {
-                return nonMatching;
+                return isSmaller;
             }
 
-            EnsureTimeStamp();
-            otherContainer.EnsureTimeStamp();
-
-            return (timeStamp == otherContainer.timeStamp ? matching : nonMatching);
-        }
-
-        private void EnsureTimeStamp()
-        {
-            if (timeStamp == emptyStamp && fileService.Exists(sourcePath))
-            {
-                timeStamp = fileService.LastModified(sourcePath);
-            }
+            return timeStamp.CompareTo(otherContainer.timeStamp);
         }
 
         public ITestContainer Snapshot()
@@ -109,7 +105,5 @@ namespace NSpec.VsAdapter
         readonly IEnumerable<Guid> debugEngines;
         readonly IFileService fileService;
         DateTime timeStamp;
-
-        static readonly DateTime emptyStamp = DateTime.MinValue;
     }
 }

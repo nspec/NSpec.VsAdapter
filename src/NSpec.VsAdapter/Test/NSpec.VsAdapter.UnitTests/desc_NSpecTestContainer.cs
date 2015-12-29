@@ -24,6 +24,8 @@ namespace NSpec.VsAdapter.UnitTests
         protected IEnumerable<Guid> debugEngines;
         protected IFileService fileService;
 
+        protected DateTime someTime;
+
         [SetUp]
         public virtual void before_each()
         {
@@ -34,6 +36,11 @@ namespace NSpec.VsAdapter.UnitTests
             debugEngines = new Guid[] { Guid.NewGuid(), Guid.NewGuid() };
 
             fileService = autoSubstitute.Resolve<IFileService>();
+
+            someTime = new DateTime(2015, 10, 21);
+
+            fileService.Exists(Arg.Any<string>()).Returns(true);
+            fileService.LastModified(Arg.Any<string>()).Returns(someTime);
 
             container = new NSpecTestContainer(containerDiscoverer, sourcePath, debugEngines, fileService);
         }
@@ -104,71 +111,82 @@ namespace NSpec.VsAdapter.UnitTests
         }
 
         [Test]
-        public void it_should_not_match_when_other_is_null()
+        public void it_should_be_smaller_when_other_is_null()
         {
             other = null;
 
-            container.CompareTo(other).Should().Be(-1);
+            container.CompareTo(other).Should().BeNegative();
         }
 
         [Test]
-        public void it_should_not_match_when_sources_are_different()
+        public void it_should_be_smaller_when_source_is_not_found()
         {
-            other = new NSpecTestContainer(containerDiscoverer, otherSourcePath, debugEngines, fileService);
-
-            container.CompareTo(other).Should().Be(-1);
-        }
-
-        [Test]
-        public void it_should_not_match_when_source_is_not_found()
-        {
-            other = new NSpecTestContainer(containerDiscoverer, otherSourcePath, debugEngines, fileService);
-
             fileService.Exists(sourcePath).Returns(false);
 
-            container.CompareTo(other).Should().Be(-1);
+            // recreate
+            container = new NSpecTestContainer(containerDiscoverer, sourcePath, debugEngines, fileService);
+
+            other = new NSpecTestContainer(containerDiscoverer, otherSourcePath, debugEngines, fileService);
+
+            container.CompareTo(other).Should().BeNegative();
         }
 
         [Test]
-        public void it_should_not_match_when_timestamps_are_different()
+        public void it_should_be_smaller_when_other_source_is_not_found()
+        {
+            fileService.Exists(otherSourcePath).Returns(false);
+
+            other = new NSpecTestContainer(containerDiscoverer, otherSourcePath, debugEngines, fileService);
+
+            container.CompareTo(other).Should().BeNegative();
+        }
+
+        [Test]
+        public void it_should_be_smaller_when_sources_are_different()
         {
             other = new NSpecTestContainer(containerDiscoverer, otherSourcePath, debugEngines, fileService);
 
-            var timestamp = DateTime.Now;
-            var otherTimestamp = timestamp.AddHours(2);
-
-            fileService.LastModified(sourcePath).Returns(timestamp);
-            fileService.LastModified(otherSourcePath).Returns(otherTimestamp);
-
-            container.CompareTo(other).Should().Be(-1);
+            container.CompareTo(other).Should().BeNegative();
         }
 
         [Test]
-        public void it_should_match_when_sources_and_timestamps_are_the_same()
+        public void it_should_be_smaller_when_sources_are_equal_and_timestamp_is_before_other()
         {
+            var otherTimestamp = someTime.Add(TimeSpan.FromHours(2));
+
+            fileService.LastModified(sourcePath).Returns(otherTimestamp);
+
             other = new NSpecTestContainer(containerDiscoverer, sourcePath, debugEngines, fileService);
 
-            var timestamp = DateTime.Now;
-            var otherTimestamp = timestamp;
+            container.CompareTo(other).Should().BeNegative();
+        }
 
-            fileService.LastModified(sourcePath).Returns(timestamp);
-            fileService.LastModified(otherSourcePath).Returns(otherTimestamp);
+        [Test]
+        public void it_should_be_larger_when_sources_are_equal_and_timestamp_is_after_other()
+        {
+            var otherTimestamp = someTime.Subtract(TimeSpan.FromHours(2));
+
+            fileService.LastModified(sourcePath).Returns(otherTimestamp);
+
+            other = new NSpecTestContainer(containerDiscoverer, sourcePath, debugEngines, fileService);
+
+            container.CompareTo(other).Should().BePositive();
+        }
+
+        [Test]
+        public void it_should_match_when_when_sources_are_equal_and_timestamps_are_equal()
+        {
+            other = new NSpecTestContainer(containerDiscoverer, sourcePath, debugEngines, fileService);
 
             container.CompareTo(other).Should().Be(0);
         }
 
         [Test]
-        public void it_should_match_when_sources_have_different_case()
+        public void it_should_match_when_sources_have_different_case_and_timestamps_are_equal()
         {
             otherSourcePath = FlipCase(sourcePath);
 
             other = new NSpecTestContainer(containerDiscoverer, otherSourcePath, debugEngines, fileService);
-
-            var timestamp = DateTime.Now;
-            var otherTimestamp = timestamp;
-
-            fileService.LastModified(sourcePath).Returns(timestamp);
-            fileService.LastModified(otherSourcePath).Returns(otherTimestamp);
 
             container.CompareTo(other).Should().Be(0);
         }
