@@ -93,6 +93,41 @@ namespace NSpec.VsAdapter.UnitTests
 
             container.DeployAppContainer().Should().BeNull();
         }
+
+        [Test]
+        [ExpectedException]
+        public void it_should_throw_with_null_container_discoverer()
+        {
+            new NSpecTestContainer(null, sourcePath, debugEngines, fileService);
+        }
+
+        [Test]
+        [ExpectedException]
+        public void it_should_throw_with_null_source()
+        {
+            new NSpecTestContainer(containerDiscoverer, null, debugEngines, fileService);
+        }
+
+        [Test]
+        [ExpectedException]
+        public void it_should_throw_with_empty_source()
+        {
+            new NSpecTestContainer(containerDiscoverer, String.Empty, debugEngines, fileService);
+        }
+
+        [Test]
+        [ExpectedException]
+        public void it_should_throw_with_null_engines()
+        {
+            new NSpecTestContainer(containerDiscoverer, sourcePath, null, fileService);
+        }
+
+        [Test]
+        [ExpectedException]
+        public void it_should_throw_with_null_fileservice()
+        {
+            new NSpecTestContainer(containerDiscoverer, sourcePath, debugEngines, null);
+        }
     }
 
     [TestFixture]

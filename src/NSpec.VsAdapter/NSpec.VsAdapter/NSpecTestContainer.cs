@@ -17,6 +17,11 @@ namespace NSpec.VsAdapter
             IEnumerable<Guid> debugEngines,
             IFileService fileService)
         {
+            ValidateArg.NotNull(containerDiscoverer, "containerDiscoverer");
+            ValidateArg.NotNullOrEmpty(sourcePath, "sourcePath");
+            ValidateArg.NotNull(debugEngines, "debugEngines");
+            ValidateArg.NotNull(fileService, "fileService");
+
             this.containerDiscoverer = containerDiscoverer;
             this.sourcePath = sourcePath;
             this.debugEngines = debugEngines;
