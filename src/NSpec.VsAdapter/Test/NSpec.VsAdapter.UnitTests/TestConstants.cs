@@ -13,9 +13,9 @@ namespace NSpec.VsAdapter.UnitTests
             Path.GetFullPath(@"..\..\..\");
 
         public static readonly string SampleSpecsDllPath =
-            Path.Combine(SolutionTestFolderPath, @"SampleSpecs\bin\Debug\SampleSpecs.dll");
+            Path.Combine(SolutionTestFolderPath, @"Samples\SampleSpecs\bin\Debug\SampleSpecs.dll");
 
         public static readonly string SampleSystemDllPath =
-            Path.Combine(SolutionTestFolderPath, @"SampleSystem\bin\Debug\SampleSystem.dll");
+            Path.Combine(SolutionTestFolderPath, @"Samples\SampleSystem\bin\Debug\SampleSystem.dll");
     }
 }
