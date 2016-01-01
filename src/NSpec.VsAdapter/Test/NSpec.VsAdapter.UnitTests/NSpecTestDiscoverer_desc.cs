@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests
 {
     [TestFixture]
-    [Category("Discovery")]
-    public class desc_NSpecTestDiscoverer
+    [Category("NSpecTestDiscoverer")]
+    public class NSpecTestDiscoverer_desc
     {
         NSpecTestDiscoverer discoverer;
 
@@ -24,7 +24,7 @@ namespace NSpec.VsAdapter.UnitTests
         public void setup()
         {
             sink = new CollectingSink();
-            targetDllPath = Path.GetFullPath(@"..\..\..\SampleSpecs\bin\Debug\SampleSpecs.dll");
+            targetDllPath = TestConstants.SampleSpecsDllPath;
 
             discoverer = new NSpecTestDiscoverer();
 

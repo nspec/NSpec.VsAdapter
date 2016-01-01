@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests
 {
     [TestFixture]
-    [Category("Container")]
-    public abstract class base_desc_NSpecTestContainer
+    [Category("NSpecTestContainer")]
+    public abstract class NSpecTestContainer_desc_base
     {
         protected NSpecTestContainer container;
 
@@ -52,9 +52,7 @@ namespace NSpec.VsAdapter.UnitTests
         }
     }
 
-    [TestFixture]
-    [Category("Container")]
-    public class when_creating_NSpecTestContainer : base_desc_NSpecTestContainer
+    public class NSpecTestContainer_when_creating : NSpecTestContainer_desc_base
     {
         [Test]
         public void it_should_return_container_discoverer()
@@ -130,14 +128,11 @@ namespace NSpec.VsAdapter.UnitTests
         }
     }
 
-    [TestFixture]
-    [Category("Container")]
-    public class when_comparing_NSpecTestContainer : base_desc_NSpecTestContainer
+    public class NSpecTestContainer_when_comparing : NSpecTestContainer_desc_base
     {
         NSpecTestContainer other;
         string otherSourcePath;
 
-        [SetUp]
         public override void before_each()
         {
             base.before_each();
@@ -237,11 +232,10 @@ namespace NSpec.VsAdapter.UnitTests
 
     [TestFixture]
     [Category("Container")]
-    public class when_cloning_NSpecTestContainer : base_desc_NSpecTestContainer
+    public class NSpecTestContainer_when_cloning : NSpecTestContainer_desc_base
     {
         ITestContainer snapshot;
 
-        [SetUp]
         public override void before_each()
         {
             base.before_each();
