@@ -7,18 +7,8 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.ProjectObservation
 {
-    public class ProjectBuildInfo
+    public class ProjectInfo
     {
         public IVsHierarchy Hierarchy { get; set; }
-
-        /* Available from VSX:
-         * 
-        IVsHierarchy pHierProj,
-        IVsCfg pCfgProj,
-        IVsCfg pCfgSln,
-        uint dwAction,
-        int fSuccess,
-        int fCancel
-         */
     }
 }

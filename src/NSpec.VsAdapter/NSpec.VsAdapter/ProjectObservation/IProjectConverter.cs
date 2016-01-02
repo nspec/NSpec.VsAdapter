@@ -5,8 +5,8 @@ using System.Text;
 
 namespace NSpec.VsAdapter.ProjectObservation
 {
-    public interface IProjectBuildNotifier
+    public interface IProjectConverter
     {
-        IObservable<IEnumerable<ProjectBuildInfo>> BuildStream { get; }
+        string ToTestDllPath(ProjectInfo projectInfo);
     }
 }

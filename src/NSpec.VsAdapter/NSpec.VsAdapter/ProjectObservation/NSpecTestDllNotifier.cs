@@ -12,16 +12,16 @@ namespace NSpec.VsAdapter.ProjectObservation
     public class NSpecTestDllNotifier : ITestDllNotifier, IDisposable
     {
         public NSpecTestDllNotifier(
-            IProjectBuildNotifier projectBuildNotifier, 
-            IProjectBuildConverter projectBuildConverter)
+            IProjectNotifier projectNotifier, 
+            IProjectConverter projectConverter)
         {
             const string notATestDllPath = null;
 
-            var hotPathStream = projectBuildNotifier.BuildStream
-                .Select(buildInfos =>
+            var hotPathStream = projectNotifier.ProjectStream
+                .Select(projectInfos =>
                 {
-                    IEnumerable<string> dllPaths = buildInfos
-                        .Select(projectBuildConverter.ToTestDllPath)
+                    IEnumerable<string> dllPaths = projectInfos
+                        .Select(projectConverter.ToTestDllPath)
                         .Where(path => path != notATestDllPath);
 
                     return dllPaths;

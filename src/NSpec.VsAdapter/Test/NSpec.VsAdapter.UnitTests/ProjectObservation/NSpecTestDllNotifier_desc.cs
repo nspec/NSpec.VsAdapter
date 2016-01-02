@@ -1,7 +1,6 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using Microsoft.Reactive.Testing;
-using NSpec.VsAdapter;
 using NSpec.VsAdapter.ProjectObservation;
 using NSubstitute;
 using NUnit.Framework;
@@ -21,8 +20,8 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         NSpecTestDllNotifier notifier;
 
         AutoSubstitute autoSubstitute;
-        Subject<IEnumerable<ProjectBuildInfo>> projectBuildInfoStream;
-        IProjectBuildConverter projectBuildConverter;
+        Subject<IEnumerable<ProjectInfo>> projectInfoStream;
+        IProjectConverter projectConverter;
         ITestableObserver<IEnumerable<string>> testDllPathObserver;
         IDisposable subscription;
 
@@ -33,11 +32,11 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         {
             autoSubstitute = new AutoSubstitute();
 
-            var projectBuildNotifier = autoSubstitute.Resolve<IProjectBuildNotifier>();
-            projectBuildInfoStream = new Subject<IEnumerable<ProjectBuildInfo>>();
-            projectBuildNotifier.BuildStream.Returns(projectBuildInfoStream);
+            var projectNotifier = autoSubstitute.Resolve<IProjectNotifier>();
+            projectInfoStream = new Subject<IEnumerable<ProjectInfo>>();
+            projectNotifier.ProjectStream.Returns(projectInfoStream);
 
-            projectBuildConverter = autoSubstitute.Resolve<IProjectBuildConverter>();
+            projectConverter = autoSubstitute.Resolve<IProjectConverter>();
 
             notifier = autoSubstitute.Resolve<NSpecTestDllNotifier>();
 
@@ -50,7 +49,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         public virtual void after_each()
         {
             autoSubstitute.Dispose();
-            projectBuildInfoStream.Dispose();
+            projectInfoStream.Dispose();
             notifier.Dispose();
             subscription.Dispose();
         }
@@ -66,14 +65,14 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         {
             var buildInfos = new []
             {
-                new ProjectBuildInfo(),
-                new ProjectBuildInfo(),
-                new ProjectBuildInfo(),
+                new ProjectInfo(),
+                new ProjectInfo(),
+                new ProjectInfo(),
             };
 
-            projectBuildConverter.ToTestDllPath(Arg.Any<ProjectBuildInfo>()).Returns(notATestDllPath);
+            projectConverter.ToTestDllPath(Arg.Any<ProjectInfo>()).Returns(notATestDllPath);
 
-            projectBuildInfoStream.OnNext(buildInfos);
+            projectInfoStream.OnNext(buildInfos);
 
             testDllPathObserver.Messages.Should().HaveCount(1);
 
@@ -85,24 +84,24 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         [Test]
         public void it_should_notify_only_test_paths_when_some_test_is_notified()
         {
-            var testBuildInfo = new ProjectBuildInfo();
-            var anotherTestBuildInfo = new ProjectBuildInfo();
+            var projectInfo = new ProjectInfo();
+            var anotherProjectInfo = new ProjectInfo();
 
             var buildInfos = new[]
             {
-                new ProjectBuildInfo(),
-                testBuildInfo,
-                anotherTestBuildInfo,
+                new ProjectInfo(),
+                projectInfo,
+                anotherProjectInfo,
             };
 
             string someTestDllPath = @".\some\dummy\test\library.dll";
             string anotherTestDllPath = @".\another\dummy\test\library.dll";
 
-            projectBuildConverter.ToTestDllPath(Arg.Any<ProjectBuildInfo>()).Returns(notATestDllPath);
-            projectBuildConverter.ToTestDllPath(testBuildInfo).Returns(someTestDllPath);
-            projectBuildConverter.ToTestDllPath(anotherTestBuildInfo).Returns(anotherTestDllPath);
+            projectConverter.ToTestDllPath(Arg.Any<ProjectInfo>()).Returns(notATestDllPath);
+            projectConverter.ToTestDllPath(projectInfo).Returns(someTestDllPath);
+            projectConverter.ToTestDllPath(anotherProjectInfo).Returns(anotherTestDllPath);
 
-            projectBuildInfoStream.OnNext(buildInfos);
+            projectInfoStream.OnNext(buildInfos);
 
             testDllPathObserver.Messages.Should().HaveCount(1);
 

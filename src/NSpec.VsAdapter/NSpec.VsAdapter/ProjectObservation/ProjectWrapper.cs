@@ -31,6 +31,9 @@ namespace NSpec.VsAdapter.ProjectObservation
         {
             string projectAbsolutePath = autoProject.Properties.Item("FullPath").Value.ToString();
 
+            // TODO instead of ActiveConfiguration, it should retrieve configuration actually built,
+            // from an IVsCfg field that should be carried over from ProjectBuildInfo
+
             string configurationRelativeOutputPath = autoProject.ConfigurationManager.ActiveConfiguration
                 .Properties.Item("OutputPath").Value.ToString();
 

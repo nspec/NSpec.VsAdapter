@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.ProjectObservation
 {
-    public interface IProjectBuildConverter
+    public interface IProjectNotifier
     {
-        string ToTestDllPath(ProjectBuildInfo projectBuildInfo);
+        IObservable<IEnumerable<ProjectInfo>> ProjectStream { get; }
     }
 }

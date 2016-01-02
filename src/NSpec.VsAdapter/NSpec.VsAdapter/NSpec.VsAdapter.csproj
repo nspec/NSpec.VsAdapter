@@ -71,8 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="ProjectObservation\IProjectBuildNotifier.cs" />
-    <Compile Include="ProjectObservation\IProjectBuildConverter.cs" />
+    <Compile Include="ProjectObservation\IProjectConverter.cs" />
+    <Compile Include="ProjectObservation\IProjectNotifier.cs" />
     <Compile Include="ProjectObservation\IProjectWrapper.cs" />
     <Compile Include="ProjectObservation\IProjectWrapperFactory.cs" />
     <Compile Include="ITestContainerFactory.cs" />
@@ -85,8 +85,9 @@
     <Compile Include="NSpecTestDiscoverer.cs" />
     <Compile Include="ProjectObservation\NSpecTestDllNotifier.cs" />
     <Compile Include="NSpecTestExecutor.cs" />
-    <Compile Include="ProjectObservation\ProjectBuildConverter.cs" />
-    <Compile Include="ProjectObservation\ProjectBuildInfo.cs" />
+    <Compile Include="ProjectObservation\ProjectConverter.cs" />
+    <Compile Include="ProjectObservation\ProjectInfo.cs" />
+    <Compile Include="ProjectObservation\ProjectNotifier.cs" />
     <Compile Include="ProjectObservation\ProjectWrapper.cs" />
     <Compile Include="ProjectObservation\ProjectWrapperFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

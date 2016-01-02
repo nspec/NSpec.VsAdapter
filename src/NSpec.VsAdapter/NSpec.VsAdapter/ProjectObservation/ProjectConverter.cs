@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.ProjectObservation
 {
-    public class ProjectBuildConverter : IProjectBuildConverter
+    public class ProjectConverter : IProjectConverter
     {
-        public ProjectBuildConverter(IProjectWrapperFactory projectWrapperFactory, IFileService fileService)
+        public ProjectConverter(IProjectWrapperFactory projectWrapperFactory, IFileService fileService)
         {
             this.projectWrapperFactory = projectWrapperFactory;
             this.fileService = fileService;
         }
 
-        public string ToTestDllPath(ProjectBuildInfo projectBuildInfo)
+        public string ToTestDllPath(ProjectInfo projectInfo)
         {
             const string noTestDllPath = null;
 
-            var projectWrapper = projectWrapperFactory.Create(projectBuildInfo.Hierarchy);
+            var projectWrapper = projectWrapperFactory.Create(projectInfo.Hierarchy);
 
             if (projectWrapper == null)
             {
@@ -35,16 +35,16 @@ namespace NSpec.VsAdapter.ProjectObservation
 
             bool hasNSpecDllReference = fileService.Exists(nspecDllPath);
 
-            if (hasNSpecDllReference)
-            {
-                string outputFileName = projectWrapper.OutputFileName;
-
-                return Path.Combine(outputDirPath, outputFileName);
-            }
-            else
+            if (! hasNSpecDllReference)
             {
                 return noTestDllPath;
             }
+
+            string outputFileName = projectWrapper.OutputFileName;
+
+            string testDllPath = Path.Combine(outputDirPath, outputFileName);
+
+            return fileService.Exists(testDllPath) ? testDllPath : noTestDllPath; 
         }
 
         readonly IProjectWrapperFactory projectWrapperFactory;
