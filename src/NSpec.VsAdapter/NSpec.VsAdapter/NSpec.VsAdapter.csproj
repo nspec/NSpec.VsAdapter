@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DisposableExtensions.cs" />
+    <Compile Include="IProjectBuildNotifier.cs" />
+    <Compile Include="IProjectBuildConverter.cs" />
     <Compile Include="ITestContainerFactory.cs" />
     <Compile Include="ITestDllNotifier.cs" />
     <Compile Include="Constants.cs" />
@@ -75,7 +77,9 @@
     <Compile Include="NSpecTestContainerDiscoverer.cs" />
     <Compile Include="NSpecTestContainerFactory.cs" />
     <Compile Include="NSpecTestDiscoverer.cs" />
+    <Compile Include="NSpecTestDllNotifier.cs" />
     <Compile Include="NSpecTestExecutor.cs" />
+    <Compile Include="ProjectBuildInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
