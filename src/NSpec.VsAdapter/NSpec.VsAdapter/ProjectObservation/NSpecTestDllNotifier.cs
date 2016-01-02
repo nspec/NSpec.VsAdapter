@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter
+namespace NSpec.VsAdapter.ProjectObservation
 {
     public class NSpecTestDllNotifier : ITestDllNotifier, IDisposable
     {

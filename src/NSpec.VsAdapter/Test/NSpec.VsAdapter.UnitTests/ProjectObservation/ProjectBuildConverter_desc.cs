@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests
+namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 {
     [TestFixture]
     [Category("ProjectBuildConverter")]

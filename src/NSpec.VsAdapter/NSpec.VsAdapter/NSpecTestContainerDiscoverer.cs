@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
+using NSpec.VsAdapter.ProjectObservation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

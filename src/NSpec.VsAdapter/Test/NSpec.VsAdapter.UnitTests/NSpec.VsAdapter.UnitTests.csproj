@@ -106,8 +106,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="NSpecTestDiscoverer_desc.cs" />
-    <Compile Include="NSpecTestDllNotifier_desc.cs" />
-    <Compile Include="ProjectBuildConverter_desc.cs" />
+    <Compile Include="ProjectObservation\NSpecTestDllNotifier_desc.cs" />
+    <Compile Include="ProjectObservation\ProjectBuildConverter_desc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestConstants.cs" />
   </ItemGroup>

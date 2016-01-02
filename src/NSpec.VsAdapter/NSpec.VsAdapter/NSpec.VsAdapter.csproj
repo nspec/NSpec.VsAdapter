@@ -76,14 +76,14 @@
     <Compile Include="ProjectObservation\IProjectWrapper.cs" />
     <Compile Include="ProjectObservation\IProjectWrapperFactory.cs" />
     <Compile Include="ITestContainerFactory.cs" />
-    <Compile Include="ITestDllNotifier.cs" />
+    <Compile Include="ProjectObservation\ITestDllNotifier.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IFileService.cs" />
     <Compile Include="NSpecTestContainer.cs" />
     <Compile Include="NSpecTestContainerDiscoverer.cs" />
     <Compile Include="NSpecTestContainerFactory.cs" />
     <Compile Include="NSpecTestDiscoverer.cs" />
-    <Compile Include="NSpecTestDllNotifier.cs" />
+    <Compile Include="ProjectObservation\NSpecTestDllNotifier.cs" />
     <Compile Include="NSpecTestExecutor.cs" />
     <Compile Include="ProjectObservation\ProjectBuildConverter.cs" />
     <Compile Include="ProjectObservation\ProjectBuildInfo.cs" />

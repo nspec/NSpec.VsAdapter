@@ -12,7 +12,7 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests
+namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 {
     [TestFixture]
     [Category("NSpecTestDllNotifier")]

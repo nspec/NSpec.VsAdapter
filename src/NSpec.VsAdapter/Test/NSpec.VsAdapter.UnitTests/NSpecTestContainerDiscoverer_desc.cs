@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
 using Microsoft.VisualStudio.TestWindow.Extensibility.Model;
 using NSpec.VsAdapter;
+using NSpec.VsAdapter.ProjectObservation;
 using NSubstitute;
 using NUnit.Framework;
 using System;
