@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NSpec.VsAdapter.ProjectObservation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;

@@ -1,15 +1,16 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using Microsoft.Reactive.Testing;
+using NSpec.VsAdapter;
+using NSpec.VsAdapter.ProjectObservation;
 using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
-using NSpec.VsAdapter;
-using System.Reactive.Subjects;
 
 namespace NSpec.VsAdapter.UnitTests
 {
