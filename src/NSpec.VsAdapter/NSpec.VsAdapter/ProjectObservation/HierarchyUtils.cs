@@ -14,6 +14,11 @@ namespace NSpec.VsAdapter.ProjectObservation
         {
             string noNameFound = String.Empty;
 
+            if (hierarchy == null)
+            {
+                return noNameFound;
+            }
+
             object outputBuffer;
             int result;
 
