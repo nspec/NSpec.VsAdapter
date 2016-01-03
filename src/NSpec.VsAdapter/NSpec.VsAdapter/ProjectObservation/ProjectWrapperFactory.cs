@@ -33,7 +33,7 @@ namespace NSpec.VsAdapter.ProjectObservation
             result = projectHierarchy.GetProperty(
                 (uint)VSConstants.VSITEMID.Root, (int)__VSHPROPID.VSHPROPID_ExtObject, out outputBuffer);
 
-            if (result != VSConstants.S_OK || outputBuffer == null)
+            if (ErrorHandler.Failed(result) || outputBuffer == null)
             {
                 return noAutomationProject;
             }

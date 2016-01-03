@@ -76,7 +76,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 
             testDllPathObserver.Messages.Should().HaveCount(1);
 
-            IEnumerable<string> testDllPaths = testDllPathObserver.Messages[0].Value.Value;
+            IEnumerable<string> testDllPaths = testDllPathObserver.Messages.Single().Value.Value;
 
             testDllPaths.Should().BeEmpty();
         }
@@ -105,12 +105,15 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 
             testDllPathObserver.Messages.Should().HaveCount(1);
 
-            IEnumerable<string> testDllPaths = testDllPathObserver.Messages[0].Value.Value;
+            IEnumerable<string> testDllPaths = testDllPathObserver.Messages.Single().Value.Value;
 
             testDllPaths.Should().HaveCount(2);
 
-            testDllPaths.Should().Contain(someTestDllPath);
-            testDllPaths.Should().Contain(anotherTestDllPath);
+            testDllPaths.Should().BeEquivalentTo(new string [] 
+                {
+                    someTestDllPath,
+                    anotherTestDllPath,
+                });
         }
     }
 }
