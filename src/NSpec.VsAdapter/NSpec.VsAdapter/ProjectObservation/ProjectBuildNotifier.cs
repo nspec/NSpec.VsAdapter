@@ -17,7 +17,7 @@ namespace NSpec.VsAdapter.ProjectObservation
 
             var updateProjectDoneStream = Observable.Create<UpdateProjectDoneInfo>(observer =>
                 {
-                    uint unregisterId;
+                    uint unregisterId = VSConstants.VSCOOKIE_NIL;
                     var solutionUpdateEventSink = new SolutionUpdateEventSink(observer);
 
                     solutionBuildManager.AdviseUpdateSolutionEvents(solutionUpdateEventSink, out unregisterId);
@@ -35,9 +35,9 @@ namespace NSpec.VsAdapter.ProjectObservation
             var hotBuildStream = updateProjectDoneStream
                 .Where(updateInfo => 
                     {
-                        bool isABuildAction =
-                            updateInfo.dwAction == (uint)VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_BUILD ||
-                            updateInfo.dwAction == (uint)VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_FORCE_UPDATE;
+                        uint buildFlag = updateInfo.dwAction & (uint)VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_BUILD;
+
+                        bool isABuildAction = (buildFlag != 0);
 
                         bool isSuccess = updateInfo.fSuccess != updateActionFailed;
 

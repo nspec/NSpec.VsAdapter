@@ -83,7 +83,8 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         [Test]
         public void it_should_not_notify_when_build_action_failed()
         {
-            uint updateAction = (uint)VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_BUILD;
+            uint updateAction = (uint)(VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_BUILD 
+                | VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_FORCE_UPDATE);
 
             solutionUpdateEventSink.UpdateProjectCfg_Done(someHierarchy, null, null, updateAction, flagFalse, flagFalse);
 
@@ -99,7 +100,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 
             buildObserver.Messages.Should().HaveCount(1);
 
-            buildObserver.Messages.First().Value.Value.Hierarchy.Should().Be(someHierarchy);
+            buildObserver.Messages.Single().Value.Value.Hierarchy.Should().Be(someHierarchy);
         }
     }
 }
