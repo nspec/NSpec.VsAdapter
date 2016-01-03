@@ -107,6 +107,7 @@
     </Compile>
     <Compile Include="NSpecTestDiscoverer_desc.cs" />
     <Compile Include="ProjectObservation\NSpecTestDllNotifier_desc.cs" />
+    <Compile Include="ProjectObservation\ProjectBuildNotifier_desc.cs" />
     <Compile Include="ProjectObservation\ProjectConverter_desc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestConstants.cs" />
