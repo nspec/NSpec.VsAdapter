@@ -159,41 +159,41 @@ namespace NSpec.VsAdapter.UnitTests
         {
             public int CompareTo(ITestContainer other)
             {
-                throw new NotImplementedException();
+                throw new InvalidOperationException();
             }
 
             public IEnumerable<Guid> DebugEngines
             {
-                get { throw new NotImplementedException(); }
+                get { throw new InvalidOperationException(); }
             }
 
             public IDeploymentData DeployAppContainer()
             {
-                throw new NotImplementedException();
+                throw new InvalidOperationException();
             }
 
             public ITestContainerDiscoverer Discoverer { get; set; }
 
             public bool IsAppContainerTestContainer
             {
-                get { throw new NotImplementedException(); }
+                get { throw new InvalidOperationException(); }
             }
 
             public ITestContainer Snapshot()
             {
-                throw new NotImplementedException();
+                throw new InvalidOperationException();
             }
 
             public string Source { get; set; }
 
             public FrameworkVersion TargetFramework
             {
-                get { throw new NotImplementedException(); }
+                get { throw new InvalidOperationException(); }
             }
 
             public Architecture TargetPlatform
             {
-                get { throw new NotImplementedException(); }
+                get { throw new InvalidOperationException(); }
             }
         }
     }

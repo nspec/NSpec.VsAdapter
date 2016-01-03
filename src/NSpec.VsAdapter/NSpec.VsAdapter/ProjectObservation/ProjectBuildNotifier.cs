@@ -20,6 +20,8 @@ namespace NSpec.VsAdapter.ProjectObservation
                     uint unregisterId = VSConstants.VSCOOKIE_NIL;
                     var solutionUpdateEventSink = new SolutionUpdateEventSink(observer);
 
+                    // TODO check result and manage failure
+
                     solutionBuildManager.AdviseUpdateSolutionEvents(solutionUpdateEventSink, out unregisterId);
 
                     Action disposeAction = () =>

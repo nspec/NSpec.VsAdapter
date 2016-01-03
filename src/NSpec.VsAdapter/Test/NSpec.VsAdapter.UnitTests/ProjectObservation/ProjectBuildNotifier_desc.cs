@@ -1,6 +1,7 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using Microsoft.Reactive.Testing;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using NSpec.VsAdapter.ProjectObservation;
 using NSubstitute;
@@ -34,14 +35,17 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
             autoSubstitute = new AutoSubstitute();
 
             var testBuildManager = autoSubstitute.Resolve<IVsSolutionBuildManager2>();
+            
             uint unregisterId;
             uint dummyId = 12345;
-            testBuildManager
-                .When(m => m.AdviseUpdateSolutionEvents(Arg.Any<IVsUpdateSolutionEvents2>(), out unregisterId))
-                .Do(callInfo =>
+
+            testBuildManager.AdviseUpdateSolutionEvents(Arg.Any<IVsUpdateSolutionEvents2>(), out unregisterId)
+                .Returns(callInfo =>
                 {
                     solutionUpdateEventSink = callInfo.Arg<IVsUpdateSolutionEvents2>();
                     callInfo[1] = dummyId;
+
+                    return VSConstants.S_OK;
                 });
 
             var solutionBuildManagerProvider = autoSubstitute.Resolve<ISolutionBuildManagerProvider>();
