@@ -98,11 +98,11 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         }
 
         [Test]
-        public void it_should_notify_projects_when_solution_changes()
+        public void it_should_notify_projects_when_project_added()
         {
-            var someProject = new ProjectInfo();
+            var addedProject = new ProjectInfo();
             var changedProjectInfos = someProjectInfos.ToList();
-            changedProjectInfos.Add(someProject);
+            changedProjectInfos.Add(addedProject);
 
             projectEnumerator.GetLoadedProjects(someSolution).Returns(someProjectInfos);
 
@@ -112,7 +112,28 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 
             projectEnumerator.GetLoadedProjects(someSolution).Returns(changedProjectInfos);
 
-            projectAddedStream.OnNext(someProject);
+            projectAddedStream.OnNext(addedProject);
+
+            testProjectObserver.Messages.Should().HaveCount(1);
+
+            testProjectObserver.Messages.Single().Value.Value.Should().BeSameAs(changedProjectInfos);
+        }
+
+        [Test]
+        public void it_should_notify_projects_when_project_removed()
+        {
+            var removedProject = someProjectInfos.First();
+            var changedProjectInfos = someProjectInfos.Skip(1);
+
+            projectEnumerator.GetLoadedProjects(someSolution).Returns(someProjectInfos);
+
+            solutionOpenedStream.OnNext(someSolution);
+
+            testProjectObserver.Messages.Clear();
+
+            projectEnumerator.GetLoadedProjects(someSolution).Returns(changedProjectInfos);
+
+            projectRemovingtream.OnNext(removedProject);
 
             testProjectObserver.Messages.Should().HaveCount(1);
 
