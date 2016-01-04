@@ -26,8 +26,9 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         IDisposable subscription;
         IVsHierarchy someHierarchy;
 
-        const int flagTrue = 1;
-        const int flagFalse = 0;
+        const int notCanceled = 0;
+        const int actionSuccess = 1;
+        const int actionFail = 0;
 
         [SetUp]
         public virtual void before_each()
@@ -79,7 +80,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         {
             uint updateAction = (uint)VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_CLEAN;
 
-            solutionUpdateEventSink.UpdateProjectCfg_Done(someHierarchy, null, null, updateAction, flagTrue, flagFalse);
+            solutionUpdateEventSink.UpdateProjectCfg_Done(someHierarchy, null, null, updateAction, actionSuccess, notCanceled);
 
             buildObserver.Messages.Should().BeEmpty();
         }
@@ -90,7 +91,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
             uint updateAction = (uint)(VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_BUILD 
                 | VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_FORCE_UPDATE);
 
-            solutionUpdateEventSink.UpdateProjectCfg_Done(someHierarchy, null, null, updateAction, flagFalse, flagFalse);
+            solutionUpdateEventSink.UpdateProjectCfg_Done(someHierarchy, null, null, updateAction, actionFail, notCanceled);
 
             buildObserver.Messages.Should().BeEmpty();
         }
@@ -98,9 +99,10 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         [Test]
         public void it_should_notify_when_build_action_succeeded()
         {
-            uint updateAction = (uint)VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_BUILD;
+            uint updateAction = (uint)(VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_BUILD
+                | VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_FORCE_UPDATE);
 
-            solutionUpdateEventSink.UpdateProjectCfg_Done(someHierarchy, null, null, updateAction, flagTrue, flagFalse);
+            solutionUpdateEventSink.UpdateProjectCfg_Done(someHierarchy, null, null, updateAction, actionSuccess, notCanceled);
 
             buildObserver.Messages.Should().HaveCount(1);
 

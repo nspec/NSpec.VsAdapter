@@ -15,17 +15,10 @@ namespace NSpec.VsAdapter.ProjectObservation
             IProjectNotifier projectNotifier, 
             IProjectConverter projectConverter)
         {
-            const string notATestDllPath = null;
+            var mapProjectInfosToPaths = MapProjectInfosToPaths(projectConverter);
 
             var hotPathStream = projectNotifier.ProjectStream
-                .Select(projectInfos =>
-                {
-                    IEnumerable<string> dllPaths = projectInfos
-                        .Select(projectConverter.ToTestDllPath)
-                        .Where(path => path != notATestDllPath);
-
-                    return dllPaths;
-                })
+                .Select(mapProjectInfosToPaths)
                 .Replay(1);
 
             hotPathStream.Connect().DisposeWith(disposables);
@@ -38,6 +31,22 @@ namespace NSpec.VsAdapter.ProjectObservation
         public void Dispose()
         {
             disposables.Dispose();
+        }
+
+        static Func<IEnumerable<ProjectInfo>, IEnumerable<string>> MapProjectInfosToPaths(IProjectConverter projectConverter)
+        {
+            return projectInfos =>
+            {
+                const string notATestDllPath = null;
+
+                IEnumerable<string> dllPaths =
+                    from info in projectInfos
+                    let path = projectConverter.ToTestDllPath(info)
+                    where path != notATestDllPath
+                    select path;
+
+                return dllPaths;
+            };
         }
 
         readonly CompositeDisposable disposables = new CompositeDisposable();
