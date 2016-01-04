@@ -92,30 +92,7 @@ namespace NSpec.VsAdapter.ProjectObservation
             {
                 const bool isSuccess = true;
 
-                var updateAction = new ProjectUpdateAction(dwAction);
-
-                if (updateAction.IsBuild)
-                {
-                    var eventInfo = new SolutionUpdateEventInfo()
-                    {
-                        Reason = SolutionUpdateEventReason.ProjectBuildStarted,
-                        Success = isSuccess,
-                        ProjectHierarchy = pHierProj,
-                    };
-
-                    updateEventObserver.OnNext(eventInfo);
-                }
-                else if (updateAction.IsClean)
-                {
-                    var eventInfo = new SolutionUpdateEventInfo()
-                    {
-                        Reason = SolutionUpdateEventReason.ProjectCleanStarted,
-                        Success = isSuccess,
-                        ProjectHierarchy = pHierProj,
-                    };
-
-                    updateEventObserver.OnNext(eventInfo);
-                }
+                OnProjectUpdate(true, pHierProj, dwAction, isSuccess);
 
                 return VSConstants.S_OK;
             }
@@ -125,32 +102,45 @@ namespace NSpec.VsAdapter.ProjectObservation
                 const int updateActionFailed = 0;
                 bool isSuccess = (fSuccess != updateActionFailed);
 
-                var updateAction = new ProjectUpdateAction(dwAction);
+                OnProjectUpdate(false, pHierProj, dwAction, isSuccess);
+
+                return VSConstants.S_OK;
+            }
+
+            void OnProjectUpdate(bool begin, IVsHierarchy hierarchy, uint action, bool isSuccess)
+            {
+                var updateAction = new ProjectUpdateAction(action);
 
                 if (updateAction.IsBuild)
                 {
+                    var reason = (begin ? 
+                        SolutionUpdateEventReason.ProjectBuildStarted : 
+                        SolutionUpdateEventReason.ProjectBuildFinished);
+
                     var eventInfo = new SolutionUpdateEventInfo()
                     {
-                        Reason = SolutionUpdateEventReason.ProjectBuildFinished,
+                        Reason = reason,
                         Success = isSuccess,
-                        ProjectHierarchy = pHierProj,
+                        ProjectHierarchy = hierarchy,
                     };
 
                     updateEventObserver.OnNext(eventInfo);
                 }
                 else if (updateAction.IsClean)
                 {
+                    var reason = (begin ?
+                        SolutionUpdateEventReason.ProjectCleanStarted :
+                        SolutionUpdateEventReason.ProjectCleanFinished);
+
                     var eventInfo = new SolutionUpdateEventInfo()
                     {
-                        Reason = SolutionUpdateEventReason.ProjectCleanFinished,
+                        Reason = reason,
                         Success = isSuccess,
-                        ProjectHierarchy = pHierProj,
+                        ProjectHierarchy = hierarchy,
                     };
 
                     updateEventObserver.OnNext(eventInfo);
                 }
-
-                return VSConstants.S_OK;
             }
 
             readonly IObserver<SolutionUpdateEventInfo> updateEventObserver;
