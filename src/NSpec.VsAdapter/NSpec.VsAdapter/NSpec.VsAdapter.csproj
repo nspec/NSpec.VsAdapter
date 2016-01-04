@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DisposableExtensions.cs" />
+    <Compile Include="ICrossDomainTestDiscoverer.cs" />
+    <Compile Include="NSpecSpecification.cs" />
     <Compile Include="ProjectObservation\HierarchyUtils.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectBuildNotifier.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectConverter.cs" />

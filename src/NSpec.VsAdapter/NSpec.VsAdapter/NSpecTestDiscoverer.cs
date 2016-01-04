@@ -14,13 +14,30 @@ namespace NSpec.VsAdapter
     [DefaultExecutorUri(Constants.ExecutorUriString)]
     public class NSpecTestDiscoverer : ITestDiscoverer
     {
+        public NSpecTestDiscoverer(ICrossDomainTestDiscoverer crossDomainTestDiscoverer)
+        {
+            this.crossDomainTestDiscoverer = crossDomainTestDiscoverer;
+        }
+
         public void DiscoverTests(
             IEnumerable<string> sources, 
             IDiscoveryContext discoveryContext, 
             IMessageLogger logger, 
             ITestCaseDiscoverySink discoverySink)
         {
-            throw new NotImplementedException();
+            var specificationGroups =
+                from assemblyPath in sources
+                select crossDomainTestDiscoverer.Discover(assemblyPath);
+
+            var specifications = specificationGroups.SelectMany(group => group);
+
+            var testCases =
+                from spec in specifications
+                select new TestCase(spec.FullName, Constants.ExecutorUri, spec.SourceFilePath);
+
+            testCases.Do(discoverySink.SendTestCase);
         }
+
+        readonly ICrossDomainTestDiscoverer crossDomainTestDiscoverer;
     }
 }
