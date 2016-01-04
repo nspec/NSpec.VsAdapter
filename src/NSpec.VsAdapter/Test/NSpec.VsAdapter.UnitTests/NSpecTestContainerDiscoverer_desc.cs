@@ -87,9 +87,7 @@ namespace NSpec.VsAdapter.UnitTests
         [Test]
         public void it_should_return_executor_uri()
         {
-            var expectedUri = new Uri(Constants.ExecutorUriString);
-
-            containerDiscoverer.ExecutorUri.Should().Be(expectedUri);
+            containerDiscoverer.ExecutorUri.Should().Be(Constants.ExecutorUriString);
         }
 
         [Test]

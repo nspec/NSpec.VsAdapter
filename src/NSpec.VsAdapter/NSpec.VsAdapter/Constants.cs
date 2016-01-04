@@ -12,5 +12,7 @@ namespace NSpec.VsAdapter
         public const string ExeExtension = ".exe";
 
         public const string ExecutorUriString = "executor://nspec-executor";
+
+        public static Uri ExecutorUri = new Uri(ExecutorUriString);
     }
 }

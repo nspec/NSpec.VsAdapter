@@ -37,7 +37,7 @@ namespace NSpec.VsAdapter
 
         public Uri ExecutorUri
         {
-            get { return new Uri(Constants.ExecutorUriString); }
+            get { return Constants.ExecutorUri; }
         }
 
         public IEnumerable<ITestContainer> TestContainers
