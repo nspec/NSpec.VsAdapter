@@ -35,15 +35,15 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
             autoSubstitute = new AutoSubstitute();
 
             var testBuildManager = autoSubstitute.Resolve<IVsSolutionBuildManager2>();
-            
-            uint unregisterId;
-            uint dummyId = 12345;
 
-            testBuildManager.AdviseUpdateSolutionEvents(Arg.Any<IVsUpdateSolutionEvents2>(), out unregisterId)
+            uint unregisterToken = VSConstants.VSCOOKIE_NIL;
+            uint dummyToken = 12345;
+
+            testBuildManager.AdviseUpdateSolutionEvents(Arg.Any<IVsUpdateSolutionEvents2>(), out unregisterToken)
                 .Returns(callInfo =>
                 {
                     solutionUpdateEventSink = callInfo.Arg<IVsUpdateSolutionEvents2>();
-                    callInfo[1] = dummyId;
+                    callInfo[1] = dummyToken;
 
                     return VSConstants.S_OK;
                 });

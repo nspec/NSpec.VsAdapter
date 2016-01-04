@@ -12,6 +12,8 @@ namespace NSpec.VsAdapter.ProjectObservation
     {
         public IVsSolution Provide()
         {
+            // TODO check result and manage failure
+
             IVsSolution solution = ServiceProvider.GlobalProvider.GetService(typeof(SVsSolution)) as IVsSolution;
 
             return solution;

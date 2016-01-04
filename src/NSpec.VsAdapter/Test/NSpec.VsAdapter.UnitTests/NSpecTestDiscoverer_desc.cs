@@ -32,12 +32,14 @@ namespace NSpec.VsAdapter.UnitTests
         }
 
         [Test]
+        [Ignore("Yet to be implemented")]
         public void it_should_find_all_examples()
         {
             sink.TestCases.Should().HaveCount(4);
         }
 
         [Test]
+        [Ignore("Yet to be implemented")]
         public void it_should_detect_tags()
         {
             var tags = sink.TestCases.SelectMany(tc => tc.Traits);

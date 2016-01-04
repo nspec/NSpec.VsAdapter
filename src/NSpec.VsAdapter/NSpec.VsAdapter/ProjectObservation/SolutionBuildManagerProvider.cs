@@ -12,6 +12,8 @@ namespace NSpec.VsAdapter.ProjectObservation
     {
         public IVsSolutionBuildManager2 Provide()
         {
+            // TODO check result and manage failure
+
             IVsSolutionBuildManager2 solutionBuildManager = 
                 ServiceProvider.GlobalProvider.GetService(typeof(SVsSolutionBuildManager)) as IVsSolutionBuildManager2;
 

@@ -17,16 +17,16 @@ namespace NSpec.VsAdapter.ProjectObservation
 
             var updateProjectDoneStream = Observable.Create<UpdateProjectDoneInfo>(observer =>
                 {
-                    uint unregisterId = VSConstants.VSCOOKIE_NIL;
+                    uint unregisterToken = VSConstants.VSCOOKIE_NIL;
                     var solutionUpdateEventSink = new SolutionUpdateEventSink(observer);
 
                     // TODO check result and manage failure
 
-                    solutionBuildManager.AdviseUpdateSolutionEvents(solutionUpdateEventSink, out unregisterId);
+                    solutionBuildManager.AdviseUpdateSolutionEvents(solutionUpdateEventSink, out unregisterToken);
 
                     Action disposeAction = () =>
                     {
-                        solutionBuildManager.UnadviseUpdateSolutionEvents(unregisterId);
+                        solutionBuildManager.UnadviseUpdateSolutionEvents(unregisterToken);
                     };
 
                     return disposeAction;
@@ -69,6 +69,30 @@ namespace NSpec.VsAdapter.ProjectObservation
                 this.updateProjectDoneObserver = updateProjectDoneObserver;
             }
 
+            // Solution update events
+
+            public int UpdateSolution_StartUpdate(ref int pfCancelUpdate)
+            {
+                return VSConstants.S_OK;
+            }
+
+            public int UpdateSolution_Begin(ref int pfCancelUpdate)
+            {
+                return VSConstants.S_OK;
+            }
+
+            public int UpdateSolution_Cancel()
+            {
+                return VSConstants.S_OK;
+            }
+
+            public int UpdateSolution_Done(int fSucceeded, int fModified, int fCancelCommand)
+            {
+                return VSConstants.S_OK;
+            }
+
+            // Project update events
+
             public int OnActiveProjectCfgChange(IVsHierarchy pIVsHierarchy)
             {
                 return VSConstants.S_OK;
@@ -93,26 +117,6 @@ namespace NSpec.VsAdapter.ProjectObservation
 
                 updateProjectDoneObserver.OnNext(doneInfo);
 
-                return VSConstants.S_OK;
-            }
-
-            public int UpdateSolution_Begin(ref int pfCancelUpdate)
-            {
-                return VSConstants.S_OK;
-            }
-
-            public int UpdateSolution_Cancel()
-            {
-                return VSConstants.S_OK;
-            }
-
-            public int UpdateSolution_Done(int fSucceeded, int fModified, int fCancelCommand)
-            {
-                return VSConstants.S_OK;
-            }
-
-            public int UpdateSolution_StartUpdate(ref int pfCancelUpdate)
-            {
                 return VSConstants.S_OK;
             }
 
