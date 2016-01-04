@@ -9,7 +9,7 @@ using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.ProjectObservation
+namespace NSpec.VsAdapter.ProjectObservation.Solution
 {
     public class SolutionNotifier : ISolutionNotifier, IDisposable
     {

@@ -73,16 +73,16 @@
   <ItemGroup>
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="ProjectObservation\HierarchyUtils.cs" />
-    <Compile Include="ProjectObservation\IProjectBuildNotifier.cs" />
-    <Compile Include="ProjectObservation\IProjectConverter.cs" />
-    <Compile Include="ProjectObservation\IProjectEnumerator.cs" />
-    <Compile Include="ProjectObservation\IProjectNotifier.cs" />
-    <Compile Include="ProjectObservation\IProjectWrapper.cs" />
-    <Compile Include="ProjectObservation\IProjectWrapperFactory.cs" />
+    <Compile Include="ProjectObservation\Projects\IProjectBuildNotifier.cs" />
+    <Compile Include="ProjectObservation\Projects\IProjectConverter.cs" />
+    <Compile Include="ProjectObservation\Projects\IProjectEnumerator.cs" />
+    <Compile Include="ProjectObservation\Projects\IProjectNotifier.cs" />
+    <Compile Include="ProjectObservation\Projects\IProjectWrapper.cs" />
+    <Compile Include="ProjectObservation\Projects\IProjectWrapperFactory.cs" />
     <Compile Include="ITestContainerFactory.cs" />
-    <Compile Include="ProjectObservation\ISolutionBuildManagerProvider.cs" />
-    <Compile Include="ProjectObservation\ISolutionNotifier.cs" />
-    <Compile Include="ProjectObservation\ISolutionProvider.cs" />
+    <Compile Include="ProjectObservation\Solution\ISolutionBuildManagerProvider.cs" />
+    <Compile Include="ProjectObservation\Solution\ISolutionNotifier.cs" />
+    <Compile Include="ProjectObservation\Solution\ISolutionProvider.cs" />
     <Compile Include="ProjectObservation\ITestDllNotifier.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IFileService.cs" />
@@ -92,17 +92,17 @@
     <Compile Include="NSpecTestDiscoverer.cs" />
     <Compile Include="ProjectObservation\NSpecTestDllNotifier.cs" />
     <Compile Include="NSpecTestExecutor.cs" />
-    <Compile Include="ProjectObservation\ProjectBuildNotifier.cs" />
-    <Compile Include="ProjectObservation\ProjectConverter.cs" />
-    <Compile Include="ProjectObservation\ProjectEnumerator.cs" />
+    <Compile Include="ProjectObservation\Projects\ProjectBuildNotifier.cs" />
+    <Compile Include="ProjectObservation\Projects\ProjectConverter.cs" />
+    <Compile Include="ProjectObservation\Projects\ProjectEnumerator.cs" />
     <Compile Include="ProjectObservation\ProjectInfo.cs" />
-    <Compile Include="ProjectObservation\ProjectNotifier.cs" />
-    <Compile Include="ProjectObservation\ProjectWrapper.cs" />
-    <Compile Include="ProjectObservation\ProjectWrapperFactory.cs" />
-    <Compile Include="ProjectObservation\SolutionBuildManagerProvider.cs" />
+    <Compile Include="ProjectObservation\Projects\ProjectNotifier.cs" />
+    <Compile Include="ProjectObservation\Projects\ProjectWrapper.cs" />
+    <Compile Include="ProjectObservation\Projects\ProjectWrapperFactory.cs" />
+    <Compile Include="ProjectObservation\Solution\SolutionBuildManagerProvider.cs" />
     <Compile Include="ProjectObservation\SolutionInfo.cs" />
-    <Compile Include="ProjectObservation\SolutionNotifier.cs" />
-    <Compile Include="ProjectObservation\SolutionProvider.cs" />
+    <Compile Include="ProjectObservation\Solution\SolutionNotifier.cs" />
+    <Compile Include="ProjectObservation\Solution\SolutionProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

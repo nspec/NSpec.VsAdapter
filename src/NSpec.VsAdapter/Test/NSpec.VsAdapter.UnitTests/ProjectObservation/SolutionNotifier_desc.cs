@@ -4,6 +4,7 @@ using Microsoft.Reactive.Testing;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using NSpec.VsAdapter.ProjectObservation;
+using NSpec.VsAdapter.ProjectObservation.Solution;
 using NSubstitute;
 using NUnit.Framework;
 using System;

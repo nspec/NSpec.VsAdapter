@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.ProjectObservation
+namespace NSpec.VsAdapter.ProjectObservation.Projects
 {
     public class ProjectConverter : IProjectConverter
     {

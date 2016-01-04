@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.ProjectObservation
+namespace NSpec.VsAdapter.ProjectObservation.Projects
 {
     public class ProjectWrapper : IProjectWrapper
     {
@@ -32,7 +32,9 @@ namespace NSpec.VsAdapter.ProjectObservation
             string projectAbsolutePath = autoProject.Properties.Item("FullPath").Value.ToString();
 
             // TODO instead of ActiveConfiguration, it should retrieve configuration actually built,
-            // from an IVsCfg field that should be carried over from ProjectBuildInfo
+            // from an IVsCfg field that should be carried over from ProjectBuildInfo:
+            // IVsCfg.get_DisplayName() returns "<configname>|<platformname>"
+            // ConfigurationManager.Platform(platformname) or .ConfigurationRow(configname) return Configuration collections
 
             string configurationRelativeOutputPath = autoProject.ConfigurationManager.ActiveConfiguration
                 .Properties.Item("OutputPath").Value.ToString();

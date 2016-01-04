@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.Reactive.Testing;
 using NSpec.VsAdapter.ProjectObservation;
+using NSpec.VsAdapter.ProjectObservation.Projects;
 using NSubstitute;
 using NUnit.Framework;
 using System;

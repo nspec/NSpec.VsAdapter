@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.Shell.Interop;
 using NSpec.VsAdapter.ProjectObservation;
+using NSpec.VsAdapter.ProjectObservation.Projects;
 using NSubstitute;
 using NUnit.Framework;
 using System;

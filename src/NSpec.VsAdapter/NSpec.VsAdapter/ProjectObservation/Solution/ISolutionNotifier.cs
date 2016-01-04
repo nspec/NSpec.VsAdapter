@@ -6,7 +6,7 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.ProjectObservation
+namespace NSpec.VsAdapter.ProjectObservation.Solution
 {
     public interface ISolutionNotifier
     {

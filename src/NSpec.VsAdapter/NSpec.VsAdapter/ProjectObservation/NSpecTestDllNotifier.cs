@@ -1,4 +1,5 @@
 ﻿using NSpec.VsAdapter.ProjectObservation;
+using NSpec.VsAdapter.ProjectObservation.Projects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
