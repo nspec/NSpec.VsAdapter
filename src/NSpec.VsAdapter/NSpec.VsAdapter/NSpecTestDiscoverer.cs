@@ -14,6 +14,10 @@ namespace NSpec.VsAdapter
     [DefaultExecutorUri(Constants.ExecutorUriString)]
     public class NSpecTestDiscoverer : ITestDiscoverer
     {
+        // used by Visual Studio test infrastructure
+        public NSpecTestDiscoverer() : this(new CrossDomainTestDiscoverer()) { }
+
+        // used to test this adapter
         public NSpecTestDiscoverer(ICrossDomainTestDiscoverer crossDomainTestDiscoverer)
         {
             this.crossDomainTestDiscoverer = crossDomainTestDiscoverer;

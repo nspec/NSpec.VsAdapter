@@ -1,5 +1,4 @@
-﻿using AutofacContrib.NSubstitute;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using NUnit.Framework;
@@ -18,19 +17,16 @@ namespace NSpec.VsAdapter.UnitTests
     {
         NSpecTestDiscoverer discoverer;
 
-        AutoSubstitute autoSubstitute;
         CollectingSink sink;
         string targetDllPath;
 
         [SetUp]
         public void setup()
         {
-            autoSubstitute = new AutoSubstitute();
-
             sink = new CollectingSink();
             targetDllPath = TestConstants.SampleSpecsDllPath;
 
-            discoverer = autoSubstitute.Resolve<NSpecTestDiscoverer>();
+            discoverer = new NSpecTestDiscoverer();
 
             discoverer.DiscoverTests(new string[] { targetDllPath }, null, null, sink);
         }

@@ -25,7 +25,5 @@ namespace NSpec.VsAdapter
         {
             throw new NotImplementedException();
         }
-
-        public const string UriString = "executor://NSpecVsExecutor";
     }
 }

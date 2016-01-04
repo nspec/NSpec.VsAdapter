@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrossDomainTestDiscoverer.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="ICrossDomainTestDiscoverer.cs" />
     <Compile Include="NSpecSpecification.cs" />
