@@ -3,8 +3,8 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
 using Microsoft.VisualStudio.TestWindow.Extensibility.Model;
-using NSpec.VsAdapter;
 using NSpec.VsAdapter.ProjectObservation;
+using NSpec.VsAdapter.TestExplorer;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -14,7 +14,7 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests
+namespace NSpec.VsAdapter.UnitTests.TestExplorer
 {
     [TestFixture]
     [Category("NSpecTestContainerDiscoverer")]

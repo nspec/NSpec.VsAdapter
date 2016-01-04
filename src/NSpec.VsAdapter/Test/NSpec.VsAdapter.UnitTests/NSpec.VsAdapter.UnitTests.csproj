@@ -102,8 +102,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="NSpecTestContainer_desc.cs" />
-    <Compile Include="NSpecTestContainerDiscoverer_desc.cs">
+    <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />
+    <Compile Include="TestExplorer\NSpecTestContainerDiscoverer_desc.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="NSpecTestDiscoverer_desc.cs" />

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter
+namespace NSpec.VsAdapter.TestExplorer
 {
     public class NSpecTestContainer : ITestContainer
     {

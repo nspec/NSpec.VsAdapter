@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
+using NSpec.VsAdapter.TestExplorer;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests
+namespace NSpec.VsAdapter.UnitTests.TestExplorer
 {
     [TestFixture]
     [Category("NSpecTestContainer")]
