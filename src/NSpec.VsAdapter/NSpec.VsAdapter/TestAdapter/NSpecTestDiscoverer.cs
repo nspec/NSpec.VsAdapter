@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter
+namespace NSpec.VsAdapter.TestAdapter
 {
     [FileExtension(Constants.DllExtension)]
     [FileExtension(Constants.ExeExtension)]

@@ -92,9 +92,9 @@
     <Compile Include="TestExplorer\NSpecTestContainer.cs" />
     <Compile Include="TestExplorer\NSpecTestContainerDiscoverer.cs" />
     <Compile Include="TestExplorer\NSpecTestContainerFactory.cs" />
-    <Compile Include="NSpecTestDiscoverer.cs" />
+    <Compile Include="TestAdapter\NSpecTestDiscoverer.cs" />
     <Compile Include="ProjectObservation\NSpecTestDllNotifier.cs" />
-    <Compile Include="NSpecTestExecutor.cs" />
+    <Compile Include="TestAdapter\NSpecTestExecutor.cs" />
     <Compile Include="ProjectObservation\Projects\ProjectBuildNotifier.cs" />
     <Compile Include="ProjectObservation\Projects\ProjectConverter.cs" />
     <Compile Include="ProjectObservation\Projects\ProjectEnumerator.cs" />
@@ -111,6 +111,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter
+namespace NSpec.VsAdapter.TestAdapter
 {
     [DefaultExecutorUri(Constants.ExecutorUriString)]
     public class NSpecTestExecutor : ITestExecutor

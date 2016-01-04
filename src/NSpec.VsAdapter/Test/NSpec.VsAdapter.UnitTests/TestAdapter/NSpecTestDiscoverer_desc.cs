@@ -3,6 +3,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using NSpec.VsAdapter.TestAdapter;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -11,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests
+namespace NSpec.VsAdapter.UnitTests.TestAdapter
 {
     [TestFixture]
     [Category("NSpecTestDiscoverer")]

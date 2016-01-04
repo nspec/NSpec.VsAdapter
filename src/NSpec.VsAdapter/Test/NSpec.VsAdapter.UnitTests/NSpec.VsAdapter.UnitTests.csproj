@@ -106,8 +106,8 @@
     <Compile Include="TestExplorer\NSpecTestContainerDiscoverer_desc.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="NSpecTestDiscoverer_desc.cs" />
-    <Compile Include="NSpecTestDiscoverer_desc_integration.cs" />
+    <Compile Include="TestAdapter\NSpecTestDiscoverer_desc.cs" />
+    <Compile Include="TestAdapter\NSpecTestDiscoverer_desc_integration.cs" />
     <Compile Include="ProjectObservation\NSpecTestDllNotifier_desc.cs" />
     <Compile Include="ProjectObservation\ProjectBuildNotifier_desc.cs" />
     <Compile Include="ProjectObservation\ProjectConverter_desc.cs" />
@@ -125,6 +125,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
