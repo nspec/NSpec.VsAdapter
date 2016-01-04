@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,12 +14,25 @@ namespace NSpec.VsAdapter.ProjectObservation
     {
         public NSpecTestDllNotifier(
             IProjectNotifier projectNotifier, 
+            IProjectBuildNotifier buildNotifier,
             IProjectConverter projectConverter)
         {
             var mapProjectInfosToPaths = MapProjectInfosToPaths(projectConverter);
 
-            var hotPathStream = projectNotifier.ProjectStream
+            var testProjectPathStream = projectNotifier.ProjectStream
                 .Select(mapProjectInfosToPaths)
+                .Publish() // this will be subscribed multiple times: avoid re-subscription side-effect
+                .RefCount();
+
+            var testBuildPathStream = buildNotifier.BuildStream
+                .Select(projectConverter.ToTestDllPath)
+                .Where(ConversionSuccess);
+
+            var buildRefreshPathStream = testProjectPathStream
+                .Sample(testBuildPathStream);
+
+            var hotPathStream = testProjectPathStream
+                .Merge(buildRefreshPathStream)
                 .Replay(1);
 
             hotPathStream.Connect().DisposeWith(disposables);
@@ -33,22 +47,29 @@ namespace NSpec.VsAdapter.ProjectObservation
             disposables.Dispose();
         }
 
+        readonly CompositeDisposable disposables = new CompositeDisposable();
+
         static Func<IEnumerable<ProjectInfo>, IEnumerable<string>> MapProjectInfosToPaths(IProjectConverter projectConverter)
         {
             return projectInfos =>
             {
-                const string notATestDllPath = null;
-
                 IEnumerable<string> dllPaths =
                     from info in projectInfos
                     let path = projectConverter.ToTestDllPath(info)
-                    where path != notATestDllPath
+                    where ConversionSuccess(path)
                     select path;
 
                 return dllPaths;
             };
         }
 
-        readonly CompositeDisposable disposables = new CompositeDisposable();
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static bool ConversionSuccess(string path)
+        {
+            const string notATestDllPath = null;
+
+            return (path != notATestDllPath);
+        }
+
     }
 }

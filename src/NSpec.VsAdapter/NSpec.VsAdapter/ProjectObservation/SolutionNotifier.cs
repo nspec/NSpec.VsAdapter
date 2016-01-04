@@ -33,7 +33,7 @@ namespace NSpec.VsAdapter.ProjectObservation
 
                     return disposeAction;
                 })
-                .Publish() // this will be subscribed multiple times, avoid re-subscription side-effect
+                .Publish() // this will be subscribed multiple times: avoid re-subscription side-effect
                 .RefCount();
 
             {

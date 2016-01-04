@@ -21,11 +21,31 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 
         protected AutoSubstitute autoSubstitute;
         protected Subject<IEnumerable<ProjectInfo>> projectStream;
+        protected Subject<ProjectInfo> buildStream;
         protected IProjectConverter projectConverter;
         protected ITestableObserver<IEnumerable<string>> testDllPathObserver;
         protected IDisposable subscription;
 
+        protected readonly ProjectInfo someProjectInfo;
+        protected readonly ProjectInfo testProjectInfo;
+        protected readonly ProjectInfo anotherTestProjectInfo;
+        protected readonly ProjectInfo[] buildInfos;
+
         protected const string notATestDllPath = null;
+
+        public NSpecTestDllNotifier_desc_base()
+        {
+            someProjectInfo = new ProjectInfo();
+            testProjectInfo = new ProjectInfo();
+            anotherTestProjectInfo = new ProjectInfo();
+
+            buildInfos = new[]
+            {
+                someProjectInfo,
+                testProjectInfo,
+                anotherTestProjectInfo,
+            };
+        }
 
         [SetUp]
         public virtual void before_each()
@@ -36,8 +56,11 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
             projectStream = new Subject<IEnumerable<ProjectInfo>>();
             projectNotifier.ProjectStream.Returns(projectStream);
 
-            projectConverter = autoSubstitute.Resolve<IProjectConverter>();
+            var buildNotifier = autoSubstitute.Resolve<IProjectBuildNotifier>();
+            buildStream = new Subject<ProjectInfo>();
+            buildNotifier.BuildStream.Returns(buildStream);
 
+            projectConverter = autoSubstitute.Resolve<IProjectConverter>();
             projectConverter.ToTestDllPath(Arg.Any<ProjectInfo>()).Returns(notATestDllPath);
 
             notifier = autoSubstitute.Resolve<NSpecTestDllNotifier>();
@@ -52,6 +75,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         {
             autoSubstitute.Dispose();
             projectStream.Dispose();
+            buildStream.Dispose();
             notifier.Dispose();
             subscription.Dispose();
         }
@@ -72,13 +96,6 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         {
             base.before_each();
 
-            var buildInfos = new[]
-            {
-                new ProjectInfo(),
-                new ProjectInfo(),
-                new ProjectInfo(),
-            };
-
             projectStream.OnNext(buildInfos);
         }
 
@@ -95,13 +112,20 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 
             testDllPaths.Should().BeEmpty();
         }
+
+        [Test]
+        public void it_should_not_notify_when_project_builds()
+        {
+            testDllPathObserver.Messages.Clear();
+
+            buildStream.OnNext(someProjectInfo);
+
+            testDllPathObserver.Messages.Should().BeEmpty();
+        }
     }
 
     public class NSpecTestDllNotifier_when_some_test_found : NSpecTestDllNotifier_desc_base
     {
-        ProjectInfo projectInfo;
-        ProjectInfo anotherProjectInfo;
-
         const string someTestDllPath = @".\some\dummy\test\library.dll";
         const string anotherTestDllPath = @".\another\dummy\test\library.dll";
 
@@ -109,18 +133,8 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         {
             base.before_each();
 
-            projectInfo = new ProjectInfo();
-            anotherProjectInfo = new ProjectInfo();
-
-            var buildInfos = new[]
-            {
-                new ProjectInfo(),
-                projectInfo,
-                anotherProjectInfo,
-            };
-
-            projectConverter.ToTestDllPath(projectInfo).Returns(someTestDllPath);
-            projectConverter.ToTestDllPath(anotherProjectInfo).Returns(anotherTestDllPath);
+            projectConverter.ToTestDllPath(testProjectInfo).Returns(someTestDllPath);
+            projectConverter.ToTestDllPath(anotherTestProjectInfo).Returns(anotherTestDllPath);
 
             projectStream.OnNext(buildInfos);
         }
@@ -136,11 +150,31 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         {
             IEnumerable<string> testDllPaths = testDllPathObserver.Messages.Single().Value.Value;
 
-            testDllPaths.Should().BeEquivalentTo(new string [] 
+            testDllPaths.Should().BeEquivalentTo(new string[] 
                 {
                     someTestDllPath,
                     anotherTestDllPath,
                 });
+        }
+
+        [Test]
+        public void it_should_not_notify_when_non_test_project_builds()
+        {
+            testDllPathObserver.Messages.Clear();
+
+            buildStream.OnNext(someProjectInfo);
+
+            testDllPathObserver.Messages.Should().BeEmpty();
+        }
+
+        [Test]
+        public void it_should_notify_when_test_project_builds()
+        {
+            testDllPathObserver.Messages.Clear();
+
+            buildStream.OnNext(testProjectInfo);
+
+            testDllPathObserver.Messages.Should().HaveCount(1);
         }
     }
 }
