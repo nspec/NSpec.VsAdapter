@@ -70,14 +70,14 @@ namespace NSpec.VsAdapter.ProjectObservation
             }
 
             {
-                var hoProjectRemovingtream = solutionEventStream
+                var hotProjectRemovingtream = solutionEventStream
                     .Where(eventInfo => eventInfo.Reason == SolutionEventReason.ProjectRemoving)
                     .Select(eventInfo => new ProjectInfo() { Hierarchy = eventInfo.ProjectHierarchy })
                     .Replay(0);
 
-                hoProjectRemovingtream.Connect().DisposeWith(disposables);
+                hotProjectRemovingtream.Connect().DisposeWith(disposables);
 
-                ProjectRemovingtream = hoProjectRemovingtream;
+                ProjectRemovingtream = hotProjectRemovingtream;
             }
         }
 

@@ -15,7 +15,7 @@ namespace NSpec.VsAdapter.ProjectObservation
         {
             var solutionBuildManager = solutionBuildManagerProvider.Provide();
 
-            var updateProjectDoneStream = Observable.Create<UpdateProjectDoneInfo>(observer =>
+            var solutionUpdateEventStream = Observable.Create<SolutionUpdateEventInfo>(observer =>
                 {
                     uint unregisterToken = VSConstants.VSCOOKIE_NIL;
                     var solutionUpdateEventSink = new SolutionUpdateEventSink(observer);
@@ -32,20 +32,10 @@ namespace NSpec.VsAdapter.ProjectObservation
                     return disposeAction;
                 });
 
-            const int updateActionFailed = 0;
-
-            var hotBuildStream = updateProjectDoneStream
-                .Where(updateInfo => 
-                    {
-                        uint buildFlag = updateInfo.dwAction & (uint)VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_BUILD;
-
-                        bool isABuildAction = (buildFlag != 0);
-
-                        bool isSuccess = updateInfo.fSuccess != updateActionFailed;
-
-                        return isSuccess && isABuildAction;
-                    })
-                .Select(updateInfo => new ProjectInfo() { Hierarchy = updateInfo.pHierProj })
+            var hotBuildStream = solutionUpdateEventStream
+                .Where(eventInfo => 
+                    eventInfo.Reason == SolutionUpdateEventReason.ProjectBuildFinished && eventInfo.Success)
+                .Select(eventInfo => new ProjectInfo() { Hierarchy = eventInfo.ProjectHierarchy })
                 .Replay(0);
 
             hotBuildStream.Connect().DisposeWith(disposables);
@@ -64,9 +54,9 @@ namespace NSpec.VsAdapter.ProjectObservation
 
         class SolutionUpdateEventSink : IVsUpdateSolutionEvents2
         {
-            public SolutionUpdateEventSink(IObserver<UpdateProjectDoneInfo> updateProjectDoneObserver)
+            public SolutionUpdateEventSink(IObserver<SolutionUpdateEventInfo> updateEventObserver)
             {
-                this.updateProjectDoneObserver = updateProjectDoneObserver;
+                this.updateEventObserver = updateEventObserver;
             }
 
             // Solution update events
@@ -100,37 +90,105 @@ namespace NSpec.VsAdapter.ProjectObservation
 
             public int UpdateProjectCfg_Begin(IVsHierarchy pHierProj, IVsCfg pCfgProj, IVsCfg pCfgSln, uint dwAction, ref int pfCancel)
             {
+                const bool isSuccess = true;
+
+                var updateAction = new ProjectUpdateAction(dwAction);
+
+                if (updateAction.IsBuild)
+                {
+                    var eventInfo = new SolutionUpdateEventInfo()
+                    {
+                        Reason = SolutionUpdateEventReason.ProjectBuildStarted,
+                        Success = isSuccess,
+                        ProjectHierarchy = pHierProj,
+                    };
+
+                    updateEventObserver.OnNext(eventInfo);
+                }
+                else if (updateAction.IsClean)
+                {
+                    var eventInfo = new SolutionUpdateEventInfo()
+                    {
+                        Reason = SolutionUpdateEventReason.ProjectCleanStarted,
+                        Success = isSuccess,
+                        ProjectHierarchy = pHierProj,
+                    };
+
+                    updateEventObserver.OnNext(eventInfo);
+                }
+
                 return VSConstants.S_OK;
             }
 
             public int UpdateProjectCfg_Done(IVsHierarchy pHierProj, IVsCfg pCfgProj, IVsCfg pCfgSln, uint dwAction, int fSuccess, int fCancel)
             {
-                var doneInfo = new UpdateProjectDoneInfo()
-                {
-                    pHierProj = pHierProj,
-                    pCfgProj = pCfgProj,
-                    pCfgSln = pCfgSln,
-                    dwAction = dwAction,
-                    fSuccess = fSuccess,
-                    fCancel = fCancel,
-                };
+                const int updateActionFailed = 0;
+                bool isSuccess = (fSuccess != updateActionFailed);
 
-                updateProjectDoneObserver.OnNext(doneInfo);
+                var updateAction = new ProjectUpdateAction(dwAction);
+
+                if (updateAction.IsBuild)
+                {
+                    var eventInfo = new SolutionUpdateEventInfo()
+                    {
+                        Reason = SolutionUpdateEventReason.ProjectBuildFinished,
+                        Success = isSuccess,
+                        ProjectHierarchy = pHierProj,
+                    };
+
+                    updateEventObserver.OnNext(eventInfo);
+                }
+                else if (updateAction.IsClean)
+                {
+                    var eventInfo = new SolutionUpdateEventInfo()
+                    {
+                        Reason = SolutionUpdateEventReason.ProjectCleanFinished,
+                        Success = isSuccess,
+                        ProjectHierarchy = pHierProj,
+                    };
+
+                    updateEventObserver.OnNext(eventInfo);
+                }
 
                 return VSConstants.S_OK;
             }
 
-            readonly IObserver<UpdateProjectDoneInfo> updateProjectDoneObserver;
+            readonly IObserver<SolutionUpdateEventInfo> updateEventObserver;
         }
 
-        class UpdateProjectDoneInfo
+        class ProjectUpdateAction
         {
-            public IVsHierarchy pHierProj;
-            public IVsCfg pCfgProj;
-            public IVsCfg pCfgSln;
-            public uint dwAction;
-            public int fSuccess;
-            public int fCancel;
+            public ProjectUpdateAction(uint action)
+            {
+                uint buildFlag = action & (uint)VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_BUILD;
+                IsBuild = (buildFlag != 0);
+
+                uint cleanFlag = action & (uint)VSSOLNBUILDUPDATEFLAGS.SBF_OPERATION_CLEAN;
+                IsClean = (cleanFlag != 0);
+            }
+
+            public bool IsBuild { get; private set; }
+
+            public bool IsClean { get; private set; }
+        }
+
+        class SolutionUpdateEventInfo
+        {
+            public SolutionUpdateEventReason Reason;
+
+            public IVsHierarchy ProjectHierarchy;
+
+            public bool Success;
+        }
+
+        enum SolutionUpdateEventReason
+        {
+            Unassigned,
+
+            ProjectBuildStarted,
+            ProjectBuildFinished,
+            ProjectCleanStarted,
+            ProjectCleanFinished,
         }
     }
 }
