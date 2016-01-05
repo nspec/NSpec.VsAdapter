@@ -101,6 +101,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="NSpecModding\CrossDomainTestDiscoverer_desc.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainerDiscoverer_desc.cs">

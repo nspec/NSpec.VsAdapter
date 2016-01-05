@@ -71,9 +71,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrossDomainTestDiscoverer.cs" />
+    <Compile Include="NSpecModding\CollectorInvocation.cs" />
+    <Compile Include="NSpecModding\CrossDomainRunner.cs" />
+    <Compile Include="NSpecModding\CrossDomainTestDiscoverer.cs" />
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="ICrossDomainTestDiscoverer.cs" />
+    <Compile Include="NSpecModding\ICollectorInvocation.cs" />
+    <Compile Include="NSpecModding\ICrossDomainRunner.cs" />
+    <Compile Include="NSpecModding\ICrossDomainTestDiscoverer.cs" />
+    <Compile Include="NSpecModding\INspecDomainRunner.cs" />
     <Compile Include="NSpecSpecification.cs" />
     <Compile Include="ProjectObservation\HierarchyUtils.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectBuildNotifier.cs" />
