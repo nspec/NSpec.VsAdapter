@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
-    public interface ICrossDomainRunner : INspecDomainRunner<ICollectorInvocation, IEnumerable<NSpecSpecification>>
+    public interface ICrossDomainCollector : INspecDomainRunner<ICollectorInvocation, IEnumerable<NSpecSpecification>>
     {
     }
 }

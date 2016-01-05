@@ -6,10 +6,10 @@ using System.Text;
 namespace NSpec.VsAdapter.NSpecModding
 {
     [Serializable]
-    public class CrossDomainRunner : 
+    public class CrossDomainCollector : 
         NspecDomainRunner<ICollectorInvocation, IEnumerable<NSpecSpecification>>, 
-        ICrossDomainRunner
+        ICrossDomainCollector
     {
-        public CrossDomainRunner(IAppDomainFactory appDomainFactory) : base(appDomainFactory) {}
+        public CrossDomainCollector(IAppDomainFactory appDomainFactory) : base(appDomainFactory) {}
     }
 }

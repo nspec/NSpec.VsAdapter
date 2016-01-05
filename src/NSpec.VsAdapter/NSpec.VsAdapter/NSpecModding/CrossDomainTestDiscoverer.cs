@@ -10,9 +10,9 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public class CrossDomainTestDiscoverer : ICrossDomainTestDiscoverer
     {
-        public CrossDomainTestDiscoverer(ICrossDomainRunner crossDomainRunner)
+        public CrossDomainTestDiscoverer(ICrossDomainCollector crossDomainCollector)
         {
-            this.crossDomainRunner = crossDomainRunner;
+            this.crossDomainCollector = crossDomainCollector;
         }
 
         public IEnumerable<NSpecSpecification> Discover(string assemblyPath, IOutputLogger logger)
@@ -25,8 +25,8 @@ namespace NSpec.VsAdapter.NSpecModding
 
                 var collectorInvocation = new CollectorInvocation(assemblyPath);
 
-                specifications = 
-                    crossDomainRunner.Run(assemblyPath, collectorInvocation, invocation => invocation.Collect());
+                specifications = crossDomainCollector.Run(
+                    assemblyPath, collectorInvocation, invocation => invocation.Collect());
 
                 logger.Debug(String.Format("Found {0} specs", specifications.Count()));
 
@@ -47,6 +47,6 @@ namespace NSpec.VsAdapter.NSpecModding
             return specifications;
         }
 
-        readonly ICrossDomainRunner crossDomainRunner;
+        readonly ICrossDomainCollector crossDomainCollector;
     }
 }

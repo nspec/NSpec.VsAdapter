@@ -74,12 +74,12 @@
     <Compile Include="IOutputLogger.cs" />
     <Compile Include="NSpecModding\AppDomainFactory.cs" />
     <Compile Include="NSpecModding\CollectorInvocation.cs" />
-    <Compile Include="NSpecModding\CrossDomainRunner.cs" />
+    <Compile Include="NSpecModding\CrossDomainCollector.cs" />
     <Compile Include="NSpecModding\CrossDomainTestDiscoverer.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="NSpecModding\IAppDomainFactory.cs" />
     <Compile Include="NSpecModding\ICollectorInvocation.cs" />
-    <Compile Include="NSpecModding\ICrossDomainRunner.cs" />
+    <Compile Include="NSpecModding\ICrossDomainCollector.cs" />
     <Compile Include="NSpecModding\ICrossDomainTestDiscoverer.cs" />
     <Compile Include="NSpecModding\INspecDomainRunner.cs" />
     <Compile Include="NSpecModding\MarshalingWrapper.cs" />

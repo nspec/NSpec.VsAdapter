@@ -20,7 +20,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
 
         protected AutoSubstitute autoSubstitute;
         protected IOutputLogger logger;
-        protected ICrossDomainRunner crossDomainRunner;
+        protected ICrossDomainCollector crossDomainCollector;
 
         protected const string somePath = @".\some\path\to\library.dll";
 
@@ -31,7 +31,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
 
             logger = autoSubstitute.Resolve<IOutputLogger>();
 
-            crossDomainRunner = autoSubstitute.Resolve<ICrossDomainRunner>();
+            crossDomainCollector = autoSubstitute.Resolve<ICrossDomainCollector>();
 
             discoverer = autoSubstitute.Resolve<CrossDomainTestDiscoverer>();
         }
@@ -56,7 +56,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         {
             base.before_each();
 
-            crossDomainRunner.Run(null, null, null).ReturnsForAnyArgs(callInfo =>
+            crossDomainCollector.Run(null, null, null).ReturnsForAnyArgs(callInfo =>
                 {
                     string assemblyPath = callInfo.Arg<string>();
 
@@ -79,7 +79,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         {
             base.before_each();
 
-            crossDomainRunner.Run(null, null, null).ReturnsForAnyArgs(_ =>
+            crossDomainCollector.Run(null, null, null).ReturnsForAnyArgs(_ =>
                 {
                     throw new InvalidOperationException();
                 });

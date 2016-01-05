@@ -20,9 +20,9 @@ namespace NSpec.VsAdapter.TestAdapter
         {
             var appDomainFactory = new AppDomainFactory();
 
-            var crossDomainRunner = new CrossDomainRunner(appDomainFactory);
+            var crossDomainCollector = new CrossDomainCollector(appDomainFactory);
 
-            this.crossDomainTestDiscoverer = new CrossDomainTestDiscoverer(crossDomainRunner);
+            this.crossDomainTestDiscoverer = new CrossDomainTestDiscoverer(crossDomainCollector);
         }
 
         // used to test this adapter
