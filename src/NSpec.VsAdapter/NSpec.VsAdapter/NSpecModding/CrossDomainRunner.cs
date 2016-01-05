@@ -5,14 +5,11 @@ using System.Text;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
-    public class CrossDomainRunner : ICrossDomainRunner
+    [Serializable]
+    public class CrossDomainRunner : 
+        NspecDomainRunner<ICollectorInvocation, IEnumerable<NSpecSpecification>>, 
+        ICrossDomainRunner
     {
-        public IEnumerable<NSpecSpecification> Run(
-            string assemblyPath, 
-            ICollectorInvocation invocation,
-            Func<ICollectorInvocation, IEnumerable<NSpecSpecification>> outputSelector)
-        {
-            throw new NotImplementedException();
-        }
+        public CrossDomainRunner(IAppDomainFactory appDomainFactory) : base(appDomainFactory) {}
     }
 }

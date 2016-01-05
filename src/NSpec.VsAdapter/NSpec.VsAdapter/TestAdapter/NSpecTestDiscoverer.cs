@@ -18,7 +18,9 @@ namespace NSpec.VsAdapter.TestAdapter
         // used by Visual Studio test infrastructure
         public NSpecTestDiscoverer() 
         {
-            var crossDomainRunner = new CrossDomainRunner();
+            var appDomainFactory = new AppDomainFactory();
+
+            var crossDomainRunner = new CrossDomainRunner(appDomainFactory);
 
             this.crossDomainTestDiscoverer = new CrossDomainTestDiscoverer(crossDomainRunner);
         }
