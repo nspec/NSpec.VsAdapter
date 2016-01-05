@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
-    public class MarshalingWrapper<TInvocation, TResult> : MarshalByRefObject
+    public class MarshalingProxy<TInvocation, TResult> : MarshalByRefObject
     {
         public override object InitializeLifetimeService()
         {
             return null;
         }
 
-        public virtual TResult Execute(TInvocation invocation, Func<TInvocation, TResult> outputSelector)
+        public virtual TResult Execute(TInvocation invocation, Func<TInvocation, TResult> targetOperation)
         {
-            return outputSelector(invocation);
+            return targetOperation(invocation);
         }
     }
 }

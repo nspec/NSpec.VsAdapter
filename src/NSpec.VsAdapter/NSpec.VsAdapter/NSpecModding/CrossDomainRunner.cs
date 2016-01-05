@@ -20,7 +20,7 @@ namespace NSpec.VsAdapter.NSpecModding
             this.marshalingFactory = marshalingFactory;
         }
 
-        public virtual TResult Run(string assemblyPath, TInvocation invocation, Func<TInvocation, TResult> outputSelector)
+        public virtual TResult Run(string assemblyPath, TInvocation invocation, Func<TInvocation, TResult> targetOperation)
         {
             ITargetAppDomain targetDomain = null;
 
@@ -30,9 +30,9 @@ namespace NSpec.VsAdapter.NSpecModding
             {
                 targetDomain = appDomainFactory.Create(assemblyPath);
 
-                var marshalingWrapper = marshalingFactory.CreateWrapper(targetDomain);
+                var crossDomainProxy = marshalingFactory.CreateProxy(targetDomain);
 
-                result = marshalingWrapper.Execute(invocation, outputSelector);
+                result = crossDomainProxy.Execute(invocation, targetOperation);
             }
             catch (Exception)
             {

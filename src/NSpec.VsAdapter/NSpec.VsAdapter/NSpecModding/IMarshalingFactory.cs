@@ -8,6 +8,6 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public interface IMarshalingFactory<TInvocation, TResult>
     {
-        MarshalingWrapper<TInvocation, TResult> CreateWrapper(ITargetAppDomain targetDomain);
+        MarshalingProxy<TInvocation, TResult> CreateProxy(ITargetAppDomain targetDomain);
     }
 }

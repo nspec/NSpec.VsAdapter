@@ -11,6 +11,6 @@ namespace NSpec.VsAdapter.NSpecModding
         TResult Run(
             string assemblyPath, 
             TInvocation invocation,
-            Func<TInvocation, TResult> outputSelector);
+            Func<TInvocation, TResult> targetOperation);
     }
 }

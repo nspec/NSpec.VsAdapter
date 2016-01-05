@@ -21,10 +21,10 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         protected AutoSubstitute autoSubstitute;
         protected IAppDomainFactory appDomainFactory;
         protected IMarshalingFactory<ICollectorInvocation, IEnumerable<NSpecSpecification>> marshalingFactory;
-        protected MarshalingWrapper<ICollectorInvocation, IEnumerable<NSpecSpecification>> marshalingWrapper;
+        protected MarshalingProxy<ICollectorInvocation, IEnumerable<NSpecSpecification>> crossDomainProxy;
         protected ITargetAppDomain targetDomain;
         protected ICollectorInvocation collectorInvocation;
-        protected Func<ICollectorInvocation, IEnumerable<NSpecSpecification>> outputSelector;
+        protected Func<ICollectorInvocation, IEnumerable<NSpecSpecification>> targetOperation;
         protected IEnumerable<NSpecSpecification> actualSpecifications;
 
         protected const string somePath = @".\some\path\to\library.dll";
@@ -39,7 +39,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
             marshalingFactory = autoSubstitute
                 .Resolve<IMarshalingFactory<ICollectorInvocation, IEnumerable<NSpecSpecification>>>();
 
-            marshalingWrapper = Substitute.For<MarshalingWrapper<ICollectorInvocation, IEnumerable<NSpecSpecification>>>();
+            crossDomainProxy = Substitute.For<MarshalingProxy<ICollectorInvocation, IEnumerable<NSpecSpecification>>>();
 
             targetDomain = Substitute.For<ITargetAppDomain>();
 
@@ -47,7 +47,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
 
             collectorInvocation = Substitute.For<ICollectorInvocation>();
 
-            outputSelector = _ => null;
+            targetOperation = _ => null;
         }
 
         [TearDown]
@@ -73,11 +73,11 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
 
             appDomainFactory.Create(somePath).Returns(targetDomain);
 
-            marshalingFactory.CreateWrapper(targetDomain).Returns(marshalingWrapper);
+            marshalingFactory.CreateProxy(targetDomain).Returns(crossDomainProxy);
 
-            marshalingWrapper.Execute(collectorInvocation, outputSelector).Returns(someSpecifications);
+            crossDomainProxy.Execute(collectorInvocation, targetOperation).Returns(someSpecifications);
 
-            actualSpecifications = collector.Run(somePath, collectorInvocation, outputSelector);
+            actualSpecifications = collector.Run(somePath, collectorInvocation, targetOperation);
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
                 throw new InvalidOperationException();
             });
 
-            actualSpecifications = collector.Run(somePath, collectorInvocation, outputSelector);
+            actualSpecifications = collector.Run(somePath, collectorInvocation, targetOperation);
         }
     }
 
@@ -119,12 +119,12 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
 
             appDomainFactory.Create(null).ReturnsForAnyArgs(targetDomain);
 
-            marshalingFactory.CreateWrapper(null).ReturnsForAnyArgs(_ =>
+            marshalingFactory.CreateProxy(null).ReturnsForAnyArgs(_ =>
             {
                 throw new InvalidOperationException();
             });
 
-            actualSpecifications = collector.Run(somePath, collectorInvocation, outputSelector);
+            actualSpecifications = collector.Run(somePath, collectorInvocation, targetOperation);
         }
     }
 
@@ -136,14 +136,14 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
 
             appDomainFactory.Create(null).ReturnsForAnyArgs(targetDomain);
 
-            marshalingFactory.CreateWrapper(null).ReturnsForAnyArgs(marshalingWrapper);
+            marshalingFactory.CreateProxy(null).ReturnsForAnyArgs(crossDomainProxy);
 
-            marshalingWrapper.Execute(null, null).ReturnsForAnyArgs(_ =>
+            crossDomainProxy.Execute(null, null).ReturnsForAnyArgs(_ =>
             {
                 throw new InvalidOperationException();
             });
 
-            actualSpecifications = collector.Run(somePath, collectorInvocation, outputSelector);
+            actualSpecifications = collector.Run(somePath, collectorInvocation, targetOperation);
         }
     }
 }

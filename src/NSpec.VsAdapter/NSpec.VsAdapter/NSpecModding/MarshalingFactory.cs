@@ -8,18 +8,18 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public class MarshalingFactory<TInvocation, TResult> : IMarshalingFactory<TInvocation, TResult>
     {
-        public MarshalingWrapper<TInvocation, TResult> CreateWrapper(ITargetAppDomain targetDomain)
+        public MarshalingProxy<TInvocation, TResult> CreateProxy(ITargetAppDomain targetDomain)
         {
-            var marshaledType = typeof(MarshalingWrapper<TInvocation, TResult>);
+            var marshaledType = typeof(MarshalingProxy<TInvocation, TResult>);
 
             var marshaledTypeName = marshaledType.FullName;
 
             var marshaledAssemblyName = marshaledType.Assembly.GetName().Name;
 
-            var marshalingWrapper = (MarshalingWrapper<TInvocation, TResult>)
+            var crossDomainProxy = (MarshalingProxy<TInvocation, TResult>)
                 targetDomain.CreateInstanceAndUnwrap(marshaledAssemblyName, marshaledTypeName);
 
-            return marshalingWrapper;
+            return crossDomainProxy;
         }
     }
 }

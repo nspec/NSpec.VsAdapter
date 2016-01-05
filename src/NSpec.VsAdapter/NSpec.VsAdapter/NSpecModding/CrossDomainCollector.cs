@@ -15,9 +15,9 @@ namespace NSpec.VsAdapter.NSpecModding
             IMarshalingFactory<ICollectorInvocation, IEnumerable<NSpecSpecification>> marshalingFactory)
             : base(appDomainFactory, marshalingFactory) { }
 
-        public override IEnumerable<NSpecSpecification> Run(string assemblyPath, ICollectorInvocation invocation, Func<ICollectorInvocation, IEnumerable<NSpecSpecification>> outputSelector)
+        public override IEnumerable<NSpecSpecification> Run(string assemblyPath, ICollectorInvocation invocation, Func<ICollectorInvocation, IEnumerable<NSpecSpecification>> targetOperation)
         {
-            var specifications = base.Run(assemblyPath, invocation, outputSelector);
+            var specifications = base.Run(assemblyPath, invocation, targetOperation);
 
             return (specifications != null ? specifications : new NSpecSpecification[0]);
         }
