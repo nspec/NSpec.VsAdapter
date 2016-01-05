@@ -10,6 +10,9 @@ namespace NSpec.VsAdapter.NSpecModding
         CrossDomainRunner<ICollectorInvocation, IEnumerable<NSpecSpecification>>, 
         ICrossDomainCollector
     {
-        public CrossDomainCollector(IAppDomainFactory appDomainFactory) : base(appDomainFactory) {}
+        public CrossDomainCollector(
+            IAppDomainFactory appDomainFactory,
+            IMarshalingFactory<ICollectorInvocation, IEnumerable<NSpecSpecification>> marshalingFactory)
+            : base(appDomainFactory, marshalingFactory) { }
     }
 }

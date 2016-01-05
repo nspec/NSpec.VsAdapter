@@ -82,6 +82,8 @@
     <Compile Include="NSpecModding\ICrossDomainCollector.cs" />
     <Compile Include="NSpecModding\ICrossDomainTestDiscoverer.cs" />
     <Compile Include="NSpecModding\ICrossDomainRunner.cs" />
+    <Compile Include="NSpecModding\IMarshalingFactory.cs" />
+    <Compile Include="NSpecModding\MarshalingFactory.cs" />
     <Compile Include="NSpecModding\MarshalingWrapper.cs" />
     <Compile Include="NSpecModding\CrossDomainRunner.cs" />
     <Compile Include="NSpecSpecification.cs" />

@@ -20,9 +20,11 @@ namespace NSpec.VsAdapter.TestAdapter
         {
             var appDomainFactory = new AppDomainFactory();
 
-            var crossDomainCollector = new CrossDomainCollector(appDomainFactory);
+            var marshalingFactory = new MarshalingFactory<ICollectorInvocation, IEnumerable<NSpecSpecification>>();
 
-            this.crossDomainTestDiscoverer = new CrossDomainTestDiscoverer(crossDomainCollector);
+            var crossDomainCollector = new CrossDomainCollector(appDomainFactory, marshalingFactory);
+
+            crossDomainTestDiscoverer = new CrossDomainTestDiscoverer(crossDomainCollector);
         }
 
         // used to test this adapter

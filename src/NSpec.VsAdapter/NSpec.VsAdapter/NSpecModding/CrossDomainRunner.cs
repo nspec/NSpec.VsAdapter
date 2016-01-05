@@ -9,11 +9,15 @@ namespace NSpec.VsAdapter.NSpecModding
     [Serializable]
     public class CrossDomainRunner<TInvocation, TResult> : ICrossDomainRunner<TInvocation, TResult>
     {
-        // initial implementation taken from http://thevalerios.net/matt/2008/06/run-anonymous-methods-in-another-appdomain/
+        // initial implementation taken from 
+        // http://thevalerios.net/matt/2008/06/run-anonymous-methods-in-another-appdomain/
 
-        public CrossDomainRunner(IAppDomainFactory appDomainFactory)
+        public CrossDomainRunner(
+            IAppDomainFactory appDomainFactory, 
+            IMarshalingFactory<TInvocation, TResult> marshalingFactory)
         {
             this.appDomainFactory = appDomainFactory;
+            this.marshalingFactory = marshalingFactory;
         }
 
         public TResult Run(string assemblyPath, TInvocation invocation, Func<TInvocation, TResult> outputSelector)
@@ -26,14 +30,7 @@ namespace NSpec.VsAdapter.NSpecModding
             {
                 targetDomain = appDomainFactory.Create(assemblyPath);
 
-                var marshalingType = typeof(MarshalingWrapper<TInvocation, TResult>);
-
-                var marshalingTypeName = marshalingType.FullName;
-
-                var marshalingAssemblyName = marshalingType.Assembly.GetName().Name;
-
-                var marshalingWrapper = (MarshalingWrapper<TInvocation, TResult>)targetDomain
-                    .CreateInstanceAndUnwrap(marshalingAssemblyName, marshalingTypeName);
+                var marshalingWrapper = marshalingFactory.CreateWrapper(targetDomain);
 
                 result = marshalingWrapper.Execute(invocation, outputSelector);
             }
@@ -53,5 +50,6 @@ namespace NSpec.VsAdapter.NSpecModding
         }
 
         readonly IAppDomainFactory appDomainFactory;
+        readonly IMarshalingFactory<TInvocation, TResult> marshalingFactory;
     }
 }
