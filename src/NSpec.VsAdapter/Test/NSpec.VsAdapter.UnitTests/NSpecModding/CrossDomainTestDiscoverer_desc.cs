@@ -19,7 +19,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         protected CrossDomainTestDiscoverer discoverer;
 
         protected AutoSubstitute autoSubstitute;
-        protected IMessageLogger logger;
+        protected IOutputLogger logger;
         protected ICrossDomainRunner crossDomainRunner;
 
         protected const string somePath = @".\some\path\to\library.dll";
@@ -29,7 +29,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         {
             autoSubstitute = new AutoSubstitute();
 
-            logger = autoSubstitute.Resolve<IMessageLogger>();
+            logger = autoSubstitute.Resolve<IOutputLogger>();
 
             crossDomainRunner = autoSubstitute.Resolve<ICrossDomainRunner>();
 
@@ -96,7 +96,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         [Test]
         public void it_should_log_error()
         {
-            logger.Received(1).SendMessage(TestMessageLevel.Error, Arg.Any<string>());
+            logger.Received(1).Error(Arg.Any<string>());
         }
     }
 }

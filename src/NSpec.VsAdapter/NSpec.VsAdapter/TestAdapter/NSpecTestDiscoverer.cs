@@ -38,11 +38,13 @@ namespace NSpec.VsAdapter.TestAdapter
             // TODO implement custom runtime TestSettings, e.g. to enable debug logging
             // E.g. as https://github.com/mmanela/chutzpah/blob/master/VS2012.TestAdapter/ChutzpahTestDiscoverer.cs
 
-            logger.SendMessage(TestMessageLevel.Informational, "Discovery started");
+            IOutputLogger outputLogger = new OutputLogger(logger);
+
+            outputLogger.Info("Discovery started");
 
             var specificationGroups =
                 from assemblyPath in sources
-                select crossDomainTestDiscoverer.Discover(assemblyPath, logger);
+                select crossDomainTestDiscoverer.Discover(assemblyPath, outputLogger);
 
             var specifications = specificationGroups.SelectMany(group => group);
 
@@ -52,7 +54,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
             testCases.Do(discoverySink.SendTestCase);
 
-            logger.SendMessage(TestMessageLevel.Informational, "Discovery finished");
+            outputLogger.Info("Discovery finished");
         }
 
         readonly ICrossDomainTestDiscoverer crossDomainTestDiscoverer;

@@ -55,7 +55,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
     public class NSpecTestDiscoverer_when_discovering : NSpecTestDiscoverer_desc_base
     {
-        IMessageLogger logger;
+        IMessageLogger messageLogger;
         string[] sources;
         List<NSpecSpecification> flatSpecifications;
 
@@ -95,23 +95,25 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             flatSpecifications = groupedSpecifications.SelectMany(collection => collection.Value).ToList();
 
-            crossDomainTestDiscoverer.Discover(Arg.Any<string>(), Arg.Any<IMessageLogger>()).Returns(new NSpecSpecification[0]);
-            crossDomainTestDiscoverer.Discover(source1, Arg.Any<IMessageLogger>()).Returns(groupedSpecifications[source1]);
-            crossDomainTestDiscoverer.Discover(source2, Arg.Any<IMessageLogger>()).Returns(groupedSpecifications[source2]);
+            crossDomainTestDiscoverer.Discover(Arg.Any<string>(), Arg.Any<IOutputLogger>()).Returns(new NSpecSpecification[0]);
+            crossDomainTestDiscoverer.Discover(source1, Arg.Any<IOutputLogger>()).Returns(groupedSpecifications[source1]);
+            crossDomainTestDiscoverer.Discover(source2, Arg.Any<IOutputLogger>()).Returns(groupedSpecifications[source2]);
 
-            logger = autoSubstitute.Resolve<IMessageLogger>();
+            messageLogger = autoSubstitute.Resolve<IMessageLogger>();
 
             discoverer.DiscoverTests(
                 sources,
                 autoSubstitute.Resolve<IDiscoveryContext>(),
-                logger,
+                messageLogger,
                 discoverySink);
         }
 
         [Test]
         public void it_should_pass_message_logger()
         {
-            crossDomainTestDiscoverer.Received().Discover(Arg.Any<string>(), logger);
+            crossDomainTestDiscoverer.Received().Discover(
+                Arg.Any<string>(), 
+                Arg.Is<OutputLogger>(ol => ol.MessageLogger == messageLogger));
         }
 
         [Test]
