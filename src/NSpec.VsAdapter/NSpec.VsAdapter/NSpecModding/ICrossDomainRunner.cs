@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
-    public interface INspecDomainRunner<TInvocation, TResult>
+    public interface ICrossDomainRunner<TInvocation, TResult>
     {
         TResult Run(
             string assemblyPath, 

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.NSpecModding
 {
     [Serializable]
-    public class NspecDomainRunner<TInvocation, TResult> : INspecDomainRunner<TInvocation, TResult>
+    public class CrossDomainRunner<TInvocation, TResult> : ICrossDomainRunner<TInvocation, TResult>
     {
         // initial implementation taken from http://thevalerios.net/matt/2008/06/run-anonymous-methods-in-another-appdomain/
 
-        public NspecDomainRunner(IAppDomainFactory appDomainFactory)
+        public CrossDomainRunner(IAppDomainFactory appDomainFactory)
         {
             this.appDomainFactory = appDomainFactory;
         }
