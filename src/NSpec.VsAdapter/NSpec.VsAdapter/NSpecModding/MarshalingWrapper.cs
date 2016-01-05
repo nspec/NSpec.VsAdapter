@@ -13,7 +13,7 @@ namespace NSpec.VsAdapter.NSpecModding
             return null;
         }
 
-        public TResult Execute(TInvocation invocation, Func<TInvocation, TResult> outputSelector)
+        public virtual TResult Execute(TInvocation invocation, Func<TInvocation, TResult> outputSelector)
         {
             return outputSelector(invocation);
         }

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
-    public interface IMarshalingFactory<TInvocation, TResult>
+    public interface ITargetAppDomain
     {
-        MarshalingWrapper<TInvocation, TResult> CreateWrapper(ITargetAppDomain targetDomain);
+        Object CreateInstanceAndUnwrap(string marshalingAssemblyName, string marshalingTypeName);
+
+        void Unload();
     }
 }

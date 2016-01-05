@@ -8,16 +8,16 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public class MarshalingFactory<TInvocation, TResult> : IMarshalingFactory<TInvocation, TResult>
     {
-        public MarshalingWrapper<TInvocation, TResult> CreateWrapper(AppDomain targetDomain)
+        public MarshalingWrapper<TInvocation, TResult> CreateWrapper(ITargetAppDomain targetDomain)
         {
-            var marshalingType = typeof(MarshalingWrapper<TInvocation, TResult>);
+            var marshaledType = typeof(MarshalingWrapper<TInvocation, TResult>);
 
-            var marshalingTypeName = marshalingType.FullName;
+            var marshaledTypeName = marshaledType.FullName;
 
-            var marshalingAssemblyName = marshalingType.Assembly.GetName().Name;
+            var marshaledAssemblyName = marshaledType.Assembly.GetName().Name;
 
             var marshalingWrapper = (MarshalingWrapper<TInvocation, TResult>)
-                targetDomain.CreateInstanceAndUnwrap(marshalingAssemblyName, marshalingTypeName);
+                targetDomain.CreateInstanceAndUnwrap(marshaledAssemblyName, marshaledTypeName);
 
             return marshalingWrapper;
         }

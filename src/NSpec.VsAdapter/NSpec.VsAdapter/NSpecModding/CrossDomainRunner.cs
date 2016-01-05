@@ -20,9 +20,9 @@ namespace NSpec.VsAdapter.NSpecModding
             this.marshalingFactory = marshalingFactory;
         }
 
-        public TResult Run(string assemblyPath, TInvocation invocation, Func<TInvocation, TResult> outputSelector)
+        public virtual TResult Run(string assemblyPath, TInvocation invocation, Func<TInvocation, TResult> outputSelector)
         {
-            AppDomain targetDomain = null;
+            ITargetAppDomain targetDomain = null;
 
             TResult result;
 
@@ -43,7 +43,7 @@ namespace NSpec.VsAdapter.NSpecModding
 
             if (targetDomain != null)
             {
-                AppDomain.Unload(targetDomain);
+                targetDomain.Unload();
             }
 
             return result;

@@ -8,6 +8,6 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public interface IAppDomainFactory
     {
-        AppDomain Create(string assemblyPath);
+        ITargetAppDomain Create(string assemblyPath);
     }
 }

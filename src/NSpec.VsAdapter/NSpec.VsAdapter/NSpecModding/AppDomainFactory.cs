@@ -11,7 +11,7 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public class AppDomainFactory : IAppDomainFactory
     {
-        public AppDomain Create(string assemblyPath)
+        public ITargetAppDomain Create(string assemblyPath)
         {
             const string targetAppDomainName = "NSpec.VsAdapter.NSpecDomainRunner.Run";
             const Evidence useCurrentAppDomainEvidence = null;
@@ -26,11 +26,13 @@ namespace NSpec.VsAdapter.NSpecModding
 
             domainInfo.ApplicationBase = Path.GetDirectoryName(currentAssembly.Location);
 
-            var targetDomain = AppDomain.CreateDomain(targetAppDomainName, useCurrentAppDomainEvidence, domainInfo);
+            var appDomain = AppDomain.CreateDomain(targetAppDomainName, useCurrentAppDomainEvidence, domainInfo);
 
             var resolveHandler = new AssemblyResolveHandler(assemblyPath);
 
-            targetDomain.AssemblyResolve += resolveHandler.Failed;
+            appDomain.AssemblyResolve += resolveHandler.Failed;
+
+            var targetDomain = new TargetAppDomain(appDomain);
 
             return targetDomain;
         }
