@@ -25,8 +25,7 @@ namespace NSpec.VsAdapter.NSpecModding
 
                 var collectorInvocation = new CollectorInvocation(assemblyPath);
 
-                specifications = crossDomainCollector.Run(
-                    assemblyPath, collectorInvocation, invocation => invocation.Collect());
+                specifications = crossDomainCollector.Run(assemblyPath, collectorInvocation.Collect);
 
                 logger.Debug(String.Format("Found {0} specs", specifications.Count()));
 

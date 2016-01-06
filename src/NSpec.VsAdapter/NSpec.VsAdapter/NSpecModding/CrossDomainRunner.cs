@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.NSpecModding
 {
     [Serializable]
-    public class CrossDomainRunner<TInvocation, TResult> : ICrossDomainRunner<TInvocation, TResult>
+    public class CrossDomainRunner<TResult> : ICrossDomainRunner<TResult>
     {
         // initial implementation taken from 
         // http://thevalerios.net/matt/2008/06/run-anonymous-methods-in-another-appdomain/
 
         public CrossDomainRunner(
             IAppDomainFactory appDomainFactory, 
-            IMarshalingFactory<TInvocation, TResult> marshalingFactory)
+            IMarshalingFactory<TResult> marshalingFactory)
         {
             this.appDomainFactory = appDomainFactory;
             this.marshalingFactory = marshalingFactory;
         }
 
-        public virtual TResult Run(string assemblyPath, TInvocation invocation, Func<TInvocation, TResult> targetOperation)
+        public virtual TResult Run(string assemblyPath, Func<TResult> targetOperation)
         {
             ITargetAppDomain targetDomain = null;
 
@@ -32,7 +32,7 @@ namespace NSpec.VsAdapter.NSpecModding
 
                 var crossDomainProxy = marshalingFactory.CreateProxy(targetDomain);
 
-                result = crossDomainProxy.Execute(invocation, targetOperation);
+                result = crossDomainProxy.Execute(targetOperation);
             }
             catch (Exception)
             {
@@ -50,6 +50,6 @@ namespace NSpec.VsAdapter.NSpecModding
         }
 
         readonly IAppDomainFactory appDomainFactory;
-        readonly IMarshalingFactory<TInvocation, TResult> marshalingFactory;
+        readonly IMarshalingFactory<TResult> marshalingFactory;
     }
 }

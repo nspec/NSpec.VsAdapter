@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
-    public interface ICrossDomainRunner<TInvocation, TResult>
+    public interface ICrossDomainRunner<TResult>
     {
         TResult Run(
             string assemblyPath, 
-            TInvocation invocation,
-            Func<TInvocation, TResult> targetOperation);
+            Func<TResult> targetOperation);
     }
 }

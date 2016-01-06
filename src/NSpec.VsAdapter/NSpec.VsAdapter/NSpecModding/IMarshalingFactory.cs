@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
-    public interface IMarshalingFactory<TInvocation, TResult>
+    public interface IMarshalingFactory<TResult>
     {
-        MarshalingProxy<TInvocation, TResult> CreateProxy(ITargetAppDomain targetDomain);
+        MarshalingProxy<TResult> CreateProxy(ITargetAppDomain targetDomain);
     }
 }

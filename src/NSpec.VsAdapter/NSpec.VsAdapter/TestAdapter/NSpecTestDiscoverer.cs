@@ -20,7 +20,7 @@ namespace NSpec.VsAdapter.TestAdapter
         {
             var appDomainFactory = new AppDomainFactory();
 
-            var marshalingFactory = new MarshalingFactory<ICollectorInvocation, IEnumerable<NSpecSpecification>>();
+            var marshalingFactory = new MarshalingFactory<IEnumerable<NSpecSpecification>>();
 
             var crossDomainCollector = new CrossDomainCollector(appDomainFactory, marshalingFactory);
 

@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
-    public class MarshalingFactory<TInvocation, TResult> : IMarshalingFactory<TInvocation, TResult>
+    public class MarshalingFactory<TResult> : IMarshalingFactory<TResult>
     {
-        public MarshalingProxy<TInvocation, TResult> CreateProxy(ITargetAppDomain targetDomain)
+        public MarshalingProxy<TResult> CreateProxy(ITargetAppDomain targetDomain)
         {
-            var marshaledType = typeof(MarshalingProxy<TInvocation, TResult>);
+            var marshaledType = typeof(MarshalingProxy<TResult>);
 
             var marshaledTypeName = marshaledType.FullName;
 
             var marshaledAssemblyName = marshaledType.Assembly.GetName().Name;
 
-            var crossDomainProxy = (MarshalingProxy<TInvocation, TResult>)
+            var crossDomainProxy = (MarshalingProxy<TResult>)
                 targetDomain.CreateInstanceAndUnwrap(marshaledAssemblyName, marshaledTypeName);
 
             return crossDomainProxy;

@@ -7,17 +7,19 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     [Serializable]
     public class CrossDomainCollector : 
-        CrossDomainRunner<ICollectorInvocation, IEnumerable<NSpecSpecification>>, 
+        CrossDomainRunner<IEnumerable<NSpecSpecification>>, 
         ICrossDomainCollector
     {
         public CrossDomainCollector(
             IAppDomainFactory appDomainFactory,
-            IMarshalingFactory<ICollectorInvocation, IEnumerable<NSpecSpecification>> marshalingFactory)
+            IMarshalingFactory<IEnumerable<NSpecSpecification>> marshalingFactory)
             : base(appDomainFactory, marshalingFactory) { }
 
-        public override IEnumerable<NSpecSpecification> Run(string assemblyPath, ICollectorInvocation invocation, Func<ICollectorInvocation, IEnumerable<NSpecSpecification>> targetOperation)
+        public override IEnumerable<NSpecSpecification> Run(
+            string assemblyPath, 
+            Func<IEnumerable<NSpecSpecification>> targetOperation)
         {
-            var specifications = base.Run(assemblyPath, invocation, targetOperation);
+            var specifications = base.Run(assemblyPath, targetOperation);
 
             return (specifications != null ? specifications : new NSpecSpecification[0]);
         }
