@@ -25,12 +25,15 @@ namespace NSpec.VsAdapter.TestAdapter
             var crossDomainCollector = new CrossDomainCollector(appDomainFactory, marshalingFactory);
 
             crossDomainTestDiscoverer = new CrossDomainTestDiscoverer(crossDomainCollector);
+
+            testCaseMapper = new TestCaseMapper();
         }
 
         // used to test this adapter
-        public NSpecTestDiscoverer(ICrossDomainTestDiscoverer crossDomainTestDiscoverer)
+        public NSpecTestDiscoverer(ICrossDomainTestDiscoverer crossDomainTestDiscoverer, ITestCaseMapper testCaseMapper)
         {
             this.crossDomainTestDiscoverer = crossDomainTestDiscoverer;
+            this.testCaseMapper = testCaseMapper;
         }
 
         public void DiscoverTests(
@@ -52,9 +55,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
             var specifications = specificationGroups.SelectMany(group => group);
 
-            var testCases =
-                from spec in specifications
-                select new TestCase(spec.FullName, Constants.ExecutorUri, spec.SourceFilePath);
+            var testCases = specifications.Select(testCaseMapper.FromSpecification);
 
             testCases.Do(discoverySink.SendTestCase);
 
@@ -62,5 +63,6 @@ namespace NSpec.VsAdapter.TestAdapter
         }
 
         readonly ICrossDomainTestDiscoverer crossDomainTestDiscoverer;
+        readonly ITestCaseMapper testCaseMapper;
     }
 }

@@ -57,7 +57,6 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
     {
         IMessageLogger messageLogger;
         string[] sources;
-        List<NSpecSpecification> flatSpecifications;
 
         public override void before_each()
         {
@@ -93,11 +92,19 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 },
             };
 
-            flatSpecifications = groupedSpecifications.SelectMany(collection => collection.Value).ToList();
-
             crossDomainTestDiscoverer.Discover(Arg.Any<string>(), Arg.Any<IOutputLogger>()).Returns(new NSpecSpecification[0]);
             crossDomainTestDiscoverer.Discover(source1, Arg.Any<IOutputLogger>()).Returns(groupedSpecifications[source1]);
             crossDomainTestDiscoverer.Discover(source2, Arg.Any<IOutputLogger>()).Returns(groupedSpecifications[source2]);
+
+            var testCaseMapper = autoSubstitute.Resolve<ITestCaseMapper>();
+            testCaseMapper.FromSpecification(null).ReturnsForAnyArgs(callInfo =>
+                {
+                    var spec = callInfo.Arg<NSpecSpecification>();
+
+                    var testCase = new TestCase(spec.FullName, Constants.ExecutorUri, spec.SourceFilePath);
+
+                    return testCase;
+                });
 
             messageLogger = autoSubstitute.Resolve<IMessageLogger>();
 
@@ -117,19 +124,8 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         }
 
         [Test]
-        public void it_should_send_discovered_source_paths()
+        public void it_should_send_discovered_test_cases()
         {
-            var sourcePaths = testCases.Select(testCase => testCase.Source).Distinct().ToList();
-
-            sourcePaths.ShouldBeEquivalentTo(sources);
-        }
-
-        [Test]
-        public void it_should_send_discovered_fullnames()
-        {
-            var fullNames = flatSpecifications.Select(spec => spec.FullName);
-
-            testCases.Select(testCase => testCase.FullyQualifiedName).Distinct().ShouldBeEquivalentTo(fullNames);
         }
     }
 }

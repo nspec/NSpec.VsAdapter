@@ -74,7 +74,6 @@
     <Compile Include="IOutputLogger.cs" />
     <Compile Include="NSpecModding\AppDomainFactory.cs" />
     <Compile Include="NSpecModding\CollectorInvocation.cs" />
-    <Compile Include="NSpecModding\ContextCollector.cs" />
     <Compile Include="NSpecModding\CrossDomainCollector.cs" />
     <Compile Include="NSpecModding\CrossDomainTestDiscoverer.cs" />
     <Compile Include="DisposableExtensions.cs" />
@@ -84,6 +83,7 @@
     <Compile Include="NSpecModding\ICrossDomainCollector.cs" />
     <Compile Include="NSpecModding\ICrossDomainTestDiscoverer.cs" />
     <Compile Include="NSpecModding\ICrossDomainRunner.cs" />
+    <Compile Include="NSpecModding\IExampleConverter.cs" />
     <Compile Include="NSpecModding\IMarshalingFactory.cs" />
     <Compile Include="NSpecModding\ITargetAppDomain.cs" />
     <Compile Include="NSpecModding\MarshalingFactory.cs" />
@@ -99,6 +99,8 @@
     <Compile Include="ProjectObservation\Projects\IProjectNotifier.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectWrapper.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectWrapperFactory.cs" />
+    <Compile Include="TestAdapter\ITestCaseMapper.cs" />
+    <Compile Include="TestAdapter\TestCaseMapper.cs" />
     <Compile Include="TestExplorer\ITestContainerFactory.cs" />
     <Compile Include="ProjectObservation\Solution\ISolutionBuildManagerProvider.cs" />
     <Compile Include="ProjectObservation\Solution\ISolutionNotifier.cs" />
