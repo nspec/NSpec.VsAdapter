@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSystem", "Test\Sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSpecs", "Test\Samples\SampleSpecs\SampleSpecs.csproj", "{2C743124-C1C6-4B5D-A6C5-16819A726919}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSpec.VsAdapter.Vsix", "NSpec.VsAdapter.Vsix\NSpec.VsAdapter.Vsix.csproj", "{A2140B36-73D2-4956-867E-D0F42DB67809}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{2C743124-C1C6-4B5D-A6C5-16819A726919}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C743124-C1C6-4B5D-A6C5-16819A726919}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C743124-C1C6-4B5D-A6C5-16819A726919}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2140B36-73D2-4956-867E-D0F42DB67809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2140B36-73D2-4956-867E-D0F42DB67809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2140B36-73D2-4956-867E-D0F42DB67809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2140B36-73D2-4956-867E-D0F42DB67809}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
