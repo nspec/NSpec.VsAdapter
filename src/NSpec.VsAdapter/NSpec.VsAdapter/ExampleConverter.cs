@@ -17,12 +17,12 @@ namespace NSpec.VsAdapter
 
         public NSpecSpecification Convert(ExampleBase example)
         {
-            string exampleTypeName = example.GetType().FullName;
+            string exampleClassName = example.GetType().FullName;
 
             var methodInfo = ReflectExampleMethod(example);
             string exampleMethodName = methodInfo.Name;
 
-            var navigationData = debugInfoProvider.GetNavigationData(assemblyPath, exampleTypeName, exampleMethodName);
+            var navigationData = debugInfoProvider.GetNavigationData(exampleClassName, exampleMethodName);
 
             var specification = new NSpecSpecification()
             {
@@ -38,6 +38,8 @@ namespace NSpec.VsAdapter
 
         readonly string assemblyPath;
         readonly IDebugInfoProvider debugInfoProvider;
+
+        // taken from https://github.com/BrainCrumbz/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Discoverer.cs
 
         static MethodInfo ReflectExampleMethod(ExampleBase example)
         {

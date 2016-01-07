@@ -29,7 +29,7 @@ namespace NSpec.VsAdapter.NSpecModding
 
             var examples = builtContexts.Examples();
 
-            var debugInfoProvider = new DebugInfoProvider();
+            var debugInfoProvider = new DebugInfoProvider(assemblyPath);
 
             var exampleConverter = new ExampleConverter(assemblyPath, debugInfoProvider);
 

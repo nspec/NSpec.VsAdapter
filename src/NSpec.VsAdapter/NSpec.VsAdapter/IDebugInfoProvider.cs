@@ -9,6 +9,6 @@ namespace NSpec.VsAdapter
 {
     public interface IDebugInfoProvider
     {
-        DiaNavigationData GetNavigationData(string binaryPath, string declaringTypeName, string methodName);
+        DiaNavigationData GetNavigationData(string declaringTypeName, string methodName);
     }
 }

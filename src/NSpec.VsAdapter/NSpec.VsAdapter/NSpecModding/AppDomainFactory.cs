@@ -13,20 +13,20 @@ namespace NSpec.VsAdapter.NSpecModding
     {
         public ITargetAppDomain Create(string assemblyPath)
         {
-            const string targetAppDomainName = "NSpec.VsAdapter.NSpecDomainRunner.Run";
-            const Evidence useCurrentAppDomainEvidence = null;
+            const string targetDomainName = "NSpec.VsAdapter.NSpecDomainRunner.Run";
+            const Evidence useCurrentDomainEvidence = null;
 
             string configFilePath = assemblyPath + ".config";
 
-            var domainInfo = new AppDomainSetup();
+            var targetDomainSetup = new AppDomainSetup();
 
-            domainInfo.ConfigurationFile = Path.GetFullPath(configFilePath);
+            targetDomainSetup.ConfigurationFile = Path.GetFullPath(configFilePath);
 
             Assembly currentAssembly = Assembly.GetExecutingAssembly();
 
-            domainInfo.ApplicationBase = Path.GetDirectoryName(currentAssembly.Location);
+            targetDomainSetup.ApplicationBase = Path.GetDirectoryName(currentAssembly.Location);
 
-            var appDomain = AppDomain.CreateDomain(targetAppDomainName, useCurrentAppDomainEvidence, domainInfo);
+            var appDomain = AppDomain.CreateDomain(targetDomainName, useCurrentDomainEvidence, targetDomainSetup);
 
             var resolveHandler = new AssemblyResolveHandler(assemblyPath);
 
