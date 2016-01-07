@@ -30,14 +30,21 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             specification = new NSpecSpecification()
             {
-                SourceFilePath = @".\some\path\to\library.dll",
                 FullName = "some-test-full-name",
+                SourceFilePath = @".\some\path\to\source\code.cs",
+                SourceLineNumber = 123,
+                SourceAssembly = @".\some\path\to\library.dll",
             };
 
             expectedTestCase = new TestCase(
-                specification.FullName, 
-                Constants.ExecutorUri, 
-                specification.SourceFilePath);
+                specification.FullName,
+                Constants.ExecutorUri,
+                specification.SourceAssembly)
+                {
+                    DisplayName = specification.FullName,
+                    CodeFilePath = specification.SourceFilePath,
+                    LineNumber = specification.SourceLineNumber,
+                };
         }
 
         [TearDown]
@@ -51,10 +58,8 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             var testCase = converter.FromSpecification(specification);
 
-            testCase.Should().Match<TestCase>(tc =>
-                tc.FullyQualifiedName == expectedTestCase.FullyQualifiedName &&
-                tc.Source == expectedTestCase.Source &&
-                tc.ExecutorUri == expectedTestCase.ExecutorUri);
+            testCase.ShouldBeEquivalentTo(expectedTestCase, options => 
+                options.Excluding(tc => tc.Id));
         }
 
     }

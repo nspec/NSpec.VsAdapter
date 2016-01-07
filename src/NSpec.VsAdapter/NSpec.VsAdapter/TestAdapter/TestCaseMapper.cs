@@ -10,7 +10,12 @@ namespace NSpec.VsAdapter.TestAdapter
     {
         public TestCase FromSpecification(NSpecSpecification spec)
         {
-            return new TestCase(spec.FullName, Constants.ExecutorUri, spec.SourceFilePath);
+            return new TestCase(spec.FullName, Constants.ExecutorUri, spec.SourceAssembly)
+                {
+                    DisplayName = spec.FullName,
+                    CodeFilePath = spec.SourceFilePath,
+                    LineNumber = spec.SourceLineNumber,
+                };
         }
     }
 }
