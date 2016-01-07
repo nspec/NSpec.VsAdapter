@@ -29,7 +29,9 @@ namespace NSpec.VsAdapter.NSpecModding
 
             var examples = builtContexts.Examples();
 
-            var exampleConverter = new ExampleConverter();
+            var debugInfoProvider = new DebugInfoProvider();
+
+            var exampleConverter = new ExampleConverter(assemblyPath, debugInfoProvider);
 
             var specifications = examples.Select(exampleConverter.Convert);
 

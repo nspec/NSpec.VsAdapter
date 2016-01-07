@@ -64,6 +64,7 @@
     <Reference Include="Microsoft.VisualStudio.TestWindow.Interfaces">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestWindow.Interfaces.dll</HintPath>
     </Reference>
+    <Reference Include="NSpec, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="NSubstitute, Version=1.8.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NSubstitute.1.8.2.0\lib\net45\NSubstitute.dll</HintPath>
       <Private>True</Private>
@@ -104,6 +105,7 @@
     <Compile Include="NSpecModding\CrossDomainCollector_desc.cs" />
     <Compile Include="NSpecModding\CrossDomainTestDiscoverer_desc.cs" />
     <Compile Include="DisposableExtensions.cs" />
+    <Compile Include="ExampleConverter_desc.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainerDiscoverer_desc.cs">

@@ -15,7 +15,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
     [Category("TestCaseMapper")]
     public class TestCaseMapper_desc
     {
-        TestCaseMapper converter;
+        TestCaseMapper mapper;
         NSpecSpecification specification;
         TestCase expectedTestCase;
 
@@ -26,7 +26,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             autoSubstitute = new AutoSubstitute();
 
-            converter = autoSubstitute.Resolve<TestCaseMapper>();
+            mapper = autoSubstitute.Resolve<TestCaseMapper>();
 
             specification = new NSpecSpecification()
             {
@@ -63,7 +63,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_fill_all_details()
         {
-            var testCase = converter.FromSpecification(specification);
+            var testCase = mapper.FromSpecification(specification);
 
             testCase.ShouldBeEquivalentTo(expectedTestCase, options => 
                 options.Excluding(tc => tc.Id));

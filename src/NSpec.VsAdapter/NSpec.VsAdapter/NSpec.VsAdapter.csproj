@@ -71,19 +71,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebugInfoProvider.cs" />
+    <Compile Include="IDebugInfoProvider.cs" />
     <Compile Include="IOutputLogger.cs" />
     <Compile Include="NSpecModding\AppDomainFactory.cs" />
     <Compile Include="NSpecModding\CollectorInvocation.cs" />
     <Compile Include="NSpecModding\CrossDomainCollector.cs" />
     <Compile Include="NSpecModding\CrossDomainTestDiscoverer.cs" />
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="NSpecModding\ExampleConverter.cs" />
+    <Compile Include="ExampleConverter.cs" />
     <Compile Include="NSpecModding\IAppDomainFactory.cs" />
     <Compile Include="NSpecModding\ICollectorInvocation.cs" />
     <Compile Include="NSpecModding\ICrossDomainCollector.cs" />
     <Compile Include="NSpecModding\ICrossDomainTestDiscoverer.cs" />
     <Compile Include="NSpecModding\ICrossDomainRunner.cs" />
-    <Compile Include="NSpecModding\IExampleConverter.cs" />
     <Compile Include="NSpecModding\IMarshalingFactory.cs" />
     <Compile Include="NSpecModding\ITargetAppDomain.cs" />
     <Compile Include="NSpecModding\MarshalingFactory.cs" />
