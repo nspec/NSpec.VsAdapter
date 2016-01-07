@@ -15,5 +15,7 @@ namespace NSpec.VsAdapter
         public int SourceLineNumber { get; set; }
 
         public string SourceAssembly { get; set; }
+
+        public string[] Tags { get; set; }
     }
 }

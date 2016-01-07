@@ -34,6 +34,10 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 SourceFilePath = @".\some\path\to\source\code.cs",
                 SourceLineNumber = 123,
                 SourceAssembly = @".\some\path\to\library.dll",
+                Tags = new string[] 
+                { 
+                    "tag1", "tag2", "tag3", 
+                },
             };
 
             expectedTestCase = new TestCase(
@@ -45,6 +49,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     CodeFilePath = specification.SourceFilePath,
                     LineNumber = specification.SourceLineNumber,
                 };
+
+            var traits = specification.Tags.Select(tag => new Trait(tag, null));
+            expectedTestCase.Traits.AddRange(traits);
         }
 
         [TearDown]
