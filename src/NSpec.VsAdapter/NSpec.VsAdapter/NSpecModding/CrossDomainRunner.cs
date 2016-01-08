@@ -20,7 +20,7 @@ namespace NSpec.VsAdapter.NSpecModding
             this.marshalingFactory = marshalingFactory;
         }
 
-        public virtual TResult Run(string assemblyPath, Func<TResult> targetOperation)
+        public virtual TResult Run(string assemblyPath, IOutputLogger logger, Func<TResult> targetOperation)
         {
             ITargetAppDomain targetDomain = null;
 
@@ -34,16 +34,22 @@ namespace NSpec.VsAdapter.NSpecModding
 
                 result = crossDomainProxy.Execute(targetOperation);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // just swallow exception for time being, until a cross-domain logging facility is implemented
+                // report problem and rethrow, cleaning up resources before leaving
 
-                result = default(TResult);
+                var message = String.Format("Exception found while executing across domain in binary '{0}'", assemblyPath);
+
+                logger.Error(ex, message);
+
+                throw;
             }
-
-            if (targetDomain != null)
+            finally
             {
-                targetDomain.Unload();
+                if (targetDomain != null)
+                {
+                    targetDomain.Unload();
+                }
             }
 
             return result;

@@ -10,6 +10,7 @@ namespace NSpec.VsAdapter.NSpecModding
     {
         TResult Run(
             string assemblyPath, 
+            IOutputLogger logger,
             Func<TResult> targetOperation);
     }
 }

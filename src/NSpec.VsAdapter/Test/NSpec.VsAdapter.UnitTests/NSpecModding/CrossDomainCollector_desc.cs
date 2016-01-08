@@ -23,6 +23,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         protected IMarshalingFactory<IEnumerable<NSpecSpecification>> marshalingFactory;
         protected MarshalingProxy<IEnumerable<NSpecSpecification>> crossDomainProxy;
         protected ITargetAppDomain targetDomain;
+        protected IOutputLogger logger;
         protected Func<IEnumerable<NSpecSpecification>> targetOperation;
         protected IEnumerable<NSpecSpecification> actualSpecifications;
 
@@ -43,6 +44,8 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
             targetDomain = Substitute.For<ITargetAppDomain>();
 
             collector = autoSubstitute.Resolve<CrossDomainCollector>();
+
+            logger = autoSubstitute.Resolve<IOutputLogger>();
 
             targetOperation = () => null;
         }
@@ -74,7 +77,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
 
             crossDomainProxy.Execute(targetOperation).Returns(someSpecifications);
 
-            actualSpecifications = collector.Run(somePath, targetOperation);
+            actualSpecifications = collector.Run(somePath, logger, targetOperation);
         }
 
         [Test]
@@ -87,6 +90,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
     public abstract class CrossDomainCollector_when_run_fails : CrossDomainCollector_desc_base
     {
         [Test]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void it_should_return_empty_spec_list()
         {
             actualSpecifications.Should().BeEmpty();
@@ -104,7 +108,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
                 throw new InvalidOperationException();
             });
 
-            actualSpecifications = collector.Run(somePath, targetOperation);
+            actualSpecifications = collector.Run(somePath, logger, targetOperation);
         }
     }
 
@@ -121,7 +125,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
                 throw new InvalidOperationException();
             });
 
-            actualSpecifications = collector.Run(somePath, targetOperation);
+            actualSpecifications = collector.Run(somePath, logger, targetOperation);
         }
     }
 
@@ -140,7 +144,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
                 throw new InvalidOperationException();
             });
 
-            actualSpecifications = collector.Run(somePath, targetOperation);
+            actualSpecifications = collector.Run(somePath, logger, targetOperation);
         }
     }
 }

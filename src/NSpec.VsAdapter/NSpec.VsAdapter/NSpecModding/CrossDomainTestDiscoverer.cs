@@ -25,7 +25,7 @@ namespace NSpec.VsAdapter.NSpecModding
 
                 var collectorInvocation = new CollectorInvocation(assemblyPath);
 
-                specifications = crossDomainCollector.Run(assemblyPath, collectorInvocation.Collect);
+                specifications = crossDomainCollector.Run(assemblyPath, logger, collectorInvocation.Collect);
 
                 logger.Debug(String.Format("Found {0} specs", specifications.Count()));
 
@@ -33,9 +33,9 @@ namespace NSpec.VsAdapter.NSpecModding
             }
             catch (Exception ex)
             {
-                // Report problem and return for the next assembly, without crashing the discovery process
+                // report problem and return for the next assembly, without crashing the container discovery process
 
-                var message = String.Format("Exception found while discovering tests in source '{0}'", assemblyPath);
+                var message = String.Format("Exception found while discovering tests in container '{0}'", assemblyPath);
                 
                 logger.Error(ex, message);
 

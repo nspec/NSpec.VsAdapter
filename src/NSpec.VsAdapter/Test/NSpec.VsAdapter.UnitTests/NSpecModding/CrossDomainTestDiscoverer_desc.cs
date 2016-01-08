@@ -56,7 +56,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         {
             base.before_each();
 
-            crossDomainCollector.Run(null, null).ReturnsForAnyArgs(callInfo =>
+            crossDomainCollector.Run(null, null, null).ReturnsForAnyArgs(callInfo =>
                 {
                     string assemblyPath = callInfo.Arg<string>();
 
@@ -79,7 +79,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         {
             base.before_each();
 
-            crossDomainCollector.Run(null, null).ReturnsForAnyArgs(_ =>
+            crossDomainCollector.Run(null, null, null).ReturnsForAnyArgs(_ =>
                 {
                     throw new InvalidOperationException();
                 });
