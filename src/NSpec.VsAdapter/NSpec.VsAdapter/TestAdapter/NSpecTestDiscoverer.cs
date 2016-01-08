@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+﻿using Autofac;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using NSpec.VsAdapter.NSpecModding;
@@ -13,22 +14,14 @@ namespace NSpec.VsAdapter.TestAdapter
     [FileExtension(Constants.DllExtension)]
     [FileExtension(Constants.ExeExtension)]
     [DefaultExecutorUri(Constants.ExecutorUriString)]
-    public class NSpecTestDiscoverer : ITestDiscoverer
+    public class NSpecTestDiscoverer : ITestDiscoverer, IDisposable
     {
         // used by Visual Studio test infrastructure
-        public NSpecTestDiscoverer() 
+        public NSpecTestDiscoverer() : this(
+            DIContainer.Instance.Discoverer.Resolve<ICrossDomainTestDiscoverer>(),
+            DIContainer.Instance.Discoverer.Resolve<ITestCaseMapper>(),
+            DIContainer.Instance.Discoverer.Resolve<IAdapterInfo>())
         {
-            var appDomainFactory = new AppDomainFactory();
-
-            var marshalingFactory = new MarshalingFactory<IEnumerable<NSpecSpecification>>();
-
-            var crossDomainCollector = new CrossDomainCollector(appDomainFactory, marshalingFactory);
-
-            crossDomainTestDiscoverer = new CrossDomainTestDiscoverer(crossDomainCollector);
-
-            testCaseMapper = new TestCaseMapper();
-
-            adapterInfo = new AdapterInfo();
         }
 
         // used to test this adapter
@@ -66,6 +59,11 @@ namespace NSpec.VsAdapter.TestAdapter
             testCases.Do(discoverySink.SendTestCase);
 
             outputLogger.Info("Discovery finished");
+        }
+
+        public void Dispose()
+        {
+            DIContainer.Instance.Discoverer.Dispose();
         }
 
         readonly ICrossDomainTestDiscoverer crossDomainTestDiscoverer;

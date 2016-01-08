@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Shell.Interop;
+﻿using Autofac;
+using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
 using NSpec.VsAdapter.ProjectObservation;
 using System;
@@ -13,8 +14,20 @@ namespace NSpec.VsAdapter.TestExplorer
 {
     public class NSpecTestContainerDiscoverer : ITestContainerDiscoverer, IDisposable
     {
-        public NSpecTestContainerDiscoverer(ITestDllNotifier testDllNotifier, ITestContainerFactory containerFactory)
+        // used by Visual Studio test infrastructure
+        public NSpecTestContainerDiscoverer() : this(
+            DIContainer.Instance.ContainerDiscoverer.Resolve<ITestDllNotifier>(),
+            DIContainer.Instance.ContainerDiscoverer.Resolve<ITestContainerFactory>())
+        { 
+        }
+
+        // used to test this adapter
+        public NSpecTestContainerDiscoverer(
+            ITestDllNotifier testDllNotifier, 
+            ITestContainerFactory containerFactory)
         {
+            DIContainer.Instance.ContainerDiscoverer.DisposeWith(disposables);
+
             this.containerFactory = containerFactory;
 
             testDllNotifier.PathStream.Subscribe(_ =>

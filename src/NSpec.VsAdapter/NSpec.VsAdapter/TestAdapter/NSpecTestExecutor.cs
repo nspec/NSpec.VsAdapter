@@ -9,8 +9,13 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.TestAdapter
 {
     [DefaultExecutorUri(Constants.ExecutorUriString)]
-    public class NSpecTestExecutor : ITestExecutor
+    public class NSpecTestExecutor : ITestExecutor, IDisposable
     {
+        public void Dispose()
+        {
+            DIContainer.Instance.Executor.Dispose();
+        }
+
         public void Cancel()
         {
             throw new NotImplementedException();
