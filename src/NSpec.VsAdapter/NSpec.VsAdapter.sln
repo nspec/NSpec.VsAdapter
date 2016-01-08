@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSpecs", "Test\Samples
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSpec.VsAdapter.Vsix", "NSpec.VsAdapter.Vsix\NSpec.VsAdapter.Vsix.csproj", "{A2140B36-73D2-4956-867E-D0F42DB67809}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSpec.VsAdapter.IntegrationTests", "Test\NSpec.VsAdapter.IntegrationTests\NSpec.VsAdapter.IntegrationTests.csproj", "{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{A2140B36-73D2-4956-867E-D0F42DB67809}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2140B36-73D2-4956-867E-D0F42DB67809}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2140B36-73D2-4956-867E-D0F42DB67809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,5 +58,6 @@ Global
 		{83BC3666-422D-4AF6-9632-390ED4B5145A} = {3D324323-F548-411C-A2CF-55C1C9337174}
 		{716E1B2B-C0F4-450F-BCD0-95CF829126B9} = {83BC3666-422D-4AF6-9632-390ED4B5145A}
 		{2C743124-C1C6-4B5D-A6C5-16819A726919} = {83BC3666-422D-4AF6-9632-390ED4B5145A}
+		{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA} = {3D324323-F548-411C-A2CF-55C1C9337174}
 	EndGlobalSection
 EndGlobal

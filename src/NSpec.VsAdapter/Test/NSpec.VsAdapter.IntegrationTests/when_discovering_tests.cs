@@ -5,16 +5,15 @@ using NSpec.VsAdapter.TestAdapter;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.TestAdapter
+namespace NSpec.VsAdapter.IntegrationTests
 {
     [TestFixture]
-    [Category("NSpecTestDiscoverer_old")]
-    public class NSpecTestDiscoverer_desc_old
+    [Category("Integration.TestDiscovery")]
+    public class when_discovering_tests
     {
         NSpecTestDiscoverer discoverer;
 
@@ -24,23 +23,32 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [SetUp]
         public void setup()
         {
-            sink = new CollectingSink();
             targetDllPath = TestConstants.SampleSpecsDllPath;
+            
+            var sources = new string[] 
+            { 
+                targetDllPath,
+                TestConstants.SampleSystemDllPath,
+            };
+
+            IDiscoveryContext discoveryContext = null;
+
+            var consoleLogger = new ConsoleLogger();
+
+            sink = new CollectingSink();
 
             discoverer = new NSpecTestDiscoverer();
 
-            discoverer.DiscoverTests(new string[] { targetDllPath }, null, null, sink);
+            discoverer.DiscoverTests(sources, discoveryContext, consoleLogger, sink);
         }
 
         [Test]
-        [Ignore("Integration tests yet to be implemented")]
         public void it_should_find_all_examples()
         {
             sink.TestCases.Should().HaveCount(4);
         }
 
         [Test]
-        [Ignore("Integration tests yet to be implemented")]
         public void it_should_detect_tags()
         {
             var tags = sink.TestCases.SelectMany(tc => tc.Traits);
