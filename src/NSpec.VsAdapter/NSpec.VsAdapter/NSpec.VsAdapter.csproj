@@ -71,7 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdapterInfo.cs" />
     <Compile Include="DebugInfoProvider.cs" />
+    <Compile Include="IAdapterInfo.cs" />
     <Compile Include="IDebugInfoProvider.cs" />
     <Compile Include="IOutputLogger.cs" />
     <Compile Include="NSpecModding\AppDomainFactory.cs" />

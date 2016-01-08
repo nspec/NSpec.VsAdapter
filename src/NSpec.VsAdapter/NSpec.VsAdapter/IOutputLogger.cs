@@ -14,6 +14,10 @@ namespace NSpec.VsAdapter
 
         void Warn(string message);
 
+        void Warn(Exception ex, string message);
+
         void Error(string message);
+
+        void Error(Exception ex, string message);
     }
 }

@@ -35,10 +35,9 @@ namespace NSpec.VsAdapter.NSpecModding
             {
                 // Report problem and return for the next assembly, without crashing the discovery process
 
-                var message = String.Format(
-                    "Exception found while discovering tests in source '{0}': {1}", assemblyPath, ex);
+                var message = String.Format("Exception found while discovering tests in source '{0}'", assemblyPath);
                 
-                logger.Error(message);
+                logger.Error(ex, message);
 
                 specifications = new NSpecSpecification[0];
             }

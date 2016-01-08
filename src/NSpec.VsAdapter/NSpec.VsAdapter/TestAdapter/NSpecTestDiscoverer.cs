@@ -27,13 +27,19 @@ namespace NSpec.VsAdapter.TestAdapter
             crossDomainTestDiscoverer = new CrossDomainTestDiscoverer(crossDomainCollector);
 
             testCaseMapper = new TestCaseMapper();
+
+            adapterInfo = new AdapterInfo();
         }
 
         // used to test this adapter
-        public NSpecTestDiscoverer(ICrossDomainTestDiscoverer crossDomainTestDiscoverer, ITestCaseMapper testCaseMapper)
+        public NSpecTestDiscoverer(
+            ICrossDomainTestDiscoverer crossDomainTestDiscoverer, 
+            ITestCaseMapper testCaseMapper,
+            IAdapterInfo adapterInfo)
         {
             this.crossDomainTestDiscoverer = crossDomainTestDiscoverer;
             this.testCaseMapper = testCaseMapper;
+            this.adapterInfo = adapterInfo;
         }
 
         public void DiscoverTests(
@@ -45,7 +51,7 @@ namespace NSpec.VsAdapter.TestAdapter
             // TODO implement custom runtime TestSettings, e.g. to enable debug logging
             // E.g. as https://github.com/mmanela/chutzpah/blob/master/VS2012.TestAdapter/ChutzpahTestDiscoverer.cs
 
-            IOutputLogger outputLogger = new OutputLogger(logger);
+            IOutputLogger outputLogger = new OutputLogger(logger, adapterInfo);
 
             outputLogger.Info("Discovery started");
 
@@ -64,5 +70,6 @@ namespace NSpec.VsAdapter.TestAdapter
 
         readonly ICrossDomainTestDiscoverer crossDomainTestDiscoverer;
         readonly ITestCaseMapper testCaseMapper;
+        readonly IAdapterInfo adapterInfo;
     }
 }

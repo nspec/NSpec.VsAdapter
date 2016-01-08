@@ -94,9 +94,9 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         }
 
         [Test]
-        public void it_should_log_error()
+        public void it_should_log_error_and_exception()
         {
-            logger.Received(1).Error(Arg.Any<string>());
+            logger.Received(1).Error(Arg.Any<InvalidOperationException>(), Arg.Any<string>());
         }
     }
 }

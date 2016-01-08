@@ -9,38 +9,85 @@ namespace NSpec.VsAdapter
 {
     public class OutputLogger : IOutputLogger
     {
-        public OutputLogger(IMessageLogger messageLogger)
+        public OutputLogger(IMessageLogger messageLogger, IAdapterInfo adapterInfo)
         {
             this.MessageLogger = messageLogger;
 
-            DebugMode = false;
+            adapterPrefix = String.Format("{0} {1}", adapterInfo.Name, adapterInfo.Version);
         }
 
-        public IMessageLogger MessageLogger { get; set; }
-
-        public bool DebugMode { get; set; }
+        public IMessageLogger MessageLogger { get; set; } // public getter needed for unit tests
 
         public void Debug(string message)
         {
-            if (DebugMode)
+            if (debugMode)
             {
-                MessageLogger.SendMessage(TestMessageLevel.Informational, "[DEBUG] " + message);
+                SendOutputMessage(TestMessageLevel.Informational, LevelPrefix.Debug, message);
             }
         }
 
         public void Info(string message)
         {
-            MessageLogger.SendMessage(TestMessageLevel.Informational, message);
+            SendOutputMessage(TestMessageLevel.Informational, LevelPrefix.Info, message);
         }
 
         public void Warn(string message)
         {
-            MessageLogger.SendMessage(TestMessageLevel.Warning, message);
+            SendOutputMessage(TestMessageLevel.Warning, LevelPrefix.Warn, message);
         }
 
         public void Error(string message)
         {
-            MessageLogger.SendMessage(TestMessageLevel.Error, message);
+            SendOutputMessage(TestMessageLevel.Error, LevelPrefix.Error, message);
+        }
+
+        public void Warn(Exception ex, string message)
+        {
+            LogException(Warn, ex, message);
+        }
+
+        public void Error(Exception ex, string message)
+        {
+            LogException(Error, ex, message);
+        }
+
+        void LogException(LogMethod logMethod, Exception ex, string message)
+        {
+            if (debugMode)
+            {
+                logMethod(message);
+                logMethod(ex.ToString());
+            }
+            else
+            {
+                logMethod(String.Format("{0} [ {1} ]", message, ex.GetType()));
+            }
+        }
+
+        void SendOutputMessage(TestMessageLevel level, string levelPrefix, string message)
+        {
+            string outputMessage = String.Format("{0}: {1}{2}", adapterPrefix, levelPrefix, message);
+
+            MessageLogger.SendMessage(level, outputMessage);
+        }
+
+        readonly string adapterPrefix;
+
+        readonly bool debugMode = 
+#if DEBUG
+            true;
+#else
+            true;
+#endif
+
+        delegate void LogMethod(string message);
+
+        static class LevelPrefix
+        {
+            public const string Debug = "[DEBUG] ";
+            public const string Info  = "[INFO]  ";
+            public const string Warn  = "[WARN]  ";
+            public const string Error = "[ERROR] ";
         }
     }
 }
