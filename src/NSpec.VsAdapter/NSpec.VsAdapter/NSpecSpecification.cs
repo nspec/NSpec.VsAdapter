@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter
 {
+    [Serializable]
     public class NSpecSpecification
     {
         public string FullName { get; set; }

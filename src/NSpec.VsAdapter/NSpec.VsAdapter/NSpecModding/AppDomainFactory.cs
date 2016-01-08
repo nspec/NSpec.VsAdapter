@@ -37,6 +37,7 @@ namespace NSpec.VsAdapter.NSpecModding
             return targetDomain;
         }
 
+        [Serializable]
         class AssemblyResolveHandler
         {
             public AssemblyResolveHandler(string assemblyPath)

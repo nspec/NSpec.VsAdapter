@@ -13,7 +13,7 @@ namespace NSpec.VsAdapter.NSpecModding
         public CrossDomainCollector(
             IAppDomainFactory appDomainFactory,
             IMarshalingFactory<IEnumerable<NSpecSpecification>> marshalingFactory)
-            : base(appDomainFactory, marshalingFactory) { }
+            : base("discovery", appDomainFactory, marshalingFactory) { }
 
         public override IEnumerable<NSpecSpecification> Run(
             string assemblyPath, 

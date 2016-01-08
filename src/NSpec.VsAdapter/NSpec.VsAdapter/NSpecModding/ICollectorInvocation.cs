@@ -7,6 +7,6 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public interface ICollectorInvocation
     {
-        IEnumerable<NSpecSpecification> Collect();
+        NSpecSpecification[] Collect();
     }
 }

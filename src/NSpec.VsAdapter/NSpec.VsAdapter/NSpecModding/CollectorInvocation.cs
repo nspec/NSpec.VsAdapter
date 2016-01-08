@@ -6,6 +6,7 @@ using System.Text;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
+    [Serializable]
     public class CollectorInvocation : ICollectorInvocation
     {
         public CollectorInvocation(string assemblyPath)
@@ -13,7 +14,7 @@ namespace NSpec.VsAdapter.NSpecModding
             this.assemblyPath = assemblyPath;
         }
 
-        public IEnumerable<NSpecSpecification> Collect()
+        public NSpecSpecification[] Collect()
         {
             var reflector = new Reflector(assemblyPath);
 
@@ -35,7 +36,7 @@ namespace NSpec.VsAdapter.NSpecModding
 
             var specifications = examples.Select(exampleConverter.Convert);
 
-            return specifications;
+            return specifications.ToArray();
         }
 
         readonly string assemblyPath;
