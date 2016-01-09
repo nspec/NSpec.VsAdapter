@@ -77,7 +77,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
 
             crossDomainProxy.Execute(targetOperation).Returns(someSpecifications);
 
-            actualSpecifications = collector.Run(somePath, logger, targetOperation);
+            actualSpecifications = collector.Run(somePath, targetOperation);
         }
 
         [Test]
@@ -108,7 +108,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
                 throw new InvalidOperationException();
             });
 
-            actualSpecifications = collector.Run(somePath, logger, targetOperation);
+            actualSpecifications = collector.Run(somePath, targetOperation);
         }
     }
 
@@ -125,7 +125,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
                 throw new InvalidOperationException();
             });
 
-            actualSpecifications = collector.Run(somePath, logger, targetOperation);
+            actualSpecifications = collector.Run(somePath, targetOperation);
         }
     }
 
@@ -144,7 +144,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
                 throw new InvalidOperationException();
             });
 
-            actualSpecifications = collector.Run(somePath, logger, targetOperation);
+            actualSpecifications = collector.Run(somePath, targetOperation);
         }
     }
 }

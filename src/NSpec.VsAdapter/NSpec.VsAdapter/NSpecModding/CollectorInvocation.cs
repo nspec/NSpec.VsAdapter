@@ -9,13 +9,16 @@ namespace NSpec.VsAdapter.NSpecModding
     [Serializable]
     public class CollectorInvocation : ICollectorInvocation
     {
-        public CollectorInvocation(string assemblyPath)
+        public CollectorInvocation(string assemblyPath, IOutputLogger logger)
         {
             this.assemblyPath = assemblyPath;
+            this.logger = logger;
         }
 
         public NSpecSpecification[] Collect()
         {
+            logger.Debug(String.Format("Start collecting tests in '{0}'", assemblyPath));
+
             var reflector = new Reflector(assemblyPath);
 
             var finder = new SpecFinder(reflector);
@@ -36,9 +39,12 @@ namespace NSpec.VsAdapter.NSpecModding
 
             var specifications = examples.Select(exampleConverter.Convert);
 
+            logger.Debug(String.Format("Finish collecting tests in '{0}'", assemblyPath));
+
             return specifications.ToArray();
         }
 
         readonly string assemblyPath;
+        readonly IOutputLogger logger;
     }
 }

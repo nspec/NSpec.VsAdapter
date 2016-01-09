@@ -8,9 +8,6 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public interface ICrossDomainRunner<TResult>
     {
-        TResult Run(
-            string assemblyPath, 
-            IOutputLogger logger,
-            Func<TResult> targetOperation);
+        TResult Run(string assemblyPath, Func<TResult> targetOperation);
     }
 }

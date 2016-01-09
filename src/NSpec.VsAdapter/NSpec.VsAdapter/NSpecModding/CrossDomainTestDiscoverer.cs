@@ -23,9 +23,13 @@ namespace NSpec.VsAdapter.NSpecModding
             {
                 logger.Debug(String.Format("Processing container: '{0}'", assemblyPath));
 
-                var collectorInvocation = new CollectorInvocation(assemblyPath);
+                var logRecorder = new LogRecorder();
 
-                specifications = crossDomainCollector.Run(assemblyPath, logger, collectorInvocation.Collect);
+                var collectorInvocation = new CollectorInvocation(assemblyPath, logRecorder);
+
+                specifications = crossDomainCollector.Run(assemblyPath, collectorInvocation.Collect);
+
+                logger.Info(logRecorder.Replay());
 
                 logger.Debug(String.Format("Found {0} specs", specifications.Count()));
 

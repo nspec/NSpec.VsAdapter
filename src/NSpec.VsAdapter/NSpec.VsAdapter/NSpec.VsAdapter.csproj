@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdapterInfo.cs" />
+    <Compile Include="LogRecorder.cs" />
     <Compile Include="DebugInfoProvider.cs" />
     <Compile Include="DIContainer.cs" />
     <Compile Include="FileService.cs" />
