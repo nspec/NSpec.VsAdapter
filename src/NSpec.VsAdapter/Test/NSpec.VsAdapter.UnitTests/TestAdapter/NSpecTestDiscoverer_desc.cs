@@ -92,9 +92,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 },
             };
 
-            crossDomainTestDiscoverer.Discover(Arg.Any<string>(), Arg.Any<IOutputLogger>()).Returns(new NSpecSpecification[0]);
-            crossDomainTestDiscoverer.Discover(source1, Arg.Any<IOutputLogger>()).Returns(groupedSpecifications[source1]);
-            crossDomainTestDiscoverer.Discover(source2, Arg.Any<IOutputLogger>()).Returns(groupedSpecifications[source2]);
+            crossDomainTestDiscoverer.Discover(Arg.Any<string>(), Arg.Any<IReplayLogger>()).Returns(new NSpecSpecification[0]);
+            crossDomainTestDiscoverer.Discover(source1, Arg.Any<IReplayLogger>()).Returns(groupedSpecifications[source1]);
+            crossDomainTestDiscoverer.Discover(source2, Arg.Any<IReplayLogger>()).Returns(groupedSpecifications[source2]);
 
             var testCaseMapper = autoSubstitute.Resolve<ITestCaseMapper>();
             testCaseMapper.FromSpecification(null).ReturnsForAnyArgs(callInfo =>

@@ -19,7 +19,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         protected CrossDomainTestDiscoverer discoverer;
 
         protected AutoSubstitute autoSubstitute;
-        protected IOutputLogger logger;
+        protected IReplayLogger logger;
         protected ICrossDomainCollector crossDomainCollector;
 
         protected const string somePath = @".\some\path\to\library.dll";
@@ -29,7 +29,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         {
             autoSubstitute = new AutoSubstitute();
 
-            logger = autoSubstitute.Resolve<IOutputLogger>();
+            logger = autoSubstitute.Resolve<IReplayLogger>();
 
             crossDomainCollector = autoSubstitute.Resolve<ICrossDomainCollector>();
 

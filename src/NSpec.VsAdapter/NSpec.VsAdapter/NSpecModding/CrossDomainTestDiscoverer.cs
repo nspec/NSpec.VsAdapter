@@ -15,7 +15,7 @@ namespace NSpec.VsAdapter.NSpecModding
             this.crossDomainCollector = crossDomainCollector;
         }
 
-        public IEnumerable<NSpecSpecification> Discover(string assemblyPath, IOutputLogger logger)
+        public IEnumerable<NSpecSpecification> Discover(string assemblyPath, IReplayLogger logger)
         {
             IEnumerable<NSpecSpecification> specifications;
 
@@ -29,7 +29,9 @@ namespace NSpec.VsAdapter.NSpecModding
 
                 specifications = crossDomainCollector.Run(assemblyPath, collectorInvocation.Collect);
 
-                logger.Info(logRecorder.Replay());
+                var logReplayer = new LogReplayer(logger);
+
+                logReplayer.Replay(logRecorder);
 
                 logger.Debug(String.Format("Found {0} specs", specifications.Count()));
 

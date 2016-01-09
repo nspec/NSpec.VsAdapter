@@ -50,6 +50,10 @@
       <HintPath>..\packages\nspec.1.0.4\lib\NSpec.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -76,6 +80,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdapterInfo.cs" />
+    <Compile Include="IReplayLogger.cs" />
+    <Compile Include="ISerializableLogger.cs" />
     <Compile Include="LogRecorder.cs" />
     <Compile Include="DebugInfoProvider.cs" />
     <Compile Include="DIContainer.cs" />
@@ -83,6 +89,7 @@
     <Compile Include="IAdapterInfo.cs" />
     <Compile Include="IDebugInfoProvider.cs" />
     <Compile Include="IOutputLogger.cs" />
+    <Compile Include="LogReplayer.cs" />
     <Compile Include="NSpecModding\AppDomainFactory.cs" />
     <Compile Include="NSpecModding\CollectorInvocation.cs" />
     <Compile Include="NSpecModding\CrossDomainCollector.cs" />
@@ -109,6 +116,7 @@
     <Compile Include="ProjectObservation\Projects\IProjectNotifier.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectWrapper.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectWrapperFactory.cs" />
+    <Compile Include="RecordedLogEvents.cs" />
     <Compile Include="TestAdapter\ITestCaseMapper.cs" />
     <Compile Include="TestAdapter\TestCaseMapper.cs" />
     <Compile Include="TestExplorer\ITestContainerFactory.cs" />

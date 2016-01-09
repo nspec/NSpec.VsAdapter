@@ -9,7 +9,7 @@ namespace NSpec.VsAdapter.NSpecModding
     [Serializable]
     public class CollectorInvocation : ICollectorInvocation
     {
-        public CollectorInvocation(string assemblyPath, IOutputLogger logger)
+        public CollectorInvocation(string assemblyPath, ISerializableLogger logger)
         {
             this.assemblyPath = assemblyPath;
             this.logger = logger;
@@ -41,10 +41,14 @@ namespace NSpec.VsAdapter.NSpecModding
 
             logger.Debug(String.Format("Finish collecting tests in '{0}'", assemblyPath));
 
-            return specifications.ToArray();
+            var specArray = specifications.ToArray();
+
+            logger.Flush();
+
+            return specArray;
         }
 
         readonly string assemblyPath;
-        readonly IOutputLogger logger;
+        readonly ISerializableLogger logger;
     }
 }

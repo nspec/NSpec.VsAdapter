@@ -8,6 +8,6 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public interface ICrossDomainTestDiscoverer
     {
-        IEnumerable<NSpecSpecification> Discover(string assemblyPath, IOutputLogger logger);
+        IEnumerable<NSpecSpecification> Discover(string assemblyPath, IReplayLogger logger);
     }
 }

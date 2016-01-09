@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter
 {
-    public class OutputLogger : IOutputLogger
+    public class OutputLogger : IReplayLogger
     {
         public OutputLogger(IMessageLogger messageLogger, IAdapterInfo adapterInfo)
         {
@@ -43,24 +43,34 @@ namespace NSpec.VsAdapter
 
         public void Warn(Exception ex, string message)
         {
-            LogException(Warn, ex, message);
+            LogExceptionInfo(Warn, ex, message);
         }
 
         public void Error(Exception ex, string message)
         {
-            LogException(Error, ex, message);
+            LogExceptionInfo(Error, ex, message);
         }
 
-        void LogException(LogMethod logMethod, Exception ex, string message)
+        public void Warn(ExceptionLogInfo exceptionInfo, string message)
+        {
+            LogExceptionInfo(Warn, exceptionInfo, message);
+        }
+
+        public void Error(ExceptionLogInfo exceptionInfo, string message)
+        {
+            LogExceptionInfo(Error, exceptionInfo, message);
+        }
+
+        void LogExceptionInfo(LogMethod logMethod, ExceptionLogInfo exceptionInfo, string message)
         {
             if (debugMode)
             {
                 logMethod(message);
-                logMethod(ex.ToString());
+                logMethod(exceptionInfo.Content);
             }
             else
             {
-                logMethod(String.Format("{0} [ {1} ]", message, ex.GetType()));
+                logMethod(String.Format("{0} [ {1} ]", message, exceptionInfo.Type));
             }
         }
 
