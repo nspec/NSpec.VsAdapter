@@ -91,9 +91,9 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
     {
         [Test]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void it_should_return_empty_spec_list()
+        public void it_should_let_exception_flow()
         {
-            actualSpecifications.Should().BeEmpty();
+            actualSpecifications = collector.Run(somePath, targetOperation);
         }
     }
 
@@ -107,8 +107,6 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
             {
                 throw new InvalidOperationException();
             });
-
-            actualSpecifications = collector.Run(somePath, targetOperation);
         }
     }
 
@@ -124,8 +122,6 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
             {
                 throw new InvalidOperationException();
             });
-
-            actualSpecifications = collector.Run(somePath, targetOperation);
         }
     }
 
@@ -143,8 +139,6 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
             {
                 throw new InvalidOperationException();
             });
-
-            actualSpecifications = collector.Run(somePath, targetOperation);
         }
     }
 }
