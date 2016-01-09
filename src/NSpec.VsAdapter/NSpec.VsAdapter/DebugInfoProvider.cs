@@ -9,9 +9,10 @@ namespace NSpec.VsAdapter
 {
     public class DebugInfoProvider : IDebugInfoProvider
     {
-        public DebugInfoProvider(string binaryPath)
+        public DebugInfoProvider(string binaryPath, ISerializableLogger logger)
         {
             this.binaryPath = binaryPath;
+            this.logger = logger;
 
             // TODO catch & log exceptions, then leave state incomplete
 
@@ -30,6 +31,11 @@ namespace NSpec.VsAdapter
             }
             else
             {
+                string message = String.Format("Cannot get navigation data for method {0}.{1} in binary '{2}'", 
+                    declaringClassName, methodName, binaryPath);
+                
+                logger.Warn(message);
+
                 // TODO check if it's an async method, before leaving
 
                 var noNavigationData = new DiaNavigationData(String.Empty, 0, 0);
@@ -39,6 +45,7 @@ namespace NSpec.VsAdapter
         }
 
         readonly string binaryPath;
+        readonly ISerializableLogger logger;
         readonly DiaSession session;
     }
 }

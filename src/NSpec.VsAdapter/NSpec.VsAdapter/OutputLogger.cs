@@ -18,6 +18,8 @@ namespace NSpec.VsAdapter
 
         public IMessageLogger MessageLogger { get; set; } // public getter needed for unit tests
 
+        // core methods taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/TestLogger.cs
+
         public void Debug(string message)
         {
             if (debugMode)

@@ -33,7 +33,7 @@ namespace NSpec.VsAdapter.Discovery
 
             var examples = builtContexts.Examples();
 
-            var debugInfoProvider = new DebugInfoProvider(assemblyPath);
+            var debugInfoProvider = new DebugInfoProvider(assemblyPath, logger);
 
             var exampleConverter = new ExampleConverter(assemblyPath, debugInfoProvider);
 
