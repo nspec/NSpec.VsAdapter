@@ -33,7 +33,7 @@ namespace NSpec.VsAdapter
         public RecordedLogException(LogMessageLevel logLevel, string message, Exception ex)
             : base(logLevel, message)
         {
-            ExceptionInfo = ex;
+            ExceptionInfo = new ExceptionLogInfo(ex);
         }
 
         [ProtoMember(3)]
@@ -56,11 +56,6 @@ namespace NSpec.VsAdapter
 
         [ProtoMember(2)]
         public string Content { get; set; }
-
-        static public implicit operator ExceptionLogInfo(Exception ex)
-        {
-            return new ExceptionLogInfo(ex);
-        }
     }
 
     public enum LogMessageLevel

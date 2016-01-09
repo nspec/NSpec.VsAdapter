@@ -19,7 +19,8 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         protected CrossDomainTestDiscoverer discoverer;
 
         protected AutoSubstitute autoSubstitute;
-        protected IReplayLogger logger;
+        protected IOutputLogger logger;
+        protected IReplayLogger crossDomainLogger;
         protected ICrossDomainCollector crossDomainCollector;
 
         protected const string somePath = @".\some\path\to\library.dll";
@@ -29,7 +30,8 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         {
             autoSubstitute = new AutoSubstitute();
 
-            logger = autoSubstitute.Resolve<IReplayLogger>();
+            logger = autoSubstitute.Resolve<IOutputLogger>();
+            crossDomainLogger = autoSubstitute.Resolve<IReplayLogger>();
 
             crossDomainCollector = autoSubstitute.Resolve<ICrossDomainCollector>();
 
@@ -67,7 +69,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
         [Test]
         public void it_should_return_collected_specifications()
         {
-            discoverer.Discover(somePath, logger).Should().BeEquivalentTo(someSpecifications);
+            discoverer.Discover(somePath, logger, crossDomainLogger).Should().BeEquivalentTo(someSpecifications);
         }
     }
 
@@ -84,7 +86,7 @@ namespace NSpec.VsAdapter.UnitTests.NSpecModding
                     throw new InvalidOperationException();
                 });
 
-            specifications = discoverer.Discover(somePath, logger);
+            specifications = discoverer.Discover(somePath, logger, crossDomainLogger);
         }
 
         [Test]

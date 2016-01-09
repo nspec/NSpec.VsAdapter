@@ -92,9 +92,19 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 },
             };
 
-            crossDomainTestDiscoverer.Discover(Arg.Any<string>(), Arg.Any<IReplayLogger>()).Returns(new NSpecSpecification[0]);
-            crossDomainTestDiscoverer.Discover(source1, Arg.Any<IReplayLogger>()).Returns(groupedSpecifications[source1]);
-            crossDomainTestDiscoverer.Discover(source2, Arg.Any<IReplayLogger>()).Returns(groupedSpecifications[source2]);
+            crossDomainTestDiscoverer.Discover(null, null, null).ReturnsForAnyArgs(callInfo =>
+                {
+                    string assemblyPath = callInfo.Arg<string>();
+
+                    if (assemblyPath == source1 || assemblyPath == source2)
+                    {
+                        return groupedSpecifications[assemblyPath];
+                    }
+                    else
+                    {
+                        return new NSpecSpecification[0];
+                    }
+                });
 
             var testCaseMapper = autoSubstitute.Resolve<ITestCaseMapper>();
             testCaseMapper.FromSpecification(null).ReturnsForAnyArgs(callInfo =>
@@ -120,12 +130,15 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             crossDomainTestDiscoverer.Received().Discover(
                 Arg.Any<string>(), 
+                Arg.Is<OutputLogger>(ol => ol.MessageLogger == messageLogger),
                 Arg.Is<OutputLogger>(ol => ol.MessageLogger == messageLogger));
         }
 
         [Test]
         public void it_should_send_discovered_test_cases()
         {
+            throw new NotImplementedException();
+            // TODO
         }
     }
 }

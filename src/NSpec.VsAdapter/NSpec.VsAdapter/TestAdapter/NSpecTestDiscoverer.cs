@@ -50,7 +50,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
             var specificationGroups =
                 from assemblyPath in sources
-                select crossDomainTestDiscoverer.Discover(assemblyPath, outputLogger);
+                select crossDomainTestDiscoverer.Discover(assemblyPath, outputLogger, outputLogger);
 
             var specifications = specificationGroups.SelectMany(group => group);
 
