@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.NSpecModding
 {
-    public interface ITargetAppDomain
+    public interface ITargetAppDomain : IDisposable
     {
         Object CreateInstanceAndUnwrap(string marshalingAssemblyName, string marshalingTypeName);
-
-        void Unload();
     }
 }

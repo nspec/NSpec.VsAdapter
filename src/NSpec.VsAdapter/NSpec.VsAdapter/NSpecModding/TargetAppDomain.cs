@@ -7,9 +7,10 @@ namespace NSpec.VsAdapter.NSpecModding
 {
     public class TargetAppDomain : ITargetAppDomain
     {
-        public TargetAppDomain(AppDomain appDomain)
+        public TargetAppDomain(AppDomain appDomain, ResolveEventHandler resolveHandler)
         {
             this.appDomain = appDomain;
+            this.resolveHandler = resolveHandler;
         }
 
         public object CreateInstanceAndUnwrap(string marshalingAssemblyName, string marshalingTypeName)
@@ -17,11 +18,14 @@ namespace NSpec.VsAdapter.NSpecModding
             return appDomain.CreateInstanceAndUnwrap(marshalingAssemblyName, marshalingTypeName);
         }
 
-        public void Unload()
+        public void Dispose()
         {
+            appDomain.AssemblyResolve -= resolveHandler;
+
             AppDomain.Unload(appDomain);
         }
 
         readonly AppDomain appDomain;
+        readonly ResolveEventHandler resolveHandler;
     }
 }

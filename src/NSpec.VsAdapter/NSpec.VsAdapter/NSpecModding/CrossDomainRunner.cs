@@ -13,52 +13,25 @@ namespace NSpec.VsAdapter.NSpecModding
         // http://thevalerios.net/matt/2008/06/run-anonymous-methods-in-another-appdomain/
 
         public CrossDomainRunner(
-            string operationName,
             IAppDomainFactory appDomainFactory, 
             IMarshalingFactory<TResult> marshalingFactory)
         {
-            this.operationName = operationName;
             this.appDomainFactory = appDomainFactory;
             this.marshalingFactory = marshalingFactory;
         }
 
         public virtual TResult Run(string assemblyPath, IOutputLogger logger, Func<TResult> targetOperation)
         {
-            ITargetAppDomain targetDomain = null;
-
-            TResult result;
-
-            try
+            using (var targetDomain = appDomainFactory.Create(assemblyPath))
             {
-                targetDomain = appDomainFactory.Create(assemblyPath);
-
                 var crossDomainProxy = marshalingFactory.CreateProxy(targetDomain);
 
-                result = crossDomainProxy.Execute(targetOperation);
+                TResult result = crossDomainProxy.Execute(targetOperation);
+
+                return result;
             }
-            catch (Exception ex)
-            {
-                // report problem and rethrow, cleaning up resources before leaving
-
-                var message = String.Format("Exception found while running {0} across domain in binary '{1}'", 
-                    operationName, assemblyPath);
-
-                logger.Error(ex, message);
-
-                throw;
-            }
-            finally
-            {
-                if (targetDomain != null)
-                {
-                    targetDomain.Unload();
-                }
-            }
-
-            return result;
         }
 
-        readonly string operationName;
         readonly IAppDomainFactory appDomainFactory;
         readonly IMarshalingFactory<TResult> marshalingFactory;
     }

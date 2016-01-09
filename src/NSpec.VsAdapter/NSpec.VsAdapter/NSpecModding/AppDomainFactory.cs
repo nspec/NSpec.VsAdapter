@@ -32,7 +32,7 @@ namespace NSpec.VsAdapter.NSpecModding
 
             appDomain.AssemblyResolve += resolveHandler.Failed;
 
-            var targetDomain = new TargetAppDomain(appDomain);
+            var targetDomain = new TargetAppDomain(appDomain, resolveHandler.Failed);
 
             return targetDomain;
         }
@@ -49,7 +49,7 @@ namespace NSpec.VsAdapter.NSpecModding
             {
                 var name = eventArgs.Name;
 
-                var argNameForResolve = eventArgs.Name.ToLower();
+                var argNameForResolve = name.ToLower();
 
                 if (argNameForResolve.Contains(","))
                 {

@@ -35,7 +35,7 @@ namespace NSpec.VsAdapter.NSpecModding
             {
                 // report problem and return for the next assembly, without crashing the container discovery process
 
-                var message = String.Format("Exception found while discovering tests in container '{0}'", assemblyPath);
+                var message = String.Format("Exception thrown while discovering tests in container '{0}'", assemblyPath);
                 
                 logger.Error(ex, message);
 
