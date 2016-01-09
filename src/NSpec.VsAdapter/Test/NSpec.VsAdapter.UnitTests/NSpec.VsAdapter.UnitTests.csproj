@@ -102,8 +102,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="NSpecModding\CrossDomainCollector_desc.cs" />
-    <Compile Include="NSpecModding\CrossDomainTestDiscoverer_desc.cs" />
+    <Compile Include="Discovery\CrossDomainCollector_desc.cs" />
+    <Compile Include="Discovery\CrossDomainTestDiscoverer_desc.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="ExampleConverter_desc.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />

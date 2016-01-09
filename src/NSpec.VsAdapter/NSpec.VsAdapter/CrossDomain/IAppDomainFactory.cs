@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.NSpecModding
+namespace NSpec.VsAdapter.CrossDomain
 {
     public interface IAppDomainFactory
     {

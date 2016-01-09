@@ -1,6 +1,7 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
-using NSpec.VsAdapter.NSpecModding;
+using NSpec.VsAdapter.CrossDomain;
+using NSpec.VsAdapter.Discovery;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.NSpecModding
+namespace NSpec.VsAdapter.UnitTests.Discovery
 {
     [TestFixture]
     [Category("CrossDomainCollector")]

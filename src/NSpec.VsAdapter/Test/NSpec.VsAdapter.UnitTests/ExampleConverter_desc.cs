@@ -2,7 +2,6 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.Domain;
-using NSpec.VsAdapter.NSpecModding;
 using NSubstitute;
 using NUnit.Framework;
 using System;

@@ -1,5 +1,6 @@
 ﻿using Autofac;
-using NSpec.VsAdapter.NSpecModding;
+using NSpec.VsAdapter.CrossDomain;
+using NSpec.VsAdapter.Discovery;
 using NSpec.VsAdapter.ProjectObservation;
 using NSpec.VsAdapter.ProjectObservation.Projects;
 using NSpec.VsAdapter.ProjectObservation.Solution;

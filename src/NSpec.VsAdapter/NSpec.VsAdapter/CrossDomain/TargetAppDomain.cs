@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NSpec.VsAdapter.NSpecModding
+namespace NSpec.VsAdapter.CrossDomain
 {
     public class TargetAppDomain : ITargetAppDomain
     {

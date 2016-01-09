@@ -7,7 +7,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.NSpecModding
+namespace NSpec.VsAdapter.CrossDomain
 {
     public class AppDomainFactory : IAppDomainFactory
     {

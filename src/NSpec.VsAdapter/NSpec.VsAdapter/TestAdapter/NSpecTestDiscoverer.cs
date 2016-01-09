@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using NSpec.VsAdapter.NSpecModding;
+using NSpec.VsAdapter.Discovery;
 using System;
 using System.Collections.Generic;
 using System.Linq;
