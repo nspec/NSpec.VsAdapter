@@ -56,7 +56,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
     public class NSpecTestDiscoverer_when_discovering : NSpecTestDiscoverer_desc_base
     {
         IMessageLogger messageLogger;
-        string[] sources;
+        Dictionary<string, NSpecSpecification[]> groupedSpecifications;
 
         public override void before_each()
         {
@@ -65,13 +65,13 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             string source1 = @".\some\dummy\some-library.dll";
             string source2 = @".\another\dummy\another-library.dll";
 
-            sources = new string[]
+            var sources = new string[]
             {
                 source1,
                 source2,
             };
 
-            var groupedSpecifications = new Dictionary<string, NSpecSpecification[]>()
+            groupedSpecifications = new Dictionary<string, NSpecSpecification[]>()
             {
                 { 
                     source1, 
@@ -137,8 +137,11 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_send_discovered_test_cases()
         {
-            throw new NotImplementedException();
-            // TODO
+            var allSpecs = groupedSpecifications.SelectMany(group => group.Value);
+
+            var specFullNames = allSpecs.Select(spec => spec.FullName);
+
+            testCases.Select(tc => tc.FullyQualifiedName).Should().BeEquivalentTo(specFullNames);
         }
     }
 }
