@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdapterInfo.cs" />
+    <Compile Include="IBaseLogger.cs" />
     <Compile Include="IReplayLogger.cs" />
     <Compile Include="ISerializableLogger.cs" />
     <Compile Include="LogRecorder.cs" />
