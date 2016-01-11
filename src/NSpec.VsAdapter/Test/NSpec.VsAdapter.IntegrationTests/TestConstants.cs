@@ -11,7 +11,9 @@ namespace NSpec.VsAdapter.IntegrationTests
     {
         static TestConstants()
         {
-            TestFolderPath = Path.GetFullPath(@"..\..\..\");
+            TestFolderPath = TestUtils.FirstCharToUpper(Path.GetFullPath(@"..\..\..\"));
+
+            SampleSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\SampleSpecs\desc_SystemUnderTest.cs");
 
             SampleSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\SampleSpecs\bin\Debug\SampleSpecs.dll");
 
@@ -19,6 +21,8 @@ namespace NSpec.VsAdapter.IntegrationTests
         }
 
         public static readonly string TestFolderPath;
+
+        public static readonly string SampleSpecsSourcePath;
 
         public static readonly string SampleSpecsDllPath;
 

@@ -45,7 +45,60 @@ namespace NSpec.VsAdapter.IntegrationTests
         [Test]
         public void it_should_find_all_examples()
         {
-            sink.TestCases.Should().HaveCount(4);
+            sink.TestCases.Should().HaveCount(5);
+        }
+
+        [Test]
+        public void it_should_set_full_names()
+        {
+            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.FullyQualifiedName);
+
+            var actual = sink.TestCases.Select(tc => tc.FullyQualifiedName);
+
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void it_should_set_display_names()
+        {
+            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.DisplayName);
+
+            var actual = sink.TestCases.Select(tc => tc.DisplayName);
+
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void it_should_set_executor_uris()
+        {
+            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.ExecutorUri).Distinct().Single();
+
+            sink.TestCases.ForEach(tc =>
+                {
+                    tc.ExecutorUri.Should().Be(expected, "FullName: {0}", tc.FullyQualifiedName);
+                });
+        }
+
+        [Test]
+        public void it_should_set_sources()
+        {
+            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.Source).Distinct().Single();
+
+            sink.TestCases.ForEach(tc =>
+            {
+                TestUtils.FirstCharToUpper(tc.Source).Should().Be(expected, "FullName: {0}", tc.FullyQualifiedName);
+            });
+        }
+
+        [Test]
+        public void it_should_set_code_file_paths()
+        {
+            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.CodeFilePath).Distinct().Single();
+
+            sink.TestCases.ForEach(tc =>
+            {
+                TestUtils.FirstCharToUpper(tc.CodeFilePath).Should().Be(expected, "FullName: {0}", tc.FullyQualifiedName);
+            });
         }
 
         [Test]
