@@ -35,9 +35,9 @@ namespace NSpec.VsAdapter.Discovery
 
             var debugInfoProvider = new DebugInfoProvider(assemblyPath, logger);
 
-            var exampleConverter = new ExampleConverter(assemblyPath, debugInfoProvider);
+            var specMapper = new SpecMapper(assemblyPath, debugInfoProvider);
 
-            var specifications = examples.Select(exampleConverter.Convert);
+            var specifications = examples.Select(specMapper.FromExample);
 
             logger.Debug(String.Format("Finish collecting tests in '{0}'", assemblyPath));
 

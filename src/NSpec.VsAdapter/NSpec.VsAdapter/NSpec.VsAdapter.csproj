@@ -96,7 +96,7 @@
     <Compile Include="Discovery\CrossDomainCollector.cs" />
     <Compile Include="Discovery\CrossDomainTestDiscoverer.cs" />
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="Discovery\ExampleConverter.cs" />
+    <Compile Include="Discovery\SpecMapper.cs" />
     <Compile Include="CrossDomain\IAppDomainFactory.cs" />
     <Compile Include="Discovery\ICollectorInvocation.cs" />
     <Compile Include="Discovery\ICrossDomainCollector.cs" />

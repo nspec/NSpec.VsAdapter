@@ -14,10 +14,10 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests.Discovery
 {
     [TestFixture]
-    [Category("ExampleConverter")]
-    public class ExampleConverter_desc
+    [Category("SpecMapper")]
+    public class SpecMapper_desc
     {
-        ExampleConverter converter;
+        SpecMapper mapper;
 
         AutoSubstitute autoSubstitute;
         IDebugInfoProvider debugInfoProvider;
@@ -45,7 +45,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
                 "tag1 tag2_more tag3",
                 someAction);
 
-            string specClassName = typeof(ExampleConverter_desc).ToString();
+            string specClassName = typeof(SpecMapper_desc).ToString();
             string exampleMethodName = someAction.Method.Name;
 
             example.Context = context;
@@ -66,7 +66,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             debugInfoProvider = autoSubstitute.Resolve<IDebugInfoProvider>();
             debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
 
-            converter = new ExampleConverter(someAssemblyPath, debugInfoProvider);
+            mapper = new SpecMapper(someAssemblyPath, debugInfoProvider);
         }
 
         [TearDown]
@@ -78,7 +78,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         [Test]
         public void it_should_fill_all_details()
         {
-            var spec = converter.Convert(example);
+            var spec = mapper.FromExample(example);
 
             spec.ShouldBeEquivalentTo(expectedSpec);
         }

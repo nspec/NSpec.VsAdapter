@@ -7,15 +7,15 @@ using System.Text;
 
 namespace NSpec.VsAdapter.Discovery
 {
-    public class ExampleConverter
+    public class SpecMapper
     {
-        public ExampleConverter(string assemblyPath, IDebugInfoProvider debugInfoProvider)
+        public SpecMapper(string assemblyPath, IDebugInfoProvider debugInfoProvider)
         {
             this.assemblyPath = assemblyPath;
             this.debugInfoProvider = debugInfoProvider;
         }
 
-        public NSpecSpecification Convert(ExampleBase example)
+        public NSpecSpecification FromExample(ExampleBase example)
         {
             var methodInfo = ReflectExampleMethod(example);
 
