@@ -45,7 +45,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
                 "tag1 tag2_more tag3",
                 someAction);
 
-            string exampleClassName = typeof(Example).FullName;
+            string specClassName = typeof(ExampleConverter_desc).ToString();
             string exampleMethodName = someAction.Method.Name;
 
             example.Context = context;
@@ -64,7 +64,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             var navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
 
             debugInfoProvider = autoSubstitute.Resolve<IDebugInfoProvider>();
-            debugInfoProvider.GetNavigationData(exampleClassName, exampleMethodName).Returns(navigationData);
+            debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
 
             converter = new ExampleConverter(someAssemblyPath, debugInfoProvider);
         }
