@@ -49,6 +49,7 @@ namespace NSpec.VsAdapter.IntegrationTests
         }
 
         [Test]
+        [Ignore("Tags/traits yet to be implemented")]
         public void it_should_detect_tags()
         {
             var tags = sink.TestCases.SelectMany(tc => tc.Traits);

@@ -27,11 +27,16 @@ namespace NSpec.VsAdapter
 
             if (navData != null && navData.FileName != null)
             {
+                string message = String.Format("Debug info found for method '{0}'.'{1}' in binary '{2}'",
+                    declaringClassName, methodName, binaryPath);
+
+                logger.Debug(message);
+
                 return navData;
             }
             else
             {
-                string message = String.Format("Cannot get navigation data for method {0}.{1} in binary '{2}'", 
+                string message = String.Format("Cannot get debug info for method '{0}'.'{1}' in binary '{2}'", 
                     declaringClassName, methodName, binaryPath);
                 
                 logger.Warn(message);

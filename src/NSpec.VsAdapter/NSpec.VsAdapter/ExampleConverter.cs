@@ -17,12 +17,12 @@ namespace NSpec.VsAdapter
 
         public NSpecSpecification Convert(ExampleBase example)
         {
-            string exampleClassName = example.GetType().FullName;
-
             var methodInfo = ReflectExampleMethod(example);
+
+            string specClassName = methodInfo.DeclaringType.FullName;
             string exampleMethodName = methodInfo.Name;
 
-            var navigationData = debugInfoProvider.GetNavigationData(exampleClassName, exampleMethodName);
+            var navigationData = debugInfoProvider.GetNavigationData(specClassName, exampleMethodName);
 
             var specification = new NSpecSpecification()
             {
