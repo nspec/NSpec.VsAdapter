@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.Domain;
+using NSpec.VsAdapter.Discovery;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests
+namespace NSpec.VsAdapter.UnitTests.Discovery
 {
     [TestFixture]
     [Category("ExampleConverter")]

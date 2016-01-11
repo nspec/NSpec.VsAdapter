@@ -84,11 +84,11 @@
     <Compile Include="IReplayLogger.cs" />
     <Compile Include="ISerializableLogger.cs" />
     <Compile Include="LogRecorder.cs" />
-    <Compile Include="DebugInfoProvider.cs" />
+    <Compile Include="Discovery\DebugInfoProvider.cs" />
     <Compile Include="DIContainer.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="IAdapterInfo.cs" />
-    <Compile Include="IDebugInfoProvider.cs" />
+    <Compile Include="Discovery\IDebugInfoProvider.cs" />
     <Compile Include="IOutputLogger.cs" />
     <Compile Include="LogReplayer.cs" />
     <Compile Include="CrossDomain\AppDomainFactory.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="Discovery\CrossDomainCollector.cs" />
     <Compile Include="Discovery\CrossDomainTestDiscoverer.cs" />
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="ExampleConverter.cs" />
+    <Compile Include="Discovery\ExampleConverter.cs" />
     <Compile Include="CrossDomain\IAppDomainFactory.cs" />
     <Compile Include="Discovery\ICollectorInvocation.cs" />
     <Compile Include="Discovery\ICrossDomainCollector.cs" />
@@ -108,7 +108,7 @@
     <Compile Include="CrossDomain\MarshalingProxy.cs" />
     <Compile Include="CrossDomain\CrossDomainRunner.cs" />
     <Compile Include="CrossDomain\TargetAppDomain.cs" />
-    <Compile Include="NSpecSpecification.cs" />
+    <Compile Include="Discovery\NSpecSpecification.cs" />
     <Compile Include="OutputLogger.cs" />
     <Compile Include="ProjectObservation\HierarchyUtils.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectBuildNotifier.cs" />

@@ -105,7 +105,7 @@
     <Compile Include="Discovery\CrossDomainCollector_desc.cs" />
     <Compile Include="Discovery\CrossDomainTestDiscoverer_desc.cs" />
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="ExampleConverter_desc.cs" />
+    <Compile Include="Discovery\ExampleConverter_desc.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainerDiscoverer_desc.cs">
