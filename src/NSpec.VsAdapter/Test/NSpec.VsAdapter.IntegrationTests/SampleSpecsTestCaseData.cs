@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.IntegrationTests
 {
-    public static class SampleSpecsNavigationData
+    public static class SampleSpecsTestCaseData
     {
         public readonly static 
-            Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>> TestCaseByClassMethodExampleName;
+            Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>> ByClassMethodExampleName;
 
-        public readonly static IEnumerable<TestCase> AllTestCases;
+        public readonly static IEnumerable<TestCase> All;
 
-        static SampleSpecsNavigationData()
+        static SampleSpecsTestCaseData()
         {
             string specAssemblyPath = TestConstants.SampleSpecsDllPath;
             string sourceCodeFilePath = TestConstants.SampleSpecsSourcePath;
 
-            TestCaseByClassMethodExampleName = new Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>>()
+            ByClassMethodExampleName = new Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>>()
             {
                 { 
                     "SampleSpecs.ParentSpec", 
@@ -114,7 +114,7 @@ namespace NSpec.VsAdapter.IntegrationTests
                 },
             };
 
-            AllTestCases = TestCaseByClassMethodExampleName
+            All = ByClassMethodExampleName
                 .SelectMany(byClassName => byClassName.Value)
                 .SelectMany(byMethodName => byMethodName.Value)
                 .Select(byExampleName => byExampleName.Value);

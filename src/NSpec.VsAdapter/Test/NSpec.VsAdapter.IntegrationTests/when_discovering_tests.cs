@@ -51,7 +51,7 @@ namespace NSpec.VsAdapter.IntegrationTests
         [Test]
         public void it_should_set_full_names()
         {
-            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.FullyQualifiedName);
+            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.FullyQualifiedName);
 
             var actual = sink.TestCases.Select(tc => tc.FullyQualifiedName);
 
@@ -61,7 +61,7 @@ namespace NSpec.VsAdapter.IntegrationTests
         [Test]
         public void it_should_set_display_names()
         {
-            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.DisplayName);
+            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.DisplayName);
 
             var actual = sink.TestCases.Select(tc => tc.DisplayName);
 
@@ -71,7 +71,7 @@ namespace NSpec.VsAdapter.IntegrationTests
         [Test]
         public void it_should_set_executor_uris()
         {
-            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.ExecutorUri).Distinct().Single();
+            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.ExecutorUri).Distinct().Single();
 
             sink.TestCases.ForEach(tc =>
                 {
@@ -82,7 +82,7 @@ namespace NSpec.VsAdapter.IntegrationTests
         [Test]
         public void it_should_set_sources()
         {
-            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.Source).Distinct().Single();
+            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.Source).Distinct().Single();
 
             sink.TestCases.ForEach(tc =>
             {
@@ -93,7 +93,7 @@ namespace NSpec.VsAdapter.IntegrationTests
         [Test]
         public void it_should_set_code_file_paths()
         {
-            var expected = SampleSpecsNavigationData.AllTestCases.Select(tc => tc.CodeFilePath).Distinct().Single();
+            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.CodeFilePath).Distinct().Single();
 
             sink.TestCases.ForEach(tc =>
             {
