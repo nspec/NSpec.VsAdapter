@@ -51,7 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DebuggerShim.cs" />
-    <Compile Include="desc_DeepThought.cs" />
+    <Compile Include="desc_SystemUnderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
