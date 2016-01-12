@@ -157,41 +157,41 @@ namespace NSpec.VsAdapter.UnitTests.TestExplorer
         {
             public int CompareTo(ITestContainer other)
             {
-                throw new InvalidOperationException();
+                throw new DummyTestException();
             }
 
             public IEnumerable<Guid> DebugEngines
             {
-                get { throw new InvalidOperationException(); }
+                get { throw new DummyTestException(); }
             }
 
             public IDeploymentData DeployAppContainer()
             {
-                throw new InvalidOperationException();
+                throw new DummyTestException();
             }
 
             public ITestContainerDiscoverer Discoverer { get; set; }
 
             public bool IsAppContainerTestContainer
             {
-                get { throw new InvalidOperationException(); }
+                get { throw new DummyTestException(); }
             }
 
             public ITestContainer Snapshot()
             {
-                throw new InvalidOperationException();
+                throw new DummyTestException();
             }
 
             public string Source { get; set; }
 
             public FrameworkVersion TargetFramework
             {
-                get { throw new InvalidOperationException(); }
+                get { throw new DummyTestException(); }
             }
 
             public Architecture TargetPlatform
             {
-                get { throw new InvalidOperationException(); }
+                get { throw new DummyTestException(); }
             }
         }
     }

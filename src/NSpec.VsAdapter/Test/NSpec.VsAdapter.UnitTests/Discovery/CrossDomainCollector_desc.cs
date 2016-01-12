@@ -14,7 +14,6 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 {
     [TestFixture]
     [Category("CrossDomainCollector")]
-    [Ignore("Test yet to be implemented")]
     public abstract class CrossDomainCollector_desc_base
     {
         protected CrossDomainCollector collector;
@@ -103,7 +102,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
     public abstract class CrossDomainCollector_when_run_fails : CrossDomainCollector_desc_base
     {
         [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [ExpectedException(typeof(DummyTestException))]
         public void it_should_let_exception_flow()
         {
             actualSpecifications = collector.Run(somePath, targetOperation);
@@ -118,7 +117,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
             appDomainFactory.Create(null).ReturnsForAnyArgs(_ =>
             {
-                throw new InvalidOperationException();
+                throw new DummyTestException();
             });
         }
     }
@@ -133,7 +132,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
             marshalingFactory.CreateProxy(null).ReturnsForAnyArgs(_ =>
             {
-                throw new InvalidOperationException();
+                throw new DummyTestException();
             });
         }
 
@@ -164,7 +163,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
             crossDomainProxy.Execute(null).ReturnsForAnyArgs(_ =>
             {
-                throw new InvalidOperationException();
+                throw new DummyTestException();
             });
         }
 

@@ -84,7 +84,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
             crossDomainCollector.Run(null, null).ReturnsForAnyArgs(_ =>
                 {
-                    throw new InvalidOperationException();
+                    throw new DummyTestException();
                 });
 
             specifications = discoverer.Discover(somePath, logger, crossDomainLogger);
@@ -99,7 +99,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         [Test]
         public void it_should_log_error_and_exception()
         {
-            logger.Received(1).Error(Arg.Any<InvalidOperationException>(), Arg.Any<string>());
+            logger.Received(1).Error(Arg.Any<DummyTestException>(), Arg.Any<string>());
         }
     }
 }

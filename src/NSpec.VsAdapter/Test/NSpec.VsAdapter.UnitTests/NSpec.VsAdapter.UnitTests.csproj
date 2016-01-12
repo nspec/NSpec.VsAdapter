@@ -109,6 +109,7 @@
     <Compile Include="Discovery\SampleSpecs\SpecSample.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Discovery\SpecMapper_desc.cs" />
+    <Compile Include="DummyTestException.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainerDiscoverer_desc.cs">
