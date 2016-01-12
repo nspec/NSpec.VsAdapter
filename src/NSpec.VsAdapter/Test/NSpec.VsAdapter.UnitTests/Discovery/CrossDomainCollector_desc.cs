@@ -55,7 +55,6 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         public virtual void after_each()
         {
             autoSubstitute.Dispose();
-            crossDomainProxy.Dispose();
         }
     }
 
@@ -86,6 +85,18 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         public void it_should_return_collected_specifications()
         {
             actualSpecifications.Should().BeEquivalentTo(someSpecifications);
+        }
+
+        [Test]
+        public void it_should_dispose_target_app_domain()
+        {
+            targetDomain.Received(1).Dispose();
+        }
+
+        [Test]
+        public void it_should_dispose_marshaling_proxy()
+        {
+            crossDomainProxy.Received(1).Dispose();
         }
     }
 
@@ -125,6 +136,20 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
                 throw new InvalidOperationException();
             });
         }
+
+        [Test]
+        public void it_should_dispose_target_app_domain()
+        {
+            try
+            {
+                actualSpecifications = collector.Run(somePath, targetOperation);
+            }
+            catch (Exception)
+            {
+            }
+
+            targetDomain.Received(1).Dispose();
+        }
     }
 
     public class CrossDomainCollector_when_marshaled_execution_fails : CrossDomainCollector_when_run_fails
@@ -141,6 +166,34 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             {
                 throw new InvalidOperationException();
             });
+        }
+
+        [Test]
+        public void it_should_dispose_target_app_domain()
+        {
+            try
+            {
+                actualSpecifications = collector.Run(somePath, targetOperation);
+            }
+            catch (Exception)
+            {
+            }
+
+            targetDomain.Received(1).Dispose();
+        }
+
+        [Test]
+        public void it_should_dispose_marshaling_proxy()
+        {
+            try
+            {
+                actualSpecifications = collector.Run(somePath, targetOperation);
+            }
+            catch (Exception)
+            {
+            }
+
+            crossDomainProxy.Received(1).Dispose();
         }
     }
 }

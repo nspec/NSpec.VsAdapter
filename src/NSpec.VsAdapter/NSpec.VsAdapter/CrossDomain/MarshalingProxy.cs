@@ -18,14 +18,14 @@ namespace NSpec.VsAdapter.CrossDomain
             return null;
         }
 
-        public virtual TResult Execute(Func<TResult> targetOperation)
+        public virtual TResult Execute(Func<TResult> targetOperation) // made virtual to allow test mocking
         {
             return targetOperation();
         }
 
         // see https://github.com/fixie/fixie/blob/master/src/Fixie/Execution/LongLivedMarshalByRefObject.cs
 
-        public void Dispose()
+        public virtual void Dispose() // made virtual to allow test mocking
         {
             RemotingServices.Disconnect(this);
         }
