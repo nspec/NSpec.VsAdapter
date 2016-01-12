@@ -14,7 +14,7 @@ namespace NSpec.VsAdapter.Discovery
             this.binaryPath = binaryPath;
             this.logger = logger;
 
-            // TODO catch & log exceptions, then leave state incomplete
+            // TODO catch & log exceptions, then leave state incomplete, then manage it later
 
             this.session = new DiaSession(binaryPath);
         }

@@ -41,4 +41,6 @@ namespace SampleSpecs
             it["child example 4A"] = () => systemUnderTest.IsAlwaysTrue().should_be_true();
         } // # 42
     }
+
+    // Do not move the preceding spec classes around, to avoid rewriting line numbers
 }
