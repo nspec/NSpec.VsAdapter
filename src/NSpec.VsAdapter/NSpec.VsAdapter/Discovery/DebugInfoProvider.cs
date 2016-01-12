@@ -14,15 +14,31 @@ namespace NSpec.VsAdapter.Discovery
             this.binaryPath = binaryPath;
             this.logger = logger;
 
-            // TODO catch & log exceptions, then leave state incomplete, then manage it later
+            try
+            {
+                session = new DiaSession(binaryPath);
+            }
+            catch (Exception ex)
+            {
+                string message = String.Format("Cannot setup debug info for binary '{0}'", binaryPath);
 
-            this.session = new DiaSession(binaryPath);
+                logger.Warn(message);
+
+                session = noSession;
+            }
         }
 
         // taken from https://github.com/nunit/nunit-vs-adapter/blob/master/src/NUnitTestAdapter/TestConverter.cs
 
         public DiaNavigationData GetNavigationData(string declaringClassName, string methodName)
         {
+            var noNavigationData = new DiaNavigationData(String.Empty, 0, 0);
+
+            if (session == noSession)
+            {
+                return noNavigationData;
+            }
+
             var navData = session.GetNavigationData(declaringClassName, methodName);
 
             if (navData != null && navData.FileName != null)
@@ -43,8 +59,6 @@ namespace NSpec.VsAdapter.Discovery
 
                 // TODO check if it's an async method, before leaving
 
-                var noNavigationData = new DiaNavigationData(String.Empty, 0, 0);
-
                 return noNavigationData;
             }
         }
@@ -52,5 +66,7 @@ namespace NSpec.VsAdapter.Discovery
         readonly string binaryPath;
         readonly ISerializableLogger logger;
         readonly DiaSession session;
+
+        readonly DiaSession noSession = null;
     }
 }
