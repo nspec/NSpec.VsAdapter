@@ -26,6 +26,8 @@ namespace NSpec.VsAdapter.Discovery
 
                 var logRecorder = new LogRecorder();
 
+                // TODO exclude assembly/binary right away if nspec.dll is not in the same path (or sub-path?)
+
                 var collectorInvocation = new CollectorInvocation(assemblyPath, logRecorder);
 
                 specifications = crossDomainCollector.Run(assemblyPath, collectorInvocation.Collect);

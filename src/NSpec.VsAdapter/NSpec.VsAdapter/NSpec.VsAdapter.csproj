@@ -81,8 +81,10 @@
   <ItemGroup>
     <Compile Include="AdapterInfo.cs" />
     <Compile Include="IBaseLogger.cs" />
+    <Compile Include="ILoggerFactory.cs" />
     <Compile Include="IReplayLogger.cs" />
     <Compile Include="ISerializableLogger.cs" />
+    <Compile Include="LoggerFactory.cs" />
     <Compile Include="LogRecorder.cs" />
     <Compile Include="Discovery\DebugInfoProvider.cs" />
     <Compile Include="DIContainer.cs" />

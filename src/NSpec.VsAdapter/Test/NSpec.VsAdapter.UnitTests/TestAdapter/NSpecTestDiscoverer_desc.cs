@@ -49,13 +49,12 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         public virtual void after_each()
         {
             autoSubstitute.Dispose();
-            testCases.Clear();
         }
     }
 
     public class NSpecTestDiscoverer_when_discovering : NSpecTestDiscoverer_desc_base
     {
-        IMessageLogger messageLogger;
+        OutputLogger outputLogger;
         Dictionary<string, NSpecSpecification[]> groupedSpecifications;
 
         public override void before_each()
@@ -116,7 +115,11 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     return testCase;
                 });
 
-            messageLogger = autoSubstitute.Resolve<IMessageLogger>();
+            var messageLogger = autoSubstitute.Resolve<IMessageLogger>();
+
+            outputLogger = autoSubstitute.Resolve<OutputLogger>();
+            var loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
+            loggerFactory.CreateOutput(Arg.Any<IMessageLogger>()).Returns(outputLogger);
 
             discoverer.DiscoverTests(
                 sources,
@@ -129,9 +132,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         public void it_should_pass_message_logger()
         {
             crossDomainTestDiscoverer.Received().Discover(
-                Arg.Any<string>(), 
-                Arg.Is<OutputLogger>(ol => ol.MessageLogger == messageLogger),
-                Arg.Is<OutputLogger>(ol => ol.MessageLogger == messageLogger));
+                Arg.Any<string>(), outputLogger, outputLogger);
         }
 
         [Test]

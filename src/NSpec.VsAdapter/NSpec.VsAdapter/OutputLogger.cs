@@ -93,7 +93,7 @@ namespace NSpec.VsAdapter
 #if DEBUG
             true;
 #else
-            true;
+            false;
 #endif
 
         delegate void LogMethod(string message);

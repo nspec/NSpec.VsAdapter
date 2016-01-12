@@ -84,6 +84,7 @@ namespace NSpec.VsAdapter
             builder.RegisterType<CrossDomainTestDiscoverer>().As<ICrossDomainTestDiscoverer>().InstancePerLifetimeScope();
             builder.RegisterType<TestCaseMapper>().As<ITestCaseMapper>().InstancePerLifetimeScope();
             builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
+            builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();
         }
 
         static void RegisterExecutor(ContainerBuilder builder)

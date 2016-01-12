@@ -20,7 +20,7 @@ namespace NSpec.VsAdapter.TestAdapter
         public NSpecTestDiscoverer() : this(
             DIContainer.Instance.Discoverer.Resolve<ICrossDomainTestDiscoverer>(),
             DIContainer.Instance.Discoverer.Resolve<ITestCaseMapper>(),
-            DIContainer.Instance.Discoverer.Resolve<IAdapterInfo>())
+            DIContainer.Instance.Discoverer.Resolve<ILoggerFactory>())
         {
         }
 
@@ -28,11 +28,16 @@ namespace NSpec.VsAdapter.TestAdapter
         public NSpecTestDiscoverer(
             ICrossDomainTestDiscoverer crossDomainTestDiscoverer, 
             ITestCaseMapper testCaseMapper,
-            IAdapterInfo adapterInfo)
+            ILoggerFactory loggerFactory)
         {
             this.crossDomainTestDiscoverer = crossDomainTestDiscoverer;
             this.testCaseMapper = testCaseMapper;
-            this.adapterInfo = adapterInfo;
+            this.loggerFactory = loggerFactory;
+        }
+
+        public void Dispose()
+        {
+            DIContainer.Instance.Discoverer.Dispose();
         }
 
         public void DiscoverTests(
@@ -44,7 +49,7 @@ namespace NSpec.VsAdapter.TestAdapter
             // TODO implement custom runtime TestSettings, e.g. to enable debug logging
             // E.g. as https://github.com/mmanela/chutzpah/blob/master/VS2012.TestAdapter/ChutzpahTestDiscoverer.cs
 
-            var outputLogger = new OutputLogger(logger, adapterInfo);
+            var outputLogger = loggerFactory.CreateOutput(logger);
 
             outputLogger.Info("Discovery started");
 
@@ -61,13 +66,8 @@ namespace NSpec.VsAdapter.TestAdapter
             outputLogger.Info("Discovery finished");
         }
 
-        public void Dispose()
-        {
-            DIContainer.Instance.Discoverer.Dispose();
-        }
-
         readonly ICrossDomainTestDiscoverer crossDomainTestDiscoverer;
         readonly ITestCaseMapper testCaseMapper;
-        readonly IAdapterInfo adapterInfo;
+        readonly ILoggerFactory loggerFactory;
     }
 }
