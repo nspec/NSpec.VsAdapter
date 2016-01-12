@@ -22,7 +22,7 @@ namespace NSpec.VsAdapter.Discovery
             {
                 string message = String.Format("Cannot setup debug info for binary '{0}'", binaryPath);
 
-                logger.Warn(message);
+                logger.Warn(ex, message);
 
                 session = noSession;
             }
@@ -32,11 +32,9 @@ namespace NSpec.VsAdapter.Discovery
 
         public DiaNavigationData GetNavigationData(string declaringClassName, string methodName)
         {
-            var noNavigationData = new DiaNavigationData(String.Empty, 0, 0);
-
             if (session == noSession)
             {
-                return noNavigationData;
+                return NoNavigationData;
             }
 
             var navData = session.GetNavigationData(declaringClassName, methodName);
@@ -59,8 +57,13 @@ namespace NSpec.VsAdapter.Discovery
 
                 // TODO check if it's an async method, before leaving
 
-                return noNavigationData;
+                return NoNavigationData;
             }
+        }
+
+        DiaNavigationData NoNavigationData
+        {
+            get { return new DiaNavigationData(String.Empty, 0, 0); }
         }
 
         readonly string binaryPath;

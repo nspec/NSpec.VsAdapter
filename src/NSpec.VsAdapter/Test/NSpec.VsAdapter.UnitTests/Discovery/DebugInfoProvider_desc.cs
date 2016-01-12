@@ -52,18 +52,22 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         [Test]
         public void it_should_return_navigation_data()
         {
-            SampleTestCaseDebugInfo.ByClassMethodName.Keys.Do(declaringClassName =>
+            SampleDebugInfo.ByClassMethodActionName.Keys.Do(declaringClassName =>
                 {
-                    var methodInfos = SampleTestCaseDebugInfo.ByClassMethodName[declaringClassName];
+                    var methodInfos = SampleDebugInfo.ByClassMethodActionName[declaringClassName];
 
-                    methodInfos.Keys.Do(methodName =>
+                    var actionInfos = methodInfos
+                        .SelectMany(methodInfo => methodInfo.Value)
+                        .ToDictionary(actionInfo => actionInfo.Key, actionInfo => actionInfo.Value);
+
+                    actionInfos.Keys.Do(actionName =>
                         {
-                            DiaNavigationData expected = methodInfos[methodName];
+                            DiaNavigationData expected = actionInfos[actionName];
 
-                            DiaNavigationData actual = provider.GetNavigationData(declaringClassName, methodName);
+                            DiaNavigationData actual = provider.GetNavigationData(declaringClassName, actionName);
 
                             actual.ShouldBeEquivalentTo(expected, 
-                                "ClassName: {0}, MethodName: {1}", declaringClassName, methodName);
+                                "ClassName: {0}, MethodName: {1}", declaringClassName, actionName);
                         });
                 });
         }
@@ -85,16 +89,20 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         {
             DiaNavigationData expected = new DiaNavigationData(String.Empty, 0, 0);
 
-            SampleTestCaseDebugInfo.ByClassMethodName.Keys.Do(declaringClassName =>
+            SampleDebugInfo.ByClassMethodActionName.Keys.Do(declaringClassName =>
             {
-                var methodInfos = SampleTestCaseDebugInfo.ByClassMethodName[declaringClassName];
+                var methodInfos = SampleDebugInfo.ByClassMethodActionName[declaringClassName];
 
-                methodInfos.Keys.Do(methodName =>
+                var actionInfos = methodInfos
+                    .SelectMany(methodInfo => methodInfo.Value)
+                    .ToDictionary(actionInfo => actionInfo.Key, actionInfo => actionInfo.Value);
+
+                actionInfos.Keys.Do(actionName =>
                 {
-                    DiaNavigationData actual = provider.GetNavigationData(declaringClassName, methodName);
+                    DiaNavigationData actual = provider.GetNavigationData(declaringClassName, actionName);
 
                     actual.ShouldBeEquivalentTo(expected,
-                        "ClassName: {0}, MethodName: {1}", declaringClassName, methodName);
+                        "ClassName: {0}, MethodName: {1}", declaringClassName, actionName);
                 });
             });
         }
