@@ -40,7 +40,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             marshalingFactory = autoSubstitute
                 .Resolve<IMarshalingFactory<IEnumerable<NSpecSpecification>>>();
 
-            crossDomainProxy = new MarshalingProxy<IEnumerable<NSpecSpecification>>();
+            crossDomainProxy = Substitute.For<MarshalingProxy<IEnumerable<NSpecSpecification>>>();
 
             targetDomain = Substitute.For<ITargetAppDomain>();
 
