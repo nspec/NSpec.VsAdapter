@@ -52,13 +52,9 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         [Test]
         public void it_should_return_navigation_data()
         {
-            SampleDebugInfo.ByClassMethodActionName.Keys.Do(declaringClassName =>
+            SampleDebugInfo.ByClassActionName.Keys.Do(declaringClassName =>
                 {
-                    var methodInfos = SampleDebugInfo.ByClassMethodActionName[declaringClassName];
-
-                    var actionInfos = methodInfos
-                        .SelectMany(methodInfo => methodInfo.Value)
-                        .ToDictionary(actionInfo => actionInfo.Key, actionInfo => actionInfo.Value);
+                    var actionInfos = SampleDebugInfo.ByClassActionName[declaringClassName];
 
                     actionInfos.Keys.Do(actionName =>
                         {
@@ -89,13 +85,9 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         {
             DiaNavigationData expected = new DiaNavigationData(String.Empty, 0, 0);
 
-            SampleDebugInfo.ByClassMethodActionName.Keys.Do(declaringClassName =>
+            SampleDebugInfo.ByClassActionName.Keys.Do(declaringClassName =>
             {
-                var methodInfos = SampleDebugInfo.ByClassMethodActionName[declaringClassName];
-
-                var actionInfos = methodInfos
-                    .SelectMany(methodInfo => methodInfo.Value)
-                    .ToDictionary(actionInfo => actionInfo.Key, actionInfo => actionInfo.Value);
+                var actionInfos = SampleDebugInfo.ByClassActionName[declaringClassName];
 
                 actionInfos.Keys.Do(actionName =>
                 {

@@ -13,6 +13,9 @@ namespace NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs
         public readonly static
             Dictionary<string, Dictionary<string, Dictionary<string, DiaNavigationData>>> ByClassMethodActionName;
 
+        public readonly static
+            Dictionary<string, Dictionary<string, DiaNavigationData>> ByClassActionName;
+
         public readonly static IEnumerable<DiaNavigationData> All;
 
         static SampleDebugInfo()
@@ -84,6 +87,19 @@ namespace NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs
                 .SelectMany(byClassName => byClassName.Value)
                 .SelectMany(byMethodName => byMethodName.Value)
                 .Select(byActionName => byActionName.Value);
+
+            ByClassActionName = new Dictionary<string, Dictionary<string, DiaNavigationData>>();
+
+            ByClassMethodActionName.Keys.Do(className =>
+                {
+                    var methodInfos = ByClassMethodActionName[className];
+
+                    var actionInfos = methodInfos
+                        .SelectMany(methodInfo => methodInfo.Value)
+                        .ToDictionary(actionInfo => actionInfo.Key, actionInfo => actionInfo.Value);
+
+                    ByClassActionName[className] = actionInfos;
+                });
         }
     }
 }
