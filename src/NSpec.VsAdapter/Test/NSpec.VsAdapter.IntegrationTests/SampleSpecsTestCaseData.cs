@@ -12,6 +12,8 @@ namespace NSpec.VsAdapter.IntegrationTests
         public readonly static 
             Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>> ByClassMethodExampleName;
 
+        public readonly static Dictionary<string, TestCase> ByTestCaseFullName;
+
         public readonly static IEnumerable<TestCase> All;
 
         static SampleSpecsTestCaseData()
@@ -37,7 +39,7 @@ namespace NSpec.VsAdapter.IntegrationTests
                                     {
                                         DisplayName = "nspec. ParentSpec. method context 1. parent example 1A.",
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 18,
+                                        LineNumber = 19,
                                     }
                                 },
                                 {
@@ -48,7 +50,7 @@ namespace NSpec.VsAdapter.IntegrationTests
                                     {
                                         DisplayName = "nspec. ParentSpec. method context 1. parent example 1B.",
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 18,
+                                        LineNumber = 21,
                                     }
                                 },
                             }
@@ -65,7 +67,7 @@ namespace NSpec.VsAdapter.IntegrationTests
                                     {
                                         DisplayName = "nspec. ParentSpec. method context 2. parent example 2A.",
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 25,
+                                        LineNumber = 26,
                                     }
                                 },
                             }
@@ -87,8 +89,9 @@ namespace NSpec.VsAdapter.IntegrationTests
                                         Constants.ExecutorUri, specAssemblyPath)
                                     {
                                         DisplayName = "nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped.",
-                                        CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 35,
+                                        // no source code info available for pending tests
+                                        CodeFilePath = String.Empty,
+                                        LineNumber = 0,
                                     }
                                 },
                             }
@@ -105,7 +108,7 @@ namespace NSpec.VsAdapter.IntegrationTests
                                     {
                                         DisplayName = "nspec. ParentSpec. ChildSpec. method context 4. child example 4A.",
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 40,
+                                        LineNumber = 41,
                                     }
                                 },
                             }
@@ -118,6 +121,8 @@ namespace NSpec.VsAdapter.IntegrationTests
                 .SelectMany(byClassName => byClassName.Value)
                 .SelectMany(byMethodName => byMethodName.Value)
                 .Select(byExampleName => byExampleName.Value);
+
+            ByTestCaseFullName = All.ToDictionary(tc => tc.FullyQualifiedName, tc => tc);
         }
     }
 }

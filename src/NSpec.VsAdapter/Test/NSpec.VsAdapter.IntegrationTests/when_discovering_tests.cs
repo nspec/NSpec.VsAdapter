@@ -93,11 +93,26 @@ namespace NSpec.VsAdapter.IntegrationTests
         [Test]
         public void it_should_set_code_file_paths()
         {
-            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.CodeFilePath).Distinct().Single();
-
             sink.TestCases.ForEach(tc =>
             {
-                TestUtils.FirstCharToUpper(tc.CodeFilePath).Should().Be(expected, "FullName: {0}", tc.FullyQualifiedName);
+                string actualFullName = tc.FullyQualifiedName;
+
+                string expected = SampleSpecsTestCaseData.ByTestCaseFullName[actualFullName].CodeFilePath;
+
+                TestUtils.FirstCharToUpper(tc.CodeFilePath).Should().Be(expected, "FullName: {0}", actualFullName);
+            });
+        }
+
+        [Test]
+        public void it_should_set_code_line_numbers()
+        {
+            sink.TestCases.ForEach(tc =>
+            {
+                string actualFullName = tc.FullyQualifiedName;
+
+                int expected = SampleSpecsTestCaseData.ByTestCaseFullName[actualFullName].LineNumber;
+
+                tc.LineNumber.Should().Be(expected, "FullName: {0}", actualFullName);
             });
         }
 
