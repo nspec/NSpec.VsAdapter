@@ -55,22 +55,21 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
     public class NSpecTestDiscoverer_when_discovering : NSpecTestDiscoverer_desc_base
     {
         OutputLogger outputLogger;
-        Dictionary<string, NSpecSpecification[]> groupedSpecifications;
+        string[] sources;
+        Dictionary<string, NSpecSpecification[]> specificationBySource;
 
-        public override void before_each()
+        public NSpecTestDiscoverer_when_discovering()
         {
-            base.before_each();
-
             string source1 = @".\some\dummy\some-library.dll";
             string source2 = @".\another\dummy\another-library.dll";
 
-            var sources = new string[]
+            sources = new string[]
             {
                 source1,
                 source2,
             };
 
-            groupedSpecifications = new Dictionary<string, NSpecSpecification[]>()
+            specificationBySource = new Dictionary<string, NSpecSpecification[]>()
             {
                 { 
                     source1, 
@@ -90,14 +89,19 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     }
                 },
             };
+        }
+
+        public override void before_each()
+        {
+            base.before_each();
 
             crossDomainTestDiscoverer.Discover(null, null, null).ReturnsForAnyArgs(callInfo =>
                 {
                     string assemblyPath = callInfo.Arg<string>();
-
-                    if (assemblyPath == source1 || assemblyPath == source2)
+                    
+                    if (sources.Contains(assemblyPath))
                     {
-                        return groupedSpecifications[assemblyPath];
+                        return specificationBySource[assemblyPath];
                     }
                     else
                     {
@@ -138,7 +142,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_send_discovered_test_cases()
         {
-            var allSpecs = groupedSpecifications.SelectMany(group => group.Value);
+            var allSpecs = specificationBySource.SelectMany(group => group.Value);
 
             var specFullNames = allSpecs.Select(spec => spec.FullName);
 

@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using NSpec.VsAdapter.CrossDomain;
-using NSpec.VsAdapter.TestAdapter;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +13,14 @@ namespace NSpec.VsAdapter.Discovery
             this.crossDomainCollector = crossDomainCollector;
         }
 
-        public IEnumerable<NSpecSpecification> Discover(string assemblyPath, IOutputLogger logger, IReplayLogger crossDomainLogger)
+        public IEnumerable<NSpecSpecification> Discover(string assemblyPath, 
+            IOutputLogger logger, IReplayLogger crossDomainLogger)
         {
             IEnumerable<NSpecSpecification> specifications;
 
             try
             {
-                logger.Debug(String.Format("Processing container: '{0}'", assemblyPath));
+                logger.Debug(String.Format("Discovering tests in binary: '{0}'", assemblyPath));
 
                 var logRecorder = new LogRecorder();
 
@@ -36,15 +34,15 @@ namespace NSpec.VsAdapter.Discovery
 
                 logReplayer.Replay(logRecorder);
 
-                logger.Debug(String.Format("Found {0} specs", specifications.Count()));
+                logger.Debug(String.Format("Found {0} tests", specifications.Count()));
 
                 return specifications;
             }
             catch (Exception ex)
             {
-                // report problem and return for the next assembly, without crashing the container discovery process
+                // report problem and return for the next assembly, without crashing the test discovery process
 
-                var message = String.Format("Exception thrown while discovering tests in container '{0}'", assemblyPath);
+                var message = String.Format("Exception thrown while discovering tests in binary '{0}'", assemblyPath);
                 
                 logger.Error(ex, message);
 

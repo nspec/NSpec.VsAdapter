@@ -19,15 +19,7 @@ namespace NSpec.VsAdapter.Discovery
         {
             logger.Debug(String.Format("Start collecting tests in '{0}'", assemblyPath));
 
-            var reflector = new Reflector(assemblyPath);
-
-            var finder = new SpecFinder(reflector);
-
-            var conventions = new DefaultConventions();
-
-            var contextBuilder = new ContextBuilder(finder, conventions);
-
-            var contexts = contextBuilder.Contexts();
+            var contexts = FindContexts(assemblyPath);
 
             var builtContexts = contexts.Build();
 
@@ -46,6 +38,21 @@ namespace NSpec.VsAdapter.Discovery
             logger.Flush();
 
             return specArray;
+        }
+
+        static ContextCollection FindContexts(string assemblyPath)
+        {
+            var reflector = new Reflector(assemblyPath);
+
+            var finder = new SpecFinder(reflector);
+
+            var conventions = new DefaultConventions();
+
+            var contextBuilder = new ContextBuilder(finder, conventions);
+
+            var contexts = contextBuilder.Contexts();
+
+            return contexts;
         }
 
         readonly string assemblyPath;

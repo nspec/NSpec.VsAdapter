@@ -14,6 +14,8 @@ namespace NSpec.VsAdapter.Discovery
         public CrossDomainCollector(
             IAppDomainFactory appDomainFactory,
             IMarshalingFactory<IEnumerable<NSpecSpecification>> marshalingFactory)
-            : base(appDomainFactory, marshalingFactory) { }
+            : base(appDomainFactory, marshalingFactory) 
+        {
+        }
     }
 }
