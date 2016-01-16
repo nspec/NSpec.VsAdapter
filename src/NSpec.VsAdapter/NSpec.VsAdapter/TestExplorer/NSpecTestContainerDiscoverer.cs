@@ -21,7 +21,7 @@ namespace NSpec.VsAdapter.TestExplorer
 
             disposables.Add(scope); ;
 
-            containerFactory = scope.Resolve<ITestContainerFactory>();
+            var containerFactory = scope.Resolve<ITestContainerFactory>();
             var testDllNotifier = scope.Resolve<ITestDllNotifier>();
 
             Initialize(testDllNotifier, containerFactory);
@@ -78,7 +78,11 @@ namespace NSpec.VsAdapter.TestExplorer
 
         IEnumerable<ITestContainer> MapToContainers(IEnumerable<string> dllPaths)
         {
-            return dllPaths.Select(path => containerFactory.Create(this, path));
+            var containers = 
+                from path in dllPaths
+                select containerFactory.Create(this, path);
+
+            return containers;
         }
 
         void RaiseTestContainersUpdated()
@@ -91,8 +95,8 @@ namespace NSpec.VsAdapter.TestExplorer
             }
         }
 
-        IObservable<IEnumerable<ITestContainer>> containerStream;
         ITestContainerFactory containerFactory;
+        IObservable<IEnumerable<ITestContainer>> containerStream;
 
         readonly CompositeDisposable disposables = new CompositeDisposable();
     }

@@ -18,16 +18,13 @@ namespace NSpec.VsAdapter.IntegrationTests
         NSpecTestDiscoverer discoverer;
 
         CollectingSink sink;
-        string targetDllPath;
 
         [SetUp]
-        public virtual void setup()
+        public virtual void before_each()
         {
-            targetDllPath = TestConstants.SampleSpecsDllPath;
-            
             var sources = new string[] 
             { 
-                targetDllPath,
+                TestConstants.SampleSpecsDllPath,
                 TestConstants.SampleSystemDllPath,
             };
 
@@ -51,75 +48,15 @@ namespace NSpec.VsAdapter.IntegrationTests
         [Test]
         public void it_should_find_all_examples()
         {
-            sink.TestCases.Should().HaveCount(5);
-        }
+            var expected = SampleSpecsTestCaseData.All;
 
-        [Test]
-        public void it_should_set_full_names()
-        {
-            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.FullyQualifiedName);
+            var actual = sink.TestCases;
 
-            var actual = sink.TestCases.Select(tc => tc.FullyQualifiedName);
+            actual.Should().HaveCount(expected.Count());
 
-            actual.ShouldAllBeEquivalentTo(expected);
-        }
-
-        [Test]
-        public void it_should_set_display_names()
-        {
-            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.DisplayName);
-
-            var actual = sink.TestCases.Select(tc => tc.DisplayName);
-
-            actual.ShouldAllBeEquivalentTo(expected);
-        }
-
-        [Test]
-        public void it_should_set_executor_uris()
-        {
-            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.ExecutorUri).Distinct().Single();
-
-            sink.TestCases.ForEach(tc =>
-                {
-                    tc.ExecutorUri.Should().Be(expected, "FullName: {0}", tc.FullyQualifiedName);
-                });
-        }
-
-        [Test]
-        public void it_should_set_sources()
-        {
-            var expected = SampleSpecsTestCaseData.All.Select(tc => tc.Source).Distinct().Single();
-
-            sink.TestCases.ForEach(tc =>
-            {
-                TestUtils.FirstCharToUpper(tc.Source).Should().Be(expected, "FullName: {0}", tc.FullyQualifiedName);
-            });
-        }
-
-        [Test]
-        public void it_should_set_code_file_paths()
-        {
-            sink.TestCases.ForEach(tc =>
-            {
-                string actualFullName = tc.FullyQualifiedName;
-
-                string expected = SampleSpecsTestCaseData.ByTestCaseFullName[actualFullName].CodeFilePath;
-
-                TestUtils.FirstCharToUpper(tc.CodeFilePath).Should().Be(expected, "FullName: {0}", actualFullName);
-            });
-        }
-
-        [Test]
-        public void it_should_set_code_line_numbers()
-        {
-            sink.TestCases.ForEach(tc =>
-            {
-                string actualFullName = tc.FullyQualifiedName;
-
-                int expected = SampleSpecsTestCaseData.ByTestCaseFullName[actualFullName].LineNumber;
-
-                tc.LineNumber.Should().Be(expected, "FullName: {0}", actualFullName);
-            });
+            actual.ShouldAllBeEquivalentTo(expected, options => options
+                .Excluding(tc => tc.Properties)
+                .Excluding(tc => tc.Traits));
         }
 
         [Test]
@@ -144,7 +81,7 @@ namespace NSpec.VsAdapter.IntegrationTests
                 TestCases = new List<TestCase>();
             }
 
-            public List<TestCase> TestCases { get; set; }
+            public List<TestCase> TestCases { get; private set; }
 
             public void SendTestCase(TestCase discoveredTestCase)
             {
