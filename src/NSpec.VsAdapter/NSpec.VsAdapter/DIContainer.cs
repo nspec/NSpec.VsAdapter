@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using NSpec.VsAdapter.CrossDomain;
 using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Execution;
 using NSpec.VsAdapter.ProjectObservation;
 using NSpec.VsAdapter.ProjectObservation.Projects;
 using NSpec.VsAdapter.ProjectObservation.Solution;
@@ -23,23 +24,15 @@ namespace NSpec.VsAdapter
             RegisterContainerDiscoverer(builder);
             RegisterDiscoverer(builder);
             RegisterExecutor(builder);
+            RegisterCommon(builder);
 
             container = builder.Build();
-
-            executorScopeHolder = new Lazy<ILifetimeScope>(() => container.BeginLifetimeScope());
         }
 
         public ILifetimeScope BeginScope()
         {
             return container.BeginLifetimeScope();
         }
-
-        public ILifetimeScope Executor
-        {
-            get { return executorScopeHolder.Value; }
-        }
-
-        readonly Lazy<ILifetimeScope> executorScopeHolder;
 
         public void Dispose()
         {
@@ -67,18 +60,25 @@ namespace NSpec.VsAdapter
 
         static void RegisterDiscoverer(ContainerBuilder builder)
         {
-            builder.RegisterType<AppDomainFactory>().As<IAppDomainFactory>().InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(MarshalingFactory<>)).As(typeof(IMarshalingFactory<>)).InstancePerLifetimeScope();
-            builder.RegisterType<CrossDomainCollector>().As<ICrossDomainCollector>().InstancePerLifetimeScope();
             builder.RegisterType<CrossDomainTestDiscoverer>().As<ICrossDomainTestDiscoverer>().InstancePerLifetimeScope();
+            builder.RegisterType<CrossDomainCollector>().As<ICrossDomainCollector>().InstancePerLifetimeScope();
             builder.RegisterType<TestCaseMapper>().As<ITestCaseMapper>().InstancePerLifetimeScope();
-            builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
-            builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();
         }
 
         static void RegisterExecutor(ContainerBuilder builder)
         {
-            // TODO RegisterExecutor in DI
+            builder.RegisterType<CrossDomainTestExecutor>().As<ICrossDomainTestExecutor>().InstancePerLifetimeScope();
+            builder.RegisterType<ExecutionObserverFactory>().As<IExecutionObserverFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<CrossDomainOperator>().As<ICrossDomainOperator>().InstancePerLifetimeScope();
+            builder.RegisterType<TestResultMapper>().As<ITestResultMapper>().InstancePerLifetimeScope();
+        }
+
+        static void RegisterCommon(ContainerBuilder builder)
+        {
+            builder.RegisterType<AppDomainFactory>().As<IAppDomainFactory>().InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(MarshalingFactory<>)).As(typeof(IMarshalingFactory<>)).InstancePerLifetimeScope();
+            builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
+            builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();
         }
 
         public static DIContainer Instance 

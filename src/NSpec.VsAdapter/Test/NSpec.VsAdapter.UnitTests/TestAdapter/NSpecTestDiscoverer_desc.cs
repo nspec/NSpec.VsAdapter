@@ -60,8 +60,8 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
         public NSpecTestDiscoverer_when_discovering()
         {
-            string source1 = @".\some\dummy\some-library.dll";
-            string source2 = @".\another\dummy\another-library.dll";
+            string source1 = @".\path\to\some\dummy-library.dll";
+            string source2 = @".\other\path\to\another-dummy-library.dll";
 
             sources = new string[]
             {
