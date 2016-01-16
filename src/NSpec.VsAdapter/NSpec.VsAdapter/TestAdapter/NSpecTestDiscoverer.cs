@@ -6,6 +6,7 @@ using NSpec.VsAdapter.Discovery;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,6 +38,8 @@ namespace NSpec.VsAdapter.TestAdapter
             this.crossDomainTestDiscoverer = crossDomainTestDiscoverer;
             this.testCaseMapper = testCaseMapper;
             this.loggerFactory = loggerFactory;
+
+            disposable = Disposable.Empty;
         }
 
         public void Dispose()
