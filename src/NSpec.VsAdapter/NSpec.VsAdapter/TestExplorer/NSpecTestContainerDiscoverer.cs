@@ -14,20 +14,31 @@ namespace NSpec.VsAdapter.TestExplorer
 {
     public class NSpecTestContainerDiscoverer : ITestContainerDiscoverer, IDisposable
     {
-        // used by Visual Studio test infrastructure
-        public NSpecTestContainerDiscoverer() : this(
-            DIContainer.Instance.ContainerDiscoverer.Resolve<ITestDllNotifier>(),
-            DIContainer.Instance.ContainerDiscoverer.Resolve<ITestContainerFactory>())
-        { 
+        // used by Visual Studio test infrastructure, by integration tests
+        public NSpecTestContainerDiscoverer()
+        {
+            var scope = DIContainer.Instance.BeginScope();
+
+            disposables.Add(scope); ;
+
+            containerFactory = scope.Resolve<ITestContainerFactory>();
+            var testDllNotifier = scope.Resolve<ITestDllNotifier>();
+
+            Initialize(testDllNotifier, containerFactory);
         }
 
-        // used to test this adapter
+        // used by unit tests
         public NSpecTestContainerDiscoverer(
             ITestDllNotifier testDllNotifier, 
             ITestContainerFactory containerFactory)
         {
-            DIContainer.Instance.ContainerDiscoverer.DisposeWith(disposables);
+            Initialize(testDllNotifier, containerFactory);
+        }
 
+        void Initialize(
+            ITestDllNotifier testDllNotifier,
+            ITestContainerFactory containerFactory)
+        {
             this.containerFactory = containerFactory;
 
             testDllNotifier.PathStream.Subscribe(_ =>
@@ -80,8 +91,8 @@ namespace NSpec.VsAdapter.TestExplorer
             }
         }
 
-        readonly IObservable<IEnumerable<ITestContainer>> containerStream;
-        readonly ITestContainerFactory containerFactory;
+        IObservable<IEnumerable<ITestContainer>> containerStream;
+        ITestContainerFactory containerFactory;
 
         readonly CompositeDisposable disposables = new CompositeDisposable();
     }

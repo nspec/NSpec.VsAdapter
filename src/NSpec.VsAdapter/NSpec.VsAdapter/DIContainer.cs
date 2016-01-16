@@ -26,7 +26,6 @@ namespace NSpec.VsAdapter
 
             container = builder.Build();
 
-            containerDiscovererScopeHolder = new Lazy<ILifetimeScope>(() => container.BeginLifetimeScope());
             executorScopeHolder = new Lazy<ILifetimeScope>(() => container.BeginLifetimeScope());
         }
 
@@ -34,13 +33,6 @@ namespace NSpec.VsAdapter
         {
             return container.BeginLifetimeScope();
         }
-
-        public ILifetimeScope ContainerDiscoverer
-        {
-            get { return containerDiscovererScopeHolder.Value; }
-        }
-
-        readonly Lazy<ILifetimeScope> containerDiscovererScopeHolder;
 
         public ILifetimeScope Executor
         {
