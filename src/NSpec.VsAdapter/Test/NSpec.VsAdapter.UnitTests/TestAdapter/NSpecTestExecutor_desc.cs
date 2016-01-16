@@ -2,6 +2,8 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using NSpec.VsAdapter.Execution;
 using NSpec.VsAdapter.TestAdapter;
 using NSubstitute;
 using NUnit.Framework;
@@ -20,6 +22,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         protected NSpecTestExecutor executor;
 
         protected AutoSubstitute autoSubstitute;
+        protected ICrossDomainTestExecutor crossDomainTestExecutor;
+        protected IExecutionObserver executionObserver;
+        protected OutputLogger outputLogger;
         protected IRunContext runContext;
         protected IFrameworkHandle frameworkHandle;
         protected string[] sources;
@@ -38,6 +43,20 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             autoSubstitute = new AutoSubstitute();
 
+            runContext = autoSubstitute.Resolve<IRunContext>();
+
+            frameworkHandle = autoSubstitute.Resolve<IFrameworkHandle>();
+
+            crossDomainTestExecutor = autoSubstitute.Resolve<ICrossDomainTestExecutor>();
+
+            outputLogger = autoSubstitute.Resolve<OutputLogger>();
+            var loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
+            loggerFactory.CreateOutput(Arg.Any<IMessageLogger>()).Returns(outputLogger);
+
+            executionObserver = autoSubstitute.Resolve<IExecutionObserver>();
+            var executionObserverFactory = autoSubstitute.Resolve<IExecutionObserverFactory>();
+            executionObserverFactory.Create(frameworkHandle).Returns(executionObserver);
+
             executor = autoSubstitute.Resolve<NSpecTestExecutor>();
         }
 
@@ -45,10 +64,54 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         public virtual void after_each()
         {
             autoSubstitute.Dispose();
+            executor.Dispose();
+        }
+    }
 
-            runContext = autoSubstitute.Resolve<IRunContext>();
+    public class NSpecTestExecutor_when_running_sources : NSpecTestExecutor_desc_base
+    {
+        List<string> executedSources;
 
-            frameworkHandle = autoSubstitute.Resolve<IFrameworkHandle>();
+        public override void before_each()
+        {
+            base.before_each();
+
+            executedSources = new List<string>();
+
+            crossDomainTestExecutor
+                .When(exc => exc.Execute(Arg.Any<string>(), executionObserver, outputLogger, outputLogger))
+                .Do(callInfo =>
+                {
+                    var source = callInfo.Arg<string>();
+
+                    executedSources.Add(source);
+                });
+
+            executor.RunTests(sources, runContext, frameworkHandle);
+        }
+
+        [Test]
+        public void it_should_pass_message_logger()
+        {
+            crossDomainTestExecutor.Received().Execute(
+                Arg.Any<string>(),
+                Arg.Any<IExecutionObserver>(),
+                outputLogger, outputLogger);
+        }
+
+        [Test]
+        public void it_should_pass_execution_observer()
+        {
+            crossDomainTestExecutor.Received().Execute(
+                Arg.Any<string>(),
+                executionObserver,
+                Arg.Any<IOutputLogger>(), Arg.Any<IReplayLogger>());
+        }
+
+        [Test]
+        public void it_should_process_all_sources()
+        {
+            executedSources.ShouldBeEquivalentTo(sources);
         }
     }
 
@@ -56,6 +119,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
     {
         Dictionary<string, TestCase[]> testCaseBySource;
         IEnumerable<TestCase> testCases;
+        Dictionary<string, IEnumerable<string>> executedTests;
 
         public NSpecTestExecutor_when_running_test_cases()
         {
@@ -130,31 +194,50 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             base.before_each();
 
+            executedTests = new Dictionary<string, IEnumerable<string>>();
+
+            crossDomainTestExecutor
+                .When(exc => exc.Execute(Arg.Any<string>(), Arg.Any<IEnumerable<string>>(), executionObserver, outputLogger, outputLogger))
+                .Do(callInfo =>
+                {
+                    var source = callInfo.Arg<string>();
+
+                    var fullNames = callInfo.Arg<IEnumerable<string>>();
+
+                    executedTests[source] = fullNames;
+                });
+
             executor.RunTests(testCases, runContext, frameworkHandle);
         }
 
         [Test]
-        [Ignore("Yet to be implemented")]
-        public void it_should_be_implemented()
+        public void it_should_pass_message_logger()
         {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class NSpecTestExecutor_when_running_sources : NSpecTestExecutor_desc_base
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            executor.RunTests(sources, runContext, frameworkHandle);
+            crossDomainTestExecutor.Received().Execute(
+                Arg.Any<string>(), 
+                Arg.Any<IEnumerable<string>>(),
+                Arg.Any<IExecutionObserver>(), 
+                outputLogger, outputLogger);
         }
 
         [Test]
-        [Ignore("Yet to be implemented")]
-        public void it_should_be_implemented()
+        public void it_should_pass_execution_observer()
         {
-            throw new NotImplementedException();
+            crossDomainTestExecutor.Received().Execute(
+                Arg.Any<string>(),
+                Arg.Any<IEnumerable<string>>(),
+                executionObserver, 
+                Arg.Any<IOutputLogger>(), Arg.Any<IReplayLogger>());
+        }
+
+        [Test]
+        public void it_should_process_all_test_cases()
+        {
+            var expected = testCases
+                .GroupBy(tc => tc.Source)
+                .ToDictionary(group => group.Key, group => group.Select(tc => tc.FullyQualifiedName));
+
+            executedTests.ShouldBeEquivalentTo(expected);
         }
     }
 }

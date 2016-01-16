@@ -6,6 +6,7 @@ using NSpec.VsAdapter.Execution;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,8 @@ namespace NSpec.VsAdapter.TestAdapter
             this.crossDomainTestExecutor = crossDomainTestExecutor;
             this.executionObserverFactory = executionObserverFactory;
             this.loggerFactory = loggerFactory;
+
+            disposable = Disposable.Empty;
         }
 
         public void Dispose()
@@ -53,10 +56,10 @@ namespace NSpec.VsAdapter.TestAdapter
 
             var executionObserver = executionObserverFactory.Create((ITestExecutionRecorder)frameworkHandle);
 
-            sources.Do(assemblyPath =>
-                {
-                    crossDomainTestExecutor.Execute(assemblyPath, executionObserver, outputLogger, outputLogger);
-                });
+            foreach (var assemblyPath in sources)
+            {
+                crossDomainTestExecutor.Execute(assemblyPath, executionObserver, outputLogger, outputLogger);
+            }
 
             outputLogger.Info("Execution by source paths finished");
         }
@@ -69,6 +72,19 @@ namespace NSpec.VsAdapter.TestAdapter
             var outputLogger = loggerFactory.CreateOutput(frameworkHandle);
 
             outputLogger.Info("Execution by TestCases started");
+
+            var executionObserver = executionObserverFactory.Create((ITestExecutionRecorder)frameworkHandle);
+
+            var testCaseGroupsBySource = tests.GroupBy(t => t.Source);
+
+            foreach (var group in testCaseGroupsBySource)
+            {
+                string assemblyPath = group.Key;
+
+                var testCaseFullNames = group.Select(tc => tc.FullyQualifiedName);
+
+                crossDomainTestExecutor.Execute(assemblyPath, testCaseFullNames, executionObserver, outputLogger, outputLogger);
+            }
 
             outputLogger.Error("Execution by TestCases NOT IMPLEMENTED yet"); // TODO
 

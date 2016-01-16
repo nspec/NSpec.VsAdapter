@@ -49,6 +49,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         public virtual void after_each()
         {
             autoSubstitute.Dispose();
+            discoverer.Dispose();
         }
     }
 
@@ -144,9 +145,11 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             var allSpecs = specificationBySource.SelectMany(group => group.Value);
 
-            var specFullNames = allSpecs.Select(spec => spec.FullName);
+            var expected = allSpecs.Select(spec => spec.FullName);
 
-            testCases.Select(tc => tc.FullyQualifiedName).Should().BeEquivalentTo(specFullNames);
+            var actual = testCases.Select(tc => tc.FullyQualifiedName);
+
+            actual.Should().BeEquivalentTo(expected);
         }
     }
 }

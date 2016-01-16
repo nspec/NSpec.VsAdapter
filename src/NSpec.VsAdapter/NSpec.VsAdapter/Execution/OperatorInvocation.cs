@@ -8,9 +8,17 @@ namespace NSpec.VsAdapter.Execution
 {
     public class OperatorInvocation : IOperatorInvocation
     {
-        public OperatorInvocation(string assemblyPath, IExecutionObserver executionObserver, ISerializableLogger logger)
+        public OperatorInvocation(string assemblyPath, 
+            IExecutionObserver executionObserver, ISerializableLogger logger)
+            : this(assemblyPath, runAll, executionObserver, logger)
+        {
+        }
+
+        public OperatorInvocation(string assemblyPath, string[] exampleFullNames, 
+            IExecutionObserver executionObserver, ISerializableLogger logger)
         {
             this.assemblyPath = assemblyPath;
+            this.exampleFullNames = exampleFullNames;
             this.executionObserver = executionObserver;
             this.logger = logger;
         }
@@ -21,9 +29,33 @@ namespace NSpec.VsAdapter.Execution
 
             var contexts = BuildContexts(assemblyPath);
 
-            contexts.Run(executionObserver, false);
+            int count;
 
-            int count = contexts.Count();
+            if (exampleFullNames == runAll)
+            {
+                contexts.Run(executionObserver, false);
+
+                count = contexts.Count();
+            }
+            else
+            {
+                // original idea taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Executor.cs
+
+                var allExamples = contexts.SelectMany(ctx => ctx.Examples);
+
+                var selectedNames = new HashSet<string>(exampleFullNames);
+
+                var selectedExamples = allExamples.Where(exm => selectedNames.Contains(exm.FullName()));
+
+                var selectedContexts = selectedExamples.Select(exm => exm.Context);
+
+                foreach (var context in selectedContexts)
+                {
+                    context.Run(executionObserver, false);
+                }
+
+                count = selectedContexts.Count();
+            }
 
             logger.Debug(String.Format("Finish operating tests in '{0}'", assemblyPath));
 
@@ -52,7 +84,10 @@ namespace NSpec.VsAdapter.Execution
         }
 
         readonly string assemblyPath;
+        readonly string[] exampleFullNames;
         readonly IExecutionObserver executionObserver;
         readonly ISerializableLogger logger;
+
+        static readonly string[] runAll = null;
     }
 }

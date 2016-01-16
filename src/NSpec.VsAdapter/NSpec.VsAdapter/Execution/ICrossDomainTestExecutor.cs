@@ -8,7 +8,12 @@ namespace NSpec.VsAdapter.Execution
 {
     public interface ICrossDomainTestExecutor
     {
-        void Execute(string assemblyPath, IExecutionObserver executionObserver, 
+        void Execute(string assemblyPath, 
+            IExecutionObserver executionObserver, 
+            IOutputLogger outputLogger, IReplayLogger replayLogger);
+
+        void Execute(string assemblyPath, IEnumerable<string> testCaseFullNames, 
+            IExecutionObserver executionObserver,
             IOutputLogger outputLogger, IReplayLogger replayLogger);
     }
 }
