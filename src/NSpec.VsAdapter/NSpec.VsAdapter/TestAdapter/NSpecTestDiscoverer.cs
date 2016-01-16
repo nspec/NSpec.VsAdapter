@@ -16,7 +16,7 @@ namespace NSpec.VsAdapter.TestAdapter
     [DefaultExecutorUri(Constants.ExecutorUriString)]
     public class NSpecTestDiscoverer : ITestDiscoverer, IDisposable
     {
-        // used by Visual Studio test infrastructure
+        // used by Visual Studio test infrastructure, by integration tests
         public NSpecTestDiscoverer() : this(
             DIContainer.Instance.Discoverer.Resolve<ICrossDomainTestDiscoverer>(),
             DIContainer.Instance.Discoverer.Resolve<ITestCaseMapper>(),
@@ -24,7 +24,7 @@ namespace NSpec.VsAdapter.TestAdapter
         {
         }
 
-        // used to test this adapter
+        // used by unit tests
         public NSpecTestDiscoverer(
             ICrossDomainTestDiscoverer crossDomainTestDiscoverer, 
             ITestCaseMapper testCaseMapper,
@@ -53,11 +53,11 @@ namespace NSpec.VsAdapter.TestAdapter
 
             outputLogger.Info("Discovery started");
 
-            var specificationGroups =
+            var groupedSpecifications =
                 from assemblyPath in sources
                 select crossDomainTestDiscoverer.Discover(assemblyPath, outputLogger, outputLogger);
 
-            var specifications = specificationGroups.SelectMany(group => group);
+            var specifications = groupedSpecifications.SelectMany(group => group);
 
             var testCases = specifications.Select(testCaseMapper.FromSpecification);
 
