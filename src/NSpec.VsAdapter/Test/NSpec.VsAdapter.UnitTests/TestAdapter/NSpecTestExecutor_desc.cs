@@ -240,4 +240,14 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             executedTests.ShouldBeEquivalentTo(expected);
         }
     }
+
+    public class NSpecTestExecutor_when_canceling_run : NSpecTestExecutor_desc_base
+    {
+        [Test]
+        [Ignore("Yet to be implemented")]
+        public void it_should_process_all_test_cases()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

@@ -29,13 +29,13 @@ namespace NSpec.VsAdapter.Execution
 
             var contexts = BuildContexts(assemblyPath);
 
-            int count;
+            IEnumerable<ExampleBase> ranExamples;
 
             if (exampleFullNames == runAll)
             {
                 contexts.Run(executionObserver, false);
 
-                count = contexts.Count();
+                ranExamples = contexts.SelectMany(ctx => ctx.Examples);
             }
             else
             {
@@ -54,8 +54,10 @@ namespace NSpec.VsAdapter.Execution
                     context.Run(executionObserver, false);
                 }
 
-                count = selectedContexts.Count();
+                ranExamples = selectedContexts.SelectMany(ctx => ctx.Examples);
             }
+
+            int count = ranExamples.Count();
 
             logger.Debug(String.Format("Finish operating tests in '{0}'", assemblyPath));
 

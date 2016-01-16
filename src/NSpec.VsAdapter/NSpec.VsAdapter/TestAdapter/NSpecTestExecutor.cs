@@ -86,8 +86,6 @@ namespace NSpec.VsAdapter.TestAdapter
                 crossDomainTestExecutor.Execute(assemblyPath, testCaseFullNames, executionObserver, outputLogger, outputLogger);
             }
 
-            outputLogger.Error("Execution by TestCases NOT IMPLEMENTED yet"); // TODO
-
             outputLogger.Info("Execution by TestCases finished");
         }
 
