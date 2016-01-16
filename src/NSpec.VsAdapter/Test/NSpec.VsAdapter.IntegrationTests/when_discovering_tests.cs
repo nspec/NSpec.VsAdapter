@@ -46,7 +46,7 @@ namespace NSpec.VsAdapter.IntegrationTests
         }
 
         [Test]
-        public void it_should_find_all_examples()
+        public void it_should_find_all_examples_with_their_data()
         {
             var expected = SampleSpecsTestCaseData.All;
 
@@ -54,24 +54,7 @@ namespace NSpec.VsAdapter.IntegrationTests
 
             actual.Should().HaveCount(expected.Count());
 
-            actual.ShouldAllBeEquivalentTo(expected, options => options
-                .Excluding(tc => tc.Properties)
-                .Excluding(tc => tc.Traits));
-        }
-
-        [Test]
-        [Ignore("Tags/traits yet to be implemented")]
-        public void it_should_detect_tags()
-        {
-            var tags = sink.TestCases.SelectMany(tc => tc.Traits);
-
-            tags.Where(t => t.Name == "describe DeepThought").Should().HaveCount(4);
-
-            tags.Any(t => t.Name == "describe Earth").Should().BeTrue();
-            tags.Any(t => t.Name == "One-should-fail").Should().BeTrue();
-            tags.Any(t => t.Name == "One-should-pass").Should().BeTrue();
-            tags.Any(t => t.Name == "Should be skipped").Should().BeTrue();
-            tags.Any(t => t.Name == "Derived").Should().BeTrue();
+            actual.ShouldAllBeEquivalentTo(expected);
         }
 
         class CollectingSink : ITestCaseDiscoverySink

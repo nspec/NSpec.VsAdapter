@@ -123,6 +123,38 @@ namespace NSpec.VsAdapter.IntegrationTests
                 .Select(byExampleName => byExampleName.Value);
 
             ByTestCaseFullName = All.ToDictionary(tc => tc.FullyQualifiedName, tc => tc);
+
+            // add traits corresponding to tags
+
+            All.Where(tc => tc.FullyQualifiedName.Contains("ParentSpec"))
+                .Do(tc => tc.Traits.Add("ParentSpec", null));
+
+            All.Where(tc => tc.FullyQualifiedName.Contains("method context 1"))
+                .Do(tc => 
+                {
+                    tc.Traits.Add("Tag-1A", null);
+                    tc.Traits.Add("Tag-1B", null);
+                });
+
+            All.Where(tc => tc.FullyQualifiedName.Contains("ChildSpec"))
+                .Do(tc =>
+                {
+                    tc.Traits.Add("ChildSpec", null);
+                    tc.Traits.Add("Tag-Child", null);
+                });
+
+            All.Where(tc => tc.FullyQualifiedName.Contains("method context 3"))
+                .Do(tc => tc.Traits.Add("Tag-Child-example-skipped", null));
+        }
+
+        // adapted from https://github.com/mattflo/NSpec/blob/master/NSpec/Extensions.cs
+
+        public static IEnumerable<TestCase> Do(this IEnumerable<TestCase> source, Action<TestCase> action)
+        {
+            foreach (var t in source)
+                action(t);
+
+            return source;
         }
     }
 }
