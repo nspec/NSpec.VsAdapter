@@ -17,11 +17,15 @@ namespace NSpec.VsAdapter.TestAdapter
     public class NSpecTestDiscoverer : ITestDiscoverer, IDisposable
     {
         // used by Visual Studio test infrastructure, by integration tests
-        public NSpecTestDiscoverer() : this(
-            DIContainer.Instance.Discoverer.Resolve<ICrossDomainTestDiscoverer>(),
-            DIContainer.Instance.Discoverer.Resolve<ITestCaseMapper>(),
-            DIContainer.Instance.Discoverer.Resolve<ILoggerFactory>())
+        public NSpecTestDiscoverer()
         {
+            var scope = DIContainer.Instance.BeginScope();
+
+            disposable = scope;
+
+            crossDomainTestDiscoverer = scope.Resolve<ICrossDomainTestDiscoverer>();
+            testCaseMapper = scope.Resolve<ITestCaseMapper>();
+            loggerFactory = scope.Resolve<ILoggerFactory>();
         }
 
         // used by unit tests
@@ -37,7 +41,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
         public void Dispose()
         {
-            DIContainer.Instance.Discoverer.Dispose();
+            disposable.Dispose();
         }
 
         public void DiscoverTests(
@@ -69,5 +73,6 @@ namespace NSpec.VsAdapter.TestAdapter
         readonly ICrossDomainTestDiscoverer crossDomainTestDiscoverer;
         readonly ITestCaseMapper testCaseMapper;
         readonly ILoggerFactory loggerFactory;
+        readonly IDisposable disposable;
     }
 }

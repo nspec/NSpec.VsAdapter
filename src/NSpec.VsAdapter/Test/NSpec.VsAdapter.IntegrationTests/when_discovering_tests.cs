@@ -21,7 +21,7 @@ namespace NSpec.VsAdapter.IntegrationTests
         string targetDllPath;
 
         [SetUp]
-        public void setup()
+        public virtual void setup()
         {
             targetDllPath = TestConstants.SampleSpecsDllPath;
             
@@ -40,6 +40,12 @@ namespace NSpec.VsAdapter.IntegrationTests
             discoverer = new NSpecTestDiscoverer();
 
             discoverer.DiscoverTests(sources, discoveryContext, consoleLogger, sink);
+        }
+
+        [TearDown]
+        public virtual void after_each()
+        {
+            discoverer.Dispose();
         }
 
         [Test]
