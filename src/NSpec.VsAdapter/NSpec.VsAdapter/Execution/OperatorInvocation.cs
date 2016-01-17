@@ -1,4 +1,5 @@
 ﻿using NSpec.Domain;
+using NSpec.VsAdapter.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,9 @@ namespace NSpec.VsAdapter.Execution
         {
             logger.Debug(String.Format("Start operating tests in '{0}'", assemblyPath));
 
-            var contexts = BuildContexts(assemblyPath);
+            var contextFinder = new ContextFinder();
+
+            var contexts = contextFinder.BuildContexts(assemblyPath);
 
             IEnumerable<ExampleBase> ranExamples;
 
@@ -64,25 +67,6 @@ namespace NSpec.VsAdapter.Execution
             logger.Flush();
 
             return count;
-        }
-
-        static ContextCollection BuildContexts(string assemblyPath)
-        {
-            // TODO this is common to XxxInvocation: extract it, maybe in a base class or dependency
-
-            var reflector = new Reflector(assemblyPath);
-
-            var finder = new SpecFinder(reflector);
-
-            var conventions = new DefaultConventions();
-
-            var contextBuilder = new ContextBuilder(finder, conventions);
-
-            var contexts = contextBuilder.Contexts();
-
-            contexts.Build();
-
-            return contexts;
         }
 
         readonly string assemblyPath;

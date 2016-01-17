@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdapterInfo.cs" />
+    <Compile Include="Common\ContextFinder.cs" />
     <Compile Include="Execution\CrossDomainOperator.cs" />
     <Compile Include="Execution\CrossDomainTestExecutor.cs" />
     <Compile Include="Execution\ExecutionObserver.cs" />
