@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public interface ICrossDomainTestExecutor
+    public interface IBinaryTestExecutor
     {
         void Execute(string assemblyPath, 
             IExecutionObserver executionObserver, 

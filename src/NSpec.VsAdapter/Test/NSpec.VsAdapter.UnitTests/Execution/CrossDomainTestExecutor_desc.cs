@@ -15,7 +15,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
     [Category("CrossDomainTestExecutor")]
     public abstract class CrossDomainTestExecutor_desc_base
     {
-        protected CrossDomainTestExecutor executor;
+        protected BinaryTestExecutor executor;
 
         protected AutoSubstitute autoSubstitute;
         protected ICrossDomainOperator crossDomainOperator;
@@ -45,7 +45,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             logger = autoSubstitute.Resolve<IOutputLogger>();
             crossDomainLogger = autoSubstitute.Resolve<IReplayLogger>();
 
-            executor = autoSubstitute.Resolve<CrossDomainTestExecutor>();
+            executor = autoSubstitute.Resolve<BinaryTestExecutor>();
         }
 
         [TearDown]

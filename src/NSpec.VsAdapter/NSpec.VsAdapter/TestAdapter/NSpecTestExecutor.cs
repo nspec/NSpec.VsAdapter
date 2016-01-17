@@ -22,18 +22,18 @@ namespace NSpec.VsAdapter.TestAdapter
 
             disposable = scope;
 
-            this.crossDomainTestExecutor = scope.Resolve<ICrossDomainTestExecutor>();
+            this.binaryTestExecutor = scope.Resolve<IBinaryTestExecutor>();
             this.executionObserverFactory = scope.Resolve<IExecutionObserverFactory>();
             this.loggerFactory = scope.Resolve<ILoggerFactory>();
         }
 
         // used by unit tests
         public NSpecTestExecutor(
-            ICrossDomainTestExecutor crossDomainTestExecutor,
+            IBinaryTestExecutor binaryTestExecutor,
             IExecutionObserverFactory executionObserverFactory,
             ILoggerFactory loggerFactory)
         {
-            this.crossDomainTestExecutor = crossDomainTestExecutor;
+            this.binaryTestExecutor = binaryTestExecutor;
             this.executionObserverFactory = executionObserverFactory;
             this.loggerFactory = loggerFactory;
 
@@ -58,7 +58,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
             foreach (var assemblyPath in sources)
             {
-                crossDomainTestExecutor.Execute(assemblyPath, executionObserver, outputLogger, outputLogger);
+                binaryTestExecutor.Execute(assemblyPath, executionObserver, outputLogger, outputLogger);
             }
 
             outputLogger.Info("Execution by source paths finished");
@@ -83,7 +83,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
                 var testCaseFullNames = group.Select(tc => tc.FullyQualifiedName);
 
-                crossDomainTestExecutor.Execute(assemblyPath, testCaseFullNames, executionObserver, outputLogger, outputLogger);
+                binaryTestExecutor.Execute(assemblyPath, testCaseFullNames, executionObserver, outputLogger, outputLogger);
             }
 
             outputLogger.Info("Execution by TestCases finished");
@@ -94,7 +94,7 @@ namespace NSpec.VsAdapter.TestAdapter
             throw new NotImplementedException();
         }
 
-        readonly ICrossDomainTestExecutor crossDomainTestExecutor;
+        readonly IBinaryTestExecutor binaryTestExecutor;
         readonly IExecutionObserverFactory executionObserverFactory;
         readonly ILoggerFactory loggerFactory;
         readonly IDisposable disposable;

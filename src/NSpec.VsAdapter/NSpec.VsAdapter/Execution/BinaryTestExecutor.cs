@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public class CrossDomainTestExecutor : ICrossDomainTestExecutor
+    public class BinaryTestExecutor : IBinaryTestExecutor
     {
-        public CrossDomainTestExecutor(ICrossDomainOperator crossDomainOperator, IOperatorInvocationFactory operatorInvocationFactory)
+        public BinaryTestExecutor(ICrossDomainOperator crossDomainOperator, IOperatorInvocationFactory operatorInvocationFactory)
         {
             this.crossDomainOperator = crossDomainOperator;
             this.operatorInvocationFactory = operatorInvocationFactory;

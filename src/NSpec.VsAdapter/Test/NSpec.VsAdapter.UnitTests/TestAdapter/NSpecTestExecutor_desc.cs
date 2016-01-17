@@ -22,7 +22,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         protected NSpecTestExecutor executor;
 
         protected AutoSubstitute autoSubstitute;
-        protected ICrossDomainTestExecutor crossDomainTestExecutor;
+        protected IBinaryTestExecutor binaryTestExecutor;
         protected IExecutionObserver executionObserver;
         protected OutputLogger outputLogger;
         protected IRunContext runContext;
@@ -47,7 +47,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             frameworkHandle = autoSubstitute.Resolve<IFrameworkHandle>();
 
-            crossDomainTestExecutor = autoSubstitute.Resolve<ICrossDomainTestExecutor>();
+            binaryTestExecutor = autoSubstitute.Resolve<IBinaryTestExecutor>();
 
             outputLogger = autoSubstitute.Resolve<OutputLogger>();
             var loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
@@ -78,7 +78,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             executedSources = new List<string>();
 
-            crossDomainTestExecutor
+            binaryTestExecutor
                 .When(exc => exc.Execute(Arg.Any<string>(), executionObserver, outputLogger, outputLogger))
                 .Do(callInfo =>
                 {
@@ -93,7 +93,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_pass_message_logger()
         {
-            crossDomainTestExecutor.Received().Execute(
+            binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
                 Arg.Any<IExecutionObserver>(),
                 outputLogger, outputLogger);
@@ -102,7 +102,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_pass_execution_observer()
         {
-            crossDomainTestExecutor.Received().Execute(
+            binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
                 executionObserver,
                 Arg.Any<IOutputLogger>(), Arg.Any<IReplayLogger>());
@@ -196,7 +196,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             executedTests = new Dictionary<string, IEnumerable<string>>();
 
-            crossDomainTestExecutor
+            binaryTestExecutor
                 .When(exc => exc.Execute(Arg.Any<string>(), Arg.Any<IEnumerable<string>>(), executionObserver, outputLogger, outputLogger))
                 .Do(callInfo =>
                 {
@@ -213,7 +213,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_pass_message_logger()
         {
-            crossDomainTestExecutor.Received().Execute(
+            binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(), 
                 Arg.Any<IEnumerable<string>>(),
                 Arg.Any<IExecutionObserver>(), 
@@ -223,7 +223,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_pass_execution_observer()
         {
-            crossDomainTestExecutor.Received().Execute(
+            binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
                 Arg.Any<IEnumerable<string>>(),
                 executionObserver, 
