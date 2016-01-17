@@ -24,18 +24,18 @@ namespace NSpec.VsAdapter.TestAdapter
 
             disposable = scope;
 
-            crossDomainTestDiscoverer = scope.Resolve<ICrossDomainTestDiscoverer>();
+            binaryTestDiscoverer = scope.Resolve<IBinaryTestDiscoverer>();
             testCaseMapper = scope.Resolve<ITestCaseMapper>();
             loggerFactory = scope.Resolve<ILoggerFactory>();
         }
 
         // used by unit tests
         public NSpecTestDiscoverer(
-            ICrossDomainTestDiscoverer crossDomainTestDiscoverer, 
+            IBinaryTestDiscoverer binaryTestDiscoverer, 
             ITestCaseMapper testCaseMapper,
             ILoggerFactory loggerFactory)
         {
-            this.crossDomainTestDiscoverer = crossDomainTestDiscoverer;
+            this.binaryTestDiscoverer = binaryTestDiscoverer;
             this.testCaseMapper = testCaseMapper;
             this.loggerFactory = loggerFactory;
 
@@ -62,7 +62,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
             var groupedSpecifications =
                 from assemblyPath in sources
-                select crossDomainTestDiscoverer.Discover(assemblyPath, outputLogger, outputLogger);
+                select binaryTestDiscoverer.Discover(assemblyPath, outputLogger, outputLogger);
 
             var specifications = groupedSpecifications.SelectMany(group => group);
 
@@ -73,7 +73,7 @@ namespace NSpec.VsAdapter.TestAdapter
             outputLogger.Info("Discovery finished");
         }
 
-        readonly ICrossDomainTestDiscoverer crossDomainTestDiscoverer;
+        readonly IBinaryTestDiscoverer binaryTestDiscoverer;
         readonly ITestCaseMapper testCaseMapper;
         readonly ILoggerFactory loggerFactory;
         readonly IDisposable disposable;

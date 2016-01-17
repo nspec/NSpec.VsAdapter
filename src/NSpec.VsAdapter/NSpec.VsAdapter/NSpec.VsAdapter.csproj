@@ -110,13 +110,13 @@
     <Compile Include="CrossDomain\AppDomainFactory.cs" />
     <Compile Include="Discovery\CollectorInvocation.cs" />
     <Compile Include="Discovery\CrossDomainCollector.cs" />
-    <Compile Include="Discovery\CrossDomainTestDiscoverer.cs" />
+    <Compile Include="Discovery\BinaryTestDiscoverer.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Discovery\SpecMapper.cs" />
     <Compile Include="CrossDomain\IAppDomainFactory.cs" />
     <Compile Include="Discovery\ICollectorInvocation.cs" />
     <Compile Include="Discovery\ICrossDomainCollector.cs" />
-    <Compile Include="Discovery\ICrossDomainTestDiscoverer.cs" />
+    <Compile Include="Discovery\IBinaryTestDiscoverer.cs" />
     <Compile Include="CrossDomain\ICrossDomainRunner.cs" />
     <Compile Include="CrossDomain\IMarshalingFactory.cs" />
     <Compile Include="CrossDomain\ITargetAppDomain.cs" />

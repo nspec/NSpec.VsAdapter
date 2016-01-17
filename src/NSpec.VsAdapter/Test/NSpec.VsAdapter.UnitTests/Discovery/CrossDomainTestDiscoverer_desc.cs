@@ -17,7 +17,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
     [Category("CrossDomainTestDiscoverer")]
     public abstract class CrossDomainTestDiscoverer_desc_base
     {
-        protected CrossDomainTestDiscoverer discoverer;
+        protected BinaryTestDiscoverer discoverer;
 
         protected AutoSubstitute autoSubstitute;
         protected ICrossDomainCollector crossDomainCollector;
@@ -36,7 +36,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             logger = autoSubstitute.Resolve<IOutputLogger>();
             crossDomainLogger = autoSubstitute.Resolve<IReplayLogger>();
 
-            discoverer = autoSubstitute.Resolve<CrossDomainTestDiscoverer>();
+            discoverer = autoSubstitute.Resolve<BinaryTestDiscoverer>();
         }
 
         [TearDown]

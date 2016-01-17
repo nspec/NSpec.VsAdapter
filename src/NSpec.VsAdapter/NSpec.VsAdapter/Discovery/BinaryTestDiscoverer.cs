@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Discovery
 {
-    public class CrossDomainTestDiscoverer : ICrossDomainTestDiscoverer
+    public class BinaryTestDiscoverer : IBinaryTestDiscoverer
     {
-        public CrossDomainTestDiscoverer(ICrossDomainCollector crossDomainCollector)
+        public BinaryTestDiscoverer(ICrossDomainCollector crossDomainCollector)
         {
             this.crossDomainCollector = crossDomainCollector;
         }

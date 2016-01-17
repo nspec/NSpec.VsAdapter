@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Discovery
 {
-    public interface ICrossDomainTestDiscoverer
+    public interface IBinaryTestDiscoverer
     {
         IEnumerable<NSpecSpecification> Discover(string assemblyPath, IOutputLogger logger, IReplayLogger crossDomainLogger);
     }

@@ -24,7 +24,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         protected AutoSubstitute autoSubstitute;
         protected List<TestCase> testCases;
         protected ITestCaseDiscoverySink discoverySink;
-        protected ICrossDomainTestDiscoverer crossDomainTestDiscoverer;
+        protected IBinaryTestDiscoverer binaryTestDiscoverer;
 
         [SetUp]
         public virtual void before_each()
@@ -40,7 +40,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     testCases.Add(discoveredTestCase);
                 });
 
-            crossDomainTestDiscoverer = autoSubstitute.Resolve<ICrossDomainTestDiscoverer>();
+            binaryTestDiscoverer = autoSubstitute.Resolve<IBinaryTestDiscoverer>();
 
             discoverer = autoSubstitute.Resolve<NSpecTestDiscoverer>();
         }
@@ -96,7 +96,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             base.before_each();
 
-            crossDomainTestDiscoverer.Discover(null, null, null).ReturnsForAnyArgs(callInfo =>
+            binaryTestDiscoverer.Discover(null, null, null).ReturnsForAnyArgs(callInfo =>
                 {
                     string assemblyPath = callInfo.Arg<string>();
                     
@@ -136,7 +136,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_pass_message_logger()
         {
-            crossDomainTestDiscoverer.Received().Discover(
+            binaryTestDiscoverer.Received().Discover(
                 Arg.Any<string>(), outputLogger, outputLogger);
         }
 
