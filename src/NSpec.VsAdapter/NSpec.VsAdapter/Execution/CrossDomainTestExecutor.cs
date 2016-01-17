@@ -8,9 +8,10 @@ namespace NSpec.VsAdapter.Execution
 {
     public class CrossDomainTestExecutor : ICrossDomainTestExecutor
     {
-        public CrossDomainTestExecutor(ICrossDomainOperator crossDomainOperator)
+        public CrossDomainTestExecutor(ICrossDomainOperator crossDomainOperator, IOperatorInvocationFactory operatorInvocationFactory)
         {
             this.crossDomainOperator = crossDomainOperator;
+            this.operatorInvocationFactory = operatorInvocationFactory;
         }
 
         public void Execute(string assemblyPath, IExecutionObserver executionObserver,
@@ -19,7 +20,7 @@ namespace NSpec.VsAdapter.Execution
             logger.Debug(String.Format("Executing tests in container: '{0}'", assemblyPath));
 
             BuildOperatorInvocation buildOperatorInvocation = logRecorder =>
-                new OperatorInvocation(assemblyPath, executionObserver, logRecorder);
+                operatorInvocationFactory.Create(assemblyPath, executionObserver, logRecorder);
 
             CrossDomainExecute(assemblyPath, buildOperatorInvocation, logger, crossDomainLogger);
         }
@@ -33,7 +34,9 @@ namespace NSpec.VsAdapter.Execution
             var exampleFullNames = testCaseFullNames.ToArray();
 
             BuildOperatorInvocation buildOperatorInvocation = logRecorder =>
-                new OperatorInvocation(assemblyPath, exampleFullNames, executionObserver, logRecorder);
+                operatorInvocationFactory.Create(assemblyPath, exampleFullNames, executionObserver, logRecorder);
+
+            CrossDomainExecute(assemblyPath, buildOperatorInvocation, logger, crossDomainLogger);
         }
 
         void CrossDomainExecute(string assemblyPath, BuildOperatorInvocation buildOperatorInvocation,
@@ -64,7 +67,8 @@ namespace NSpec.VsAdapter.Execution
         }
 
         readonly ICrossDomainOperator crossDomainOperator;
+        readonly IOperatorInvocationFactory operatorInvocationFactory;
 
-        delegate OperatorInvocation BuildOperatorInvocation(LogRecorder logRecorder);
+        delegate IOperatorInvocation BuildOperatorInvocation(LogRecorder logRecorder);
     }
 }

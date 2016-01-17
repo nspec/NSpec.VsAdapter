@@ -110,6 +110,7 @@
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Discovery\SpecMapper_desc.cs" />
     <Compile Include="DummyTestException.cs" />
+    <Compile Include="Execution\CrossDomainTestExecutor_desc.cs" />
     <Compile Include="TestAdapter\NSpecTestExecutor_desc.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />

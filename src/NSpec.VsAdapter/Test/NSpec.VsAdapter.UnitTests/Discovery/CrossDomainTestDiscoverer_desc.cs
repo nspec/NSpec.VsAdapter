@@ -20,21 +20,21 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         protected CrossDomainTestDiscoverer discoverer;
 
         protected AutoSubstitute autoSubstitute;
+        protected ICrossDomainCollector crossDomainCollector;
         protected IOutputLogger logger;
         protected IReplayLogger crossDomainLogger;
-        protected ICrossDomainCollector crossDomainCollector;
 
-        protected const string somePath = @".\some\path\to\library.dll";
+        protected const string somePath = @".\path\to\some\dummy-library.dll";
 
         [SetUp]
         public virtual void before_each()
         {
             autoSubstitute = new AutoSubstitute();
 
+            crossDomainCollector = autoSubstitute.Resolve<ICrossDomainCollector>();
+
             logger = autoSubstitute.Resolve<IOutputLogger>();
             crossDomainLogger = autoSubstitute.Resolve<IReplayLogger>();
-
-            crossDomainCollector = autoSubstitute.Resolve<ICrossDomainCollector>();
 
             discoverer = autoSubstitute.Resolve<CrossDomainTestDiscoverer>();
         }
