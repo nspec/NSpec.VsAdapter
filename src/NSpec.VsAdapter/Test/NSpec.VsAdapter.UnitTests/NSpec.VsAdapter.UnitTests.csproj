@@ -103,14 +103,14 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Discovery\CrossDomainCollector_desc.cs" />
-    <Compile Include="Discovery\CrossDomainTestDiscoverer_desc.cs" />
+    <Compile Include="Discovery\BinaryTestDiscoverer_desc.cs" />
     <Compile Include="Discovery\DebugInfoProvider_desc.cs" />
     <Compile Include="Discovery\SampleSpecs\SampleDebugInfo.cs" />
     <Compile Include="Discovery\SampleSpecs\SpecSample.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Discovery\SpecMapper_desc.cs" />
     <Compile Include="DummyTestException.cs" />
-    <Compile Include="Execution\CrossDomainTestExecutor_desc.cs" />
+    <Compile Include="Execution\BinaryTestExecutor_desc.cs" />
     <Compile Include="TestAdapter\NSpecTestExecutor_desc.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />

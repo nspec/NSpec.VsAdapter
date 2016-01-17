@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests.Execution
 {
     [TestFixture]
-    [Category("CrossDomainTestExecutor")]
+    [Category("BinaryTestExecutor")]
     public abstract class CrossDomainTestExecutor_desc_base
     {
         protected BinaryTestExecutor executor;

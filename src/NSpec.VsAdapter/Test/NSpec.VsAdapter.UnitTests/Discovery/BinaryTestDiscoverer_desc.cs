@@ -14,8 +14,8 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests.Discovery
 {
     [TestFixture]
-    [Category("CrossDomainTestDiscoverer")]
-    public abstract class CrossDomainTestDiscoverer_desc_base
+    [Category("BinaryTestDiscoverer")]
+    public abstract class BinaryTestDiscoverer_desc_base
     {
         protected BinaryTestDiscoverer discoverer;
 
@@ -46,7 +46,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         }
     }
 
-    public class CrossDomainTestDiscoverer_when_discovery_succeeds : CrossDomainTestDiscoverer_desc_base
+    public class BinaryTestDiscoverer_when_discovery_succeeds : BinaryTestDiscoverer_desc_base
     {
         readonly static NSpecSpecification[] someSpecifications = new NSpecSpecification[] 
         { 
@@ -74,7 +74,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         }
     }
 
-    public class CrossDomainTestDiscoverer_when_discovery_fails : CrossDomainTestDiscoverer_desc_base
+    public class BinaryTestDiscoverer_when_discovery_fails : BinaryTestDiscoverer_desc_base
     {
         IEnumerable<NSpecSpecification> specifications;
 
