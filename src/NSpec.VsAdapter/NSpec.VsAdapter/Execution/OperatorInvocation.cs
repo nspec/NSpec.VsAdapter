@@ -9,16 +9,16 @@ namespace NSpec.VsAdapter.Execution
 {
     public class OperatorInvocation : IOperatorInvocation
     {
-        public OperatorInvocation(string assemblyPath, 
+        public OperatorInvocation(string binaryPath, 
             IExecutionObserver executionObserver, ISerializableLogger logger)
-            : this(assemblyPath, runAll, executionObserver, logger)
+            : this(binaryPath, runAll, executionObserver, logger)
         {
         }
 
-        public OperatorInvocation(string assemblyPath, string[] exampleFullNames, 
+        public OperatorInvocation(string binaryPath, string[] exampleFullNames, 
             IExecutionObserver executionObserver, ISerializableLogger logger)
         {
-            this.assemblyPath = assemblyPath;
+            this.binaryPath = binaryPath;
             this.exampleFullNames = exampleFullNames;
             this.executionObserver = executionObserver;
             this.logger = logger;
@@ -26,11 +26,11 @@ namespace NSpec.VsAdapter.Execution
 
         public int Operate()
         {
-            logger.Debug(String.Format("Start operating tests in '{0}'", assemblyPath));
+            logger.Debug(String.Format("Start operating tests in '{0}'", binaryPath));
 
             var contextFinder = new ContextFinder();
 
-            var contexts = contextFinder.BuildContexts(assemblyPath);
+            var contexts = contextFinder.BuildContexts(binaryPath);
 
             IEnumerable<ExampleBase> ranExamples;
 
@@ -62,14 +62,14 @@ namespace NSpec.VsAdapter.Execution
 
             int count = ranExamples.Count();
 
-            logger.Debug(String.Format("Finish operating tests in '{0}'", assemblyPath));
+            logger.Debug(String.Format("Finish operating tests in '{0}'", binaryPath));
 
             logger.Flush();
 
             return count;
         }
 
-        readonly string assemblyPath;
+        readonly string binaryPath;
         readonly string[] exampleFullNames;
         readonly IExecutionObserver executionObserver;
         readonly ISerializableLogger logger;

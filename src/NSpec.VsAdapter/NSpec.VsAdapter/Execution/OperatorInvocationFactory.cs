@@ -8,16 +8,16 @@ namespace NSpec.VsAdapter.Execution
 {
     public class OperatorInvocationFactory : IOperatorInvocationFactory
     {
-        public IOperatorInvocation Create(string assemblyPath, 
+        public IOperatorInvocation Create(string binaryPath, 
             IExecutionObserver executionObserver, LogRecorder logRecorder)
         {
-            return new OperatorInvocation(assemblyPath, executionObserver, logRecorder);
+            return new OperatorInvocation(binaryPath, executionObserver, logRecorder);
         }
 
-        public IOperatorInvocation Create(string assemblyPath, string[] exampleFullNames, 
+        public IOperatorInvocation Create(string binaryPath, string[] exampleFullNames, 
             IExecutionObserver executionObserver, LogRecorder logRecorder)
         {
-            return new OperatorInvocation(assemblyPath, exampleFullNames, executionObserver, logRecorder);
+            return new OperatorInvocation(binaryPath, exampleFullNames, executionObserver, logRecorder);
         }
     }
 }

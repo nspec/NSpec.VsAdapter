@@ -9,9 +9,9 @@ namespace NSpec.VsAdapter.Discovery
 {
     public class SpecMapper
     {
-        public SpecMapper(string assemblyPath, IDebugInfoProvider debugInfoProvider)
+        public SpecMapper(string binaryPath, IDebugInfoProvider debugInfoProvider)
         {
-            this.assemblyPath = assemblyPath;
+            this.binaryPath = binaryPath;
             this.debugInfoProvider = debugInfoProvider;
         }
 
@@ -27,7 +27,7 @@ namespace NSpec.VsAdapter.Discovery
             var specification = new NSpecSpecification()
             {
                 FullName = example.FullName(),
-                SourceAssembly = assemblyPath,
+                SourceAssembly = binaryPath,
                 SourceFilePath = navigationData.FileName,
                 SourceLineNumber = navigationData.MinLineNumber,
                 Tags = example.Tags.Select(tag => tag.Replace("_", " ")).ToArray(),
@@ -36,7 +36,7 @@ namespace NSpec.VsAdapter.Discovery
             return specification;
         }
 
-        readonly string assemblyPath;
+        readonly string binaryPath;
         readonly IDebugInfoProvider debugInfoProvider;
 
         // taken from https://github.com/BrainCrumbz/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Discoverer.cs

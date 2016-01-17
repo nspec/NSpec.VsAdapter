@@ -13,22 +13,22 @@ namespace NSpec.VsAdapter.Discovery
             this.crossDomainCollector = crossDomainCollector;
         }
 
-        public IEnumerable<NSpecSpecification> Discover(string assemblyPath, 
+        public IEnumerable<NSpecSpecification> Discover(string binaryPath, 
             IOutputLogger logger, IReplayLogger crossDomainLogger)
         {
             IEnumerable<NSpecSpecification> specifications;
 
             try
             {
-                logger.Debug(String.Format("Discovering tests in binary: '{0}'", assemblyPath));
+                logger.Debug(String.Format("Discovering tests in binary: '{0}'", binaryPath));
 
                 var logRecorder = new LogRecorder();
 
                 // TODO exclude assembly/binary right away if nspec.dll is not in the same path (or sub-path?)
 
-                var collectorInvocation = new CollectorInvocation(assemblyPath, logRecorder);
+                var collectorInvocation = new CollectorInvocation(binaryPath, logRecorder);
 
-                specifications = crossDomainCollector.Run(assemblyPath, collectorInvocation.Collect);
+                specifications = crossDomainCollector.Run(binaryPath, collectorInvocation.Collect);
 
                 var logReplayer = new LogReplayer(crossDomainLogger);
 
@@ -42,7 +42,7 @@ namespace NSpec.VsAdapter.Discovery
             {
                 // report problem and return for the next assembly, without crashing the test discovery process
 
-                var message = String.Format("Exception thrown while discovering tests in binary '{0}'", assemblyPath);
+                var message = String.Format("Exception thrown while discovering tests in binary '{0}'", binaryPath);
                 
                 logger.Error(ex, message);
 

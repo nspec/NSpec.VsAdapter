@@ -61,9 +61,9 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
             crossDomainCollector.Run(null, null).ReturnsForAnyArgs(callInfo =>
                 {
-                    string assemblyPath = callInfo.Arg<string>();
+                    string binaryPath = callInfo.Arg<string>();
 
-                    return (assemblyPath == somePath ? someSpecifications : new NSpecSpecification[0]);
+                    return (binaryPath == somePath ? someSpecifications : new NSpecSpecification[0]);
                 });
         }
 

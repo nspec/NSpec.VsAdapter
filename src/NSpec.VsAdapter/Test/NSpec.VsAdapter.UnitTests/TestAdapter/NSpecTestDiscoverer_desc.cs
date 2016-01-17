@@ -98,11 +98,11 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             binaryTestDiscoverer.Discover(null, null, null).ReturnsForAnyArgs(callInfo =>
                 {
-                    string assemblyPath = callInfo.Arg<string>();
+                    string binaryPath = callInfo.Arg<string>();
                     
-                    if (sources.Contains(assemblyPath))
+                    if (sources.Contains(binaryPath))
                     {
-                        return specificationBySource[assemblyPath];
+                        return specificationBySource[binaryPath];
                     }
                     else
                     {

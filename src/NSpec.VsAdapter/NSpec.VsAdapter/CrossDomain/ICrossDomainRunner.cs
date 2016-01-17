@@ -8,6 +8,6 @@ namespace NSpec.VsAdapter.CrossDomain
 {
     public interface ICrossDomainRunner<TResult>
     {
-        TResult Run(string assemblyPath, Func<TResult> targetOperation);
+        TResult Run(string binaryPath, Func<TResult> targetOperation);
     }
 }

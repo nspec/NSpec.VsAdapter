@@ -17,9 +17,9 @@ namespace NSpec.VsAdapter.CrossDomain
             this.marshalingFactory = marshalingFactory;
         }
 
-        public virtual TResult Run(string assemblyPath, Func<TResult> targetOperation)
+        public virtual TResult Run(string binaryPath, Func<TResult> targetOperation)
         {
-            using (var targetDomain = appDomainFactory.Create(assemblyPath))
+            using (var targetDomain = appDomainFactory.Create(binaryPath))
             using (var crossDomainProxy = marshalingFactory.CreateProxy(targetDomain))
             {
                 TResult result = crossDomainProxy.Execute(targetOperation);

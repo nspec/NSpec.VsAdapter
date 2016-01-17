@@ -11,12 +11,12 @@ namespace NSpec.VsAdapter.CrossDomain
 {
     public class AppDomainFactory : IAppDomainFactory
     {
-        public ITargetAppDomain Create(string assemblyPath)
+        public ITargetAppDomain Create(string binaryPath)
         {
             const string targetDomainName = "NSpec.VsAdapter.NSpecDomainRunner.Run";
             const Evidence useCurrentDomainEvidence = null;
 
-            string configFilePath = assemblyPath + ".config";
+            string configFilePath = binaryPath + ".config";
 
             var targetDomainSetup = new AppDomainSetup();
 
@@ -28,7 +28,7 @@ namespace NSpec.VsAdapter.CrossDomain
 
             var appDomain = AppDomain.CreateDomain(targetDomainName, useCurrentDomainEvidence, targetDomainSetup);
 
-            var resolveHandler = new AssemblyResolveHandler(assemblyPath);
+            var resolveHandler = new AssemblyResolveHandler(binaryPath);
 
             appDomain.AssemblyResolve += resolveHandler.Failed;
 
@@ -40,9 +40,9 @@ namespace NSpec.VsAdapter.CrossDomain
         [Serializable]
         class AssemblyResolveHandler
         {
-            public AssemblyResolveHandler(string assemblyPath)
+            public AssemblyResolveHandler(string binaryPath)
             {
-                this.assemblyPath = assemblyPath;
+                this.binaryPath = binaryPath;
             }
 
             public Assembly Failed(object sender, ResolveEventArgs eventArgs)
@@ -64,7 +64,7 @@ namespace NSpec.VsAdapter.CrossDomain
                     name = argNameForResolve.Substring(0, argNameForResolve.IndexOf(".resource")) + ".xml";
                 }
 
-                var missing = Path.Combine(Path.GetDirectoryName(assemblyPath), name);
+                var missing = Path.Combine(Path.GetDirectoryName(binaryPath), name);
 
                 if (File.Exists(missing))
                 {
@@ -74,7 +74,7 @@ namespace NSpec.VsAdapter.CrossDomain
                 return null;
             }
 
-            string assemblyPath;
+            string binaryPath;
         }
     }
 }

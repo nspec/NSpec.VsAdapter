@@ -61,8 +61,8 @@ namespace NSpec.VsAdapter.TestAdapter
             outputLogger.Info("Discovery started");
 
             var groupedSpecifications =
-                from assemblyPath in sources
-                select binaryTestDiscoverer.Discover(assemblyPath, outputLogger, outputLogger);
+                from binaryPath in sources
+                select binaryTestDiscoverer.Discover(binaryPath, outputLogger, outputLogger);
 
             var specifications = groupedSpecifications.SelectMany(group => group);
 

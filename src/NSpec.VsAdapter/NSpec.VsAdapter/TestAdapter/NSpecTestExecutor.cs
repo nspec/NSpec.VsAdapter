@@ -56,9 +56,9 @@ namespace NSpec.VsAdapter.TestAdapter
 
             var executionObserver = executionObserverFactory.Create((ITestExecutionRecorder)frameworkHandle);
 
-            foreach (var assemblyPath in sources)
+            foreach (var binaryPath in sources)
             {
-                binaryTestExecutor.Execute(assemblyPath, executionObserver, outputLogger, outputLogger);
+                binaryTestExecutor.Execute(binaryPath, executionObserver, outputLogger, outputLogger);
             }
 
             outputLogger.Info("Execution by source paths finished");
@@ -79,11 +79,11 @@ namespace NSpec.VsAdapter.TestAdapter
 
             foreach (var group in testCaseGroupsBySource)
             {
-                string assemblyPath = group.Key;
+                string binaryPath = group.Key;
 
                 var testCaseFullNames = group.Select(tc => tc.FullyQualifiedName);
 
-                binaryTestExecutor.Execute(assemblyPath, testCaseFullNames, executionObserver, outputLogger, outputLogger);
+                binaryTestExecutor.Execute(binaryPath, testCaseFullNames, executionObserver, outputLogger, outputLogger);
             }
 
             outputLogger.Info("Execution by TestCases finished");

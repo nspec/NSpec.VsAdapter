@@ -8,6 +8,6 @@ namespace NSpec.VsAdapter.CrossDomain
 {
     public interface IAppDomainFactory
     {
-        ITargetAppDomain Create(string assemblyPath);
+        ITargetAppDomain Create(string binaryPath);
     }
 }
