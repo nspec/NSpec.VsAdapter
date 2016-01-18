@@ -8,11 +8,11 @@ namespace NSpec.VsAdapter.Execution
 {
     public interface IBinaryTestExecutor
     {
-        void Execute(string binaryPath, 
+        int Execute(string binaryPath, 
             IExecutionObserver executionObserver, 
             IOutputLogger outputLogger, IReplayLogger replayLogger);
 
-        void Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
+        int Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
             IExecutionObserver executionObserver,
             IOutputLogger outputLogger, IReplayLogger replayLogger);
     }

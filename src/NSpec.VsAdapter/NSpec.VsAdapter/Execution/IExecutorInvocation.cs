@@ -7,6 +7,6 @@ namespace NSpec.VsAdapter.Execution
 {
     public interface IExecutorInvocation
     {
-        int Operate();
+        int Execute();
     }
 }

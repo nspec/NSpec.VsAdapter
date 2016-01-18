@@ -24,9 +24,9 @@ namespace NSpec.VsAdapter.Execution
             this.logger = logger;
         }
 
-        public int Operate()
+        public int Execute()
         {
-            logger.Debug(String.Format("Start operating tests in '{0}'", binaryPath));
+            logger.Debug(String.Format("Start executing tests in '{0}'", binaryPath));
 
             var contextFinder = new ContextFinder();
 
@@ -62,7 +62,7 @@ namespace NSpec.VsAdapter.Execution
 
             int count = ranExamples.Count();
 
-            logger.Debug(String.Format("Finish operating tests in '{0}'", binaryPath));
+            logger.Debug(String.Format("Finish executing tests in '{0}'", binaryPath));
 
             logger.Flush();
 

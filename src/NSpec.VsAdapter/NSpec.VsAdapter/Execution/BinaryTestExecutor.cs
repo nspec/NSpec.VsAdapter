@@ -14,7 +14,7 @@ namespace NSpec.VsAdapter.Execution
             this.executorInvocationFactory = executorInvocationFactory;
         }
 
-        public void Execute(string binaryPath, IExecutionObserver executionObserver,
+        public int Execute(string binaryPath, IExecutionObserver executionObserver,
             IOutputLogger logger, IReplayLogger crossDomainLogger)
         {
             logger.Debug(String.Format("Executing tests in container: '{0}'", binaryPath));
@@ -22,10 +22,10 @@ namespace NSpec.VsAdapter.Execution
             BuildExecutorInvocation buildExecutorInvocation = logRecorder =>
                 executorInvocationFactory.Create(binaryPath, executionObserver, logRecorder);
 
-            CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
+            return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
         }
 
-        public void Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
+        public int Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
             IExecutionObserver executionObserver,
             IOutputLogger logger, IReplayLogger crossDomainLogger)
         {
@@ -36,19 +36,21 @@ namespace NSpec.VsAdapter.Execution
             BuildExecutorInvocation buildExecutorInvocation = logRecorder =>
                 executorInvocationFactory.Create(binaryPath, exampleFullNames, executionObserver, logRecorder);
 
-            CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
+            return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
         }
 
-        void CrossDomainExecute(string binaryPath, BuildExecutorInvocation buildExecutorInvocation,
+        int CrossDomainExecute(string binaryPath, BuildExecutorInvocation buildExecutorInvocation,
             IOutputLogger logger, IReplayLogger crossDomainLogger)
         {
+            int count;
+
             try
             {
                 var logRecorder = new LogRecorder();
 
                 var executorInvocation = buildExecutorInvocation(logRecorder);
 
-                int count = crossDomainExecutor.Run(binaryPath, executorInvocation.Operate);
+                count = crossDomainExecutor.Run(binaryPath, executorInvocation.Execute);
 
                 var logReplayer = new LogReplayer(crossDomainLogger);
 
@@ -63,7 +65,11 @@ namespace NSpec.VsAdapter.Execution
                 var message = String.Format("Exception thrown while executing tests in binary '{0}'", binaryPath);
 
                 logger.Error(ex, message);
+
+                count = 0;
             }
+
+            return count;
         }
 
         readonly ICrossDomainExecutor crossDomainExecutor;

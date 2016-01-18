@@ -13,7 +13,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 {
     [TestFixture]
     [Category("BinaryTestExecutor")]
-    public abstract class CrossDomainTestExecutor_desc_base
+    public abstract class BinaryTestExecutor_desc_base
     {
         protected BinaryTestExecutor executor;
 
@@ -24,6 +24,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         protected IExecutionObserver executionObserver;
         protected IOutputLogger logger;
         protected IReplayLogger crossDomainLogger;
+        protected int actualCount;
 
         protected const string somePath = @".\path\to\some\dummy-library.dll";
 
@@ -55,7 +56,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         }
     }
 
-    public abstract class CrossDomainTestExecutor_when_executing_by_source : CrossDomainTestExecutor_desc_base
+    public abstract class BinaryTestExecutor_when_executing_by_source : BinaryTestExecutor_desc_base
     {
         public override void before_each()
         {
@@ -73,23 +74,27 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         }
     }
 
-    public class CrossDomainTestExecutor_when_executing_by_source_succeeds : CrossDomainTestExecutor_when_executing_by_source
+    public class BinaryTestExecutor_when_executing_by_source_succeeds : BinaryTestExecutor_when_executing_by_source
     {
+        const int expectedCount = 17;
+
         public override void before_each()
         {
             base.before_each();
 
-            executor.Execute(somePath, executionObserver, logger, crossDomainLogger);
+            crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
+
+            actualCount = executor.Execute(somePath, executionObserver, logger, crossDomainLogger);
         }
 
         [Test]
-        public void it_should_run_operator_on_source()
+        public void it_should_return_nr_of_tests_ran()
         {
-            crossDomainExecutor.Received().Run(somePath, executorInvocation.Operate);
+            actualCount.Should().Be(expectedCount);
         }
     }
 
-    public class CrossDomainTestExecutor_when_execution_by_source_fails : CrossDomainTestExecutor_when_executing_by_source
+    public class BinaryTestExecutor_when_execution_by_source_fails : BinaryTestExecutor_when_executing_by_source
     {
         public override void before_each()
         {
@@ -100,7 +105,13 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            executor.Execute(somePath, executionObserver, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, executionObserver, logger, crossDomainLogger);
+        }
+
+        [Test]
+        public void it_should_return_zero_tests_ran()
+        {
+            actualCount.Should().Be(0);
         }
 
         [Test]
@@ -110,58 +121,45 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         }
     }
 
-    public abstract class CrossDomainTestExecutor_when_executing_by_testcase : CrossDomainTestExecutor_desc_base
+    public abstract class BinaryTestExecutor_when_executing_by_testcase : BinaryTestExecutor_desc_base
     {
         public override void before_each()
         {
             base.before_each();
 
             executorInvocationFactory
-                .Create(somePath, testCaseFullNames, executionObserver, Arg.Any<LogRecorder>())
+                .Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), executionObserver, Arg.Any<LogRecorder>())
                 .Returns(executorInvocation);
         }
 
         [Test]
         public void it_should_request_invocation_by_testcase()
         {
-            var argMatcher = Arg.Is<string[]>(names => MatchEnumerables(names, testCaseFullNames));
-
-            executorInvocationFactory.Received().Create(somePath, argMatcher, executionObserver, Arg.Any<LogRecorder>());
-        }
-
-        static bool MatchEnumerables(IEnumerable<string> a, IEnumerable<string> b)
-        {
-            try
-            {
-                a.ShouldBeEquivalentTo(b);
-
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            executorInvocationFactory.Received().Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), executionObserver, Arg.Any<LogRecorder>());
         }
     }
 
-    public class CrossDomainTestExecutor_when_executing_by_testcase_succeeds : CrossDomainTestExecutor_when_executing_by_testcase
+    public class BinaryTestExecutor_when_executing_by_testcase_succeeds : BinaryTestExecutor_when_executing_by_testcase
     {
+        const int expectedCount = 17;
+
         public override void before_each()
         {
             base.before_each();
 
-            executor.Execute(somePath, testCaseFullNames, executionObserver, logger, crossDomainLogger);
+            crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
+
+            actualCount = executor.Execute(somePath, testCaseFullNames, executionObserver, logger, crossDomainLogger);
         }
 
         [Test]
-        [Ignore("It fails on ExecutorInvocation.Operate")]
-        public void it_should_run_operator_on_source()
+        public void it_should_return_nr_of_tests_ran()
         {
-            crossDomainExecutor.Received().Run(somePath, executorInvocation.Operate);
+            actualCount.Should().Be(expectedCount);
         }
     }
 
-    public class CrossDomainTestExecutor_when_executing_by_testcase_fails : CrossDomainTestExecutor_when_executing_by_testcase
+    public class BinaryTestExecutor_when_executing_by_testcase_fails : BinaryTestExecutor_when_executing_by_testcase
     {
         public override void before_each()
         {
@@ -172,7 +170,13 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            executor.Execute(somePath, testCaseFullNames, executionObserver, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, testCaseFullNames, executionObserver, logger, crossDomainLogger);
+        }
+
+        [Test]
+        public void it_should_return_zero_tests_ran()
+        {
+            actualCount.Should().Be(0);
         }
 
         [Test]
