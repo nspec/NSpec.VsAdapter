@@ -41,6 +41,18 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         }
 
         [Test]
+        public void it_should_not_record_any_start()
+        {
+            testExecutionRecorder.DidNotReceive().RecordStart(Arg.Any<TestCase>());
+        }
+
+        [Test]
+        public void it_should_not_record_any_end()
+        {
+            testExecutionRecorder.DidNotReceive().RecordEnd(Arg.Any<TestCase>(), Arg.Any<TestOutcome>());
+        }
+
+        [Test]
         public void it_should_not_record_any_attachment()
         {
             testExecutionRecorder.DidNotReceive().RecordAttachments(Arg.Any<IList<AttachmentSet>>());
@@ -83,25 +95,6 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             observer.Write(someExample, someLevel);
         }
 
-        /*
-        [Test]
-        [TestCase("some passed example", true, true)]
-        [TestCase("some failed example", false, true)]
-        [TestCase("some pending example", false, false)]
-        public void it_should_record_result(string name, bool passed, bool pending)
-        {
-            var someExample = new Example(name, "some-tag another-tag", someAction, pending)
-            {
-                HasRun = true,
-                Exception = passed ? null : new DummyTestException(),
-            };
-
-            observer.Write(someExample, someLevel);
-
-            ...
-        }
-         */
-
         [Test]
         public void it_should_record_result()
         {
@@ -118,18 +111,6 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             var someContext = new Context("some context");
 
             observer.Write(someContext);
-        }
-
-        [Test]
-        public void it_should_not_record_any_start()
-        {
-            testExecutionRecorder.DidNotReceive().RecordStart(Arg.Any<TestCase>());
-        }
-
-        [Test]
-        public void it_should_not_record_any_end()
-        {
-            testExecutionRecorder.DidNotReceive().RecordEnd(Arg.Any<TestCase>(), Arg.Any<TestOutcome>());
         }
 
         [Test]
