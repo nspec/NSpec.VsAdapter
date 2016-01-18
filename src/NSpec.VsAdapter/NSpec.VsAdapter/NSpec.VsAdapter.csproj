@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="AdapterInfo.cs" />
     <Compile Include="Common\ContextFinder.cs" />
+    <Compile Include="Discovery\ExampleFinder.cs" />
     <Compile Include="Execution\CrossDomainExecutor.cs" />
     <Compile Include="Execution\BinaryTestExecutor.cs" />
     <Compile Include="Execution\ExecutionObserver.cs" />

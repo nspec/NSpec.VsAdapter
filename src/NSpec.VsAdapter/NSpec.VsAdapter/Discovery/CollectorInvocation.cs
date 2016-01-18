@@ -20,11 +20,9 @@ namespace NSpec.VsAdapter.Discovery
         {
             logger.Debug(String.Format("Start collecting tests in '{0}'", binaryPath));
 
-            var contextFinder = new ContextFinder();
+            var exampleFinder = new ExampleFinder();
 
-            var contexts = contextFinder.BuildContexts(binaryPath);
-
-            var examples = contexts.Examples();
+            var examples = exampleFinder.Find(binaryPath);
 
             var debugInfoProvider = new DebugInfoProvider(binaryPath, logger);
 
