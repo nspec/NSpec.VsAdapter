@@ -10,30 +10,42 @@ namespace NSpec.VsAdapter.Execution
 {
     public class RunnableContextFinder
     {
+        // used by Visual Studio test infrastructure, by integration tests
+        public RunnableContextFinder()
+            : this(new ContextFinder())
+        {
+        }
+
+        // used by unit tests
+        public RunnableContextFinder(IContextFinder contextFinder)
+        {
+            this.contextFinder = contextFinder;
+        }
+
         public IEnumerable<Context> Find(string binaryPath, string[] exampleFullNames)
         {
-            var contextFinder = new ContextFinder();
-
-            var contexts = contextFinder.BuildContexts(binaryPath);
+            var contextCollection = contextFinder.BuildContextCollection(binaryPath);
 
             if (exampleFullNames == RunAll)
             {
-                return contexts.AllContexts();
+                return contextCollection.AllContexts();
             }
 
             // original idea taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Executor.cs
 
-            var allExamples = contexts.SelectMany(ctx => ctx.Examples);
+            var allExamples = contextCollection.SelectMany(ctx => ctx.Examples);
 
             var selectedNames = new HashSet<string>(exampleFullNames);
 
             var runnableExamples = allExamples.Where(exm => selectedNames.Contains(exm.FullName()));
 
-            var runnableContexts = runnableExamples.Select(exm => exm.Context);
+            var runnableContexts = runnableExamples.Select(exm => exm.Context).Distinct();
 
             return runnableContexts;
         }
 
         public const string[] RunAll = null;
+
+        readonly IContextFinder contextFinder;
     }
 }

@@ -14,7 +14,7 @@ namespace NSpec.VsAdapter.Discovery
         {
             var contextFinder = new ContextFinder();
 
-            var contexts = contextFinder.BuildContexts(binaryPath);
+            var contexts = contextFinder.BuildContextCollection(binaryPath);
 
             var examples = contexts.Examples();
 

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Common
 {
-    class ContextFinder
+    public class ContextFinder : IContextFinder
     {
-        public ContextCollection BuildContexts(string binaryPath)
+        public ContextCollection BuildContextCollection(string binaryPath)
         {
             var reflector = new Reflector(binaryPath);
 

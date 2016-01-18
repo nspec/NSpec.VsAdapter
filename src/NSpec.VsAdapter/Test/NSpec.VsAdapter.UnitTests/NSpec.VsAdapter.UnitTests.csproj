@@ -113,6 +113,7 @@
     <Compile Include="DummyTestException.cs" />
     <Compile Include="Execution\BinaryTestExecutor_desc.cs" />
     <Compile Include="Execution\CrossDomainExecutor_desc.cs" />
+    <Compile Include="Execution\RunnableContextFinder_desc.cs" />
     <Compile Include="TestAdapter\NSpecTestExecutor_desc.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />

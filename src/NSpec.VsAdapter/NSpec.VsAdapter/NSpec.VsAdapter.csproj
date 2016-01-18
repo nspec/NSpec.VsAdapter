@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="AdapterInfo.cs" />
     <Compile Include="Common\ContextFinder.cs" />
+    <Compile Include="Common\IContextFinder.cs" />
     <Compile Include="Discovery\ExampleFinder.cs" />
     <Compile Include="Execution\ContextExecutor.cs" />
     <Compile Include="Execution\CrossDomainExecutor.cs" />
