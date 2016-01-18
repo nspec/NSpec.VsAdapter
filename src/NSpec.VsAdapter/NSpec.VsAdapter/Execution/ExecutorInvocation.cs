@@ -11,7 +11,7 @@ namespace NSpec.VsAdapter.Execution
     {
         public ExecutorInvocation(string binaryPath, 
             IExecutionObserver executionObserver, ISerializableLogger logger)
-            : this(binaryPath, runAll, executionObserver, logger)
+            : this(binaryPath, RunnableContextFinder.RunAll, executionObserver, logger)
         {
         }
 
@@ -28,37 +28,16 @@ namespace NSpec.VsAdapter.Execution
         {
             logger.Debug(String.Format("Start executing tests in '{0}'", binaryPath));
 
-            var contextFinder = new ContextFinder();
+            var runnableContextFinder = new RunnableContextFinder();
 
-            var contexts = contextFinder.BuildContexts(binaryPath);
+            var runnableContexts = runnableContextFinder.Find(binaryPath, exampleFullNames);
 
-            IEnumerable<ExampleBase> ranExamples;
-
-            if (exampleFullNames == runAll)
+            foreach (var context in runnableContexts)
             {
-                contexts.Run(executionObserver, false);
-
-                ranExamples = contexts.SelectMany(ctx => ctx.Examples);
+                context.Run(executionObserver, false);
             }
-            else
-            {
-                // original idea taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Executor.cs
 
-                var allExamples = contexts.SelectMany(ctx => ctx.Examples);
-
-                var selectedNames = new HashSet<string>(exampleFullNames);
-
-                var selectedExamples = allExamples.Where(exm => selectedNames.Contains(exm.FullName()));
-
-                var selectedContexts = selectedExamples.Select(exm => exm.Context);
-
-                foreach (var context in selectedContexts)
-                {
-                    context.Run(executionObserver, false);
-                }
-
-                ranExamples = selectedContexts.SelectMany(ctx => ctx.Examples);
-            }
+            var ranExamples = runnableContexts.SelectMany(ctx => ctx.Examples);
 
             int count = ranExamples.Count();
 
@@ -73,7 +52,5 @@ namespace NSpec.VsAdapter.Execution
         readonly string[] exampleFullNames;
         readonly IExecutionObserver executionObserver;
         readonly ISerializableLogger logger;
-
-        static readonly string[] runAll = null;
     }
 }
