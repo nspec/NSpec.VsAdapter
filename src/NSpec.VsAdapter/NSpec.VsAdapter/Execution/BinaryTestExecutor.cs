@@ -8,9 +8,9 @@ namespace NSpec.VsAdapter.Execution
 {
     public class BinaryTestExecutor : IBinaryTestExecutor
     {
-        public BinaryTestExecutor(ICrossDomainOperator crossDomainOperator, IOperatorInvocationFactory operatorInvocationFactory)
+        public BinaryTestExecutor(ICrossDomainExecutor crossDomainExecutor, IOperatorInvocationFactory operatorInvocationFactory)
         {
-            this.crossDomainOperator = crossDomainOperator;
+            this.crossDomainExecutor = crossDomainExecutor;
             this.operatorInvocationFactory = operatorInvocationFactory;
         }
 
@@ -48,7 +48,7 @@ namespace NSpec.VsAdapter.Execution
 
                 var operatorInvocation = buildOperatorInvocation(logRecorder);
 
-                int count = crossDomainOperator.Run(binaryPath, operatorInvocation.Operate);
+                int count = crossDomainExecutor.Run(binaryPath, operatorInvocation.Operate);
 
                 var logReplayer = new LogReplayer(crossDomainLogger);
 
@@ -66,7 +66,7 @@ namespace NSpec.VsAdapter.Execution
             }
         }
 
-        readonly ICrossDomainOperator crossDomainOperator;
+        readonly ICrossDomainExecutor crossDomainExecutor;
         readonly IOperatorInvocationFactory operatorInvocationFactory;
 
         delegate IOperatorInvocation BuildOperatorInvocation(LogRecorder logRecorder);

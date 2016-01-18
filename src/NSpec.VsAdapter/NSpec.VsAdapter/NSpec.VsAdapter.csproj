@@ -81,11 +81,11 @@
   <ItemGroup>
     <Compile Include="AdapterInfo.cs" />
     <Compile Include="Common\ContextFinder.cs" />
-    <Compile Include="Execution\CrossDomainOperator.cs" />
+    <Compile Include="Execution\CrossDomainExecutor.cs" />
     <Compile Include="Execution\BinaryTestExecutor.cs" />
     <Compile Include="Execution\ExecutionObserver.cs" />
     <Compile Include="Execution\ExecutionObserverFactory.cs" />
-    <Compile Include="Execution\ICrossDomainOperator.cs" />
+    <Compile Include="Execution\ICrossDomainExecutor.cs" />
     <Compile Include="Execution\IBinaryTestExecutor.cs" />
     <Compile Include="Execution\IExecutionObserver.cs" />
     <Compile Include="Execution\IExecutionObserverFactory.cs" />

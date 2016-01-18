@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public class CrossDomainOperator :
+    public class CrossDomainExecutor :
         CrossDomainRunner<int>, 
-        ICrossDomainOperator
+        ICrossDomainExecutor
     {
-        public CrossDomainOperator(
+        public CrossDomainExecutor(
             IAppDomainFactory appDomainFactory,
             IMarshalingFactory<int> marshalingFactory)
             : base(appDomainFactory, marshalingFactory)

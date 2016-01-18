@@ -18,7 +18,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         protected BinaryTestExecutor executor;
 
         protected AutoSubstitute autoSubstitute;
-        protected ICrossDomainOperator crossDomainOperator;
+        protected ICrossDomainExecutor crossDomainExecutor;
         protected IOperatorInvocationFactory operatorInvocationFactory;
         protected IOperatorInvocation operatorInvocation;
         protected IExecutionObserver executionObserver;
@@ -37,7 +37,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             autoSubstitute = new AutoSubstitute();
 
-            crossDomainOperator = autoSubstitute.Resolve<ICrossDomainOperator>();
+            crossDomainExecutor = autoSubstitute.Resolve<ICrossDomainExecutor>();
             operatorInvocationFactory = autoSubstitute.Resolve<IOperatorInvocationFactory>();
             operatorInvocation = autoSubstitute.Resolve<IOperatorInvocation>();
 
@@ -85,7 +85,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         [Test]
         public void it_should_run_operator_on_source()
         {
-            crossDomainOperator.Received().Run(somePath, operatorInvocation.Operate);
+            crossDomainExecutor.Received().Run(somePath, operatorInvocation.Operate);
         }
     }
 
@@ -95,7 +95,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             base.before_each();
 
-            crossDomainOperator.Run(null, null).ReturnsForAnyArgs(_ =>
+            crossDomainExecutor.Run(null, null).ReturnsForAnyArgs(_ =>
             {
                 throw new DummyTestException();
             });
@@ -157,7 +157,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         [Ignore("It fails on OperatorInvocation.Operate")]
         public void it_should_run_operator_on_source()
         {
-            crossDomainOperator.Received().Run(somePath, operatorInvocation.Operate);
+            crossDomainExecutor.Received().Run(somePath, operatorInvocation.Operate);
         }
     }
 
@@ -167,7 +167,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             base.before_each();
 
-            crossDomainOperator.Run(null, null).ReturnsForAnyArgs(_ =>
+            crossDomainExecutor.Run(null, null).ReturnsForAnyArgs(_ =>
             {
                 throw new DummyTestException();
             });

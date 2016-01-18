@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public interface ICrossDomainOperator : ICrossDomainRunner<int>
+    public interface ICrossDomainExecutor : ICrossDomainRunner<int>
     {
     }
 }
