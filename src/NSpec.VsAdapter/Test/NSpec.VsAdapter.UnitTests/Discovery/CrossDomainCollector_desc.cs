@@ -1,7 +1,6 @@
-﻿using AutofacContrib.NSubstitute;
-using FluentAssertions;
-using NSpec.VsAdapter.CrossDomain;
+﻿using FluentAssertions;
 using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.UnitTests.CrossDomain;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -12,53 +11,13 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.UnitTests.Discovery
 {
-    [TestFixture]
     [Category("CrossDomainCollector")]
-    public abstract class CrossDomainCollector_desc_base
+    public class CrossDomainCollector_when_run_succeeds 
+        : CrossDomainRunner_when_run_succeeds<IEnumerable<NSpecSpecification>>
     {
-        protected CrossDomainCollector collector;
+        CrossDomainCollector collector;
 
-        protected AutoSubstitute autoSubstitute;
-        protected IAppDomainFactory appDomainFactory;
-        protected IMarshalingFactory<IEnumerable<NSpecSpecification>> marshalingFactory;
-        protected MarshalingProxy<IEnumerable<NSpecSpecification>> crossDomainProxy;
-        protected ITargetAppDomain targetDomain;
-        protected IOutputLogger logger;
-        protected Func<IEnumerable<NSpecSpecification>> targetOperation;
-        protected IEnumerable<NSpecSpecification> actualSpecifications;
-
-        protected const string somePath = @".\some\path\to\library.dll";
-
-        [SetUp]
-        public virtual void before_each()
-        {
-            autoSubstitute = new AutoSubstitute();
-
-            appDomainFactory = autoSubstitute.Resolve<IAppDomainFactory>();
-
-            marshalingFactory = autoSubstitute
-                .Resolve<IMarshalingFactory<IEnumerable<NSpecSpecification>>>();
-
-            crossDomainProxy = Substitute.For<MarshalingProxy<IEnumerable<NSpecSpecification>>>();
-
-            targetDomain = Substitute.For<ITargetAppDomain>();
-
-            collector = autoSubstitute.Resolve<CrossDomainCollector>();
-
-            logger = autoSubstitute.Resolve<IOutputLogger>();
-
-            targetOperation = () => null;
-        }
-
-        [TearDown]
-        public virtual void after_each()
-        {
-            autoSubstitute.Dispose();
-        }
-    }
-
-    public class CrossDomainCollector_when_run_succeeds : CrossDomainCollector_desc_base
-    {
+        IEnumerable<NSpecSpecification> actualSpecifications;
 
         readonly static NSpecSpecification[] someSpecifications = new NSpecSpecification[] 
         { 
@@ -71,11 +30,9 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         {
             base.before_each();
 
-            appDomainFactory.Create(somePath).Returns(targetDomain);
-
-            marshalingFactory.CreateProxy(targetDomain).Returns(crossDomainProxy);
-
             crossDomainProxy.Execute(targetOperation).Returns(someSpecifications);
+
+            collector = autoSubstitute.Resolve<CrossDomainCollector>();
 
             actualSpecifications = collector.Run(somePath, targetOperation);
         }
@@ -85,114 +42,39 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         {
             actualSpecifications.Should().BeEquivalentTo(someSpecifications);
         }
+    }
 
-        [Test]
-        public void it_should_dispose_target_app_domain()
+    [Category("CrossDomainCollector")]
+    public class CrossDomainCollector_when_marshal_wrapper_creation_fails
+        : CrossDomainRunner_when_marshal_wrapper_creation_fails<IEnumerable<NSpecSpecification>>
+    {
+        CrossDomainCollector collector;
+
+        protected override void CreateRunner()
         {
-            targetDomain.Received(1).Dispose();
+            collector = autoSubstitute.Resolve<CrossDomainCollector>();
         }
 
-        [Test]
-        public void it_should_dispose_marshaling_proxy()
+        protected override void ExerciseRunner()
         {
-            crossDomainProxy.Received(1).Dispose();
+            collector.Run(somePath, targetOperation);
         }
     }
 
-    public abstract class CrossDomainCollector_when_run_fails : CrossDomainCollector_desc_base
+    [Category("CrossDomainCollector")]
+    public class CrossDomainCollector_when_marshaled_execution_fails
+        : CrossDomainRunner_when_marshaled_execution_fails<IEnumerable<NSpecSpecification>>
     {
-        [Test]
-        [ExpectedException(typeof(DummyTestException))]
-        public void it_should_let_exception_flow()
+        CrossDomainCollector collector;
+
+        protected override void CreateRunner()
         {
-            actualSpecifications = collector.Run(somePath, targetOperation);
-        }
-    }
-
-    public class CrossDomainCollector_when_app_domain_creation_fails : CrossDomainCollector_when_run_fails
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            appDomainFactory.Create(null).ReturnsForAnyArgs(_ =>
-            {
-                throw new DummyTestException();
-            });
-        }
-    }
-
-    public class CrossDomainCollector_when_marshal_wrapper_creation_fails : CrossDomainCollector_when_run_fails
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            appDomainFactory.Create(null).ReturnsForAnyArgs(targetDomain);
-
-            marshalingFactory.CreateProxy(null).ReturnsForAnyArgs(_ =>
-            {
-                throw new DummyTestException();
-            });
+            collector = autoSubstitute.Resolve<CrossDomainCollector>();
         }
 
-        [Test]
-        public void it_should_dispose_target_app_domain()
+        protected override void ExerciseRunner()
         {
-            try
-            {
-                actualSpecifications = collector.Run(somePath, targetOperation);
-            }
-            catch (Exception)
-            {
-            }
-
-            targetDomain.Received(1).Dispose();
-        }
-    }
-
-    public class CrossDomainCollector_when_marshaled_execution_fails : CrossDomainCollector_when_run_fails
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            appDomainFactory.Create(null).ReturnsForAnyArgs(targetDomain);
-
-            marshalingFactory.CreateProxy(null).ReturnsForAnyArgs(crossDomainProxy);
-
-            crossDomainProxy.Execute(null).ReturnsForAnyArgs(_ =>
-            {
-                throw new DummyTestException();
-            });
-        }
-
-        [Test]
-        public void it_should_dispose_target_app_domain()
-        {
-            try
-            {
-                actualSpecifications = collector.Run(somePath, targetOperation);
-            }
-            catch (Exception)
-            {
-            }
-
-            targetDomain.Received(1).Dispose();
-        }
-
-        [Test]
-        public void it_should_dispose_marshaling_proxy()
-        {
-            try
-            {
-                actualSpecifications = collector.Run(somePath, targetOperation);
-            }
-            catch (Exception)
-            {
-            }
-
-            crossDomainProxy.Received(1).Dispose();
+            collector.Run(somePath, targetOperation);
         }
     }
 }

@@ -102,6 +102,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="CrossDomain\CrossDomainRunner_desc_base.cs" />
     <Compile Include="Discovery\CrossDomainCollector_desc.cs" />
     <Compile Include="Discovery\BinaryTestDiscoverer_desc.cs" />
     <Compile Include="Discovery\DebugInfoProvider_desc.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Discovery\SpecMapper_desc.cs" />
     <Compile Include="DummyTestException.cs" />
     <Compile Include="Execution\BinaryTestExecutor_desc.cs" />
+    <Compile Include="Execution\CrossDomainExecutor_desc.cs" />
     <Compile Include="TestAdapter\NSpecTestExecutor_desc.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />

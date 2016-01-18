@@ -1,7 +1,5 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using NSpec.VsAdapter.CrossDomain;
 using NSpec.VsAdapter.Discovery;
 using NSubstitute;
 using NUnit.Framework;
