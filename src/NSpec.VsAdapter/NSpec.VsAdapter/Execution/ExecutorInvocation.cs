@@ -1,5 +1,4 @@
 ﻿using NSpec.Domain;
-using NSpec.VsAdapter.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,14 +31,9 @@ namespace NSpec.VsAdapter.Execution
 
             var runnableContexts = runnableContextFinder.Find(binaryPath, exampleFullNames);
 
-            foreach (var context in runnableContexts)
-            {
-                context.Run(executionObserver, false);
-            }
+            var contextExecutor = new ContextExecutor(executionObserver);
 
-            var ranExamples = runnableContexts.SelectMany(ctx => ctx.Examples);
-
-            int count = ranExamples.Count();
+            int count = contextExecutor.Execute(runnableContexts);
 
             logger.Debug(String.Format("Finish executing tests in '{0}'", binaryPath));
 
