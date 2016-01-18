@@ -19,8 +19,8 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
         protected AutoSubstitute autoSubstitute;
         protected ICrossDomainExecutor crossDomainExecutor;
-        protected IOperatorInvocationFactory operatorInvocationFactory;
-        protected IOperatorInvocation operatorInvocation;
+        protected IExecutorInvocationFactory executorInvocationFactory;
+        protected IExecutorInvocation executorInvocation;
         protected IExecutionObserver executionObserver;
         protected IOutputLogger logger;
         protected IReplayLogger crossDomainLogger;
@@ -38,8 +38,8 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             autoSubstitute = new AutoSubstitute();
 
             crossDomainExecutor = autoSubstitute.Resolve<ICrossDomainExecutor>();
-            operatorInvocationFactory = autoSubstitute.Resolve<IOperatorInvocationFactory>();
-            operatorInvocation = autoSubstitute.Resolve<IOperatorInvocation>();
+            executorInvocationFactory = autoSubstitute.Resolve<IExecutorInvocationFactory>();
+            executorInvocation = autoSubstitute.Resolve<IExecutorInvocation>();
 
             executionObserver = autoSubstitute.Resolve<IExecutionObserver>();
             logger = autoSubstitute.Resolve<IOutputLogger>();
@@ -61,15 +61,15 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             base.before_each();
 
-            operatorInvocationFactory
+            executorInvocationFactory
                 .Create(somePath, executionObserver, Arg.Any<LogRecorder>())
-                .Returns(operatorInvocation);
+                .Returns(executorInvocation);
         }
 
         [Test]
         public void it_should_request_invocation_by_source()
         {
-            operatorInvocationFactory.Received().Create(somePath, executionObserver, Arg.Any<LogRecorder>());
+            executorInvocationFactory.Received().Create(somePath, executionObserver, Arg.Any<LogRecorder>());
         }
     }
 
@@ -85,7 +85,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         [Test]
         public void it_should_run_operator_on_source()
         {
-            crossDomainExecutor.Received().Run(somePath, operatorInvocation.Operate);
+            crossDomainExecutor.Received().Run(somePath, executorInvocation.Operate);
         }
     }
 
@@ -116,9 +116,9 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             base.before_each();
 
-            operatorInvocationFactory
+            executorInvocationFactory
                 .Create(somePath, testCaseFullNames, executionObserver, Arg.Any<LogRecorder>())
-                .Returns(operatorInvocation);
+                .Returns(executorInvocation);
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             var argMatcher = Arg.Is<string[]>(names => MatchEnumerables(names, testCaseFullNames));
 
-            operatorInvocationFactory.Received().Create(somePath, argMatcher, executionObserver, Arg.Any<LogRecorder>());
+            executorInvocationFactory.Received().Create(somePath, argMatcher, executionObserver, Arg.Any<LogRecorder>());
         }
 
         static bool MatchEnumerables(IEnumerable<string> a, IEnumerable<string> b)
@@ -154,10 +154,10 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         }
 
         [Test]
-        [Ignore("It fails on OperatorInvocation.Operate")]
+        [Ignore("It fails on ExecutorInvocation.Operate")]
         public void it_should_run_operator_on_source()
         {
-            crossDomainExecutor.Received().Run(somePath, operatorInvocation.Operate);
+            crossDomainExecutor.Received().Run(somePath, executorInvocation.Operate);
         }
     }
 

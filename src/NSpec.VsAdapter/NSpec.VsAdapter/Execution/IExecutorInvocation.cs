@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public interface IOperatorInvocation
+    public interface IExecutorInvocation
     {
         int Operate();
     }

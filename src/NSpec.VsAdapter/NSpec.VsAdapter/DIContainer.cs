@@ -70,7 +70,7 @@ namespace NSpec.VsAdapter
             builder.RegisterType<BinaryTestExecutor>().As<IBinaryTestExecutor>().InstancePerLifetimeScope();
             builder.RegisterType<ExecutionObserverFactory>().As<IExecutionObserverFactory>().InstancePerLifetimeScope();
             builder.RegisterType<CrossDomainExecutor>().As<ICrossDomainExecutor>().InstancePerLifetimeScope();
-            builder.RegisterType<OperatorInvocationFactory>().As<IOperatorInvocationFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<ExecutorInvocationFactory>().As<IExecutorInvocationFactory>().InstancePerLifetimeScope();
             builder.RegisterType<TestResultMapper>().As<ITestResultMapper>().InstancePerLifetimeScope();
         }
 

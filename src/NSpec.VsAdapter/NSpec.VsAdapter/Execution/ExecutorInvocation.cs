@@ -7,15 +7,15 @@ using System.Text;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public class OperatorInvocation : IOperatorInvocation
+    public class ExecutorInvocation : IExecutorInvocation
     {
-        public OperatorInvocation(string binaryPath, 
+        public ExecutorInvocation(string binaryPath, 
             IExecutionObserver executionObserver, ISerializableLogger logger)
             : this(binaryPath, runAll, executionObserver, logger)
         {
         }
 
-        public OperatorInvocation(string binaryPath, string[] exampleFullNames, 
+        public ExecutorInvocation(string binaryPath, string[] exampleFullNames, 
             IExecutionObserver executionObserver, ISerializableLogger logger)
         {
             this.binaryPath = binaryPath;

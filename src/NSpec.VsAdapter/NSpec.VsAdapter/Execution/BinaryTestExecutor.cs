@@ -8,10 +8,10 @@ namespace NSpec.VsAdapter.Execution
 {
     public class BinaryTestExecutor : IBinaryTestExecutor
     {
-        public BinaryTestExecutor(ICrossDomainExecutor crossDomainExecutor, IOperatorInvocationFactory operatorInvocationFactory)
+        public BinaryTestExecutor(ICrossDomainExecutor crossDomainExecutor, IExecutorInvocationFactory executorInvocationFactory)
         {
             this.crossDomainExecutor = crossDomainExecutor;
-            this.operatorInvocationFactory = operatorInvocationFactory;
+            this.executorInvocationFactory = executorInvocationFactory;
         }
 
         public void Execute(string binaryPath, IExecutionObserver executionObserver,
@@ -19,10 +19,10 @@ namespace NSpec.VsAdapter.Execution
         {
             logger.Debug(String.Format("Executing tests in container: '{0}'", binaryPath));
 
-            BuildOperatorInvocation buildOperatorInvocation = logRecorder =>
-                operatorInvocationFactory.Create(binaryPath, executionObserver, logRecorder);
+            BuildExecutorInvocation buildExecutorInvocation = logRecorder =>
+                executorInvocationFactory.Create(binaryPath, executionObserver, logRecorder);
 
-            CrossDomainExecute(binaryPath, buildOperatorInvocation, logger, crossDomainLogger);
+            CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
         }
 
         public void Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
@@ -33,22 +33,22 @@ namespace NSpec.VsAdapter.Execution
 
             var exampleFullNames = testCaseFullNames.ToArray();
 
-            BuildOperatorInvocation buildOperatorInvocation = logRecorder =>
-                operatorInvocationFactory.Create(binaryPath, exampleFullNames, executionObserver, logRecorder);
+            BuildExecutorInvocation buildExecutorInvocation = logRecorder =>
+                executorInvocationFactory.Create(binaryPath, exampleFullNames, executionObserver, logRecorder);
 
-            CrossDomainExecute(binaryPath, buildOperatorInvocation, logger, crossDomainLogger);
+            CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
         }
 
-        void CrossDomainExecute(string binaryPath, BuildOperatorInvocation buildOperatorInvocation,
+        void CrossDomainExecute(string binaryPath, BuildExecutorInvocation buildExecutorInvocation,
             IOutputLogger logger, IReplayLogger crossDomainLogger)
         {
             try
             {
                 var logRecorder = new LogRecorder();
 
-                var operatorInvocation = buildOperatorInvocation(logRecorder);
+                var executorInvocation = buildExecutorInvocation(logRecorder);
 
-                int count = crossDomainExecutor.Run(binaryPath, operatorInvocation.Operate);
+                int count = crossDomainExecutor.Run(binaryPath, executorInvocation.Operate);
 
                 var logReplayer = new LogReplayer(crossDomainLogger);
 
@@ -67,8 +67,8 @@ namespace NSpec.VsAdapter.Execution
         }
 
         readonly ICrossDomainExecutor crossDomainExecutor;
-        readonly IOperatorInvocationFactory operatorInvocationFactory;
+        readonly IExecutorInvocationFactory executorInvocationFactory;
 
-        delegate IOperatorInvocation BuildOperatorInvocation(LogRecorder logRecorder);
+        delegate IExecutorInvocation BuildExecutorInvocation(LogRecorder logRecorder);
     }
 }

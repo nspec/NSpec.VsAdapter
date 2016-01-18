@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public interface IOperatorInvocationFactory
+    public interface IExecutorInvocationFactory
     {
-        IOperatorInvocation Create(string binaryPath, 
+        IExecutorInvocation Create(string binaryPath, 
             IExecutionObserver executionObserver, LogRecorder logRecorder);
 
-        IOperatorInvocation Create(string binaryPath, string[] exampleFullNames, 
+        IExecutorInvocation Create(string binaryPath, string[] exampleFullNames, 
             IExecutionObserver executionObserver, LogRecorder logRecorder);
     }
 }

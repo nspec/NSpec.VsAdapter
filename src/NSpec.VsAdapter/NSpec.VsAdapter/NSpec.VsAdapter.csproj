@@ -89,11 +89,11 @@
     <Compile Include="Execution\IBinaryTestExecutor.cs" />
     <Compile Include="Execution\IExecutionObserver.cs" />
     <Compile Include="Execution\IExecutionObserverFactory.cs" />
-    <Compile Include="Execution\IOperatorInvocation.cs" />
-    <Compile Include="Execution\IOperatorInvocationFactory.cs" />
+    <Compile Include="Execution\IExecutorInvocation.cs" />
+    <Compile Include="Execution\IExecutorInvocationFactory.cs" />
     <Compile Include="Execution\NSpecResult.cs" />
-    <Compile Include="Execution\OperatorInvocation.cs" />
-    <Compile Include="Execution\OperatorInvocationFactory.cs" />
+    <Compile Include="Execution\ExecutorInvocation.cs" />
+    <Compile Include="Execution\ExecutorInvocationFactory.cs" />
     <Compile Include="IBaseLogger.cs" />
     <Compile Include="ILoggerFactory.cs" />
     <Compile Include="IReplayLogger.cs" />
