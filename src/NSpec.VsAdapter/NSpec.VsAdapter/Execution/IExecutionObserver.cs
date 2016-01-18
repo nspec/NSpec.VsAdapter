@@ -9,5 +9,6 @@ namespace NSpec.VsAdapter.Execution
 {
     public interface IExecutionObserver : ILiveFormatter
     {
+        // separate this adapter specific interface (IExecutionObserver) from NSpec inner workings interface (ILiveFormatter)
     }
 }

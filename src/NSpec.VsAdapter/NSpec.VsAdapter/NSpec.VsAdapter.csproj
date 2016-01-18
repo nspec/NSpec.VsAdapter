@@ -139,9 +139,9 @@
     <Compile Include="ProjectObservation\Projects\IProjectWrapperFactory.cs" />
     <Compile Include="RecordedLogEvents.cs" />
     <Compile Include="TestAdapter\ITestCaseMapper.cs" />
-    <Compile Include="TestAdapter\ITestResultMapper.cs" />
+    <Compile Include="Execution\ITestResultMapper.cs" />
     <Compile Include="TestAdapter\TestCaseMapper.cs" />
-    <Compile Include="TestAdapter\TestResultMapper.cs" />
+    <Compile Include="Execution\TestResultMapper.cs" />
     <Compile Include="TestExplorer\ITestContainerFactory.cs" />
     <Compile Include="ProjectObservation\Solution\ISolutionBuildManagerProvider.cs" />
     <Compile Include="ProjectObservation\Solution\ISolutionNotifier.cs" />

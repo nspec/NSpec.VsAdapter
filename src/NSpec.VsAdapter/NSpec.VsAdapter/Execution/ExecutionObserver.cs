@@ -9,21 +9,27 @@ namespace NSpec.VsAdapter.Execution
 {
     public class ExecutionObserver : IExecutionObserver
     {
-        public ExecutionObserver(ITestExecutionRecorder testExecutionRecorder)
+        public ExecutionObserver(ITestExecutionRecorder testExecutionRecorder, ITestResultMapper testResultMapper)
         {
             this.testExecutionRecorder = testExecutionRecorder;
+            this.testResultMapper = testResultMapper;
         }
 
         public void Write(ExampleBase example, int level)
         {
-            throw new NotImplementedException();
+            // ignore level
+
+            var testResult = testResultMapper.FromExample(example);
+
+            testExecutionRecorder.RecordResult(testResult);
         }
 
         public void Write(Context context)
         {
-            throw new NotImplementedException();
+            // do nothing
         }
 
         readonly ITestExecutionRecorder testExecutionRecorder;
+        readonly ITestResultMapper testResultMapper;
     }
 }

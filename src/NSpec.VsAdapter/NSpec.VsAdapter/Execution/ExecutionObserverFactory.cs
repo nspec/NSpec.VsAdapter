@@ -9,9 +9,16 @@ namespace NSpec.VsAdapter.Execution
 {
     public class ExecutionObserverFactory : IExecutionObserverFactory
     {
+        public ExecutionObserverFactory(ITestResultMapper testResultMapper)
+        {
+            this.testResultMapper = testResultMapper;
+        }
+
         public IExecutionObserver Create(ITestExecutionRecorder testExecutionRecorder)
         {
-            return new ExecutionObserver(testExecutionRecorder);
+            return new ExecutionObserver(testExecutionRecorder, testResultMapper);
         }
+
+        readonly ITestResultMapper testResultMapper;
     }
 }
