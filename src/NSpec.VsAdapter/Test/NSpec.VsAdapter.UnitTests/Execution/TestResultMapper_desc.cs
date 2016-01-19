@@ -62,7 +62,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 Outcome = TestOutcome.Passed,
             };
 
-            var actual = mapper.FromExample(someExample);
+            var actual = mapper.FromExample(someExample, somePath);
 
             actual.ShouldBeEquivalentTo(expected, SetMatchingOptions);
         }
@@ -88,7 +88,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 ErrorStackTrace = someError.StackTrace,
             };
 
-            var actual = mapper.FromExample(someExample);
+            var actual = mapper.FromExample(someExample, somePath);
 
             actual.ShouldBeEquivalentTo(expected, SetMatchingOptions);
         }
@@ -109,7 +109,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 Outcome = TestOutcome.Skipped,
             };
 
-            var actual = mapper.FromExample(someExample);
+            var actual = mapper.FromExample(someExample, somePath);
 
             actual.ShouldBeEquivalentTo(expected, SetMatchingOptions);
         }
@@ -119,7 +119,8 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             return opts
                 .Including(tr => tr.Outcome)
                 .Including(tr => tr.ErrorMessage)
-                .Including(tr => tr.ErrorStackTrace);
+                .Including(tr => tr.ErrorStackTrace)
+                .Including(tr => tr.TestCase.Source);
         }
     }
 }

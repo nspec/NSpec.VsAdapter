@@ -90,7 +90,9 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 };
 
             testResultMapper = autoSubstitute.Resolve<ITestResultMapper>();
-            testResultMapper.FromExample(someExample).Returns(someTestResult);
+            testResultMapper.FromExample(someExample, somePath).Returns(someTestResult);
+
+            observer.BinaryPath = somePath;
 
             observer.Write(someExample, someLevel);
         }

@@ -58,6 +58,8 @@ namespace NSpec.VsAdapter.TestAdapter
 
             foreach (var binaryPath in sources)
             {
+                executionObserver.BinaryPath = binaryPath;
+
                 binaryTestExecutor.Execute(binaryPath, executionObserver, outputLogger, outputLogger);
             }
 
@@ -82,6 +84,8 @@ namespace NSpec.VsAdapter.TestAdapter
                 string binaryPath = group.Key;
 
                 var testCaseFullNames = group.Select(tc => tc.FullyQualifiedName);
+
+                executionObserver.BinaryPath = binaryPath;
 
                 binaryTestExecutor.Execute(binaryPath, testCaseFullNames, executionObserver, outputLogger, outputLogger);
             }

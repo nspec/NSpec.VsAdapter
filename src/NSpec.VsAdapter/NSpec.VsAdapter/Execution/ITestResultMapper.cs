@@ -11,6 +11,6 @@ namespace NSpec.VsAdapter.Execution
 {
     public interface ITestResultMapper
     {
-        TestResult FromExample(ExampleBase example);
+        TestResult FromExample(ExampleBase example, string binaryPath);
     }
 }

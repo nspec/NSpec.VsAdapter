@@ -11,13 +11,9 @@ namespace NSpec.VsAdapter.Execution
 {
     public class TestResultMapper : ITestResultMapper
     {
-        public TestResult FromExample(ExampleBase example)
+        public TestResult FromExample(ExampleBase example, string binaryPath)
         {
-            // TODO obtain somehow the current binary path
-
-            string dummyBinaryPath = @".\whatever\dummy-library.dll";
-
-            var testCase = new TestCase(example.FullName(), Constants.ExecutorUri, dummyBinaryPath);
+            var testCase = new TestCase(example.FullName(), Constants.ExecutorUri, binaryPath);
 
             var testResult = new TestResult(testCase);
 

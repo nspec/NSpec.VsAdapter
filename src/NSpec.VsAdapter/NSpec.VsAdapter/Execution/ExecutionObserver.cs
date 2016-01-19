@@ -15,11 +15,13 @@ namespace NSpec.VsAdapter.Execution
             this.testResultMapper = testResultMapper;
         }
 
+        public string BinaryPath { private get; set; }
+
         public void Write(ExampleBase example, int level)
         {
             // ignore level
 
-            var testResult = testResultMapper.FromExample(example);
+            var testResult = testResultMapper.FromExample(example, BinaryPath);
 
             testExecutionRecorder.RecordResult(testResult);
         }

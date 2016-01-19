@@ -27,6 +27,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         protected OutputLogger outputLogger;
         protected IRunContext runContext;
         protected IFrameworkHandle frameworkHandle;
+        protected List<string> actualSources;
         protected string[] sources;
 
         public NSpecTestExecutor_desc_base()
@@ -56,6 +57,10 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             executionObserver = autoSubstitute.Resolve<IExecutionObserver>();
             var executionObserverFactory = autoSubstitute.Resolve<IExecutionObserverFactory>();
             executionObserverFactory.Create(frameworkHandle).Returns(executionObserver);
+
+            actualSources = new List<string>();
+
+            executionObserver.BinaryPath = Arg.Do<string>(path => actualSources.Add(path));
 
             executor = autoSubstitute.Resolve<NSpecTestExecutor>();
         }
@@ -88,6 +93,12 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 });
 
             executor.RunTests(sources, runContext, frameworkHandle);
+        }
+
+        [Test]
+        public void it_should_pass_binary_path()
+        {
+            actualSources.ShouldBeEquivalentTo(sources);
         }
 
         [Test]
@@ -211,6 +222,12 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         }
 
         [Test]
+        public void it_should_pass_binary_path()
+        {
+            actualSources.ShouldBeEquivalentTo(sources);
+        }
+
+        [Test]
         public void it_should_pass_message_logger()
         {
             binaryTestExecutor.Received().Execute(
@@ -245,7 +262,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
     {
         [Test]
         [Ignore("Yet to be implemented")]
-        public void it_should_process_all_test_cases()
+        public void it_should_quit_execution()
         {
             throw new NotImplementedException();
         }
