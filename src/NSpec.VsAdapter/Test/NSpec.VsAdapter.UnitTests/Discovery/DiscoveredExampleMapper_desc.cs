@@ -14,10 +14,10 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests.Discovery
 {
     [TestFixture]
-    [Category("SpecMapper")]
-    public abstract class SpecMapper_desc_base
+    [Category("DiscoveredExampleMapper")]
+    public abstract class DiscoveredExampleMapper_desc_base
     {
-        protected SpecMapper mapper;
+        protected DiscoveredExampleMapper mapper;
 
         protected AutoSubstitute autoSubstitute;
         protected IDebugInfoProvider debugInfoProvider;
@@ -45,7 +45,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             var emptyNavigationData = new DiaNavigationData(String.Empty, 0, 0);
             debugInfoProvider.GetNavigationData(null, null).ReturnsForAnyArgs(emptyNavigationData);
 
-            mapper = new SpecMapper(someAssemblyPath, debugInfoProvider);
+            mapper = new DiscoveredExampleMapper(someAssemblyPath, debugInfoProvider);
         }
 
         [TearDown]
@@ -55,7 +55,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         }
     }
 
-    public class SpecMapper_when_example_runs : SpecMapper_desc_base
+    public class DiscoveredExampleMapper_when_example_is_runnable : DiscoveredExampleMapper_desc_base
     {
         Example example;
 
@@ -100,7 +100,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         }
     }
 
-    public class SpecMapper_when_example_is_pending : SpecMapper_desc_base
+    public class DiscoveredExampleMapper_when_example_is_pending : DiscoveredExampleMapper_desc_base
     {
         Example example;
 

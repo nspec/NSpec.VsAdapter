@@ -7,9 +7,9 @@ using System.Text;
 
 namespace NSpec.VsAdapter.Discovery
 {
-    public class SpecMapper
+    public class DiscoveredExampleMapper
     {
-        public SpecMapper(string binaryPath, IDebugInfoProvider debugInfoProvider)
+        public DiscoveredExampleMapper(string binaryPath, IDebugInfoProvider debugInfoProvider)
         {
             this.binaryPath = binaryPath;
             this.debugInfoProvider = debugInfoProvider;

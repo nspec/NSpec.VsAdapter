@@ -26,9 +26,9 @@ namespace NSpec.VsAdapter.Discovery
 
             var debugInfoProvider = new DebugInfoProvider(binaryPath, logger);
 
-            var specMapper = new SpecMapper(binaryPath, debugInfoProvider);
+            var discoveredExampleMapper = new DiscoveredExampleMapper(binaryPath, debugInfoProvider);
 
-            var discoveredExamples = examples.Select(specMapper.FromExample);
+            var discoveredExamples = examples.Select(discoveredExampleMapper.FromExample);
 
             var discoveredExampleArray = discoveredExamples.ToArray();
 

@@ -109,7 +109,7 @@
     <Compile Include="Discovery\SampleSpecs\SampleDebugInfo.cs" />
     <Compile Include="Discovery\SampleSpecs\SpecSample.cs" />
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="Discovery\SpecMapper_desc.cs" />
+    <Compile Include="Discovery\DiscoveredExampleMapper_desc.cs" />
     <Compile Include="DummyTestException.cs" />
     <Compile Include="Execution\BinaryTestExecutor_desc.cs" />
     <Compile Include="Execution\CrossDomainExecutor_desc.cs" />
