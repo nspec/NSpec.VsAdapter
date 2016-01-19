@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NSpec.VsAdapter.Discovery
 {
-    public interface ICrossDomainCollector : ICrossDomainRunner<IEnumerable<NSpecSpecification>>
+    public interface ICrossDomainCollector : ICrossDomainRunner<IEnumerable<DiscoveredExample>>
     {
     }
 }

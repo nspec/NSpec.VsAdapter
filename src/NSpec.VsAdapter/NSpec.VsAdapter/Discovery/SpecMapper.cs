@@ -15,7 +15,7 @@ namespace NSpec.VsAdapter.Discovery
             this.debugInfoProvider = debugInfoProvider;
         }
 
-        public NSpecSpecification FromExample(ExampleBase example)
+        public DiscoveredExample FromExample(ExampleBase example)
         {
             var methodInfo = ReflectExampleMethod(example);
 
@@ -24,7 +24,7 @@ namespace NSpec.VsAdapter.Discovery
 
             var navigationData = debugInfoProvider.GetNavigationData(specClassName, exampleMethodName);
 
-            var specification = new NSpecSpecification()
+            var discoveredExample = new DiscoveredExample()
             {
                 FullName = example.FullName(),
                 SourceAssembly = binaryPath,
@@ -33,7 +33,7 @@ namespace NSpec.VsAdapter.Discovery
                 Tags = example.Tags.Select(tag => tag.Replace("_", " ")).ToArray(),
             };
 
-            return specification;
+            return discoveredExample;
         }
 
         readonly string binaryPath;

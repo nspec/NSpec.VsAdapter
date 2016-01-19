@@ -16,7 +16,7 @@ namespace NSpec.VsAdapter.Discovery
             this.logger = logger;
         }
 
-        public NSpecSpecification[] Collect()
+        public DiscoveredExample[] Collect()
         {
             logger.Debug(String.Format("Start collecting tests in '{0}'", binaryPath));
 
@@ -28,15 +28,15 @@ namespace NSpec.VsAdapter.Discovery
 
             var specMapper = new SpecMapper(binaryPath, debugInfoProvider);
 
-            var specifications = examples.Select(specMapper.FromExample);
+            var discoveredExamples = examples.Select(specMapper.FromExample);
 
-            var specArray = specifications.ToArray();
+            var discoveredExampleArray = discoveredExamples.ToArray();
 
             logger.Debug(String.Format("Finish collecting tests in '{0}'", binaryPath));
 
             logger.Flush();
 
-            return specArray;
+            return discoveredExampleArray;
         }
 
         readonly string binaryPath;

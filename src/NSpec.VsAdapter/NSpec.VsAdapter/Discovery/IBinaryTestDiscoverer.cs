@@ -8,6 +8,6 @@ namespace NSpec.VsAdapter.Discovery
 {
     public interface IBinaryTestDiscoverer
     {
-        IEnumerable<NSpecSpecification> Discover(string binaryPath, IOutputLogger logger, IReplayLogger crossDomainLogger);
+        IEnumerable<DiscoveredExample> Discover(string binaryPath, IOutputLogger logger, IReplayLogger crossDomainLogger);
     }
 }

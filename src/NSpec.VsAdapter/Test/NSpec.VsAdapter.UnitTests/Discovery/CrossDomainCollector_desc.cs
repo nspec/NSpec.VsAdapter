@@ -13,40 +13,40 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 {
     [Category("CrossDomainCollector")]
     public class CrossDomainCollector_when_run_succeeds 
-        : CrossDomainRunner_when_run_succeeds<IEnumerable<NSpecSpecification>>
+        : CrossDomainRunner_when_run_succeeds<IEnumerable<DiscoveredExample>>
     {
         CrossDomainCollector collector;
 
-        IEnumerable<NSpecSpecification> actualSpecifications;
+        IEnumerable<DiscoveredExample> actualDiscoveredExamples;
 
-        readonly static NSpecSpecification[] someSpecifications = new NSpecSpecification[] 
+        readonly static DiscoveredExample[] someDiscoveredExamples = new DiscoveredExample[] 
         { 
-            new NSpecSpecification() { SourceFilePath = somePath, FullName = "source-1-spec-A", },
-            new NSpecSpecification() { SourceFilePath = somePath, FullName = "source-1-spec-B", },
-            new NSpecSpecification() { SourceFilePath = somePath, FullName = "source-1-spec-C", },
+            new DiscoveredExample() { SourceFilePath = somePath, FullName = "source-1-spec-A", },
+            new DiscoveredExample() { SourceFilePath = somePath, FullName = "source-1-spec-B", },
+            new DiscoveredExample() { SourceFilePath = somePath, FullName = "source-1-spec-C", },
         };
 
         public override void before_each()
         {
             base.before_each();
 
-            crossDomainProxy.Execute(targetOperation).Returns(someSpecifications);
+            crossDomainProxy.Execute(targetOperation).Returns(someDiscoveredExamples);
 
             collector = autoSubstitute.Resolve<CrossDomainCollector>();
 
-            actualSpecifications = collector.Run(somePath, targetOperation);
+            actualDiscoveredExamples = collector.Run(somePath, targetOperation);
         }
 
         [Test]
         public void it_should_return_collected_specifications()
         {
-            actualSpecifications.Should().BeEquivalentTo(someSpecifications);
+            actualDiscoveredExamples.Should().BeEquivalentTo(someDiscoveredExamples);
         }
     }
 
     [Category("CrossDomainCollector")]
     public class CrossDomainCollector_when_marshal_wrapper_creation_fails
-        : CrossDomainRunner_when_marshal_wrapper_creation_fails<IEnumerable<NSpecSpecification>>
+        : CrossDomainRunner_when_marshal_wrapper_creation_fails<IEnumerable<DiscoveredExample>>
     {
         CrossDomainCollector collector;
 
@@ -63,7 +63,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
     [Category("CrossDomainCollector")]
     public class CrossDomainCollector_when_marshaled_execution_fails
-        : CrossDomainRunner_when_marshaled_execution_fails<IEnumerable<NSpecSpecification>>
+        : CrossDomainRunner_when_marshaled_execution_fails<IEnumerable<DiscoveredExample>>
     {
         CrossDomainCollector collector;
 

@@ -66,7 +66,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
             var specifications = groupedSpecifications.SelectMany(group => group);
 
-            var testCases = specifications.Select(testCaseMapper.FromSpecification);
+            var testCases = specifications.Select(testCaseMapper.FromDiscoveredExample);
 
             testCases.Do(discoverySink.SendTestCase);
 

@@ -9,16 +9,16 @@ namespace NSpec.VsAdapter.TestAdapter
 {
     public class TestCaseMapper : ITestCaseMapper
     {
-        public TestCase FromSpecification(NSpecSpecification spec)
+        public TestCase FromDiscoveredExample(DiscoveredExample discoveredExample)
         {
-            var testCase = new TestCase(spec.FullName, Constants.ExecutorUri, spec.SourceAssembly)
+            var testCase = new TestCase(discoveredExample.FullName, Constants.ExecutorUri, discoveredExample.SourceAssembly)
                 {
-                    DisplayName = spec.FullName,
-                    CodeFilePath = spec.SourceFilePath,
-                    LineNumber = spec.SourceLineNumber,
+                    DisplayName = discoveredExample.FullName,
+                    CodeFilePath = discoveredExample.SourceFilePath,
+                    LineNumber = discoveredExample.SourceLineNumber,
                 };
 
-            var traits = spec.Tags.Select(tag => new Trait(tag, null));
+            var traits = discoveredExample.Tags.Select(tag => new Trait(tag, null));
 
             testCase.Traits.AddRange(traits);
 

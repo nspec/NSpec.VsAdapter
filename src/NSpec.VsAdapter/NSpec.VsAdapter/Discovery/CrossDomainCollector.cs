@@ -8,12 +8,12 @@ namespace NSpec.VsAdapter.Discovery
 {
     [Serializable]
     public class CrossDomainCollector : 
-        CrossDomainRunner<IEnumerable<NSpecSpecification>>, 
+        CrossDomainRunner<IEnumerable<DiscoveredExample>>, 
         ICrossDomainCollector
     {
         public CrossDomainCollector(
             IAppDomainFactory appDomainFactory,
-            IMarshalingFactory<IEnumerable<NSpecSpecification>> marshalingFactory)
+            IMarshalingFactory<IEnumerable<DiscoveredExample>> marshalingFactory)
             : base(appDomainFactory, marshalingFactory) 
         {
         }

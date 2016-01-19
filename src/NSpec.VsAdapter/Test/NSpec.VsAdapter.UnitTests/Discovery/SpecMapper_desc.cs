@@ -85,7 +85,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         [Test]
         public void it_should_fill_all_details()
         {
-            var expected = new NSpecSpecification()
+            var expected = new DiscoveredExample()
             {
                 FullName = example.FullName(),
                 SourceAssembly = someAssemblyPath,
@@ -129,7 +129,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         [Test]
         public void it_should_lack_source_code_info()
         {
-            var expected = new NSpecSpecification()
+            var expected = new DiscoveredExample()
             {
                 FullName = example.FullName(),
                 SourceAssembly = someAssemblyPath,

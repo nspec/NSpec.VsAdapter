@@ -13,10 +13,10 @@ namespace NSpec.VsAdapter.Discovery
             this.crossDomainCollector = crossDomainCollector;
         }
 
-        public IEnumerable<NSpecSpecification> Discover(string binaryPath, 
+        public IEnumerable<DiscoveredExample> Discover(string binaryPath, 
             IOutputLogger logger, IReplayLogger crossDomainLogger)
         {
-            IEnumerable<NSpecSpecification> specifications;
+            IEnumerable<DiscoveredExample> discoveredExamples;
 
             try
             {
@@ -28,15 +28,15 @@ namespace NSpec.VsAdapter.Discovery
 
                 var collectorInvocation = new CollectorInvocation(binaryPath, logRecorder);
 
-                specifications = crossDomainCollector.Run(binaryPath, collectorInvocation.Collect);
+                discoveredExamples = crossDomainCollector.Run(binaryPath, collectorInvocation.Collect);
 
                 var logReplayer = new LogReplayer(crossDomainLogger);
 
                 logReplayer.Replay(logRecorder);
 
-                logger.Debug(String.Format("Found {0} tests", specifications.Count()));
+                logger.Debug(String.Format("Found {0} tests", discoveredExamples.Count()));
 
-                return specifications;
+                return discoveredExamples;
             }
             catch (Exception ex)
             {
@@ -46,10 +46,10 @@ namespace NSpec.VsAdapter.Discovery
                 
                 logger.Error(ex, message);
 
-                specifications = new NSpecSpecification[0];
+                discoveredExamples = new DiscoveredExample[0];
             }
 
-            return specifications;
+            return discoveredExamples;
         }
 
         readonly ICrossDomainCollector crossDomainCollector;

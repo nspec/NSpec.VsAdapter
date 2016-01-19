@@ -7,6 +7,6 @@ namespace NSpec.VsAdapter.Discovery
 {
     public interface ICollectorInvocation
     {
-        NSpecSpecification[] Collect();
+        DiscoveredExample[] Collect();
     }
 }

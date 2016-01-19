@@ -17,7 +17,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
     public class TestCaseMapper_desc
     {
         TestCaseMapper mapper;
-        NSpecSpecification specification;
+        DiscoveredExample discoveredExample;
         TestCase expectedTestCase;
 
         AutoSubstitute autoSubstitute;
@@ -29,7 +29,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             mapper = autoSubstitute.Resolve<TestCaseMapper>();
 
-            specification = new NSpecSpecification()
+            discoveredExample = new DiscoveredExample()
             {
                 FullName = "some-test-full-name",
                 SourceFilePath = @".\some\path\to\source\code.cs",
@@ -42,16 +42,16 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             };
 
             expectedTestCase = new TestCase(
-                specification.FullName,
+                discoveredExample.FullName,
                 Constants.ExecutorUri,
-                specification.SourceAssembly)
+                discoveredExample.SourceAssembly)
                 {
-                    DisplayName = specification.FullName,
-                    CodeFilePath = specification.SourceFilePath,
-                    LineNumber = specification.SourceLineNumber,
+                    DisplayName = discoveredExample.FullName,
+                    CodeFilePath = discoveredExample.SourceFilePath,
+                    LineNumber = discoveredExample.SourceLineNumber,
                 };
 
-            var traits = specification.Tags.Select(tag => new Trait(tag, null));
+            var traits = discoveredExample.Tags.Select(tag => new Trait(tag, null));
             expectedTestCase.Traits.AddRange(traits);
         }
 
@@ -64,7 +64,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_fill_all_details()
         {
-            var testCase = mapper.FromSpecification(specification);
+            var testCase = mapper.FromDiscoveredExample(discoveredExample);
 
             testCase.ShouldBeEquivalentTo(expectedTestCase, options => 
                 options.Excluding(tc => tc.Id));

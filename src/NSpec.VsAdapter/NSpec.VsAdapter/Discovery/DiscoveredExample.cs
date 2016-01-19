@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.Discovery
 {
     [Serializable]
-    public class NSpecSpecification
+    public class DiscoveredExample
     {
-        // TODO rename in DiscoveredExample or SerializableSpec
-
         public string FullName { get; set; }
 
         public string SourceFilePath { get; set; }

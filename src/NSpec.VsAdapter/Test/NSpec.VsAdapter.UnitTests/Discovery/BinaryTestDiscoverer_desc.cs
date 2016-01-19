@@ -46,11 +46,11 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
     public class BinaryTestDiscoverer_when_discovery_succeeds : BinaryTestDiscoverer_desc_base
     {
-        readonly static NSpecSpecification[] someSpecifications = new NSpecSpecification[] 
+        readonly static DiscoveredExample[] someDiscoveredExamples = new DiscoveredExample[] 
         { 
-            new NSpecSpecification() { SourceFilePath = somePath, FullName = "source-1-spec-A", },
-            new NSpecSpecification() { SourceFilePath = somePath, FullName = "source-1-spec-B", },
-            new NSpecSpecification() { SourceFilePath = somePath, FullName = "source-1-spec-C", },
+            new DiscoveredExample() { SourceFilePath = somePath, FullName = "source-1-spec-A", },
+            new DiscoveredExample() { SourceFilePath = somePath, FullName = "source-1-spec-B", },
+            new DiscoveredExample() { SourceFilePath = somePath, FullName = "source-1-spec-C", },
         };
 
         public override void before_each()
@@ -61,20 +61,20 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
                 {
                     string binaryPath = callInfo.Arg<string>();
 
-                    return (binaryPath == somePath ? someSpecifications : new NSpecSpecification[0]);
+                    return (binaryPath == somePath ? someDiscoveredExamples : new DiscoveredExample[0]);
                 });
         }
 
         [Test]
         public void it_should_return_collected_specifications()
         {
-            discoverer.Discover(somePath, logger, crossDomainLogger).Should().BeEquivalentTo(someSpecifications);
+            discoverer.Discover(somePath, logger, crossDomainLogger).Should().BeEquivalentTo(someDiscoveredExamples);
         }
     }
 
     public class BinaryTestDiscoverer_when_discovery_fails : BinaryTestDiscoverer_desc_base
     {
-        IEnumerable<NSpecSpecification> specifications;
+        IEnumerable<DiscoveredExample> discoveredExamples;
 
         public override void before_each()
         {
@@ -85,13 +85,13 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
                     throw new DummyTestException();
                 });
 
-            specifications = discoverer.Discover(somePath, logger, crossDomainLogger);
+            discoveredExamples = discoverer.Discover(somePath, logger, crossDomainLogger);
         }
 
         [Test]
         public void it_should_return_empty_spec_list()
         {
-            specifications.Should().BeEmpty();
+            discoveredExamples.Should().BeEmpty();
         }
 
         [Test]

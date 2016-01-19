@@ -57,7 +57,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
     {
         OutputLogger outputLogger;
         string[] sources;
-        Dictionary<string, NSpecSpecification[]> specificationBySource;
+        Dictionary<string, DiscoveredExample[]> discoveredExamplesBySource;
 
         public NSpecTestDiscoverer_when_discovering()
         {
@@ -70,23 +70,23 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 source2,
             };
 
-            specificationBySource = new Dictionary<string, NSpecSpecification[]>()
+            discoveredExamplesBySource = new Dictionary<string, DiscoveredExample[]>()
             {
                 { 
                     source1, 
-                    new NSpecSpecification[] 
+                    new DiscoveredExample[] 
                     { 
-                        new NSpecSpecification() { SourceFilePath = source1, FullName = "source-1-spec-A", },
-                        new NSpecSpecification() { SourceFilePath = source1, FullName = "source-1-spec-B", },
-                        new NSpecSpecification() { SourceFilePath = source1, FullName = "source-1-spec-C", },
+                        new DiscoveredExample() { SourceFilePath = source1, FullName = "source-1-spec-A", },
+                        new DiscoveredExample() { SourceFilePath = source1, FullName = "source-1-spec-B", },
+                        new DiscoveredExample() { SourceFilePath = source1, FullName = "source-1-spec-C", },
                     }
                 },
                 { 
                     source2, 
-                    new NSpecSpecification[] 
+                    new DiscoveredExample[] 
                     { 
-                        new NSpecSpecification() { SourceFilePath = source2, FullName = "source-2-spec-A", },
-                        new NSpecSpecification() { SourceFilePath = source2, FullName = "source-2-spec-B", },
+                        new DiscoveredExample() { SourceFilePath = source2, FullName = "source-2-spec-A", },
+                        new DiscoveredExample() { SourceFilePath = source2, FullName = "source-2-spec-B", },
                     }
                 },
             };
@@ -102,20 +102,20 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     
                     if (sources.Contains(binaryPath))
                     {
-                        return specificationBySource[binaryPath];
+                        return discoveredExamplesBySource[binaryPath];
                     }
                     else
                     {
-                        return new NSpecSpecification[0];
+                        return new DiscoveredExample[0];
                     }
                 });
 
             var testCaseMapper = autoSubstitute.Resolve<ITestCaseMapper>();
-            testCaseMapper.FromSpecification(null).ReturnsForAnyArgs(callInfo =>
+            testCaseMapper.FromDiscoveredExample(null).ReturnsForAnyArgs(callInfo =>
                 {
-                    var spec = callInfo.Arg<NSpecSpecification>();
+                    var discoveredExample = callInfo.Arg<DiscoveredExample>();
 
-                    var testCase = new TestCase(spec.FullName, Constants.ExecutorUri, spec.SourceFilePath);
+                    var testCase = new TestCase(discoveredExample.FullName, Constants.ExecutorUri, discoveredExample.SourceFilePath);
 
                     return testCase;
                 });
@@ -143,7 +143,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_send_discovered_test_cases()
         {
-            var allSpecs = specificationBySource.SelectMany(group => group.Value);
+            var allSpecs = discoveredExamplesBySource.SelectMany(group => group.Value);
 
             var expected = allSpecs.Select(spec => spec.FullName);
 

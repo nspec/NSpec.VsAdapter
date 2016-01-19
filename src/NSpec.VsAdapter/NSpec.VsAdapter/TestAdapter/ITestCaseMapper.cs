@@ -9,6 +9,6 @@ namespace NSpec.VsAdapter.TestAdapter
 {
     public interface ITestCaseMapper
     {
-        TestCase FromSpecification(NSpecSpecification spec);
+        TestCase FromDiscoveredExample(DiscoveredExample spec);
     }
 }
