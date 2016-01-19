@@ -11,11 +11,9 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.ProjectObservation
 {
-    // TODO Rename class, interface, test class and files to change 'Dll' with 'Assembly'
-
-    public class NSpecTestDllNotifier : ITestDllNotifier, IDisposable
+    public class TestBinaryNotifier : ITestBinaryNotifier, IDisposable
     {
-        public NSpecTestDllNotifier(
+        public TestBinaryNotifier(
             IProjectNotifier projectNotifier, 
             IProjectBuildNotifier buildNotifier,
             IProjectConverter projectConverter)

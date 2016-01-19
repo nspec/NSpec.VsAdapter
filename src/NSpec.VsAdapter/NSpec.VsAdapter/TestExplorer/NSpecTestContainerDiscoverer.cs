@@ -22,26 +22,26 @@ namespace NSpec.VsAdapter.TestExplorer
             disposables.Add(scope); ;
 
             var containerFactory = scope.Resolve<ITestContainerFactory>();
-            var testDllNotifier = scope.Resolve<ITestDllNotifier>();
+            var testBinaryNotifier = scope.Resolve<ITestBinaryNotifier>();
 
-            Initialize(testDllNotifier, containerFactory);
+            Initialize(testBinaryNotifier, containerFactory);
         }
 
         // used by unit tests
         public NSpecTestContainerDiscoverer(
-            ITestDllNotifier testDllNotifier, 
+            ITestBinaryNotifier testBinaryNotifier, 
             ITestContainerFactory containerFactory)
         {
-            Initialize(testDllNotifier, containerFactory);
+            Initialize(testBinaryNotifier, containerFactory);
         }
 
         void Initialize(
-            ITestDllNotifier testDllNotifier,
+            ITestBinaryNotifier testBinaryNotifier,
             ITestContainerFactory containerFactory)
         {
             this.containerFactory = containerFactory;
 
-            testDllNotifier.PathStream.Subscribe(_ =>
+            testBinaryNotifier.PathStream.Subscribe(_ =>
                 {
                     RaiseTestContainersUpdated();
                 })
@@ -49,7 +49,7 @@ namespace NSpec.VsAdapter.TestExplorer
 
             var noDllPaths = new string[0];
 
-            var hotContainerStream = testDllNotifier.PathStream
+            var hotContainerStream = testBinaryNotifier.PathStream
                 .StartWith(noDllPaths)
                 .Select(MapToContainers)
                 .Replay(1);  // "remember" last observation when TestContainers is requested for the first time

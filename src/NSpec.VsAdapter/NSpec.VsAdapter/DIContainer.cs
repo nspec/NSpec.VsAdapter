@@ -43,7 +43,7 @@ namespace NSpec.VsAdapter
 
         static void RegisterContainerDiscoverer(ContainerBuilder builder)
         {
-            builder.RegisterType<NSpecTestDllNotifier>().As<ITestDllNotifier>().InstancePerLifetimeScope();
+            builder.RegisterType<TestBinaryNotifier>().As<ITestBinaryNotifier>().InstancePerLifetimeScope();
             builder.RegisterType<NSpecTestContainerFactory>().As<ITestContainerFactory>().InstancePerLifetimeScope();
             builder.RegisterType<FileService>().As<IFileService>().InstancePerLifetimeScope();
 

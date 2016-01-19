@@ -31,13 +31,13 @@ namespace NSpec.VsAdapter.UnitTests.TestExplorer
         {
             autoSubstitute = new AutoSubstitute();
 
-            var testDllNotifier = autoSubstitute.Resolve<ITestDllNotifier>();
+            var testBinaryNotifier = autoSubstitute.Resolve<ITestBinaryNotifier>();
             testDllPathStream = new Subject<IEnumerable<string>>();
-            testDllNotifier.PathStream.Returns(testDllPathStream);
+            testBinaryNotifier.PathStream.Returns(testDllPathStream);
 
             containerFactory = autoSubstitute.Resolve<ITestContainerFactory>();
 
-            containerDiscoverer = new NSpecTestContainerDiscoverer(testDllNotifier, containerFactory);
+            containerDiscoverer = new NSpecTestContainerDiscoverer(testBinaryNotifier, containerFactory);
         }
 
         [TearDown]

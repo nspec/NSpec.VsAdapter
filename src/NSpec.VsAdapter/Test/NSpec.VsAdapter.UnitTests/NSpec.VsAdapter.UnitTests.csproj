@@ -123,7 +123,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="TestAdapter\NSpecTestDiscoverer_desc.cs" />
-    <Compile Include="ProjectObservation\NSpecTestDllNotifier_desc.cs" />
+    <Compile Include="ProjectObservation\TestBinaryNotifier_desc.cs" />
     <Compile Include="ProjectObservation\ProjectBuildNotifier_desc.cs" />
     <Compile Include="ProjectObservation\ProjectConverter_desc.cs" />
     <Compile Include="ProjectObservation\ProjectNotifier_desc.cs" />

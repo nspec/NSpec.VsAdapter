@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NSpec.VsAdapter.ProjectObservation
 {
-    public interface ITestDllNotifier
+    public interface ITestBinaryNotifier
     {
         IObservable<IEnumerable<string>> PathStream { get; }
     }

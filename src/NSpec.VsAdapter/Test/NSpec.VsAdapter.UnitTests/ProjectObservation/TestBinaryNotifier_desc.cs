@@ -15,10 +15,10 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 {
     [TestFixture]
-    [Category("NSpecTestDllNotifier")]
-    public abstract class NSpecTestDllNotifier_desc_base
+    [Category("TestBinaryNotifier")]
+    public abstract class TestBinaryNotifier_desc_base
     {
-        protected NSpecTestDllNotifier notifier;
+        protected TestBinaryNotifier notifier;
 
         protected AutoSubstitute autoSubstitute;
         protected Subject<IEnumerable<ProjectInfo>> projectStream;
@@ -34,7 +34,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
 
         protected const string notATestDllPath = null;
 
-        public NSpecTestDllNotifier_desc_base()
+        public TestBinaryNotifier_desc_base()
         {
             someProjectInfo = new ProjectInfo();
             testProjectInfo = new ProjectInfo();
@@ -64,7 +64,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
             projectConverter = autoSubstitute.Resolve<IProjectConverter>();
             projectConverter.ToTestDllPath(Arg.Any<ProjectInfo>()).Returns(notATestDllPath);
 
-            notifier = autoSubstitute.Resolve<NSpecTestDllNotifier>();
+            notifier = autoSubstitute.Resolve<TestBinaryNotifier>();
 
             testDllPathObserver = new TestScheduler().CreateObserver<IEnumerable<string>>();
 
@@ -82,7 +82,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         }
     }
 
-    public class NSpecTestDllNotifier_when_created : NSpecTestDllNotifier_desc_base
+    public class TestBinaryNotifier_when_created : TestBinaryNotifier_desc_base
     {
         [Test]
         public void it_should_not_notify()
@@ -91,7 +91,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         }
     }
 
-    public class NSpecTestDllNotifier_when_no_test_found : NSpecTestDllNotifier_desc_base
+    public class TestBinaryNotifier_when_no_test_found : TestBinaryNotifier_desc_base
     {
         public override void before_each()
         {
@@ -125,7 +125,7 @@ namespace NSpec.VsAdapter.UnitTests.ProjectObservation
         }
     }
 
-    public class NSpecTestDllNotifier_when_some_test_found : NSpecTestDllNotifier_desc_base
+    public class TestBinaryNotifier_when_some_test_found : TestBinaryNotifier_desc_base
     {
         const string someTestDllPath = @".\some\dummy\test\library.dll";
         const string anotherTestDllPath = @".\another\dummy\test\library.dll";
