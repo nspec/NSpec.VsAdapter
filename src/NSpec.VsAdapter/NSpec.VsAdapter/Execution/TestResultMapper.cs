@@ -13,7 +13,30 @@ namespace NSpec.VsAdapter.Execution
     {
         public TestResult FromExample(ExampleBase example)
         {
-            throw new NotImplementedException();
+            // TODO obtain somehow the current binary path
+
+            string dummyBinaryPath = @".\whatever\dummy-library.dll";
+
+            var testCase = new TestCase(example.FullName(), Constants.ExecutorUri, dummyBinaryPath);
+
+            var testResult = new TestResult(testCase);
+
+            if (example.Pending)
+            {
+                testResult.Outcome = TestOutcome.Skipped;
+            }
+            else if (example.Failed())
+            {
+                testResult.Outcome = TestOutcome.Failed;
+                testResult.ErrorMessage = example.Exception.Message;
+                testResult.ErrorStackTrace = example.Exception.StackTrace;
+            }
+            else
+            {
+                testResult.Outcome = TestOutcome.Passed;
+            }
+
+            return testResult;
         }
     }
 }
