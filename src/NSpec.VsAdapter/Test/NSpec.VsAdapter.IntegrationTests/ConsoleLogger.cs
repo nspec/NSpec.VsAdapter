@@ -6,6 +6,7 @@ using System.Text;
 
 namespace NSpec.VsAdapter.IntegrationTests
 {
+    [Serializable]
     public class ConsoleLogger : IMessageLogger
     {
         public ConsoleLogger()

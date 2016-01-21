@@ -95,4 +95,28 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
             actual.ShouldAllBeEquivalentTo(expected);
         }
     }
+
+    public class when_executing_selected_tests : when_executing_tests_base
+    {
+        [Test]
+        [Ignore("Yet to be implemented")]
+        public void it_should_start_selected_examples()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        [Ignore("Yet to be implemented")]
+        public void it_should_end_selected_examples()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        [Ignore("Yet to be implemented")]
+        public void it_should_report_result_of_selected_examples()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
