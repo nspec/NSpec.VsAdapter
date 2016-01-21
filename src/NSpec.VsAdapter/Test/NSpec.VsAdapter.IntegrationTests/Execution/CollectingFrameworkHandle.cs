@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,15 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.IntegrationTests.Execution
 {
     [Serializable]
-    public class CollectingFrameworkHandle : ConsoleLogger, IFrameworkHandle
+    public class CollectingFrameworkHandle : IFrameworkHandle
     {
-        public CollectingFrameworkHandle()
+        public CollectingFrameworkHandle(ConsoleLogger consoleLogger)
         {
             StartedTestCases = new List<TestCase>();
             EndedTestInfo = new List<Tuple<TestCase, TestOutcome>>();
             Results = new List<TestResult>();
+
+            this.consoleLogger = consoleLogger;
         }
 
         public List<TestCase> StartedTestCases { get; private set; }
@@ -50,5 +53,12 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         }
 
         public bool EnableShutdownAfterTestRun { get; set; }
+
+        public void SendMessage(TestMessageLevel testMessageLevel, string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        readonly ConsoleLogger consoleLogger;
     }
 }

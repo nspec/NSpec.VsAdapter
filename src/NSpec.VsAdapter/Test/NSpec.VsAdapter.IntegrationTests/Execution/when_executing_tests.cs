@@ -37,7 +37,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
 
             var consoleLogger = new ConsoleLogger();
 
-            handle = new CollectingFrameworkHandle();
+            handle = new CollectingFrameworkHandle(consoleLogger);
 
             executor = new NSpecTestExecutor();
         }
