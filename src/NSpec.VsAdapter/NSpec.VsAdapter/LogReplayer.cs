@@ -28,6 +28,8 @@ namespace NSpec.VsAdapter
 
         public void Replay(LogRecorder logRecorder)
         {
+            // TODO Extract (de)serialization as a dependency
+
             var stream = logRecorder.Stream;
 
             stream.Position = 0;

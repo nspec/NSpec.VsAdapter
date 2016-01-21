@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
+    [Serializable]
     public class TestResultMapper : ITestResultMapper
     {
         public TestResult FromExample(ExampleBase example, string binaryPath)

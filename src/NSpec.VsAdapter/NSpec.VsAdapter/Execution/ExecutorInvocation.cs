@@ -6,6 +6,7 @@ using System.Text;
 
 namespace NSpec.VsAdapter.Execution
 {
+    [Serializable]
     public class ExecutorInvocation : IExecutorInvocation
     {
         public ExecutorInvocation(string binaryPath, 

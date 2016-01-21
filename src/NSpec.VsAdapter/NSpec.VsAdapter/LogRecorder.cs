@@ -54,6 +54,8 @@ namespace NSpec.VsAdapter
 
         public void Flush()
         {
+            // TODO Extract (de)serialization as a dependency
+
             Serializer.Serialize(stream, events);
 
             events.Clear();

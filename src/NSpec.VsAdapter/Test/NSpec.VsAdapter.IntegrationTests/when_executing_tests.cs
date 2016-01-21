@@ -14,30 +14,33 @@ namespace NSpec.VsAdapter.IntegrationTests
 {
     [TestFixture]
     [Category("Integration.TestExecution")]
-    public class when_executing_tests
+    public class when_executing_tests_base
     {
-        NSpecTestExecutor executor;
+        protected NSpecTestExecutor executor;
 
-        CollectingFrameworkHandle handle;
+        protected CollectingFrameworkHandle handle;
+        protected IRunContext runContext;
+        protected readonly string[] sources;
 
-        [SetUp]
-        public virtual void before_each()
+        public when_executing_tests_base()
         {
-            var sources = new string[] 
+            sources = new string[] 
             { 
                 TestConstants.SampleSpecsDllPath,
                 TestConstants.SampleSystemDllPath,
             };
+        }
 
-            IRunContext runContext = null;
+        [SetUp]
+        public virtual void before_each()
+        {
+            runContext = null;
 
             var consoleLogger = new ConsoleLogger();
 
             handle = new CollectingFrameworkHandle();
 
             executor = new NSpecTestExecutor();
-
-            executor.RunTests(sources, runContext, handle);
         }
 
         [TearDown]
@@ -46,44 +49,8 @@ namespace NSpec.VsAdapter.IntegrationTests
             executor.Dispose();
         }
 
-        [Test]
-        [Ignore("Yet to be implemented")]
-        public void it_should_start_all_examples()
-        {
-            var expected = SampleSpecsTestCaseData.All;
-
-            var actual = handle.StartedTestCases;
-
-            actual.ShouldAllBeEquivalentTo(expected);
-        }
-
-        [Test]
-        [Ignore("Yet to be implemented")]
-        public void it_should_end_all_examples()
-        {
-            var expected = SampleSpecsTestOutcomeData.ByTestCaseFullName;
-
-            var actual = handle.EndedTestInfo
-                .ToDictionary(info => info.Item1.FullyQualifiedName, info => info.Item2);
-
-            actual.ShouldAllBeEquivalentTo(expected);
-        }
-
-        [Test]
-        [Ignore("Yet to be implemented")]
-        public void it_should_report_result_of_all_examples()
-        {
-            var expected = SampleSpecsTestCaseData.All.Select(tc => new TestResult(tc)
-                {
-                    Outcome = SampleSpecsTestOutcomeData.ByTestCaseFullName[tc.FullyQualifiedName],
-                });
-
-            var actual = handle.Results;
-
-            actual.ShouldAllBeEquivalentTo(expected);
-        }
-
-        class CollectingFrameworkHandle : ConsoleLogger, IFrameworkHandle
+        [Serializable]
+        public class CollectingFrameworkHandle : ConsoleLogger, IFrameworkHandle
         {
             public CollectingFrameworkHandle()
             {
@@ -124,6 +91,53 @@ namespace NSpec.VsAdapter.IntegrationTests
             }
 
             public bool EnableShutdownAfterTestRun { get; set; }
+        }
+    }
+
+    public class when_executing_all_tests : when_executing_tests_base
+    {
+        public override void before_each()
+        {
+            base.before_each();
+
+            executor.RunTests(sources, runContext, handle);
+        }
+
+        [Test]
+        [Ignore("Yet to be implemented")]
+        public void it_should_start_all_examples()
+        {
+            var expected = SampleSpecsTestCaseData.All;
+
+            var actual = handle.StartedTestCases;
+
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [Test]
+        [Ignore("Yet to be implemented")]
+        public void it_should_end_all_examples()
+        {
+            var expected = SampleSpecsTestOutcomeData.ByTestCaseFullName;
+
+            var actual = handle.EndedTestInfo
+                .ToDictionary(info => info.Item1.FullyQualifiedName, info => info.Item2);
+
+            actual.ShouldAllBeEquivalentTo(expected);
+        }
+
+        [Test]
+        [Ignore("Yet to be implemented")]
+        public void it_should_report_result_of_all_examples()
+        {
+            var expected = SampleSpecsTestCaseData.All.Select(tc => new TestResult(tc)
+            {
+                Outcome = SampleSpecsTestOutcomeData.ByTestCaseFullName[tc.FullyQualifiedName],
+            });
+
+            var actual = handle.Results;
+
+            actual.ShouldAllBeEquivalentTo(expected);
         }
     }
 }

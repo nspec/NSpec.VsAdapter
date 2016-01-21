@@ -7,6 +7,7 @@ using System.Text;
 
 namespace NSpec.VsAdapter.Execution
 {
+    [Serializable]
     public class ExecutionObserver : IExecutionObserver
     {
         public ExecutionObserver(ITestExecutionRecorder testExecutionRecorder, ITestResultMapper testResultMapper)
