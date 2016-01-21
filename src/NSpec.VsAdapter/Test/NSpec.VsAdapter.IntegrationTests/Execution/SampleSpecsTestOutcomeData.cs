@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.IntegrationTests
+namespace NSpec.VsAdapter.IntegrationTests.Execution
 {
     public static class SampleSpecsTestOutcomeData
     {

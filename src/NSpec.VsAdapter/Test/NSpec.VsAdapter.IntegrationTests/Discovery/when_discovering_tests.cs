@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.IntegrationTests
+namespace NSpec.VsAdapter.IntegrationTests.Discovery
 {
     [TestFixture]
     [Category("Integration.TestDiscovery")]
