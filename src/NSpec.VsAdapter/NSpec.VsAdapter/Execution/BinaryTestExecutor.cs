@@ -15,19 +15,19 @@ namespace NSpec.VsAdapter.Execution
         }
 
         public int Execute(string binaryPath, IExecutionObserver executionObserver,
-            IOutputLogger logger, IReplayLogger crossDomainLogger)
+            IOutputLogger logger, IReplayLogger replayLogger)
         {
             logger.Debug(String.Format("Executing tests in container: '{0}'", binaryPath));
 
             BuildExecutorInvocation buildExecutorInvocation = logRecorder =>
                 executorInvocationFactory.Create(binaryPath, executionObserver, logRecorder);
 
-            return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
+            return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, replayLogger);
         }
 
         public int Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
             IExecutionObserver executionObserver,
-            IOutputLogger logger, IReplayLogger crossDomainLogger)
+            IOutputLogger logger, IReplayLogger replayLogger)
         {
             logger.Debug(String.Format("Executing tests in container: '{0}'", binaryPath));
 
@@ -36,11 +36,11 @@ namespace NSpec.VsAdapter.Execution
             BuildExecutorInvocation buildExecutorInvocation = logRecorder =>
                 executorInvocationFactory.Create(binaryPath, exampleFullNames, executionObserver, logRecorder);
 
-            return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
+            return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, replayLogger);
         }
 
         int CrossDomainExecute(string binaryPath, BuildExecutorInvocation buildExecutorInvocation,
-            IOutputLogger logger, IReplayLogger crossDomainLogger)
+            IOutputLogger logger, IReplayLogger replayLogger)
         {
             int count;
 
@@ -52,7 +52,7 @@ namespace NSpec.VsAdapter.Execution
 
                 count = crossDomainExecutor.Run(binaryPath, executorInvocation.Execute);
 
-                var logReplayer = new LogReplayer(crossDomainLogger);
+                var logReplayer = new LogReplayer(replayLogger);
 
                 logReplayer.Replay(logRecorder);
 

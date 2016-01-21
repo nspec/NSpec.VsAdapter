@@ -14,7 +14,7 @@ namespace NSpec.VsAdapter.Discovery
         }
 
         public IEnumerable<DiscoveredExample> Discover(string binaryPath, 
-            IOutputLogger logger, IReplayLogger crossDomainLogger)
+            IOutputLogger logger, IReplayLogger replayLogger)
         {
             IEnumerable<DiscoveredExample> discoveredExamples;
 
@@ -30,7 +30,7 @@ namespace NSpec.VsAdapter.Discovery
 
                 discoveredExamples = crossDomainCollector.Run(binaryPath, collectorInvocation.Collect);
 
-                var logReplayer = new LogReplayer(crossDomainLogger);
+                var logReplayer = new LogReplayer(replayLogger);
 
                 logReplayer.Replay(logRecorder);
 

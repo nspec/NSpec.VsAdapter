@@ -23,7 +23,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         protected IExecutorInvocation executorInvocation;
         protected IExecutionObserver executionObserver;
         protected IOutputLogger logger;
-        protected IReplayLogger crossDomainLogger;
+        protected IReplayLogger replayLogger;
         protected int actualCount;
 
         protected const string somePath = @".\path\to\some\dummy-library.dll";
@@ -44,7 +44,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             executionObserver = autoSubstitute.Resolve<IExecutionObserver>();
             logger = autoSubstitute.Resolve<IOutputLogger>();
-            crossDomainLogger = autoSubstitute.Resolve<IReplayLogger>();
+            replayLogger = autoSubstitute.Resolve<IReplayLogger>();
 
             executor = autoSubstitute.Resolve<BinaryTestExecutor>();
         }
@@ -84,7 +84,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
 
-            actualCount = executor.Execute(somePath, executionObserver, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, executionObserver, logger, replayLogger);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            actualCount = executor.Execute(somePath, executionObserver, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, executionObserver, logger, replayLogger);
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
 
-            actualCount = executor.Execute(somePath, testCaseFullNames, executionObserver, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, testCaseFullNames, executionObserver, logger, replayLogger);
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            actualCount = executor.Execute(somePath, testCaseFullNames, executionObserver, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, testCaseFullNames, executionObserver, logger, replayLogger);
         }
 
         [Test]
