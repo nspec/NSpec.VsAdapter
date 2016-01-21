@@ -56,7 +56,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
 
         public void SendMessage(TestMessageLevel testMessageLevel, string message)
         {
-            throw new NotImplementedException();
+            consoleLogger.SendMessage(testMessageLevel, message);
         }
 
         readonly ConsoleLogger consoleLogger;
