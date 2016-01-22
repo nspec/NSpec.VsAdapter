@@ -64,7 +64,10 @@
     <Reference Include="Microsoft.VisualStudio.TestWindow.Interfaces">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\Microsoft.VisualStudio.TestWindow.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="NSpec, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="NSpec, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\nspec.1.0.4\lib\NSpec.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NSubstitute, Version=1.8.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NSubstitute.1.8.2.0\lib\net45\NSubstitute.dll</HintPath>
       <Private>True</Private>
@@ -113,9 +116,11 @@
     <Compile Include="DummyTestException.cs" />
     <Compile Include="Execution\BinaryTestExecutor_desc.cs" />
     <Compile Include="Execution\CrossDomainExecutor_desc.cs" />
-    <Compile Include="Execution\ExecutionObserver_desc.cs" />
+    <Compile Include="Execution\ExecutedExampleMapper_desc.cs" />
+    <Compile Include="Execution\ExecutionReporter_desc.cs" />
+    <Compile Include="Execution\ProgressRecorder_desc.cs" />
     <Compile Include="Execution\RunnableContextFinder_desc.cs" />
-    <Compile Include="Execution\TestResultMapper_desc.cs" />
+    <Compile Include="TestAdapter\TestResultMapper_desc.cs" />
     <Compile Include="TestAdapter\NSpecTestExecutor_desc.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />

@@ -23,7 +23,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
         protected AutoSubstitute autoSubstitute;
         protected IBinaryTestExecutor binaryTestExecutor;
-        protected IExecutionObserver executionObserver;
+        protected IProgressRecorder progressRecorder;
         protected OutputLogger outputLogger;
         protected IRunContext runContext;
         protected IFrameworkHandle frameworkHandle;
@@ -54,13 +54,13 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             var loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
             loggerFactory.CreateOutput(Arg.Any<IMessageLogger>()).Returns(outputLogger);
 
-            executionObserver = autoSubstitute.Resolve<IExecutionObserver>();
-            var executionObserverFactory = autoSubstitute.Resolve<IExecutionObserverFactory>();
-            executionObserverFactory.Create(frameworkHandle).Returns(executionObserver);
+            progressRecorder = autoSubstitute.Resolve<IProgressRecorder>();
+            var progressRecorderFactory = autoSubstitute.Resolve<IProgressRecorderFactory>();
+            progressRecorderFactory.Create(frameworkHandle).Returns(progressRecorder);
 
             actualSources = new List<string>();
 
-            executionObserver.BinaryPath = Arg.Do<string>(path => actualSources.Add(path));
+            progressRecorder.BinaryPath = Arg.Do<string>(path => actualSources.Add(path));
 
             executor = autoSubstitute.Resolve<NSpecTestExecutor>();
         }
@@ -84,7 +84,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             executedSources = new List<string>();
 
             binaryTestExecutor
-                .When(exc => exc.Execute(Arg.Any<string>(), executionObserver, outputLogger, outputLogger))
+                .When(exc => exc.Execute(Arg.Any<string>(), progressRecorder, outputLogger, outputLogger))
                 .Do(callInfo =>
                 {
                     var source = callInfo.Arg<string>();
@@ -106,7 +106,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
-                Arg.Any<IExecutionObserver>(),
+                Arg.Any<IProgressRecorder>(),
                 outputLogger, outputLogger);
         }
 
@@ -115,7 +115,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
-                executionObserver,
+                progressRecorder,
                 Arg.Any<IOutputLogger>(), Arg.Any<IReplayLogger>());
         }
 
@@ -208,7 +208,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             executedTests = new Dictionary<string, IEnumerable<string>>();
 
             binaryTestExecutor
-                .When(exc => exc.Execute(Arg.Any<string>(), Arg.Any<IEnumerable<string>>(), executionObserver, outputLogger, outputLogger))
+                .When(exc => exc.Execute(Arg.Any<string>(), Arg.Any<IEnumerable<string>>(), progressRecorder, outputLogger, outputLogger))
                 .Do(callInfo =>
                 {
                     var source = callInfo.Arg<string>();
@@ -233,7 +233,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(), 
                 Arg.Any<IEnumerable<string>>(),
-                Arg.Any<IExecutionObserver>(), 
+                Arg.Any<IProgressRecorder>(), 
                 outputLogger, outputLogger);
         }
 
@@ -243,7 +243,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
                 Arg.Any<IEnumerable<string>>(),
-                executionObserver, 
+                progressRecorder, 
                 Arg.Any<IOutputLogger>(), Arg.Any<IReplayLogger>());
         }
 

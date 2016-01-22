@@ -9,15 +9,15 @@ namespace NSpec.VsAdapter.Execution
     public class ExecutorInvocationFactory : IExecutorInvocationFactory
     {
         public IExecutorInvocation Create(string binaryPath, 
-            IExecutionObserver executionObserver, LogRecorder logRecorder)
+            IProgressRecorder progressRecorder, LogRecorder logRecorder)
         {
-            return new ExecutorInvocation(binaryPath, executionObserver, logRecorder);
+            return new ExecutorInvocation(binaryPath, progressRecorder, logRecorder);
         }
 
         public IExecutorInvocation Create(string binaryPath, string[] exampleFullNames, 
-            IExecutionObserver executionObserver, LogRecorder logRecorder)
+            IProgressRecorder progressRecorder, LogRecorder logRecorder)
         {
-            return new ExecutorInvocation(binaryPath, exampleFullNames, executionObserver, logRecorder);
+            return new ExecutorInvocation(binaryPath, exampleFullNames, progressRecorder, logRecorder);
         }
     }
 }

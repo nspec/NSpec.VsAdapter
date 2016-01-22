@@ -10,17 +10,17 @@ namespace NSpec.VsAdapter.Execution
     public class ExecutorInvocation : IExecutorInvocation
     {
         public ExecutorInvocation(string binaryPath, 
-            IExecutionObserver executionObserver, ISerializableLogger logger)
-            : this(binaryPath, RunnableContextFinder.RunAll, executionObserver, logger)
+            IProgressRecorder progressRecorder, ISerializableLogger logger)
+            : this(binaryPath, RunnableContextFinder.RunAll, progressRecorder, logger)
         {
         }
 
         public ExecutorInvocation(string binaryPath, string[] exampleFullNames, 
-            IExecutionObserver executionObserver, ISerializableLogger logger)
+            IProgressRecorder progressRecorder, ISerializableLogger logger)
         {
             this.binaryPath = binaryPath;
             this.exampleFullNames = exampleFullNames;
-            this.executionObserver = executionObserver;
+            this.progressRecorder = progressRecorder;
             this.logger = logger;
         }
 
@@ -32,7 +32,11 @@ namespace NSpec.VsAdapter.Execution
 
             var runnableContexts = runnableContextFinder.Find(binaryPath, exampleFullNames);
 
-            var contextExecutor = new ContextExecutor(executionObserver);
+            var executedExampleMapper = new ExecutedExampleMapper();
+
+            var executionReporter = new ExecutionReporter(progressRecorder, executedExampleMapper);
+
+            var contextExecutor = new ContextExecutor(executionReporter);
 
             int count = contextExecutor.Execute(runnableContexts);
 
@@ -45,7 +49,7 @@ namespace NSpec.VsAdapter.Execution
 
         readonly string binaryPath;
         readonly string[] exampleFullNames;
-        readonly IExecutionObserver executionObserver;
+        readonly IProgressRecorder progressRecorder;
         readonly ISerializableLogger logger;
     }
 }

@@ -14,19 +14,19 @@ namespace NSpec.VsAdapter.Execution
             this.executorInvocationFactory = executorInvocationFactory;
         }
 
-        public int Execute(string binaryPath, IExecutionObserver executionObserver,
+        public int Execute(string binaryPath, IProgressRecorder progressRecorder,
             IOutputLogger logger, IReplayLogger replayLogger)
         {
             logger.Debug(String.Format("Executing tests in container: '{0}'", binaryPath));
 
             BuildExecutorInvocation buildExecutorInvocation = logRecorder =>
-                executorInvocationFactory.Create(binaryPath, executionObserver, logRecorder);
+                executorInvocationFactory.Create(binaryPath, progressRecorder, logRecorder);
 
             return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, replayLogger);
         }
 
         public int Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
-            IExecutionObserver executionObserver,
+            IProgressRecorder progressRecorder,
             IOutputLogger logger, IReplayLogger replayLogger)
         {
             logger.Debug(String.Format("Executing tests in container: '{0}'", binaryPath));
@@ -34,7 +34,7 @@ namespace NSpec.VsAdapter.Execution
             var exampleFullNames = testCaseFullNames.ToArray();
 
             BuildExecutorInvocation buildExecutorInvocation = logRecorder =>
-                executorInvocationFactory.Create(binaryPath, exampleFullNames, executionObserver, logRecorder);
+                executorInvocationFactory.Create(binaryPath, exampleFullNames, progressRecorder, logRecorder);
 
             return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, replayLogger);
         }

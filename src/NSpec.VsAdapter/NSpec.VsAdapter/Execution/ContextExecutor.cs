@@ -1,4 +1,5 @@
 ﻿using NSpec.Domain;
+using NSpec.Domain.Formatters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace NSpec.VsAdapter.Execution
 {
     public class ContextExecutor
     {
-        public ContextExecutor(IExecutionObserver executionObserver)
+        public ContextExecutor(ILiveFormatter executionReporter)
         {
-            this.executionObserver = executionObserver;
+            this.executionReporter = executionReporter;
         }
 
         public int Execute(IEnumerable<Context> contextsToRun)
@@ -19,7 +20,7 @@ namespace NSpec.VsAdapter.Execution
 
             foreach (var context in contextsToRun)
             {
-                context.Run(executionObserver, false);
+                context.Run(executionReporter, false);
 
                 context.AssignExceptions();
 
@@ -29,6 +30,6 @@ namespace NSpec.VsAdapter.Execution
             return count;
         }
 
-        readonly IExecutionObserver executionObserver;
+        readonly ILiveFormatter executionReporter;
     }
 }

@@ -23,18 +23,18 @@ namespace NSpec.VsAdapter.TestAdapter
             disposable = scope;
 
             this.binaryTestExecutor = scope.Resolve<IBinaryTestExecutor>();
-            this.executionObserverFactory = scope.Resolve<IExecutionObserverFactory>();
+            this.progressRecorderFactory = scope.Resolve<IProgressRecorderFactory>();
             this.loggerFactory = scope.Resolve<ILoggerFactory>();
         }
 
         // used by unit tests
         public NSpecTestExecutor(
             IBinaryTestExecutor binaryTestExecutor,
-            IExecutionObserverFactory executionObserverFactory,
+            IProgressRecorderFactory progressRecorderFactory,
             ILoggerFactory loggerFactory)
         {
             this.binaryTestExecutor = binaryTestExecutor;
-            this.executionObserverFactory = executionObserverFactory;
+            this.progressRecorderFactory = progressRecorderFactory;
             this.loggerFactory = loggerFactory;
 
             disposable = Disposable.Empty;
@@ -54,13 +54,14 @@ namespace NSpec.VsAdapter.TestAdapter
 
             outputLogger.Info("Execution by source paths started");
 
-            var executionObserver = executionObserverFactory.Create((ITestExecutionRecorder)frameworkHandle);
-
-            foreach (var binaryPath in sources)
+            using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
             {
-                executionObserver.BinaryPath = binaryPath;
+                foreach (var binaryPath in sources)
+                {
+                    progressRecorder.BinaryPath = binaryPath;
 
-                binaryTestExecutor.Execute(binaryPath, executionObserver, outputLogger, outputLogger);
+                    binaryTestExecutor.Execute(binaryPath, progressRecorder, outputLogger, outputLogger);
+                }
             }
 
             outputLogger.Info("Execution by source paths finished");
@@ -75,19 +76,20 @@ namespace NSpec.VsAdapter.TestAdapter
 
             outputLogger.Info("Execution by TestCases started");
 
-            var executionObserver = executionObserverFactory.Create((ITestExecutionRecorder)frameworkHandle);
-
             var testCaseGroupsBySource = tests.GroupBy(t => t.Source);
 
-            foreach (var group in testCaseGroupsBySource)
+            using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
             {
-                string binaryPath = group.Key;
+                foreach (var group in testCaseGroupsBySource)
+                {
+                    string binaryPath = group.Key;
 
-                var testCaseFullNames = group.Select(tc => tc.FullyQualifiedName);
+                    var testCaseFullNames = group.Select(tc => tc.FullyQualifiedName);
 
-                executionObserver.BinaryPath = binaryPath;
+                    progressRecorder.BinaryPath = binaryPath;
 
-                binaryTestExecutor.Execute(binaryPath, testCaseFullNames, executionObserver, outputLogger, outputLogger);
+                    binaryTestExecutor.Execute(binaryPath, testCaseFullNames, progressRecorder, outputLogger, outputLogger);
+                }
             }
 
             outputLogger.Info("Execution by TestCases finished");
@@ -99,7 +101,7 @@ namespace NSpec.VsAdapter.TestAdapter
         }
 
         readonly IBinaryTestExecutor binaryTestExecutor;
-        readonly IExecutionObserverFactory executionObserverFactory;
+        readonly IProgressRecorderFactory progressRecorderFactory;
         readonly ILoggerFactory loggerFactory;
         readonly IDisposable disposable;
     }

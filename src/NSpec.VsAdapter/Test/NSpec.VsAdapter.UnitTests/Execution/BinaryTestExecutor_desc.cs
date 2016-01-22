@@ -21,7 +21,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         protected ICrossDomainExecutor crossDomainExecutor;
         protected IExecutorInvocationFactory executorInvocationFactory;
         protected IExecutorInvocation executorInvocation;
-        protected IExecutionObserver executionObserver;
+        protected IProgressRecorder progressRecorder;
         protected IOutputLogger logger;
         protected IReplayLogger replayLogger;
         protected int actualCount;
@@ -42,7 +42,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             executorInvocationFactory = autoSubstitute.Resolve<IExecutorInvocationFactory>();
             executorInvocation = autoSubstitute.Resolve<IExecutorInvocation>();
 
-            executionObserver = autoSubstitute.Resolve<IExecutionObserver>();
+            progressRecorder = autoSubstitute.Resolve<IProgressRecorder>();
             logger = autoSubstitute.Resolve<IOutputLogger>();
             replayLogger = autoSubstitute.Resolve<IReplayLogger>();
 
@@ -63,14 +63,14 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             base.before_each();
 
             executorInvocationFactory
-                .Create(somePath, executionObserver, Arg.Any<LogRecorder>())
+                .Create(somePath, progressRecorder, Arg.Any<LogRecorder>())
                 .Returns(executorInvocation);
         }
 
         [Test]
         public void it_should_request_invocation_by_source()
         {
-            executorInvocationFactory.Received().Create(somePath, executionObserver, Arg.Any<LogRecorder>());
+            executorInvocationFactory.Received().Create(somePath, progressRecorder, Arg.Any<LogRecorder>());
         }
     }
 
@@ -84,7 +84,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
 
-            actualCount = executor.Execute(somePath, executionObserver, logger, replayLogger);
+            actualCount = executor.Execute(somePath, progressRecorder, logger, replayLogger);
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            actualCount = executor.Execute(somePath, executionObserver, logger, replayLogger);
+            actualCount = executor.Execute(somePath, progressRecorder, logger, replayLogger);
         }
 
         [Test]
@@ -128,14 +128,14 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             base.before_each();
 
             executorInvocationFactory
-                .Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), executionObserver, Arg.Any<LogRecorder>())
+                .Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), progressRecorder, Arg.Any<LogRecorder>())
                 .Returns(executorInvocation);
         }
 
         [Test]
         public void it_should_request_invocation_by_testcase()
         {
-            executorInvocationFactory.Received().Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), executionObserver, Arg.Any<LogRecorder>());
+            executorInvocationFactory.Received().Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), progressRecorder, Arg.Any<LogRecorder>());
         }
     }
 
@@ -149,7 +149,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
 
-            actualCount = executor.Execute(somePath, testCaseFullNames, executionObserver, logger, replayLogger);
+            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, logger, replayLogger);
         }
 
         [Test]
@@ -170,7 +170,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            actualCount = executor.Execute(somePath, testCaseFullNames, executionObserver, logger, replayLogger);
+            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, logger, replayLogger);
         }
 
         [Test]

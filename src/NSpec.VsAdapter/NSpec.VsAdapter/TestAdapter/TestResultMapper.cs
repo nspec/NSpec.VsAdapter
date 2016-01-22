@@ -7,26 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.Execution
+namespace NSpec.VsAdapter.TestAdapter
 {
-    [Serializable]
     public class TestResultMapper : ITestResultMapper
     {
-        public TestResult FromExample(ExampleBase example, string binaryPath)
+        public TestResult FromExecutedExample(ExecutedExample executedExample, string binaryPath)
         {
-            var testCase = new TestCase(example.FullName(), Constants.ExecutorUri, binaryPath);
+            var testCase = new TestCase(executedExample.FullName, Constants.ExecutorUri, binaryPath);
 
             var testResult = new TestResult(testCase);
 
-            if (example.Pending)
+            if (executedExample.Pending)
             {
                 testResult.Outcome = TestOutcome.Skipped;
             }
-            else if (example.Failed())
+            else if (executedExample.Failed)
             {
                 testResult.Outcome = TestOutcome.Failed;
-                testResult.ErrorMessage = example.Exception.Message;
-                testResult.ErrorStackTrace = example.Exception.StackTrace;
+                testResult.ErrorMessage = executedExample.Exception.Message;
+                testResult.ErrorStackTrace = executedExample.Exception.StackTrace;
             }
             else
             {

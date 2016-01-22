@@ -1,6 +1,5 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
-using FluentAssertions.Equivalency;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.Domain;
 using NSpec.VsAdapter.Execution;
@@ -15,17 +14,16 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests.Execution
 {
     [TestFixture]
-    [Category("TestResultMapper")]
-    public class TestResultMapper_desc
+    [Category("ExecutedExampleMapper")]
+    public class ExecutedExampleMapper_desc
     {
-        TestResultMapper mapper;
+        ExecutedExampleMapper mapper;
 
         AutoSubstitute autoSubstitute;
 
         Context someContext;
         Action someAction;
         Uri someUri;
-        const string somePath = @".\path\to\some\dummy-library.dll";
         const string tagText = "some-tag another-tag";
 
         [SetUp]
@@ -37,7 +35,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             someAction = () => { };
             someUri = new Uri("http://www.example.com");
 
-            mapper = autoSubstitute.Resolve<TestResultMapper>();
+            mapper = autoSubstitute.Resolve<ExecutedExampleMapper>();
         }
 
         [TearDown]
@@ -55,16 +53,14 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 HasRun = true,
             };
 
-            var someTestCase = new TestCase(someExample.FullName(), someUri, somePath);
-
-            var expected = new TestResult(someTestCase)
+            var expected = new ExecutedExample()
             {
-                Outcome = TestOutcome.Passed,
+                FullName = someExample.FullName(),
             };
 
-            var actual = mapper.FromExample(someExample, somePath);
+            var actual = mapper.FromExample(someExample);
 
-            actual.ShouldBeEquivalentTo(expected, SetMatchingOptions);
+            actual.ShouldBeEquivalentTo(expected);
         }
 
         [Test]
@@ -79,18 +75,16 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 Exception = someError,
             };
 
-            var someTestCase = new TestCase(someExample.FullName(), someUri, somePath);
-
-            var expected = new TestResult(someTestCase)
+            var expected = new ExecutedExample()
             {
-                Outcome = TestOutcome.Failed,
-                ErrorMessage = someError.Message,
-                ErrorStackTrace = someError.StackTrace,
+                FullName = someExample.FullName(),
+                Failed = true,
+                Exception = someError,
             };
 
-            var actual = mapper.FromExample(someExample, somePath);
+            var actual = mapper.FromExample(someExample);
 
-            actual.ShouldBeEquivalentTo(expected, SetMatchingOptions);
+            actual.ShouldBeEquivalentTo(expected);
         }
 
         [Test]
@@ -102,25 +96,15 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 HasRun = false,
             };
 
-            var someTestCase = new TestCase(someExample.FullName(), someUri, somePath);
-
-            var expected = new TestResult(someTestCase)
+            var expected = new ExecutedExample()
             {
-                Outcome = TestOutcome.Skipped,
+                FullName = someExample.FullName(),
+                Pending = true,
             };
 
-            var actual = mapper.FromExample(someExample, somePath);
+            var actual = mapper.FromExample(someExample);
 
-            actual.ShouldBeEquivalentTo(expected, SetMatchingOptions);
-        }
-
-        static EquivalencyAssertionOptions<TestResult> SetMatchingOptions(EquivalencyAssertionOptions<TestResult> opts)
-        {
-            return opts
-                .Including(tr => tr.Outcome)
-                .Including(tr => tr.ErrorMessage)
-                .Including(tr => tr.ErrorStackTrace)
-                .Including(tr => tr.TestCase.Source);
+            actual.ShouldBeEquivalentTo(expected);
         }
     }
 }

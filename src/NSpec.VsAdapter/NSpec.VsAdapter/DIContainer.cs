@@ -68,7 +68,7 @@ namespace NSpec.VsAdapter
         static void RegisterExecutor(ContainerBuilder builder)
         {
             builder.RegisterType<BinaryTestExecutor>().As<IBinaryTestExecutor>().InstancePerLifetimeScope();
-            builder.RegisterType<ExecutionObserverFactory>().As<IExecutionObserverFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<ProgressRecorderFactory>().As<IProgressRecorderFactory>().InstancePerLifetimeScope();
             builder.RegisterType<CrossDomainExecutor>().As<ICrossDomainExecutor>().InstancePerLifetimeScope();
             builder.RegisterType<ExecutorInvocationFactory>().As<IExecutorInvocationFactory>().InstancePerLifetimeScope();
             builder.RegisterType<TestResultMapper>().As<ITestResultMapper>().InstancePerLifetimeScope();

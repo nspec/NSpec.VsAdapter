@@ -1,5 +1,4 @@
-﻿using NSpec.Domain.Formatters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public interface IExecutionObserver : ILiveFormatter
+    public interface IProgressRecorder : IDisposable
     {
         string BinaryPath { set; }
+
+        void RecordExecutedExample(ExecutedExample executedExample);
     }
 }

@@ -16,10 +16,10 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests.Execution
 {
     [TestFixture]
-    [Category("ExecutionObserver")]
-    public abstract class ExecutionObserver_desc
+    [Category("ProgressRecorder")]
+    public abstract class ProgressRecorder_desc
     {
-        protected ExecutionObserver observer;
+        protected ProgressRecorder recorder;
 
         protected AutoSubstitute autoSubstitute;
         protected ITestExecutionRecorder testExecutionRecorder;
@@ -31,7 +31,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             testExecutionRecorder = autoSubstitute.Resolve<ITestExecutionRecorder>();
 
-            observer = autoSubstitute.Resolve<ExecutionObserver>();
+            recorder = autoSubstitute.Resolve<ProgressRecorder>();
         }
 
         [TearDown]
@@ -57,68 +57,50 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             testExecutionRecorder.DidNotReceive().RecordAttachments(Arg.Any<IList<AttachmentSet>>());
         }
+
+        [Test]
+        public void it_should_claim_infinite_lease_lifetime()
+        {
+            recorder.GetLifetimeService().Should().BeNull();
+        }
     }
 
-    public class ExecutionObserver_when_writing_example : ExecutionObserver_desc
+    public class ProgressRecorder_when_recording_executed_example : ProgressRecorder_desc
     {
-        ITestResultMapper testResultMapper;
-
         TestResult someTestResult;
+        
         const string somePath = @".\path\to\some\dummy-library.dll";
-        int someLevel = 123;
 
         public override void before_each()
         {
             base.before_each();
 
-            var someContext = new Context("some context");
-
-            Action someAction = () => { };
-
-            var someExample = new Example("some-example-name", "some-tag another-tag", someAction, false)
+            var someExample = new ExecutedExample()
             {
-                Context = someContext,
-                HasRun = true,
-                Exception = new DummyTestException(),
+                FullName = "nspec. some context. some passing example.",
+                Pending = false,
+                Failed = false,
             };
 
-            var someTestCase = new TestCase(someExample.FullName(), new Uri("http://www.example.com"), somePath);
+            var someTestCase = new TestCase(someExample.FullName, new Uri("http://www.example.com"), somePath);
 
             someTestResult = new TestResult(someTestCase)
                 {
                     Outcome = TestOutcome.Failed,
                 };
 
-            testResultMapper = autoSubstitute.Resolve<ITestResultMapper>();
-            testResultMapper.FromExample(someExample, somePath).Returns(someTestResult);
+            var testResultMapper = autoSubstitute.Resolve<ITestResultMapper>();
+            testResultMapper.FromExecutedExample(someExample, somePath).Returns(someTestResult);
 
-            observer.BinaryPath = somePath;
+            recorder.BinaryPath = somePath;
 
-            observer.Write(someExample, someLevel);
+            recorder.RecordExecutedExample(someExample);
         }
 
         [Test]
         public void it_should_record_result()
         {
             testExecutionRecorder.Received(1).RecordResult(someTestResult);
-        }
-    }
-
-    public class ExecutionObserver_when_writing_context : ExecutionObserver_desc
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            var someContext = new Context("some context");
-
-            observer.Write(someContext);
-        }
-
-        [Test]
-        public void it_should_not_record_any_result()
-        {
-            testExecutionRecorder.DidNotReceive().RecordResult(Arg.Any<TestResult>());
         }
     }
 }

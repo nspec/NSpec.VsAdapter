@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.Execution
+namespace NSpec.VsAdapter.TestAdapter
 {
     public interface ITestResultMapper
     {
-        TestResult FromExample(ExampleBase example, string binaryPath);
+        TestResult FromExecutedExample(ExecutedExample example, string binaryPath);
     }
 }

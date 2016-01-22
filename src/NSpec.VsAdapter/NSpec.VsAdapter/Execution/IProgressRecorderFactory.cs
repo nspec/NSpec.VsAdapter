@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public interface IExecutionObserverFactory
+    public interface IProgressRecorderFactory
     {
-        IExecutionObserver Create(ITestExecutionRecorder testExecutionRecorder);
+        IProgressRecorder Create(ITestExecutionRecorder testExecutionRecorder);
     }
 }
