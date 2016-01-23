@@ -28,7 +28,7 @@ namespace NSpec.VsAdapter.Execution
 
             if (exampleFullNames == RunAll)
             {
-                return contextCollection.AllContexts();
+                return (IEnumerable<Context>)contextCollection;
             }
 
             // original idea taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Executor.cs

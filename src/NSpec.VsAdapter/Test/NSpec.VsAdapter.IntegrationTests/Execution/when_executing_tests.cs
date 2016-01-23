@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+using FluentAssertions.Equivalency;
 
 namespace NSpec.VsAdapter.IntegrationTests.Execution
 {
@@ -47,6 +48,17 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         {
             executor.Dispose();
         }
+
+        protected static EquivalencyAssertionOptions<TestResult> TestResultMatchingOptions(EquivalencyAssertionOptions<TestResult> opts)
+        {
+            return opts
+                .Including(tr => tr.Outcome)
+                .Including(tr => tr.ErrorMessage)
+                .Including(tr => tr.ErrorStackTrace)
+                .Including(tr => tr.TestCase.FullyQualifiedName)
+                .Including(tr => tr.TestCase.ExecutorUri)
+                .Including(tr => tr.TestCase.Source);
+        }
     }
 
     public class when_executing_all_tests : when_executing_tests_base
@@ -82,7 +94,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         }
 
         [Test]
-        [Ignore("Yet to be implemented")]
+        //[Ignore("Yet to be implemented")]
         public void it_should_report_result_of_all_examples()
         {
             var expected = SampleSpecsTestCaseData.All.Select(tc => new TestResult(tc)
@@ -92,7 +104,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
 
             var actual = handle.Results;
 
-            actual.ShouldAllBeEquivalentTo(expected);
+            actual.ShouldAllBeEquivalentTo(expected, TestResultMatchingOptions);
         }
     }
 

@@ -22,7 +22,6 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
         AutoSubstitute autoSubstitute;
 
-        readonly Uri someUri = new Uri("http://www.example.com");
         const string somePath = @".\path\to\some\dummy-library.dll";
 
         [SetUp]
@@ -58,7 +57,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             var actual = mapper.FromExecutedExample(someExample, somePath);
 
-            actual.ShouldBeEquivalentTo(expected, SetMatchingOptions);
+            actual.ShouldBeEquivalentTo(expected, TestResultMatchingOptions);
         }
 
         [Test]
@@ -85,7 +84,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             var actual = mapper.FromExecutedExample(someExample, somePath);
 
-            actual.ShouldBeEquivalentTo(expected, SetMatchingOptions);
+            actual.ShouldBeEquivalentTo(expected, TestResultMatchingOptions);
         }
 
         [Test]
@@ -107,20 +106,22 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             var actual = mapper.FromExecutedExample(someExample, somePath);
 
-            actual.ShouldBeEquivalentTo(expected, SetMatchingOptions);
+            actual.ShouldBeEquivalentTo(expected, TestResultMatchingOptions);
         }
 
         TestCase BuildTestCase(ExecutedExample someExample)
         {
-            return new TestCase(someExample.FullName, someUri, somePath);
+            return new TestCase(someExample.FullName, Constants.ExecutorUri, somePath);
         }
 
-        static EquivalencyAssertionOptions<TestResult> SetMatchingOptions(EquivalencyAssertionOptions<TestResult> opts)
+        static EquivalencyAssertionOptions<TestResult> TestResultMatchingOptions(EquivalencyAssertionOptions<TestResult> opts)
         {
             return opts
                 .Including(tr => tr.Outcome)
                 .Including(tr => tr.ErrorMessage)
                 .Including(tr => tr.ErrorStackTrace)
+                .Including(tr => tr.TestCase.FullyQualifiedName)
+                .Including(tr => tr.TestCase.ExecutorUri)
                 .Including(tr => tr.TestCase.Source);
         }
     }
