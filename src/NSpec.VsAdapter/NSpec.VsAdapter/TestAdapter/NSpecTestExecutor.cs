@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.TestAdapter
 {
-    [DefaultExecutorUri(Constants.ExecutorUriString)]
+    [ExtensionUri(Constants.ExecutorUriString)]
     public class NSpecTestExecutor : ITestExecutor, IDisposable
     {
         // used by Visual Studio test infrastructure, by integration tests
