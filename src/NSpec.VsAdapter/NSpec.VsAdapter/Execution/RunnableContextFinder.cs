@@ -33,7 +33,7 @@ namespace NSpec.VsAdapter.Execution
 
             // original idea taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Executor.cs
 
-            var allExamples = contextCollection.SelectMany(ctx => ctx.Examples);
+            var allExamples = contextCollection.SelectMany(ctx => ctx.AllExamples());
 
             var selectedNames = new HashSet<string>(exampleFullNames);
 

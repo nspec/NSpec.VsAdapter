@@ -111,4 +111,46 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             actualContexts.ShouldBeEquivalentTo(expectedContexts);
         }
     }
+
+    public class RunnableContextFinder_when_finding_example_names_and_no_first_level_examples : RunnableContextFinder_desc_base
+    {
+        public override void before_each()
+        {
+            base.before_each();
+
+            var firstLevelContext = new Context("first-level context");
+
+            foreach (var ctx in someContexts)
+            {
+                ctx.Parent = firstLevelContext;
+            }
+
+            firstLevelContext.Contexts = someContextCollection;
+
+            var firstLevelContextCollection = new ContextCollection(new[] { firstLevelContext });
+
+            contextFinder.BuildContextCollection(somePath).Returns(firstLevelContextCollection);
+        }
+
+        [Test]
+        public void it_should_return_only_containing_contexts()
+        {
+            var exampleNames = new string[]
+            {
+                "first-level context. context 1. example 1B.",
+                "first-level context. context 3. example 3A.",
+                "first-level context. context 3. example 3C.",
+            };
+
+            var expectedContexts = new Context[]
+            {
+                someContexts[0],
+                someContexts[2],
+            };
+
+            var actualContexts = runnableContextFinder.Find(somePath, exampleNames);
+
+            actualContexts.ShouldBeEquivalentTo(expectedContexts);
+        }
+    }
 }
