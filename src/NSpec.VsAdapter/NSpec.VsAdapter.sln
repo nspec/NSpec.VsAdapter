@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSpec.VsAdapter.Vsix", "NSp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSpec.VsAdapter.IntegrationTests", "Test\NSpec.VsAdapter.IntegrationTests\NSpec.VsAdapter.IntegrationTests.csproj", "{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdHocConsoleRunner", "Test\Samples\AdHocConsoleRunner\AdHocConsoleRunner.csproj", "{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,5 +65,6 @@ Global
 		{716E1B2B-C0F4-450F-BCD0-95CF829126B9} = {83BC3666-422D-4AF6-9632-390ED4B5145A}
 		{2C743124-C1C6-4B5D-A6C5-16819A726919} = {83BC3666-422D-4AF6-9632-390ED4B5145A}
 		{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA} = {3D324323-F548-411C-A2CF-55C1C9337174}
+		{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D} = {83BC3666-422D-4AF6-9632-390ED4B5145A}
 	EndGlobalSection
 EndGlobal
