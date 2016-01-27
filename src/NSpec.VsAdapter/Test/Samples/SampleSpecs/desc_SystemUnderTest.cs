@@ -1,29 +1,29 @@
 ﻿using NSpec;
-using SampleSystem;
+using Shouldly;
 using System;
 
 namespace SampleSpecs
 {
     class ParentSpec : nspec
     {
-        protected SystemUnderTest systemUnderTest;
+        protected SampleSystem.SystemUnderTest systemUnderTest;
 
         void before_each()
         {
-            systemUnderTest = new SystemUnderTest();
+            systemUnderTest = new SampleSystem.SystemUnderTest();
         }
 
         [Tag("Tag-1A Tag-1B")]
         void method_context_1()
         { // # 18
-            it["parent example 1A"] = () => systemUnderTest.IsAlwaysTrue().should_be_true(); // # 19
+            it["parent example 1A"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 19
 
-            it["parent example 1B"] = () => systemUnderTest.IsAlwaysTrue().should_be_true(); // # 21
+            it["parent example 1B"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 21
         } // # 22
 
         void method_context_2()
         { // # 25
-            it["parent example 2A"] = () => systemUnderTest.IsAlwaysTrue().should_be_true(); // # 26
+            it["parent example 2A"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 26
         } // # 27
     }
 
@@ -38,9 +38,13 @@ namespace SampleSpecs
 
         void method_context_4()
         { // # 40
-            it["child example 4A"] = () => systemUnderTest.IsAlwaysTrue().should_be_true(); // # 41
+            it["child example 4A"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 41
         } // # 42
     }
 
     // Do not move the preceding spec classes around, to avoid rewriting line numbers
+
+    public class DummyPublicClass
+    {
+    }
 }
