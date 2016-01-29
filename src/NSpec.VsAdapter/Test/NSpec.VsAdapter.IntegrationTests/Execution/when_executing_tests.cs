@@ -49,6 +49,16 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
             executor.Dispose();
         }
 
+        protected static TestResult MapTestCaseToResult(TestCase testCase)
+        {
+            var testResult = new TestResult(testCase)
+            {
+                Outcome = SampleSpecsTestOutcomeData.ByTestCaseFullName[testCase.FullyQualifiedName],
+            };
+
+            return testResult;
+        }
+
         protected static EquivalencyAssertionOptions<TestResult> TestResultMatchingOptions(EquivalencyAssertionOptions<TestResult> opts)
         {
             return opts
@@ -94,13 +104,9 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         }
 
         [Test]
-        //[Ignore("Yet to be implemented")]
         public void it_should_report_result_of_all_examples()
         {
-            var expected = SampleSpecsTestCaseData.All.Select(tc => new TestResult(tc)
-            {
-                Outcome = SampleSpecsTestOutcomeData.ByTestCaseFullName[tc.FullyQualifiedName],
-            });
+            var expected = SampleSpecsTestCaseData.All.Select(MapTestCaseToResult);
 
             var actual = handle.Results;
 
@@ -110,6 +116,39 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
 
     public class when_executing_selected_tests : when_executing_tests_base
     {
+        readonly TestCase[] selectedTestCases;
+        readonly TestCase[] runningTestCases;
+
+        public when_executing_selected_tests()
+        {
+            selectedTestCases = new TestCase[]
+            {
+                // this is example sits in a context with another example, that should be executed as well
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. method context 1. parent example 1B."],
+
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. method context 2. parent example 2A."],
+
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped."],
+            };
+
+            runningTestCases = new TestCase[]
+            {
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. method context 1. parent example 1A."],
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. method context 1. parent example 1B."],
+
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. method context 2. parent example 2A."],
+
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped."],
+            };
+        }
+
+        public override void before_each()
+        {
+            base.before_each();
+
+            executor.RunTests(selectedTestCases, runContext, handle);
+        }
+
         [Test]
         [Ignore("Yet to be implemented")]
         public void it_should_start_selected_examples()
@@ -125,10 +164,22 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         }
 
         [Test]
-        [Ignore("Yet to be implemented")]
         public void it_should_report_result_of_selected_examples()
         {
-            throw new NotImplementedException();
+            var selectedFullNames = runningTestCases.Select(tc => tc.FullyQualifiedName);
+
+            IEnumerable<TestResult> expected = SampleSpecsTestCaseData
+                .ByTestCaseFullName.Where(pair => 
+                    {
+                        string fullName = pair.Key;
+
+                        return selectedFullNames.Contains(fullName);
+                    })
+                .Select(pair => MapTestCaseToResult(pair.Value));
+
+            var actual = handle.Results;
+
+            actual.ShouldAllBeEquivalentTo(expected, TestResultMatchingOptions);
         }
     }
 }
