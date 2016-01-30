@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+using NSpec.VsAdapter.IntegrationTests.TestData;
 using NSpec.VsAdapter.TestAdapter;
 using NUnit.Framework;
 using System;

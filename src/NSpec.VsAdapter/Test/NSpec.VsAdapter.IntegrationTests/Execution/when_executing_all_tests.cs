@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using NSpec.VsAdapter.IntegrationTests.TestData;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

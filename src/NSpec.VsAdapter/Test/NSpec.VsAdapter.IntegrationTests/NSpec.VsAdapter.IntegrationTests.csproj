@@ -70,13 +70,13 @@
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="DummyTestException.cs" />
     <Compile Include="Execution\CollectingFrameworkHandle.cs" />
-    <Compile Include="Execution\ConfigSampleSpecsTestData.cs" />
+    <Compile Include="TestData\ConfigSampleSpecsTestData.cs" />
     <Compile Include="Execution\when_executing_selected_tests.cs" />
     <Compile Include="Execution\when_executing_tests_base.cs" />
     <Compile Include="Execution\when_target_has_app_config.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SampleSpecsTestCaseData.cs" />
-    <Compile Include="Execution\SampleSpecsTestOutcomeData.cs" />
+    <Compile Include="TestData\SampleSpecsTestCaseData.cs" />
+    <Compile Include="TestData\SampleSpecsTestOutcomeData.cs" />
     <Compile Include="TestConstants.cs" />
     <Compile Include="TestUtils.cs" />
     <Compile Include="Discovery\when_discovering_tests.cs" />
