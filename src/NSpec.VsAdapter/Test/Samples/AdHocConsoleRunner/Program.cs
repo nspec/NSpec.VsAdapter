@@ -15,6 +15,7 @@ namespace AdHocConsoleRunner
             var assemblies = new Assembly[] 
             { 
                 typeof(SampleSpecs.DummyPublicClass).Assembly,
+                typeof(ConfigSampleSpecs.DummyPublicClass).Assembly,
             };
 
             //types that should be considered for testing

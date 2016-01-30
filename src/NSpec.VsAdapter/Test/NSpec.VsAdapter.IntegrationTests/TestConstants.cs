@@ -14,18 +14,30 @@ namespace NSpec.VsAdapter.IntegrationTests
             TestFolderPath = TestUtils.FirstCharToUpper(Path.GetFullPath(@"..\..\..\"));
 
             SampleSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\SampleSpecs\desc_SystemUnderTest.cs");
-
             SampleSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\SampleSpecs\bin\Debug\SampleSpecs.dll");
 
             SampleSystemDllPath = Path.Combine(TestFolderPath, @"Samples\SampleSystem\bin\Debug\SampleSystem.dll");
+
+            ConfigSampleSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\ConfigSampleSpecs\desc_SystemWithSettings.cs");
+            ConfigSampleSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\ConfigSampleSpecs\bin\Debug\ConfigSampleSpecs.dll");
+
+            ConfigSampleSystemExePath = Path.Combine(TestFolderPath, @"Samples\ConfigSampleSystem\bin\Debug\ConfigSampleSystem.exe");
         }
 
         public static readonly string TestFolderPath;
 
-        public static readonly string SampleSpecsSourcePath;
+        // Sample System & Specs
 
+        public static readonly string SampleSpecsSourcePath;
         public static readonly string SampleSpecsDllPath;
 
         public static readonly string SampleSystemDllPath;
+
+        // Config Sample System & Specs
+
+        public static readonly string ConfigSampleSpecsDllPath;
+        public static readonly string ConfigSampleSpecsSourcePath;
+
+        public static readonly string ConfigSampleSystemExePath;
     }
 }
