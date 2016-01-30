@@ -19,10 +19,10 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
             All = new TestCase[]
             {
                 new TestCase(
-                    "nspec. desc_SystemWithSettings. method context. should return app settings value.", 
+                    "nspec. desc SystemWithSettings. method context. should return app settings value.", 
                     Constants.ExecutorUri, specAssemblyPath)
                 {
-                    DisplayName = "nspec. desc_SystemWithSettings. method context. should return app settings value.", 
+                    DisplayName = "nspec. desc SystemWithSettings. method context. should return app settings value.", 
                     CodeFilePath = sourceCodeFilePath,
                     LineNumber = 19,
                 }
@@ -39,7 +39,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
             ByTestCaseFullName = new Dictionary<string, TestOutcome>()
             {
                 {
-                    "nspec. desc_SystemWithSettings. method context. should return app settings value.", 
+                    "nspec. desc SystemWithSettings. method context. should return app settings value.", 
                     TestOutcome.Passed
                 },
             };

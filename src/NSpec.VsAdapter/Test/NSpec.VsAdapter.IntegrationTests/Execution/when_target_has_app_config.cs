@@ -25,7 +25,6 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         }
 
         [Test]
-        [Ignore("Setting value is null when loading assembly at runtime")]
         public void it_should_access_app_settings()
         {
             Func<TestCase, TestResult> mapToTestResult =
