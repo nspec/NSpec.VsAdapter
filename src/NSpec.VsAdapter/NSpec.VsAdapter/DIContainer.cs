@@ -2,6 +2,7 @@
 using NSpec.VsAdapter.CrossDomain;
 using NSpec.VsAdapter.Discovery;
 using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.ProjectObservation;
 using NSpec.VsAdapter.ProjectObservation.Projects;
 using NSpec.VsAdapter.ProjectObservation.Solution;

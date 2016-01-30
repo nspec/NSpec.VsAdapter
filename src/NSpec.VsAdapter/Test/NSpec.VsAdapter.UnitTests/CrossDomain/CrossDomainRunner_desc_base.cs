@@ -1,6 +1,7 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using NSpec.VsAdapter.CrossDomain;
+using NSpec.VsAdapter.Logging;
 using NSubstitute;
 using NUnit.Framework;
 using System;

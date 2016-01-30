@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter
+namespace NSpec.VsAdapter.Logging
 {
     public interface IBaseLogger
     {

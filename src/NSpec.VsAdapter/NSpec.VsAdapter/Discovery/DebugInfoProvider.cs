@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

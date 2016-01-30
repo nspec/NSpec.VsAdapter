@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

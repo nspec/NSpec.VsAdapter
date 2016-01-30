@@ -1,4 +1,5 @@
 ﻿using NSpec.Domain;
+using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;

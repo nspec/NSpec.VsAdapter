@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs;
 using NSubstitute;
 using NUnit.Framework;
