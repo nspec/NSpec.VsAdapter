@@ -61,9 +61,14 @@ namespace NSpec.VsAdapter.TestAdapter
 
             outputLogger.Info("Discovery started");
 
-            var groupedSpecifications =
-                from binaryPath in sources
-                select binaryTestDiscoverer.Discover(binaryPath, outputLogger, outputLogger);
+            IEnumerable<IEnumerable<DiscoveredExample>> groupedSpecifications;
+
+            using (var crossDomainLogger = new CrossDomainLogger(outputLogger))
+            {
+                groupedSpecifications =
+                    from binaryPath in sources
+                    select binaryTestDiscoverer.Discover(binaryPath, outputLogger, crossDomainLogger);
+            }
 
             var specifications = groupedSpecifications.SelectMany(group => group);
 

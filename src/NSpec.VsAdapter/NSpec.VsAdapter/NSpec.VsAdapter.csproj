@@ -50,10 +50,6 @@
       <HintPath>..\packages\nspec.1.0.4\lib\NSpec.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
-      <HintPath>..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -102,19 +98,17 @@
     <Compile Include="Execution\ExecutorInvocation.cs" />
     <Compile Include="Execution\ExecutorInvocationFactory.cs" />
     <Compile Include="Execution\RunnableContextFinder.cs" />
+    <Compile Include="Logging\CrossDomainLogger.cs" />
     <Compile Include="Logging\IBaseLogger.cs" />
     <Compile Include="Logging\ILoggerFactory.cs" />
-    <Compile Include="Logging\IReplayLogger.cs" />
-    <Compile Include="Logging\ISerializableLogger.cs" />
+    <Compile Include="Logging\ICrossDomainLogger.cs" />
     <Compile Include="Logging\LoggerFactory.cs" />
-    <Compile Include="Logging\LogRecorder.cs" />
     <Compile Include="Discovery\DebugInfoProvider.cs" />
     <Compile Include="DIContainer.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="IAdapterInfo.cs" />
     <Compile Include="Discovery\IDebugInfoProvider.cs" />
     <Compile Include="Logging\IOutputLogger.cs" />
-    <Compile Include="Logging\LogReplayer.cs" />
     <Compile Include="CrossDomain\AppDomainFactory.cs" />
     <Compile Include="Discovery\CollectorInvocation.cs" />
     <Compile Include="Discovery\CrossDomainCollector.cs" />
@@ -141,7 +135,7 @@
     <Compile Include="ProjectObservation\Projects\IProjectNotifier.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectWrapper.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectWrapperFactory.cs" />
-    <Compile Include="Logging\RecordedLogEvents.cs" />
+    <Compile Include="Logging\ExceptionLogInfo.cs" />
     <Compile Include="Settings\ISettingsRepository.cs" />
     <Compile Include="Settings\JsonSettingsRepository.cs" />
     <Compile Include="TestAdapter\ITestCaseMapper.cs" />

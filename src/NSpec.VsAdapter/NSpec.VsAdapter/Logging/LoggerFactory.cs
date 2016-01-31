@@ -16,7 +16,7 @@ namespace NSpec.VsAdapter.Logging
             this.settings = settings;
         }
 
-        public OutputLogger CreateOutput(IMessageLogger messageLogger)
+        public IOutputLogger CreateOutput(IMessageLogger messageLogger)
         {
             return new OutputLogger(messageLogger, adapterInfo, settings);
         }

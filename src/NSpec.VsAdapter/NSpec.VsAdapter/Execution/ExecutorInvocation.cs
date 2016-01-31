@@ -11,13 +11,13 @@ namespace NSpec.VsAdapter.Execution
     public class ExecutorInvocation : IExecutorInvocation
     {
         public ExecutorInvocation(string binaryPath, 
-            IProgressRecorder progressRecorder, ISerializableLogger logger)
+            IProgressRecorder progressRecorder, ICrossDomainLogger logger)
             : this(binaryPath, RunnableContextFinder.RunAll, progressRecorder, logger)
         {
         }
 
         public ExecutorInvocation(string binaryPath, string[] exampleFullNames, 
-            IProgressRecorder progressRecorder, ISerializableLogger logger)
+            IProgressRecorder progressRecorder, ICrossDomainLogger logger)
         {
             this.binaryPath = binaryPath;
             this.exampleFullNames = exampleFullNames;
@@ -43,14 +43,12 @@ namespace NSpec.VsAdapter.Execution
 
             logger.Debug(String.Format("Finish executing tests in '{0}'", binaryPath));
 
-            logger.Flush();
-
             return count;
         }
 
         readonly string binaryPath;
         readonly string[] exampleFullNames;
         readonly IProgressRecorder progressRecorder;
-        readonly ISerializableLogger logger;
+        readonly ICrossDomainLogger logger;
     }
 }

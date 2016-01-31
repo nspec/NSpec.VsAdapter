@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Logging
 {
-    public class OutputLogger : IOutputLogger, IReplayLogger
+    public class OutputLogger : IOutputLogger
     {
         public OutputLogger(IMessageLogger messageLogger, IAdapterInfo adapterInfo, ISettingsRepository settings)
         {

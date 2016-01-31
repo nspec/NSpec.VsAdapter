@@ -15,7 +15,7 @@ namespace NSpec.VsAdapter.Discovery
         }
 
         public IEnumerable<DiscoveredExample> Discover(string binaryPath, 
-            IOutputLogger logger, IReplayLogger replayLogger)
+            IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
             IEnumerable<DiscoveredExample> discoveredExamples;
 
@@ -23,17 +23,11 @@ namespace NSpec.VsAdapter.Discovery
             {
                 logger.Debug(String.Format("Discovering tests in binary: '{0}'", binaryPath));
 
-                var logRecorder = new LogRecorder();
-
                 // TODO exclude assembly/binary right away if nspec.dll is not in the same path (or sub-path?)
 
-                var collectorInvocation = new CollectorInvocation(binaryPath, logRecorder);
+                var collectorInvocation = new CollectorInvocation(binaryPath, crossDomainLogger);
 
                 discoveredExamples = crossDomainCollector.Run(binaryPath, collectorInvocation.Collect);
-
-                var logReplayer = new LogReplayer(replayLogger);
-
-                logReplayer.Replay(logRecorder);
 
                 logger.Debug(String.Format("Found {0} tests", discoveredExamples.Count()));
 

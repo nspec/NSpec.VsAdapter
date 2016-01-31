@@ -9,6 +9,6 @@ namespace NSpec.VsAdapter.Logging
 {
     public interface ILoggerFactory
     {
-        OutputLogger CreateOutput(IMessageLogger messageLogger);
+        IOutputLogger CreateOutput(IMessageLogger messageLogger);
     }
 }

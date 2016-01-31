@@ -25,7 +25,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         protected AutoSubstitute autoSubstitute;
         protected IBinaryTestExecutor binaryTestExecutor;
         protected IProgressRecorder progressRecorder;
-        protected OutputLogger outputLogger;
+        protected IOutputLogger outputLogger;
         protected IRunContext runContext;
         protected IFrameworkHandle frameworkHandle;
         protected List<string> actualSources;
@@ -51,7 +51,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             binaryTestExecutor = autoSubstitute.Resolve<IBinaryTestExecutor>();
 
-            outputLogger = autoSubstitute.Resolve<OutputLogger>();
+            outputLogger = autoSubstitute.Resolve<IOutputLogger>();
             var loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
             loggerFactory.CreateOutput(Arg.Any<IMessageLogger>()).Returns(outputLogger);
 
@@ -85,7 +85,11 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             executedSources = new List<string>();
 
             binaryTestExecutor
-                .When(exc => exc.Execute(Arg.Any<string>(), progressRecorder, outputLogger, outputLogger))
+                .When(exc => exc.Execute(
+                    Arg.Any<string>(), 
+                    progressRecorder, 
+                    outputLogger, 
+                    Arg.Any<ICrossDomainLogger>()))
                 .Do(callInfo =>
                 {
                     var source = callInfo.Arg<string>();
@@ -108,7 +112,8 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
                 Arg.Any<IProgressRecorder>(),
-                outputLogger, outputLogger);
+                outputLogger,
+                Arg.Any<ICrossDomainLogger>());
         }
 
         [Test]
@@ -117,7 +122,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
                 progressRecorder,
-                Arg.Any<IOutputLogger>(), Arg.Any<IReplayLogger>());
+                Arg.Any<IOutputLogger>(), Arg.Any<ICrossDomainLogger>());
         }
 
         [Test]
@@ -209,7 +214,12 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             executedTests = new Dictionary<string, IEnumerable<string>>();
 
             binaryTestExecutor
-                .When(exc => exc.Execute(Arg.Any<string>(), Arg.Any<IEnumerable<string>>(), progressRecorder, outputLogger, outputLogger))
+                .When(exc => exc.Execute(
+                    Arg.Any<string>(), 
+                    Arg.Any<IEnumerable<string>>(), 
+                    progressRecorder, 
+                    outputLogger,
+                    Arg.Any<ICrossDomainLogger>()))
                 .Do(callInfo =>
                 {
                     var source = callInfo.Arg<string>();
@@ -235,7 +245,8 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 Arg.Any<string>(), 
                 Arg.Any<IEnumerable<string>>(),
                 Arg.Any<IProgressRecorder>(), 
-                outputLogger, outputLogger);
+                outputLogger,
+                Arg.Any<ICrossDomainLogger>());
         }
 
         [Test]
@@ -245,7 +256,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 Arg.Any<string>(),
                 Arg.Any<IEnumerable<string>>(),
                 progressRecorder, 
-                Arg.Any<IOutputLogger>(), Arg.Any<IReplayLogger>());
+                Arg.Any<IOutputLogger>(), Arg.Any<ICrossDomainLogger>());
         }
 
         [Test]

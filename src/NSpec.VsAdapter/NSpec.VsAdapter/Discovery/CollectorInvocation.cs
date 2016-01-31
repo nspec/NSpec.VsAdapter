@@ -11,7 +11,7 @@ namespace NSpec.VsAdapter.Discovery
     [Serializable]
     public class CollectorInvocation : ICollectorInvocation
     {
-        public CollectorInvocation(string binaryPath, ISerializableLogger logger)
+        public CollectorInvocation(string binaryPath, ICrossDomainLogger logger)
         {
             this.binaryPath = binaryPath;
             this.logger = logger;
@@ -35,12 +35,10 @@ namespace NSpec.VsAdapter.Discovery
 
             logger.Debug(String.Format("Finish collecting tests in '{0}'", binaryPath));
 
-            logger.Flush();
-
             return discoveredExampleArray;
         }
 
         readonly string binaryPath;
-        readonly ISerializableLogger logger;
+        readonly ICrossDomainLogger logger;
     }
 }

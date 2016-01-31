@@ -21,7 +21,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         protected AutoSubstitute autoSubstitute;
         protected ICrossDomainCollector crossDomainCollector;
         protected IOutputLogger logger;
-        protected IReplayLogger replayLogger;
+        protected ICrossDomainLogger crossDomainLogger;
 
         protected const string somePath = @".\path\to\some\dummy-library.dll";
 
@@ -33,7 +33,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             crossDomainCollector = autoSubstitute.Resolve<ICrossDomainCollector>();
 
             logger = autoSubstitute.Resolve<IOutputLogger>();
-            replayLogger = autoSubstitute.Resolve<IReplayLogger>();
+            crossDomainLogger = autoSubstitute.Resolve<ICrossDomainLogger>();
 
             discoverer = autoSubstitute.Resolve<BinaryTestDiscoverer>();
         }
@@ -69,7 +69,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         [Test]
         public void it_should_return_collected_specifications()
         {
-            discoverer.Discover(somePath, logger, replayLogger).Should().BeEquivalentTo(someDiscoveredExamples);
+            discoverer.Discover(somePath, logger, crossDomainLogger).Should().BeEquivalentTo(someDiscoveredExamples);
         }
     }
 
@@ -86,7 +86,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
                     throw new DummyTestException();
                 });
 
-            discoveredExamples = discoverer.Discover(somePath, logger, replayLogger);
+            discoveredExamples = discoverer.Discover(somePath, logger, crossDomainLogger);
         }
 
         [Test]

@@ -56,12 +56,13 @@ namespace NSpec.VsAdapter.TestAdapter
             outputLogger.Info("Execution by source paths started");
 
             using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
+            using (var crossDomainLogger = new CrossDomainLogger(outputLogger))
             {
                 foreach (var binaryPath in sources)
                 {
                     progressRecorder.BinaryPath = binaryPath;
 
-                    binaryTestExecutor.Execute(binaryPath, progressRecorder, outputLogger, outputLogger);
+                    binaryTestExecutor.Execute(binaryPath, progressRecorder, outputLogger, crossDomainLogger);
                 }
             }
 
@@ -80,6 +81,7 @@ namespace NSpec.VsAdapter.TestAdapter
             var testCaseGroupsBySource = tests.GroupBy(t => t.Source);
 
             using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
+            using (var crossDomainLogger = new CrossDomainLogger(outputLogger))
             {
                 foreach (var group in testCaseGroupsBySource)
                 {
@@ -89,7 +91,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
                     progressRecorder.BinaryPath = binaryPath;
 
-                    binaryTestExecutor.Execute(binaryPath, testCaseFullNames, progressRecorder, outputLogger, outputLogger);
+                    binaryTestExecutor.Execute(binaryPath, testCaseFullNames, progressRecorder, outputLogger, crossDomainLogger);
                 }
             }
 

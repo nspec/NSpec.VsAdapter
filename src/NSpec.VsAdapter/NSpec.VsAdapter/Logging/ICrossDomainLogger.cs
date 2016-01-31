@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Logging
 {
-    public interface IReplayLogger : IBaseLogger
+    public interface ICrossDomainLogger : IBaseLogger
     {
         void Warn(ExceptionLogInfo exceptionInfo, string message);
 

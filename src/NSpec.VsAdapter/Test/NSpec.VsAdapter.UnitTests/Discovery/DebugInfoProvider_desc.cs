@@ -22,14 +22,14 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         protected DebugInfoProvider provider;
 
         protected AutoSubstitute autoSubstitute;
-        protected ISerializableLogger logger;
+        protected ICrossDomainLogger logger;
 
         [SetUp]
         public virtual void before_each()
         {
             autoSubstitute = new AutoSubstitute();
 
-            logger = autoSubstitute.Resolve<ISerializableLogger>();
+            logger = autoSubstitute.Resolve<ICrossDomainLogger>();
         }
 
         [TearDown]

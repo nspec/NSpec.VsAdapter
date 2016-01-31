@@ -56,7 +56,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
     public class NSpecTestDiscoverer_when_discovering : NSpecTestDiscoverer_desc_base
     {
-        OutputLogger outputLogger;
+        IOutputLogger outputLogger;
         string[] sources;
         Dictionary<string, DiscoveredExample[]> discoveredExamplesBySource;
 
@@ -123,7 +123,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             var messageLogger = autoSubstitute.Resolve<IMessageLogger>();
 
-            outputLogger = autoSubstitute.Resolve<OutputLogger>();
+            outputLogger = autoSubstitute.Resolve<IOutputLogger>();
             var loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
             loggerFactory.CreateOutput(Arg.Any<IMessageLogger>()).Returns(outputLogger);
 
@@ -138,7 +138,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         public void it_should_pass_message_logger()
         {
             binaryTestDiscoverer.Received().Discover(
-                Arg.Any<string>(), outputLogger, outputLogger);
+                Arg.Any<string>(), outputLogger, Arg.Any<ICrossDomainLogger>());
         }
 
         [Test]

@@ -24,7 +24,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         protected IExecutorInvocation executorInvocation;
         protected IProgressRecorder progressRecorder;
         protected IOutputLogger logger;
-        protected IReplayLogger replayLogger;
+        protected ICrossDomainLogger crossDomainLogger;
         protected int actualCount;
 
         protected const string somePath = @".\path\to\some\dummy-library.dll";
@@ -45,7 +45,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             progressRecorder = autoSubstitute.Resolve<IProgressRecorder>();
             logger = autoSubstitute.Resolve<IOutputLogger>();
-            replayLogger = autoSubstitute.Resolve<IReplayLogger>();
+            crossDomainLogger = autoSubstitute.Resolve<ICrossDomainLogger>();
 
             executor = autoSubstitute.Resolve<BinaryTestExecutor>();
         }
@@ -64,14 +64,14 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             base.before_each();
 
             executorInvocationFactory
-                .Create(somePath, progressRecorder, Arg.Any<LogRecorder>())
+                .Create(somePath, progressRecorder, Arg.Any<ICrossDomainLogger>())
                 .Returns(executorInvocation);
         }
 
         [Test]
         public void it_should_request_invocation_by_source()
         {
-            executorInvocationFactory.Received().Create(somePath, progressRecorder, Arg.Any<LogRecorder>());
+            executorInvocationFactory.Received().Create(somePath, progressRecorder, Arg.Any<ICrossDomainLogger>());
         }
     }
 
@@ -85,7 +85,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
 
-            actualCount = executor.Execute(somePath, progressRecorder, logger, replayLogger);
+            actualCount = executor.Execute(somePath, progressRecorder, logger, crossDomainLogger);
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            actualCount = executor.Execute(somePath, progressRecorder, logger, replayLogger);
+            actualCount = executor.Execute(somePath, progressRecorder, logger, crossDomainLogger);
         }
 
         [Test]
@@ -129,14 +129,14 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             base.before_each();
 
             executorInvocationFactory
-                .Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), progressRecorder, Arg.Any<LogRecorder>())
+                .Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), progressRecorder, Arg.Any<ICrossDomainLogger>())
                 .Returns(executorInvocation);
         }
 
         [Test]
         public void it_should_request_invocation_by_testcase()
         {
-            executorInvocationFactory.Received().Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), progressRecorder, Arg.Any<LogRecorder>());
+            executorInvocationFactory.Received().Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), progressRecorder, Arg.Any<ICrossDomainLogger>());
         }
     }
 
@@ -150,7 +150,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
 
-            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, logger, replayLogger);
+            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, logger, crossDomainLogger);
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, logger, replayLogger);
+            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, logger, crossDomainLogger);
         }
 
         [Test]

@@ -10,7 +10,7 @@ namespace NSpec.VsAdapter.Discovery
 {
     public class DebugInfoProvider : IDebugInfoProvider
     {
-        public DebugInfoProvider(string binaryPath, ISerializableLogger logger)
+        public DebugInfoProvider(string binaryPath, ICrossDomainLogger logger)
         {
             this.binaryPath = binaryPath;
             this.logger = logger;
@@ -23,7 +23,7 @@ namespace NSpec.VsAdapter.Discovery
             {
                 string message = String.Format("Cannot setup debug info for binary '{0}'", binaryPath);
 
-                logger.Warn(ex, message);
+                logger.Warn(new ExceptionLogInfo(ex), message);
 
                 session = noSession;
             }
@@ -68,7 +68,7 @@ namespace NSpec.VsAdapter.Discovery
         }
 
         readonly string binaryPath;
-        readonly ISerializableLogger logger;
+        readonly ICrossDomainLogger logger;
         readonly DiaSession session;
 
         readonly DiaSession noSession = null;

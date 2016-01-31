@@ -11,10 +11,10 @@ namespace NSpec.VsAdapter.Execution
     {
         int Execute(string binaryPath, 
             IProgressRecorder progressRecorder, 
-            IOutputLogger outputLogger, IReplayLogger replayLogger);
+            IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger);
 
         int Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
             IProgressRecorder progressRecorder,
-            IOutputLogger outputLogger, IReplayLogger replayLogger);
+            IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger);
     }
 }
