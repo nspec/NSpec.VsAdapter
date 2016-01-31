@@ -98,6 +98,8 @@ namespace NSpec.VsAdapter.TestAdapter
 
         public void Cancel()
         {
+            // TODO implement execution cancel
+
             throw new NotImplementedException();
         }
 

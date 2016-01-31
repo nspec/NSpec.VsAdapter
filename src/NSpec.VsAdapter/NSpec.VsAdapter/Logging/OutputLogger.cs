@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using NSpec.VsAdapter.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,29 @@ namespace NSpec.VsAdapter.Logging
 {
     public class OutputLogger : IOutputLogger, IReplayLogger
     {
-        public OutputLogger(IMessageLogger messageLogger, IAdapterInfo adapterInfo)
+        public OutputLogger(IMessageLogger messageLogger, IAdapterInfo adapterInfo, ISettingsRepository settings)
         {
             this.MessageLogger = messageLogger;
 
             adapterPrefix = String.Format("{0} {1}", adapterInfo.Name, adapterInfo.Version);
+
+            var settingsToLogLevelMap = new Dictionary<string, int>()
+            {
+                { "debug", debugLogLevel },
+                { "info", infoLogLevel },
+                { "warning", warningLogLevel },
+                { "error", errorLogLevel },
+            };
+
+            const string defaultSetting = "info";
+
+            string textLogLevel = (settings.LogLevel != null ? settings.LogLevel : defaultSetting);
+
+            textLogLevel = textLogLevel.ToLower();
+
+            minLogLevel = settingsToLogLevelMap.ContainsKey(textLogLevel) ?
+                settingsToLogLevelMap[textLogLevel] :
+                settingsToLogLevelMap[defaultSetting];
         }
 
         public IMessageLogger MessageLogger { get; set; } // public getter needed for unit tests
@@ -22,7 +41,7 @@ namespace NSpec.VsAdapter.Logging
 
         public void Debug(string message)
         {
-            if (debugMode)
+            if (debugLogLevel >= minLogLevel)
             {
                 SendOutputMessage(TestMessageLevel.Informational, LevelPrefix.Debug, message);
             }
@@ -30,17 +49,26 @@ namespace NSpec.VsAdapter.Logging
 
         public void Info(string message)
         {
-            SendOutputMessage(TestMessageLevel.Informational, LevelPrefix.Info, message);
+            if (infoLogLevel >= minLogLevel)
+            {
+                SendOutputMessage(TestMessageLevel.Informational, LevelPrefix.Info, message);
+            }
         }
 
         public void Warn(string message)
         {
-            SendOutputMessage(TestMessageLevel.Warning, LevelPrefix.Warn, message);
+            if (warningLogLevel >= minLogLevel)
+            {
+                SendOutputMessage(TestMessageLevel.Warning, LevelPrefix.Warn, message);
+            }
         }
 
         public void Error(string message)
         {
-            SendOutputMessage(TestMessageLevel.Error, LevelPrefix.Error, message);
+            if (errorLogLevel >= minLogLevel)
+            {
+                SendOutputMessage(TestMessageLevel.Error, LevelPrefix.Error, message);
+            }
         }
 
         public void Warn(Exception ex, string message)
@@ -88,6 +116,7 @@ namespace NSpec.VsAdapter.Logging
         }
 
         readonly string adapterPrefix;
+        readonly int minLogLevel;
 
         readonly bool debugMode = 
 #if DEBUG
@@ -97,6 +126,11 @@ namespace NSpec.VsAdapter.Logging
 #endif
 
         delegate void LogMethod(string message);
+
+        const int debugLogLevel = 1;
+        const int infoLogLevel = 2;
+        const int warningLogLevel = 3;
+        const int errorLogLevel = 4;
 
         static class LevelPrefix
         {

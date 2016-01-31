@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using NSpec.VsAdapter.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +10,18 @@ namespace NSpec.VsAdapter.Logging
 {
     public class LoggerFactory : ILoggerFactory
     {
-        public LoggerFactory(IAdapterInfo adapterInfo)
+        public LoggerFactory(IAdapterInfo adapterInfo, ISettingsRepository settings)
         {
             this.adapterInfo = adapterInfo;
+            this.settings = settings;
         }
 
         public OutputLogger CreateOutput(IMessageLogger messageLogger)
         {
-            return new OutputLogger(messageLogger, adapterInfo);
+            return new OutputLogger(messageLogger, adapterInfo, settings);
         }
 
         readonly IAdapterInfo adapterInfo;
+        readonly ISettingsRepository settings;
     }
 }

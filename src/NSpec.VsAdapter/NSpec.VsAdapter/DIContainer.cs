@@ -6,6 +6,7 @@ using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.ProjectObservation;
 using NSpec.VsAdapter.ProjectObservation.Projects;
 using NSpec.VsAdapter.ProjectObservation.Solution;
+using NSpec.VsAdapter.Settings;
 using NSpec.VsAdapter.TestAdapter;
 using NSpec.VsAdapter.TestExplorer;
 using System;
@@ -80,6 +81,7 @@ namespace NSpec.VsAdapter
             builder.RegisterType<AppDomainFactory>().As<IAppDomainFactory>().InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(MarshalingFactory<>)).As(typeof(IMarshalingFactory<>)).InstancePerLifetimeScope();
             builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
+            builder.RegisterType<JsonSettingsRepository>().As<ISettingsRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();
         }
 

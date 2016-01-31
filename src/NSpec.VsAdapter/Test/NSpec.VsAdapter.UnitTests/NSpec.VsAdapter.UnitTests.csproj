@@ -120,6 +120,7 @@
     <Compile Include="Execution\ExecutionReporter_desc.cs" />
     <Compile Include="Execution\ProgressRecorder_desc.cs" />
     <Compile Include="Execution\RunnableContextFinder_desc.cs" />
+    <Compile Include="Logging\OutputLogger_desc.cs" />
     <Compile Include="TestAdapter\TestResultMapper_desc.cs" />
     <Compile Include="TestAdapter\NSpecTestExecutor_desc.cs" />
     <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />

@@ -142,6 +142,8 @@
     <Compile Include="ProjectObservation\Projects\IProjectWrapper.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectWrapperFactory.cs" />
     <Compile Include="Logging\RecordedLogEvents.cs" />
+    <Compile Include="Settings\ISettingsRepository.cs" />
+    <Compile Include="Settings\JsonSettingsRepository.cs" />
     <Compile Include="TestAdapter\ITestCaseMapper.cs" />
     <Compile Include="TestAdapter\ITestResultMapper.cs" />
     <Compile Include="TestAdapter\TestCaseMapper.cs" />

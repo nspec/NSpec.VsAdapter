@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Logging
 {
+    // TODO switch from a serializable LogRecorder to a marshaled logger proxy
+
     [Serializable]
     public class LogRecorder : ISerializableLogger, IDisposable
     {
