@@ -34,6 +34,13 @@ namespace NSpec.VsAdapter.Logging
 
         // ICrossDomainLogger
 
+        // message
+
+        public void Trace(string message)
+        {
+            outputLogger.Trace(message);
+        }
+
         public void Debug(string message)
         {
             outputLogger.Debug(message);
@@ -52,6 +59,23 @@ namespace NSpec.VsAdapter.Logging
         public void Error(string message)
         {
             outputLogger.Error(message);
+        }
+
+        // exception info and message
+
+        public void Trace(ExceptionLogInfo exceptionInfo, string message)
+        {
+            outputLogger.Trace(exceptionInfo, message);
+        }
+
+        public void Debug(ExceptionLogInfo exceptionInfo, string message)
+        {
+            outputLogger.Debug(exceptionInfo, message);
+        }
+
+        public void Info(ExceptionLogInfo exceptionInfo, string message)
+        {
+            outputLogger.Info(exceptionInfo, message);
         }
 
         public void Warn(ExceptionLogInfo exceptionInfo, string message)

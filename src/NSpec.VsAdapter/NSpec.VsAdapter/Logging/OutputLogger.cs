@@ -18,6 +18,7 @@ namespace NSpec.VsAdapter.Logging
 
             var settingsToLogLevelMap = new Dictionary<string, int>()
             {
+                { "trace", traceLogLevel },
                 { "debug", debugLogLevel },
                 { "info", infoLogLevel },
                 { "warning", warningLogLevel },
@@ -39,50 +40,75 @@ namespace NSpec.VsAdapter.Logging
 
         // core methods taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/TestLogger.cs
 
+        // message
+
+        public void Trace(string message)
+        {
+            LogMessage(traceLogLevel, LevelPrefix.Trace, TestMessageLevel.Informational, message);
+        }
+
         public void Debug(string message)
         {
-            if (debugLogLevel >= minLogLevel)
-            {
-                SendOutputMessage(TestMessageLevel.Informational, LevelPrefix.Debug, message);
-            }
+            LogMessage(debugLogLevel, LevelPrefix.Debug, TestMessageLevel.Informational, message);
         }
 
         public void Info(string message)
         {
-            if (infoLogLevel >= minLogLevel)
-            {
-                SendOutputMessage(TestMessageLevel.Informational, LevelPrefix.Info, message);
-            }
+            LogMessage(infoLogLevel, LevelPrefix.Info, TestMessageLevel.Informational, message);
         }
 
         public void Warn(string message)
         {
-            if (warningLogLevel >= minLogLevel)
-            {
-                SendOutputMessage(TestMessageLevel.Warning, LevelPrefix.Warn, message);
-            }
+            LogMessage(warningLogLevel, LevelPrefix.Warn, TestMessageLevel.Warning, message);
         }
 
         public void Error(string message)
         {
-            if (errorLogLevel >= minLogLevel)
-            {
-                SendOutputMessage(TestMessageLevel.Error, LevelPrefix.Error, message);
-            }
+            LogMessage(errorLogLevel, LevelPrefix.Error, TestMessageLevel.Error, message);
+        }
+
+        // exception and message
+
+        public void Trace(Exception ex, string message)
+        {
+            LogException(Trace, ex, message);
+        }
+
+        public void Debug(Exception ex, string message)
+        {
+            LogException(Debug, ex, message);
+        }
+
+        public void Info(Exception ex, string message)
+        {
+            LogException(Info, ex, message);
         }
 
         public void Warn(Exception ex, string message)
         {
-            var exceptionInfo = new ExceptionLogInfo(ex);
-
-            LogExceptionInfo(Warn, exceptionInfo, message);
+            LogException(Warn, ex, message);
         }
 
         public void Error(Exception ex, string message)
         {
-            var exceptionInfo = new ExceptionLogInfo(ex);
+            LogException(Error, ex, message);
+        }
 
-            LogExceptionInfo(Error, exceptionInfo, message);
+        // exception info and message
+
+        public void Trace(ExceptionLogInfo exceptionInfo, string message)
+        {
+            LogExceptionInfo(Trace, exceptionInfo, message);
+        }
+
+        public void Debug(ExceptionLogInfo exceptionInfo, string message)
+        {
+            LogExceptionInfo(Debug, exceptionInfo, message);
+        }
+
+        public void Info(ExceptionLogInfo exceptionInfo, string message)
+        {
+            LogExceptionInfo(Info, exceptionInfo, message);
         }
 
         public void Warn(ExceptionLogInfo exceptionInfo, string message)
@@ -93,6 +119,21 @@ namespace NSpec.VsAdapter.Logging
         public void Error(ExceptionLogInfo exceptionInfo, string message)
         {
             LogExceptionInfo(Error, exceptionInfo, message);
+        }
+
+        void LogMessage(int logLevel, string levelPrefix, TestMessageLevel testMessageLevel, string message)
+        {
+            if (logLevel >= minLogLevel)
+            {
+                SendOutputMessage(testMessageLevel, levelPrefix, message);
+            }
+        }
+
+        void LogException(LogMethod logMethod, Exception ex, string message)
+        {
+            var exceptionInfo = new ExceptionLogInfo(ex);
+
+            LogExceptionInfo(logMethod, exceptionInfo, message);
         }
 
         void LogExceptionInfo(LogMethod logMethod, ExceptionLogInfo exceptionInfo, string message)
@@ -127,13 +168,15 @@ namespace NSpec.VsAdapter.Logging
 
         delegate void LogMethod(string message);
 
-        const int debugLogLevel = 1;
-        const int infoLogLevel = 2;
-        const int warningLogLevel = 3;
-        const int errorLogLevel = 4;
+        const int traceLogLevel = 1;
+        const int debugLogLevel = 2;
+        const int infoLogLevel = 3;
+        const int warningLogLevel = 4;
+        const int errorLogLevel = 5;
 
         static class LevelPrefix
         {
+            public const string Trace = "[TRACE] ";
             public const string Debug = "[DEBUG] ";
             public const string Info  = "[INFO]  ";
             public const string Warn  = "[WARN]  ";
