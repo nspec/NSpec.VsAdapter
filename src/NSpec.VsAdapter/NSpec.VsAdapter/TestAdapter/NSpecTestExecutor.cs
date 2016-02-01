@@ -48,9 +48,6 @@ namespace NSpec.VsAdapter.TestAdapter
 
         public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
-            // TODO implement custom runtime TestSettings, e.g. to enable debug logging
-            // E.g. as https://github.com/mmanela/chutzpah/blob/master/VS2012.TestAdapter/ChutzpahTestDiscoverer.cs
-
             var outputLogger = loggerFactory.CreateOutput((IMessageLogger)frameworkHandle);
 
             outputLogger.Info("Execution by source paths started");
@@ -71,9 +68,6 @@ namespace NSpec.VsAdapter.TestAdapter
 
         public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
-            // TODO implement custom runtime TestSettings, e.g. to enable debug logging
-            // E.g. as https://github.com/mmanela/chutzpah/blob/master/VS2012.TestAdapter/ChutzpahTestDiscoverer.cs
-
             var outputLogger = loggerFactory.CreateOutput(frameworkHandle);
 
             outputLogger.Info("Execution by TestCases started");

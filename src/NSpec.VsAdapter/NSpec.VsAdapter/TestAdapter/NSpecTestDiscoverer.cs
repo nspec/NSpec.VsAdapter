@@ -54,9 +54,6 @@ namespace NSpec.VsAdapter.TestAdapter
             IMessageLogger logger, 
             ITestCaseDiscoverySink discoverySink)
         {
-            // TODO implement custom runtime TestSettings, e.g. to enable debug logging
-            // E.g. as https://github.com/mmanela/chutzpah/blob/master/VS2012.TestAdapter/ChutzpahTestDiscoverer.cs
-
             var outputLogger = loggerFactory.CreateOutput(logger);
 
             outputLogger.Info("Discovery started");

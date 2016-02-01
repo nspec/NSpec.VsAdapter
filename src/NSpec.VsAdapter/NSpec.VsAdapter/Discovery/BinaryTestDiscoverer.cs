@@ -1,6 +1,7 @@
 ﻿using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,25 +10,29 @@ namespace NSpec.VsAdapter.Discovery
 {
     public class BinaryTestDiscoverer : IBinaryTestDiscoverer
     {
-        public BinaryTestDiscoverer(ICrossDomainCollector crossDomainCollector)
+        public BinaryTestDiscoverer(ICrossDomainCollector crossDomainCollector, IFileService fileService)
         {
             this.crossDomainCollector = crossDomainCollector;
+            this.fileService = fileService;
         }
 
         public IEnumerable<DiscoveredExample> Discover(string binaryPath, 
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
-            IEnumerable<DiscoveredExample> discoveredExamples;
+            if (!NSpecLibraryFound(binaryPath))
+            {
+                logger.Info(String.Format("Skipping binary '{0}' because it does not reference nspec library", binaryPath));
+
+                return new DiscoveredExample[0];
+            }
 
             try
             {
-                logger.Debug(String.Format("Discovering tests in binary: '{0}'", binaryPath));
-
-                // TODO exclude assembly/binary right away if nspec.dll is not in the same path (or sub-path?)
+                logger.Debug(String.Format("Discovering tests in binary '{0}'", binaryPath));
 
                 var collectorInvocation = new CollectorInvocation(binaryPath, crossDomainLogger);
 
-                discoveredExamples = crossDomainCollector.Run(binaryPath, collectorInvocation.Collect);
+                var discoveredExamples = crossDomainCollector.Run(binaryPath, collectorInvocation.Collect);
 
                 logger.Debug(String.Format("Found {0} tests", discoveredExamples.Count()));
 
@@ -41,12 +46,20 @@ namespace NSpec.VsAdapter.Discovery
                 
                 logger.Error(ex, message);
 
-                discoveredExamples = new DiscoveredExample[0];
+                return new DiscoveredExample[0];
             }
+        }
 
-            return discoveredExamples;
+        bool NSpecLibraryFound(string binaryPath)
+        {
+            string binaryDirectoryPath = Path.GetDirectoryName(binaryPath);
+
+            string nspecLibraryPath = Path.Combine(binaryDirectoryPath, "nspec.dll");
+
+            return fileService.Exists(nspecLibraryPath);
         }
 
         readonly ICrossDomainCollector crossDomainCollector;
+        readonly IFileService fileService;
     }
 }
