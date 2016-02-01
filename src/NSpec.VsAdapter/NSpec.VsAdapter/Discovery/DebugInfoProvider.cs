@@ -23,8 +23,7 @@ namespace NSpec.VsAdapter.Discovery
             {
                 string message = String.Format("Cannot setup debug info for binary '{0}'", binaryPath);
 
-                // TODO remove not needed warning
-                logger.Warn(new ExceptionLogInfo(ex), message);
+                logger.Debug(new ExceptionLogInfo(ex), message);
 
                 session = noSession;
             }
@@ -46,7 +45,7 @@ namespace NSpec.VsAdapter.Discovery
                 string message = String.Format("Debug info found for method '{0}'.'{1}' in binary '{2}'",
                     declaringClassName, methodName, binaryPath);
 
-                logger.Debug(message);
+                logger.Trace(message);
 
                 return navData;
             }
@@ -55,8 +54,7 @@ namespace NSpec.VsAdapter.Discovery
                 string message = String.Format("Cannot get debug info for method '{0}'.'{1}' in binary '{2}'", 
                     declaringClassName, methodName, binaryPath);
 
-                // TODO remove not needed warning
-                logger.Warn(message);
+                logger.Debug(message);
 
                 // TODO check if it's an async method, before leaving
 

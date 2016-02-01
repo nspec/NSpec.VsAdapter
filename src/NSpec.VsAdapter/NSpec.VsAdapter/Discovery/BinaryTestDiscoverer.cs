@@ -28,13 +28,13 @@ namespace NSpec.VsAdapter.Discovery
 
             try
             {
-                logger.Debug(String.Format("Discovering tests in binary '{0}'", binaryPath));
+                logger.Info(String.Format("Discovering tests in binary '{0}'", binaryPath));
 
                 var collectorInvocation = new CollectorInvocation(binaryPath, crossDomainLogger);
 
                 var discoveredExamples = crossDomainCollector.Run(binaryPath, collectorInvocation.Collect);
 
-                logger.Debug(String.Format("Found {0} tests", discoveredExamples.Count()));
+                logger.Info(String.Format("Found {0} tests", discoveredExamples.Count()));
 
                 return discoveredExamples;
             }

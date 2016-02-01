@@ -18,7 +18,7 @@ namespace NSpec.VsAdapter.Execution
         public int Execute(string binaryPath, IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
-            logger.Debug(String.Format("Executing tests in container: '{0}'", binaryPath));
+            logger.Info(String.Format("Executing all tests in binary '{0}'", binaryPath));
 
             BuildExecutorInvocation buildExecutorInvocation = xDomainLogger =>
                 executorInvocationFactory.Create(binaryPath, progressRecorder, xDomainLogger);
@@ -30,7 +30,7 @@ namespace NSpec.VsAdapter.Execution
             IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
-            logger.Debug(String.Format("Executing tests in container: '{0}'", binaryPath));
+            logger.Info(String.Format("Executing selected tests in binary '{0}'", binaryPath));
 
             var exampleFullNames = testCaseFullNames.ToArray();
 
@@ -51,7 +51,7 @@ namespace NSpec.VsAdapter.Execution
 
                 count = crossDomainExecutor.Run(binaryPath, executorInvocation.Execute);
 
-                logger.Debug(String.Format("Executed {0} tests", count));
+                logger.Info(String.Format("Executed {0} tests", count));
             }
             catch (Exception ex)
             {
