@@ -20,10 +20,9 @@ namespace NSpec.VsAdapter.Execution
         {
             logger.Info(String.Format("Executing all tests in binary '{0}'", binaryPath));
 
-            BuildExecutorInvocation buildExecutorInvocation = xDomainLogger =>
-                executorInvocationFactory.Create(binaryPath, progressRecorder, xDomainLogger);
+            var executorInvocation = executorInvocationFactory.Create(binaryPath, progressRecorder, crossDomainLogger);
 
-            return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
+            return CrossDomainExecute(binaryPath, executorInvocation, logger);
         }
 
         public int Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
@@ -34,21 +33,18 @@ namespace NSpec.VsAdapter.Execution
 
             var exampleFullNames = testCaseFullNames.ToArray();
 
-            BuildExecutorInvocation buildExecutorInvocation = xDomainLogger =>
-                executorInvocationFactory.Create(binaryPath, exampleFullNames, progressRecorder, xDomainLogger);
+            var executorInvocation = executorInvocationFactory.Create(binaryPath, exampleFullNames, progressRecorder, crossDomainLogger);
 
-            return CrossDomainExecute(binaryPath, buildExecutorInvocation, logger, crossDomainLogger);
+            return CrossDomainExecute(binaryPath, executorInvocation, logger);
         }
 
-        int CrossDomainExecute(string binaryPath, BuildExecutorInvocation buildExecutorInvocation,
-            IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
+        int CrossDomainExecute(string binaryPath, IExecutorInvocation executorInvocation,
+            IOutputLogger logger)
         {
             int count;
 
             try
             {
-                var executorInvocation = buildExecutorInvocation(crossDomainLogger);
-
                 count = crossDomainExecutor.Run(binaryPath, executorInvocation.Execute);
 
                 logger.Info(String.Format("Executed {0} tests", count));
@@ -69,7 +65,5 @@ namespace NSpec.VsAdapter.Execution
 
         readonly ICrossDomainExecutor crossDomainExecutor;
         readonly IExecutorInvocationFactory executorInvocationFactory;
-
-        delegate IExecutorInvocation BuildExecutorInvocation(ICrossDomainLogger crossDomainLogger);
     }
 }

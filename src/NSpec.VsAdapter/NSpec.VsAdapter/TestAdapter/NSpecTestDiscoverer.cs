@@ -54,6 +54,8 @@ namespace NSpec.VsAdapter.TestAdapter
             IMessageLogger logger, 
             ITestCaseDiscoverySink discoverySink)
         {
+            // TODO extract into a MultiSourceTestDiscoverer
+
             var outputLogger = loggerFactory.CreateOutput(logger);
 
             outputLogger.Info("Discovery started");
