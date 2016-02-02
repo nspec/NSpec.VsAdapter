@@ -48,67 +48,102 @@ namespace NSpec.VsAdapter.TestAdapter
 
         public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
-            var outputLogger = loggerFactory.CreateOutput((IMessageLogger)frameworkHandle);
+            var testableItems = sources.Select(source => new SourceTestableItem(source));
 
-            outputLogger.Info("Execution by source paths started");
-
-            isCanceled = false;
-
-            using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
-            using (var crossDomainLogger = new CrossDomainLogger(outputLogger))
-            {
-                foreach (var binaryPath in sources)
-                {
-                    if (isCanceled)
-                    {
-                        break;
-                    }
-
-                    progressRecorder.BinaryPath = binaryPath;
-
-                    binaryTestExecutor.Execute(binaryPath, progressRecorder, outputLogger, crossDomainLogger);
-                }
-            }
-
-            outputLogger.Info("Execution by source paths finished");
+            ProcessTestableItems(testableItems, frameworkHandle, "source paths");
         }
 
         public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
-            var outputLogger = loggerFactory.CreateOutput(frameworkHandle);
-
-            outputLogger.Info("Execution by TestCases started");
-
-            isCanceled = false;
-
             var testCaseGroupsBySource = tests.GroupBy(t => t.Source);
 
-            using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
-            using (var crossDomainLogger = new CrossDomainLogger(outputLogger))
-            {
-                foreach (var group in testCaseGroupsBySource)
-                {
-                    if (isCanceled)
-                    {
-                        break;
-                    }
+            var testableItems = testCaseGroupsBySource.Select(group => new TestCaseGroupTestableItem(group));
 
-                    string binaryPath = group.Key;
-
-                    var testCaseFullNames = group.Select(tc => tc.FullyQualifiedName);
-
-                    progressRecorder.BinaryPath = binaryPath;
-
-                    binaryTestExecutor.Execute(binaryPath, testCaseFullNames, progressRecorder, outputLogger, crossDomainLogger);
-                }
-            }
-
-            outputLogger.Info("Execution by TestCases finished");
+            ProcessTestableItems(testableItems, frameworkHandle, "TestCases");
         }
 
         public void Cancel()
         {
             isCanceled = true;
+        }
+
+        void ProcessTestableItems(IEnumerable<ITestableItem> testableItems, IFrameworkHandle frameworkHandle, string methodDescription)
+        {
+            var outputLogger = loggerFactory.CreateOutput(frameworkHandle);
+
+            outputLogger.Info(String.Format("Execution by {0} started", methodDescription));
+
+            isCanceled = false;
+
+            using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
+            using (var crossDomainLogger = new CrossDomainLogger(outputLogger))
+            {
+                foreach (var item in testableItems)
+                {
+                    if (isCanceled)
+                    {
+                        break;
+                    }
+
+                    progressRecorder.BinaryPath = item.BinaryPath;
+
+                    item.Execute(binaryTestExecutor, progressRecorder, outputLogger, crossDomainLogger);
+                }
+            }
+
+            outputLogger.Info(String.Format("Execution by {0} finished", methodDescription));
+        }
+
+        interface ITestableItem
+        {
+            string BinaryPath { get; }
+
+            void Execute(
+                IBinaryTestExecutor binaryTestExecutor,
+                IProgressRecorder progressRecorder,
+                IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger);
+        }
+
+        class SourceTestableItem : ITestableItem
+        {
+            public SourceTestableItem(string source)
+            {
+                this.source = source;
+            }
+
+            public string BinaryPath { get { return source; } }
+
+            public void Execute(
+                IBinaryTestExecutor binaryTestExecutor, 
+                IProgressRecorder progressRecorder, 
+                IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger)
+            {
+                binaryTestExecutor.Execute(BinaryPath, progressRecorder, outputLogger, crossDomainLogger);
+            }
+
+            readonly string source;
+        }
+
+        class TestCaseGroupTestableItem : ITestableItem
+        {
+            public TestCaseGroupTestableItem(IGrouping<string, TestCase> testCaseGroup)
+            {
+                this.testCaseGroup = testCaseGroup;
+            }
+
+            public string BinaryPath { get { return testCaseGroup.Key; } }
+
+            public void Execute(
+                IBinaryTestExecutor binaryTestExecutor, 
+                IProgressRecorder progressRecorder, 
+                IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger)
+            {
+                var testCaseFullNames = testCaseGroup.Select(tc => tc.FullyQualifiedName);
+
+                binaryTestExecutor.Execute(BinaryPath, testCaseFullNames, progressRecorder, outputLogger, crossDomainLogger);
+            }
+
+            readonly IGrouping<string, TestCase> testCaseGroup;
         }
 
         bool isCanceled;
