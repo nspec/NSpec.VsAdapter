@@ -138,8 +138,12 @@
     <Compile Include="Logging\ExceptionLogInfo.cs" />
     <Compile Include="Settings\ISettingsRepository.cs" />
     <Compile Include="Settings\JsonSettingsRepository.cs" />
+    <Compile Include="TestAdapter\IMultiSourceTestExecutor.cs" />
+    <Compile Include="TestAdapter\IMultiSourceTestExecutorFactory.cs" />
     <Compile Include="TestAdapter\ITestCaseMapper.cs" />
     <Compile Include="TestAdapter\ITestResultMapper.cs" />
+    <Compile Include="TestAdapter\MultiSourceTestExecutor.cs" />
+    <Compile Include="TestAdapter\MultiSourceTestExecutorFactory.cs" />
     <Compile Include="TestAdapter\TestCaseMapper.cs" />
     <Compile Include="TestAdapter\TestResultMapper.cs" />
     <Compile Include="TestExplorer\ITestContainerFactory.cs" />

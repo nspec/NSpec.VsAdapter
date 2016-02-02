@@ -17,21 +17,22 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests.TestAdapter
 {
     [TestFixture]
-    [Category("NSpecTestExecutor")]
-    public abstract class NSpecTestExecutor_desc_base
+    [Category("MultiSourceTestExecutor")]
+    public abstract class MultiSourceTestExecutor_desc_base
     {
-        protected NSpecTestExecutor executor;
+        protected MultiSourceTestExecutor executor;
 
         protected AutoSubstitute autoSubstitute;
         protected IBinaryTestExecutor binaryTestExecutor;
+        protected IProgressRecorderFactory progressRecorderFactory;
         protected IProgressRecorder progressRecorder;
+        protected ILoggerFactory loggerFactory;
         protected IOutputLogger outputLogger;
-        protected IRunContext runContext;
         protected IFrameworkHandle frameworkHandle;
         protected List<string> actualSources;
         protected string[] sources;
 
-        public NSpecTestExecutor_desc_base()
+        public MultiSourceTestExecutor_desc_base()
         {
             sources = new string[]
             {
@@ -45,36 +46,31 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             autoSubstitute = new AutoSubstitute();
 
-            runContext = autoSubstitute.Resolve<IRunContext>();
-
             frameworkHandle = autoSubstitute.Resolve<IFrameworkHandle>();
 
             binaryTestExecutor = autoSubstitute.Resolve<IBinaryTestExecutor>();
 
             outputLogger = autoSubstitute.Resolve<IOutputLogger>();
-            var loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
+            loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
             loggerFactory.CreateOutput(Arg.Any<IMessageLogger>()).Returns(outputLogger);
 
             progressRecorder = autoSubstitute.Resolve<IProgressRecorder>();
-            var progressRecorderFactory = autoSubstitute.Resolve<IProgressRecorderFactory>();
+            progressRecorderFactory = autoSubstitute.Resolve<IProgressRecorderFactory>();
             progressRecorderFactory.Create(frameworkHandle).Returns(progressRecorder);
 
             actualSources = new List<string>();
 
             progressRecorder.BinaryPath = Arg.Do<string>(path => actualSources.Add(path));
-
-            executor = autoSubstitute.Resolve<NSpecTestExecutor>();
         }
 
         [TearDown]
         public virtual void after_each()
         {
             autoSubstitute.Dispose();
-            executor.Dispose();
         }
     }
 
-    public class NSpecTestExecutor_when_running_sources : NSpecTestExecutor_desc_base
+    public class MultiSourceTestExecutor_when_running_sources : MultiSourceTestExecutor_desc_base
     {
         List<string> executedSources;
 
@@ -97,7 +93,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     executedSources.Add(source);
                 });
 
-            executor.RunTests(sources, runContext, frameworkHandle);
+            executor = new MultiSourceTestExecutor(sources, binaryTestExecutor, progressRecorderFactory, loggerFactory);
+
+            executor.RunTests(frameworkHandle);
         }
 
         [Test]
@@ -132,13 +130,13 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         }
     }
 
-    public class NSpecTestExecutor_when_running_test_cases : NSpecTestExecutor_desc_base
+    public class MultiSourceTestExecutor_when_running_test_cases : MultiSourceTestExecutor_desc_base
     {
         Dictionary<string, TestCase[]> testCaseBySource;
         IEnumerable<TestCase> testCases;
         Dictionary<string, IEnumerable<string>> executedTests;
 
-        public NSpecTestExecutor_when_running_test_cases()
+        public MultiSourceTestExecutor_when_running_test_cases()
         {
             string source1 = sources[0];
             string source2 = sources[1];
@@ -229,7 +227,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     executedTests[source] = fullNames;
                 });
 
-            executor.RunTests(testCases, runContext, frameworkHandle);
+            executor = new MultiSourceTestExecutor(testCases, binaryTestExecutor, progressRecorderFactory, loggerFactory);
+
+            executor.RunTests(frameworkHandle);
         }
 
         [Test]
@@ -270,7 +270,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         }
     }
 
-    public class NSpecTestExecutor_when_canceling_run : NSpecTestExecutor_desc_base
+    public class MultiSourceTestExecutor_when_canceling_run : MultiSourceTestExecutor_desc_base
     {
         [Test]
         [Ignore("Cannot figure out how to block & sync to inner RunTests loop")]
