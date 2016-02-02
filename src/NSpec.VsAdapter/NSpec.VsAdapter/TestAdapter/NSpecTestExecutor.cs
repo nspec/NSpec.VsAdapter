@@ -13,7 +13,7 @@ namespace NSpec.VsAdapter.TestAdapter
     [ExtensionUri(Constants.ExecutorUriString)]
     public class NSpecTestExecutor : ITestExecutor, IDisposable
     {
-        // used by Visual Studio test infrastructure, by integration tests
+        // Visual Studio test infrastructure requires a default constructor
         public NSpecTestExecutor()
         {
             var scope = DIContainer.Instance.BeginScope();
@@ -21,14 +21,6 @@ namespace NSpec.VsAdapter.TestAdapter
             disposable = scope;
 
             this.multiSourceTestExecutorFactory = scope.Resolve<IMultiSourceTestExecutorFactory>();
-        }
-
-        // used by unit tests
-        public NSpecTestExecutor(IMultiSourceTestExecutorFactory multiSourceTestExecutorFactory)
-        {
-            this.multiSourceTestExecutorFactory = multiSourceTestExecutorFactory;
-
-            disposable = Disposable.Empty;
         }
 
         public void Dispose()
