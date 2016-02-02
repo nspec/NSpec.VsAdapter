@@ -52,11 +52,18 @@ namespace NSpec.VsAdapter.TestAdapter
 
             outputLogger.Info("Execution by source paths started");
 
+            isCanceled = false;
+
             using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
             using (var crossDomainLogger = new CrossDomainLogger(outputLogger))
             {
                 foreach (var binaryPath in sources)
                 {
+                    if (isCanceled)
+                    {
+                        break;
+                    }
+
                     progressRecorder.BinaryPath = binaryPath;
 
                     binaryTestExecutor.Execute(binaryPath, progressRecorder, outputLogger, crossDomainLogger);
@@ -72,6 +79,8 @@ namespace NSpec.VsAdapter.TestAdapter
 
             outputLogger.Info("Execution by TestCases started");
 
+            isCanceled = false;
+
             var testCaseGroupsBySource = tests.GroupBy(t => t.Source);
 
             using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
@@ -79,6 +88,11 @@ namespace NSpec.VsAdapter.TestAdapter
             {
                 foreach (var group in testCaseGroupsBySource)
                 {
+                    if (isCanceled)
+                    {
+                        break;
+                    }
+
                     string binaryPath = group.Key;
 
                     var testCaseFullNames = group.Select(tc => tc.FullyQualifiedName);
@@ -94,10 +108,10 @@ namespace NSpec.VsAdapter.TestAdapter
 
         public void Cancel()
         {
-            // TODO implement execution cancel
-
-            throw new NotImplementedException();
+            isCanceled = true;
         }
+
+        bool isCanceled;
 
         readonly IBinaryTestExecutor binaryTestExecutor;
         readonly IProgressRecorderFactory progressRecorderFactory;

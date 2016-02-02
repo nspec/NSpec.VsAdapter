@@ -16,6 +16,8 @@ namespace NSpec.VsAdapter.Execution
 
         public int Execute(IEnumerable<Context> contextsToRun)
         {
+            // TODO implement execution cancel
+
             int count = 0;
 
             foreach (var context in contextsToRun)

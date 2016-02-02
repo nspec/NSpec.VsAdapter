@@ -273,7 +273,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
     public class NSpecTestExecutor_when_canceling_run : NSpecTestExecutor_desc_base
     {
         [Test]
-        [Ignore("Yet to be implemented")]
+        [Ignore("Cannot figure out how to block & sync to inner RunTests loop")]
         public void it_should_quit_execution()
         {
             throw new NotImplementedException();
