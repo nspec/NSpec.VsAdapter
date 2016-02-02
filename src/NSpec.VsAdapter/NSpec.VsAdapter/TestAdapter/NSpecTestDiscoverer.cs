@@ -2,8 +2,6 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using NSpec.VsAdapter.Discovery;
-using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,20 +23,13 @@ namespace NSpec.VsAdapter.TestAdapter
 
             disposable = scope;
 
-            binaryTestDiscoverer = scope.Resolve<IBinaryTestDiscoverer>();
-            testCaseMapper = scope.Resolve<ITestCaseMapper>();
-            loggerFactory = scope.Resolve<ILoggerFactory>();
+            multiSourceTestDiscovererFactory = scope.Resolve<IMultiSourceTestDiscovererFactory>();
         }
 
         // used by unit tests
-        public NSpecTestDiscoverer(
-            IBinaryTestDiscoverer binaryTestDiscoverer, 
-            ITestCaseMapper testCaseMapper,
-            ILoggerFactory loggerFactory)
+        public NSpecTestDiscoverer(IMultiSourceTestDiscovererFactory multiSourceTestDiscovererFactory)
         {
-            this.binaryTestDiscoverer = binaryTestDiscoverer;
-            this.testCaseMapper = testCaseMapper;
-            this.loggerFactory = loggerFactory;
+            this.multiSourceTestDiscovererFactory = multiSourceTestDiscovererFactory;
 
             disposable = Disposable.Empty;
         }
@@ -54,33 +45,12 @@ namespace NSpec.VsAdapter.TestAdapter
             IMessageLogger logger, 
             ITestCaseDiscoverySink discoverySink)
         {
-            // TODO extract into a MultiSourceTestDiscoverer
+            var multiSourceTestDiscoverer = multiSourceTestDiscovererFactory.Create(sources);
 
-            var outputLogger = loggerFactory.CreateOutput(logger);
-
-            outputLogger.Info("Discovery started");
-
-            IEnumerable<IEnumerable<DiscoveredExample>> groupedSpecifications;
-
-            using (var crossDomainLogger = new CrossDomainLogger(outputLogger))
-            {
-                groupedSpecifications =
-                    from binaryPath in sources
-                    select binaryTestDiscoverer.Discover(binaryPath, outputLogger, crossDomainLogger);
-            }
-
-            var specifications = groupedSpecifications.SelectMany(group => group);
-
-            var testCases = specifications.Select(testCaseMapper.FromDiscoveredExample);
-
-            testCases.Do(discoverySink.SendTestCase);
-
-            outputLogger.Info("Discovery finished");
+            multiSourceTestDiscoverer.DiscoverTests(discoverySink, logger);
         }
 
-        readonly IBinaryTestDiscoverer binaryTestDiscoverer;
-        readonly ITestCaseMapper testCaseMapper;
-        readonly ILoggerFactory loggerFactory;
+        readonly IMultiSourceTestDiscovererFactory multiSourceTestDiscovererFactory;
         readonly IDisposable disposable;
     }
 }

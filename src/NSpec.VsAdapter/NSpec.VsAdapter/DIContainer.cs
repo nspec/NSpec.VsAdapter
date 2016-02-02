@@ -62,6 +62,7 @@ namespace NSpec.VsAdapter
 
         static void RegisterDiscoverer(ContainerBuilder builder)
         {
+            builder.RegisterType<MultiSourceTestDiscovererFactory>().As<IMultiSourceTestDiscovererFactory>().InstancePerLifetimeScope();
             builder.RegisterType<BinaryTestDiscoverer>().As<IBinaryTestDiscoverer>().InstancePerLifetimeScope();
             builder.RegisterType<CrossDomainCollector>().As<ICrossDomainCollector>().InstancePerLifetimeScope();
             builder.RegisterType<TestCaseMapper>().As<ITestCaseMapper>().InstancePerLifetimeScope();

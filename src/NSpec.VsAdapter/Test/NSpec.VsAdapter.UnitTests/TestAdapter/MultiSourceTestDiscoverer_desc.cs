@@ -17,50 +17,20 @@ using System.Threading.Tasks;
 namespace NSpec.VsAdapter.UnitTests.TestAdapter
 {
     [TestFixture]
-    [Category("NSpecTestDiscoverer")]
-    public abstract class NSpecTestDiscoverer_desc_base
+    [Category("MultiSourceTestDiscoverer")]
+    public class MultiSourceTestDiscoverer_when_discovering
     {
-        protected NSpecTestDiscoverer discoverer;
+        MultiSourceTestDiscoverer discoverer;
 
-        protected AutoSubstitute autoSubstitute;
-        protected List<TestCase> testCases;
-        protected ITestCaseDiscoverySink discoverySink;
-        protected IBinaryTestDiscoverer binaryTestDiscoverer;
-
-        [SetUp]
-        public virtual void before_each()
-        {
-            autoSubstitute = new AutoSubstitute();
-
-            testCases = new List<TestCase>();
-            discoverySink = autoSubstitute.Resolve<ITestCaseDiscoverySink>();
-            discoverySink.When(sink => sink.SendTestCase(Arg.Any<TestCase>())).Do(callInfo =>
-                {
-                    var discoveredTestCase = callInfo.Arg<TestCase>();
-
-                    testCases.Add(discoveredTestCase);
-                });
-
-            binaryTestDiscoverer = autoSubstitute.Resolve<IBinaryTestDiscoverer>();
-
-            discoverer = autoSubstitute.Resolve<NSpecTestDiscoverer>();
-        }
-
-        [TearDown]
-        public virtual void after_each()
-        {
-            autoSubstitute.Dispose();
-            discoverer.Dispose();
-        }
-    }
-
-    public class NSpecTestDiscoverer_when_discovering : NSpecTestDiscoverer_desc_base
-    {
+        AutoSubstitute autoSubstitute;
+        List<TestCase> testCases;
+        ITestCaseDiscoverySink discoverySink;
+        IBinaryTestDiscoverer binaryTestDiscoverer;
         IOutputLogger outputLogger;
         string[] sources;
         Dictionary<string, DiscoveredExample[]> discoveredExamplesBySource;
 
-        public NSpecTestDiscoverer_when_discovering()
+        public MultiSourceTestDiscoverer_when_discovering()
         {
             string source1 = @".\path\to\some\dummy-library.dll";
             string source2 = @".\other\path\to\another-dummy-library.dll";
@@ -93,9 +63,21 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             };
         }
 
-        public override void before_each()
+        [SetUp]
+        public virtual void before_each()
         {
-            base.before_each();
+            autoSubstitute = new AutoSubstitute();
+
+            testCases = new List<TestCase>();
+            discoverySink = autoSubstitute.Resolve<ITestCaseDiscoverySink>();
+            discoverySink.When(sink => sink.SendTestCase(Arg.Any<TestCase>())).Do(callInfo =>
+                {
+                    var discoveredTestCase = callInfo.Arg<TestCase>();
+
+                    testCases.Add(discoveredTestCase);
+                });
+
+            binaryTestDiscoverer = autoSubstitute.Resolve<IBinaryTestDiscoverer>();
 
             binaryTestDiscoverer.Discover(null, null, null).ReturnsForAnyArgs(callInfo =>
                 {
@@ -127,11 +109,15 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             var loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
             loggerFactory.CreateOutput(Arg.Any<IMessageLogger>()).Returns(outputLogger);
 
-            discoverer.DiscoverTests(
-                sources,
-                autoSubstitute.Resolve<IDiscoveryContext>(),
-                messageLogger,
-                discoverySink);
+            discoverer = new MultiSourceTestDiscoverer(sources, binaryTestDiscoverer, testCaseMapper, loggerFactory);
+
+            discoverer.DiscoverTests(discoverySink, messageLogger);
+        }
+
+        [TearDown]
+        public virtual void after_each()
+        {
+            autoSubstitute.Dispose();
         }
 
         [Test]

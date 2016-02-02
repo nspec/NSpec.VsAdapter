@@ -128,7 +128,7 @@
     <Compile Include="TestExplorer\NSpecTestContainerDiscoverer_desc.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TestAdapter\NSpecTestDiscoverer_desc.cs" />
+    <Compile Include="TestAdapter\MultiSourceTestDiscoverer_desc.cs" />
     <Compile Include="ProjectObservation\TestBinaryNotifier_desc.cs" />
     <Compile Include="ProjectObservation\ProjectBuildNotifier_desc.cs" />
     <Compile Include="ProjectObservation\ProjectConverter_desc.cs" />
