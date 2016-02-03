@@ -39,6 +39,22 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             autoSubstitute.Dispose();
         }
+
+        protected void VerifyMessageSent(LogMethod logMethod, TestMessageLevel messageLevel)
+        {
+            logMethod(someMessage);
+
+            messageLogger.Received(1).SendMessage(messageLevel, Arg.Any<string>());
+        }
+
+        protected void VerifyMessageNotSent(LogMethod logMethod)
+        {
+            logMethod(someMessage);
+
+            messageLogger.DidNotReceive().SendMessage(Arg.Any<TestMessageLevel>(), Arg.Any<string>());
+        }
+
+        protected delegate void LogMethod(string message);
     }
 
     public class OutputLogger_when_min_level_is_debug : OutputLogger_desc_base
@@ -47,7 +63,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("debug");
+            settingsRepo.LogLevel.Returns("Debug");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -55,33 +71,25 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         [Test]
         public void it_should_report_debug()
         {
-            logger.Debug(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Informational, Arg.Any<string>());
+            VerifyMessageSent(logger.Debug, TestMessageLevel.Informational);
         }
 
         [Test]
         public void it_should_report_info()
         {
-            logger.Info(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Informational, Arg.Any<string>());
+            VerifyMessageSent(logger.Info, TestMessageLevel.Informational);
         }
 
         [Test]
         public void it_should_report_warning()
         {
-            logger.Warn(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Warning, Arg.Any<string>());
+            VerifyMessageSent(logger.Warn, TestMessageLevel.Warning);
         }
 
         [Test]
         public void it_should_report_error()
         {
-            logger.Error(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Error, Arg.Any<string>());
+            VerifyMessageSent(logger.Error, TestMessageLevel.Error);
         }
     }
 
@@ -91,7 +99,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("info");
+            settingsRepo.LogLevel.Returns("Info");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -99,33 +107,25 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         [Test]
         public void it_should_not_report_debug()
         {
-            logger.Debug(someMessage);
-
-            messageLogger.DidNotReceive().SendMessage(Arg.Any<TestMessageLevel>(), Arg.Any<string>());
+            VerifyMessageNotSent(logger.Debug);
         }
 
         [Test]
         public void it_should_report_info()
         {
-            logger.Info(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Informational, Arg.Any<string>());
+            VerifyMessageSent(logger.Info, TestMessageLevel.Informational);
         }
 
         [Test]
         public void it_should_report_warning()
         {
-            logger.Warn(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Warning, Arg.Any<string>());
+            VerifyMessageSent(logger.Warn, TestMessageLevel.Warning);
         }
 
         [Test]
         public void it_should_report_error()
         {
-            logger.Error(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Error, Arg.Any<string>());
+            VerifyMessageSent(logger.Error, TestMessageLevel.Error);
         }
     }
 
@@ -135,7 +135,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("warning");
+            settingsRepo.LogLevel.Returns("Warning");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -143,33 +143,25 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         [Test]
         public void it_should_not_report_debug()
         {
-            logger.Debug(someMessage);
-
-            messageLogger.DidNotReceive().SendMessage(Arg.Any<TestMessageLevel>(), Arg.Any<string>());
+            VerifyMessageNotSent(logger.Debug);
         }
 
         [Test]
         public void it_should_not_report_info()
         {
-            logger.Info(someMessage);
-
-            messageLogger.DidNotReceive().SendMessage(Arg.Any<TestMessageLevel>(), Arg.Any<string>());
+            VerifyMessageNotSent(logger.Info);
         }
 
         [Test]
         public void it_should_report_warning()
         {
-            logger.Warn(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Warning, Arg.Any<string>());
+            VerifyMessageSent(logger.Warn, TestMessageLevel.Warning);
         }
 
         [Test]
         public void it_should_report_error()
         {
-            logger.Error(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Error, Arg.Any<string>());
+            VerifyMessageSent(logger.Error, TestMessageLevel.Error);
         }
     }
 
@@ -179,7 +171,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("error");
+            settingsRepo.LogLevel.Returns("Error");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -187,33 +179,25 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         [Test]
         public void it_should_not_report_debug()
         {
-            logger.Debug(someMessage);
-
-            messageLogger.DidNotReceive().SendMessage(Arg.Any<TestMessageLevel>(), Arg.Any<string>());
+            VerifyMessageNotSent(logger.Debug);
         }
 
         [Test]
         public void it_should_not_report_info()
         {
-            logger.Info(someMessage);
-
-            messageLogger.DidNotReceive().SendMessage(Arg.Any<TestMessageLevel>(), Arg.Any<string>());
+            VerifyMessageNotSent(logger.Info);
         }
 
         [Test]
         public void it_should_not_report_warning()
         {
-            logger.Warn(someMessage);
-
-            messageLogger.DidNotReceive().SendMessage(Arg.Any<TestMessageLevel>(), Arg.Any<string>());
+            VerifyMessageNotSent(logger.Warn);
         }
 
         [Test]
         public void it_should_report_error()
         {
-            logger.Error(someMessage);
-
-            messageLogger.Received(1).SendMessage(TestMessageLevel.Error, Arg.Any<string>());
+            VerifyMessageSent(logger.Error, TestMessageLevel.Error);
         }
     }
 
@@ -247,7 +231,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("unknown");
+            settingsRepo.LogLevel.Returns("Unknown");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
