@@ -57,6 +57,48 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         protected delegate void LogMethod(string message);
     }
 
+    public class OutputLogger_when_min_level_is_trace : OutputLogger_desc_base
+    {
+        public override void before_each()
+        {
+            base.before_each();
+
+            settingsRepo.LogLevel.Returns("Trace");
+
+            logger = autoSubstitute.Resolve<OutputLogger>();
+        }
+
+        [Test]
+        public void it_should_report_trace()
+        {
+            VerifyMessageSent(logger.Trace, TestMessageLevel.Informational);
+        }
+
+        [Test]
+        public void it_should_report_debug()
+        {
+            VerifyMessageSent(logger.Debug, TestMessageLevel.Informational);
+        }
+
+        [Test]
+        public void it_should_report_info()
+        {
+            VerifyMessageSent(logger.Info, TestMessageLevel.Informational);
+        }
+
+        [Test]
+        public void it_should_report_warning()
+        {
+            VerifyMessageSent(logger.Warn, TestMessageLevel.Warning);
+        }
+
+        [Test]
+        public void it_should_report_error()
+        {
+            VerifyMessageSent(logger.Error, TestMessageLevel.Error);
+        }
+    }
+
     public class OutputLogger_when_min_level_is_debug : OutputLogger_desc_base
     {
         public override void before_each()
@@ -66,6 +108,12 @@ namespace NSpec.VsAdapter.UnitTests.Logging
             settingsRepo.LogLevel.Returns("Debug");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
+        }
+
+        [Test]
+        public void it_should_not_report_trace()
+        {
+            VerifyMessageNotSent(logger.Trace);
         }
 
         [Test]
@@ -105,6 +153,12 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         }
 
         [Test]
+        public void it_should_not_report_trace()
+        {
+            VerifyMessageNotSent(logger.Trace);
+        }
+
+        [Test]
         public void it_should_not_report_debug()
         {
             VerifyMessageNotSent(logger.Debug);
@@ -141,6 +195,12 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         }
 
         [Test]
+        public void it_should_not_report_trace()
+        {
+            VerifyMessageNotSent(logger.Trace);
+        }
+
+        [Test]
         public void it_should_not_report_debug()
         {
             VerifyMessageNotSent(logger.Debug);
@@ -174,6 +234,12 @@ namespace NSpec.VsAdapter.UnitTests.Logging
             settingsRepo.LogLevel.Returns("Error");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
+        }
+
+        [Test]
+        public void it_should_not_report_trace()
+        {
+            VerifyMessageNotSent(logger.Trace);
         }
 
         [Test]
