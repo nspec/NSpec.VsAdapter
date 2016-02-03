@@ -13,18 +13,21 @@ namespace NSpec.VsAdapter.CrossDomain
     {
         public ITargetAppDomain Create(string binaryPath)
         {
-            const string targetDomainName = "NSpec.VsAdapter.NSpecDomainRunner.Run";
+            const string targetDomainName = "NSpec.VsAdapter.AppDomainFactory.Create";
             const Evidence useCurrentDomainEvidence = null;
+
+            binaryPath = Path.GetFullPath(binaryPath);
 
             string configFilePath = binaryPath + ".config";
 
-            var targetDomainSetup = new AppDomainSetup();
-
-            targetDomainSetup.ConfigurationFile = Path.GetFullPath(configFilePath);
-
             Assembly currentAssembly = Assembly.GetExecutingAssembly();
 
-            targetDomainSetup.ApplicationBase = Path.GetDirectoryName(currentAssembly.Location);
+            var targetDomainSetup = new AppDomainSetup()
+            {
+                ConfigurationFile = configFilePath,
+                ApplicationBase = Path.GetDirectoryName(currentAssembly.Location)
+            };
+            // TODO verifiy if PrivateBinPath should be set as well
 
             var appDomain = AppDomain.CreateDomain(targetDomainName, useCurrentDomainEvidence, targetDomainSetup);
 
