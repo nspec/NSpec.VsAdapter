@@ -47,7 +47,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Debug");
+            settingsRepo.LogLevel.Returns("debug");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -91,7 +91,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Info");
+            settingsRepo.LogLevel.Returns("info");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -135,7 +135,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Warning");
+            settingsRepo.LogLevel.Returns("warning");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -179,7 +179,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Error");
+            settingsRepo.LogLevel.Returns("error");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }

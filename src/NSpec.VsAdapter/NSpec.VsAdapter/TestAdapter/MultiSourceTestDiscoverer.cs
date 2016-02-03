@@ -25,6 +25,9 @@ namespace NSpec.VsAdapter.TestAdapter
 
         public void DiscoverTests(ITestCaseDiscoverySink discoverySink, IMessageLogger messageLogger)
         {
+            // TODO logger depends on settings, but settings change with binary source path
+            // probably move settings from c'tor dependency to property dependency on logger
+
             var outputLogger = loggerFactory.CreateOutput(messageLogger);
 
             outputLogger.Info("Discovery started");
