@@ -8,6 +8,8 @@ namespace NSpec.VsAdapter.Settings
 {
     public interface ISettingsRepository
     {
+        string BinaryPath { set; }
+
         string LogLevel { get; }
     }
 }

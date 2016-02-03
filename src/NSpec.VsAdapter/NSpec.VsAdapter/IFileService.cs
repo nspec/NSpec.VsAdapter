@@ -11,5 +11,7 @@ namespace NSpec.VsAdapter
         bool Exists(string path);
 
         DateTime LastModified(string path);
+
+        string ReadAllText(string path);
     }
 }

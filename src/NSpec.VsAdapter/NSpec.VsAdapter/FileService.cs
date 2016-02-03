@@ -17,5 +17,10 @@ namespace NSpec.VsAdapter
         {
             return File.GetLastWriteTime(path);
         }
+
+        public string ReadAllText(string path)
+        {
+            return File.ReadAllText(path);
+        }
     }
 }
