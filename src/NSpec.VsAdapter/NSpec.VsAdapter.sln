@@ -10,9 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSpec.VsAdapter.UnitTests", "Test\NSpec.VsAdapter.UnitTests\NSpec.VsAdapter.UnitTests.csproj", "{1A556ED6-FB2A-48DB-A5E0-8CD5923035AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{83BC3666-422D-4AF6-9632-390ED4B5145A}"
-	ProjectSection(SolutionItems) = preProject
-		Test\Samples\SolutionItems\samples.runsettings = Test\Samples\SolutionItems\samples.runsettings
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSystem", "Test\Samples\SampleSystem\SampleSystem.csproj", "{716E1B2B-C0F4-450F-BCD0-95CF829126B9}"
 EndProject
@@ -33,6 +30,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSpecs", "Test\Samples\ConfigSampleSpecs\ConfigSampleSpecs.csproj", "{B51BD897-01A8-4F16-AF5A-2A18EA1F43C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSystem", "Test\Samples\ConfigSampleSystem\ConfigSampleSystem.csproj", "{E17B343A-3159-4BF9-9043-A5E0F626954A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{5BF2F04A-F6EF-421E-964E-D19445AB5E94}"
+	ProjectSection(SolutionItems) = preProject
+		Test\Samples\SolutionItems\samples.runsettings = Test\Samples\SolutionItems\samples.runsettings
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,5 +91,6 @@ Global
 		{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D} = {83BC3666-422D-4AF6-9632-390ED4B5145A}
 		{B51BD897-01A8-4F16-AF5A-2A18EA1F43C3} = {83BC3666-422D-4AF6-9632-390ED4B5145A}
 		{E17B343A-3159-4BF9-9043-A5E0F626954A} = {83BC3666-422D-4AF6-9632-390ED4B5145A}
+		{5BF2F04A-F6EF-421E-964E-D19445AB5E94} = {83BC3666-422D-4AF6-9632-390ED4B5145A}
 	EndGlobalSection
 EndGlobal

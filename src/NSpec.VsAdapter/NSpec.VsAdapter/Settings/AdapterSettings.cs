@@ -10,10 +10,11 @@ using System.Xml.Serialization;
 
 namespace NSpec.VsAdapter.Settings
 {
+    [XmlRoot(AdapterSettings.RunSettingsXmlNode)]
     public class AdapterSettings : TestRunSettings, IAdapterSettings
     {
         public AdapterSettings()
-            : base(SettingsName)
+            : base(RunSettingsXmlNode)
         {
             LogLevel = String.Empty;
         }
@@ -35,8 +36,8 @@ namespace NSpec.VsAdapter.Settings
             return document.DocumentElement;
         }
 
-        public const string SettingsName = "NSpec.VsAdapter.Settings";
-
         static readonly XmlSerializer serializer = new XmlSerializer(typeof(AdapterSettings));
+
+        public const string RunSettingsXmlNode = "NSpec.VsAdapter";
     }
 }

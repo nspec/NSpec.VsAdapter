@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 
 namespace NSpec.VsAdapter.Settings
 {
-    [SettingsName(AdapterSettings.SettingsName)]
+    [SettingsName(AdapterSettings.RunSettingsXmlNode)]
     public class AdapterSettingsProvider : ISettingsProvider
     {
         public AdapterSettingsProvider()
@@ -25,9 +25,11 @@ namespace NSpec.VsAdapter.Settings
 
         public void Load(XmlReader reader)
         {
+            // TODO test that AdapterSettingsProvider.Load does not throw when deserialize fails
+
             ValidateArg.NotNull(reader, "reader");
 
-            if (reader.Read() && reader.Name == AdapterSettings.SettingsName)
+            if (reader.Read() && reader.Name == AdapterSettings.RunSettingsXmlNode)
             {
                 // store settings locally
                 Settings = serializer.Deserialize(reader) as AdapterSettings;

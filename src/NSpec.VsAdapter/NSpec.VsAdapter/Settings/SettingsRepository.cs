@@ -11,7 +11,9 @@ namespace NSpec.VsAdapter.Settings
     {
         public IAdapterSettings Load(IDiscoveryContext discoveryContext)
         {
-            var settingsProvider = discoveryContext.RunSettings.GetSettings(AdapterSettings.SettingsName) as AdapterSettingsProvider;
+            // TODO test that SettingsRepository.Load does not throw when GetSettings throws
+
+            var settingsProvider = discoveryContext.RunSettings.GetSettings(AdapterSettings.RunSettingsXmlNode) as AdapterSettingsProvider;
 
             var settings = (settingsProvider != null ?  settingsProvider.Settings : new AdapterSettings());
 
