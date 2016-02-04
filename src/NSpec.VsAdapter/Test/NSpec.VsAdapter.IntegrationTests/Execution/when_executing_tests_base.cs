@@ -23,7 +23,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         [SetUp]
         public virtual void before_each()
         {
-            runContext = null;
+            runContext = new EmptyRunContext();
 
             var consoleLogger = new ConsoleLogger();
 

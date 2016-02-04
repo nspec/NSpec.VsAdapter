@@ -140,8 +140,11 @@
     <Compile Include="ProjectObservation\Projects\IProjectWrapper.cs" />
     <Compile Include="ProjectObservation\Projects\IProjectWrapperFactory.cs" />
     <Compile Include="Logging\ExceptionLogInfo.cs" />
+    <Compile Include="Settings\AdapterSettingsProvider.cs" />
+    <Compile Include="Settings\IAdapterSettings.cs" />
     <Compile Include="Settings\ISettingsRepository.cs" />
-    <Compile Include="Settings\JsonSettingsRepository.cs" />
+    <Compile Include="Settings\AdapterSettings.cs" />
+    <Compile Include="Settings\SettingsRepository.cs" />
     <Compile Include="TestAdapter\IMultiSourceTestDiscoverer.cs" />
     <Compile Include="TestAdapter\IMultiSourceTestExecutor.cs" />
     <Compile Include="TestAdapter\IMultiSourceTestDiscovererFactory.cs" />

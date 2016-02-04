@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using NSpec.VsAdapter.Discovery;
 using NSpec.VsAdapter.Logging;
+using NSpec.VsAdapter.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,20 +16,21 @@ namespace NSpec.VsAdapter.TestAdapter
         public MultiSourceTestDiscoverer(IEnumerable<string> sources,
             IBinaryTestDiscoverer binaryTestDiscoverer,
             ITestCaseMapper testCaseMapper,
+            ISettingsRepository settingsRepository,
             ILoggerFactory loggerFactory)
         {
             this.sources = sources;
             this.binaryTestDiscoverer = binaryTestDiscoverer;
             this.testCaseMapper = testCaseMapper;
+            this.settingsRepository = settingsRepository;
             this.loggerFactory = loggerFactory;
         }
 
-        public void DiscoverTests(ITestCaseDiscoverySink discoverySink, IMessageLogger messageLogger)
+        public void DiscoverTests(ITestCaseDiscoverySink discoverySink, IMessageLogger messageLogger, IDiscoveryContext discoveryContext)
         {
-            // TODO logger depends on settings, but settings change with binary source path
-            // probably move settings from c'tor dependency to property dependency on logger
+            var settings = settingsRepository.Load(discoveryContext);
 
-            var outputLogger = loggerFactory.CreateOutput(messageLogger);
+            var outputLogger = loggerFactory.CreateOutput(messageLogger, settings);
 
             outputLogger.Info("Discovery started");
 
@@ -53,6 +55,7 @@ namespace NSpec.VsAdapter.TestAdapter
         readonly IEnumerable<string> sources;
         readonly IBinaryTestDiscoverer binaryTestDiscoverer;
         readonly ITestCaseMapper testCaseMapper;
+        readonly ISettingsRepository settingsRepository;
         readonly ILoggerFactory loggerFactory;
     }
 }

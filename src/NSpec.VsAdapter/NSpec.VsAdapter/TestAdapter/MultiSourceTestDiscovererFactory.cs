@@ -1,5 +1,6 @@
 ﻿using NSpec.VsAdapter.Discovery;
 using NSpec.VsAdapter.Logging;
+using NSpec.VsAdapter.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +14,23 @@ namespace NSpec.VsAdapter.TestAdapter
         public MultiSourceTestDiscovererFactory(
             IBinaryTestDiscoverer binaryTestDiscoverer,
             ITestCaseMapper testCaseMapper,
+            ISettingsRepository settingsRepository,
             ILoggerFactory loggerFactory)
         {
             this.binaryTestDiscoverer = binaryTestDiscoverer;
             this.testCaseMapper = testCaseMapper;
+            this.settingsRepository = settingsRepository;
             this.loggerFactory = loggerFactory;
         }
 
         public IMultiSourceTestDiscoverer Create(IEnumerable<string> sources)
         {
-            return new MultiSourceTestDiscoverer(sources, binaryTestDiscoverer, testCaseMapper, loggerFactory);
+            return new MultiSourceTestDiscoverer(sources, binaryTestDiscoverer, testCaseMapper, settingsRepository, loggerFactory);
         }
 
         readonly IBinaryTestDiscoverer binaryTestDiscoverer;
         readonly ITestCaseMapper testCaseMapper;
+        readonly ISettingsRepository settingsRepository;
         readonly ILoggerFactory loggerFactory;
     }
 }

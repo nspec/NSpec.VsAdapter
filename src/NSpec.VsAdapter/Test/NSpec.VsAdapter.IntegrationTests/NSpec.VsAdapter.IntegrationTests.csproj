@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="DummyTestException.cs" />
+    <Compile Include="EmptySettingsContext.cs" />
     <Compile Include="Execution\CollectingFrameworkHandle.cs" />
     <Compile Include="TestData\ConfigSampleSpecsTestData.cs" />
     <Compile Include="Execution\when_executing_selected_tests.cs" />

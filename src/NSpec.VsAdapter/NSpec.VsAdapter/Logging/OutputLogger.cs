@@ -10,7 +10,7 @@ namespace NSpec.VsAdapter.Logging
 {
     public class OutputLogger : IOutputLogger
     {
-        public OutputLogger(IMessageLogger messageLogger, IAdapterInfo adapterInfo, ISettingsRepository settings)
+        public OutputLogger(IMessageLogger messageLogger, IAdapterInfo adapterInfo, IAdapterSettings settings)
         {
             this.MessageLogger = messageLogger;
 
@@ -27,9 +27,7 @@ namespace NSpec.VsAdapter.Logging
 
             const string defaultSetting = "info";
 
-            string textLogLevel = (settings.LogLevel != null ? settings.LogLevel : defaultSetting);
-
-            textLogLevel = textLogLevel.ToLower();
+            string textLogLevel = (settings.LogLevel != null ? settings.LogLevel.ToLower() : defaultSetting);
 
             minLogLevel = settingsToLogLevelMap.ContainsKey(textLogLevel) ?
                 settingsToLogLevelMap[textLogLevel] :

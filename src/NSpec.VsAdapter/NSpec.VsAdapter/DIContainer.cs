@@ -83,7 +83,7 @@ namespace NSpec.VsAdapter
             builder.RegisterType<AppDomainFactory>().As<IAppDomainFactory>().InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(MarshalingFactory<>)).As(typeof(IMarshalingFactory<>)).InstancePerLifetimeScope();
             builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
-            builder.RegisterType<JsonSettingsRepository>().As<ISettingsRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<SettingsRepository>().As<ISettingsRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();
         }
 

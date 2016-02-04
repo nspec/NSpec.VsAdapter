@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.TestAdapter
 {
+    // TODO rename to something like NSpecVsAdapterTestExecutor
+
     [ExtensionUri(Constants.ExecutorUriString)]
     public class NSpecTestExecutor : ITestExecutor, IDisposable
     {
@@ -32,14 +34,14 @@ namespace NSpec.VsAdapter.TestAdapter
         {
             multiSourceTestExecutor = multiSourceTestExecutorFactory.Create(sources);
 
-            multiSourceTestExecutor.RunTests(frameworkHandle);
+            multiSourceTestExecutor.RunTests(frameworkHandle, runContext);
         }
 
         public void RunTests(IEnumerable<TestCase> tests, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
             multiSourceTestExecutor = multiSourceTestExecutorFactory.Create(tests);
 
-            multiSourceTestExecutor.RunTests(frameworkHandle);
+            multiSourceTestExecutor.RunTests(frameworkHandle, runContext);
         }
 
         public void Cancel()

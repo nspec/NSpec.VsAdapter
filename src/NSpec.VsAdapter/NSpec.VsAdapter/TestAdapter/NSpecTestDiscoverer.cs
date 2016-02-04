@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.TestAdapter
 {
+    // TODO rename to something like NSpecVsAdapterTestDiscoverer
+
     [FileExtension(Constants.DllExtension)]
     [FileExtension(Constants.ExeExtension)]
     [DefaultExecutorUri(Constants.ExecutorUriString)]
@@ -39,7 +41,7 @@ namespace NSpec.VsAdapter.TestAdapter
         {
             var multiSourceTestDiscoverer = multiSourceTestDiscovererFactory.Create(sources);
 
-            multiSourceTestDiscoverer.DiscoverTests(discoverySink, logger);
+            multiSourceTestDiscoverer.DiscoverTests(discoverySink, logger, discoveryContext);
         }
 
         readonly IMultiSourceTestDiscovererFactory multiSourceTestDiscovererFactory;

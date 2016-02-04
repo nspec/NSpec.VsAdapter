@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using NSpec.VsAdapter.Execution;
 using NSpec.VsAdapter.Logging;
+using NSpec.VsAdapter.Settings;
 using NSpec.VsAdapter.TestAdapter;
 using NSubstitute;
 using NUnit.Framework;
@@ -26,6 +27,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         protected IBinaryTestExecutor binaryTestExecutor;
         protected IProgressRecorderFactory progressRecorderFactory;
         protected IProgressRecorder progressRecorder;
+        protected ISettingsRepository settingsRepository;
         protected ILoggerFactory loggerFactory;
         protected IOutputLogger outputLogger;
         protected IFrameworkHandle frameworkHandle;
@@ -50,13 +52,15 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             binaryTestExecutor = autoSubstitute.Resolve<IBinaryTestExecutor>();
 
-            outputLogger = autoSubstitute.Resolve<IOutputLogger>();
-            loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
-            loggerFactory.CreateOutput(Arg.Any<IMessageLogger>()).Returns(outputLogger);
-
             progressRecorder = autoSubstitute.Resolve<IProgressRecorder>();
             progressRecorderFactory = autoSubstitute.Resolve<IProgressRecorderFactory>();
             progressRecorderFactory.Create(frameworkHandle).Returns(progressRecorder);
+
+            settingsRepository = autoSubstitute.Resolve<ISettingsRepository>();
+
+            outputLogger = autoSubstitute.Resolve<IOutputLogger>();
+            loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
+            loggerFactory.CreateOutput(null, null).ReturnsForAnyArgs(outputLogger);
 
             actualSources = new List<string>();
 
@@ -93,9 +97,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     executedSources.Add(source);
                 });
 
-            executor = new MultiSourceTestExecutor(sources, binaryTestExecutor, progressRecorderFactory, loggerFactory);
+            executor = new MultiSourceTestExecutor(sources, binaryTestExecutor, progressRecorderFactory, settingsRepository, loggerFactory);
 
-            executor.RunTests(frameworkHandle);
+            executor.RunTests(frameworkHandle, autoSubstitute.Resolve<IRunContext>());
         }
 
         [Test]
@@ -227,9 +231,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     executedTests[source] = fullNames;
                 });
 
-            executor = new MultiSourceTestExecutor(testCases, binaryTestExecutor, progressRecorderFactory, loggerFactory);
+            executor = new MultiSourceTestExecutor(testCases, binaryTestExecutor, progressRecorderFactory, settingsRepository, loggerFactory);
 
-            executor.RunTests(frameworkHandle);
+            executor.RunTests(frameworkHandle, autoSubstitute.Resolve<IRunContext>());
         }
 
         [Test]

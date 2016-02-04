@@ -9,6 +9,6 @@ namespace NSpec.VsAdapter.TestAdapter
 {
     public interface IMultiSourceTestDiscoverer
     {
-        void DiscoverTests(ITestCaseDiscoverySink discoverySink, IMessageLogger messageLogger);
+        void DiscoverTests(ITestCaseDiscoverySink discoverySink, IMessageLogger messageLogger, IDiscoveryContext discoveryContext);
     }
 }

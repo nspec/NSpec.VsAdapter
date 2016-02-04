@@ -20,7 +20,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
 
         protected AutoSubstitute autoSubstitute;
         protected IMessageLogger messageLogger;
-        protected ISettingsRepository settingsRepo;
+        protected IAdapterSettings settings;
 
         protected const string someMessage = "whatever";
 
@@ -31,7 +31,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
 
             messageLogger = autoSubstitute.Resolve<IMessageLogger>();
 
-            settingsRepo = autoSubstitute.Resolve<ISettingsRepository>();
+            settings = autoSubstitute.Resolve<IAdapterSettings>();
         }
 
         [TearDown]
@@ -63,7 +63,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Trace");
+            settings.LogLevel.Returns("Trace");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -105,7 +105,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Debug");
+            settings.LogLevel.Returns("Debug");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -147,7 +147,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Info");
+            settings.LogLevel.Returns("Info");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -189,7 +189,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Warning");
+            settings.LogLevel.Returns("Warning");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -231,7 +231,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Error");
+            settings.LogLevel.Returns("Error");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -273,7 +273,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns((string)null);
+            settings.LogLevel.Returns((string)null);
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -285,7 +285,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns(String.Empty);
+            settings.LogLevel.Returns(String.Empty);
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }
@@ -297,7 +297,7 @@ namespace NSpec.VsAdapter.UnitTests.Logging
         {
             base.before_each();
 
-            settingsRepo.LogLevel.Returns("Unknown");
+            settings.LogLevel.Returns("Unknown");
 
             logger = autoSubstitute.Resolve<OutputLogger>();
         }

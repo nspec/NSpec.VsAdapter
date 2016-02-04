@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSpecs", "Config
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdHocConsoleRunner", "AdHocConsoleRunner\AdHocConsoleRunner.csproj", "{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{34F9A67E-68F1-4AAC-A3EE-272428AC7968}"
+	ProjectSection(SolutionItems) = preProject
+		SolutionItems\samples.runsettings = SolutionItems\samples.runsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

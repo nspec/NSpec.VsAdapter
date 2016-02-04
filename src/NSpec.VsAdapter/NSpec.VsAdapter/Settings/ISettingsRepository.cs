@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,6 @@ namespace NSpec.VsAdapter.Settings
 {
     public interface ISettingsRepository
     {
-        string BinaryPath { set; }
-
-        string LogLevel { get; }
+        IAdapterSettings Load(IDiscoveryContext discoveryContext);
     }
 }

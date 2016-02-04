@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using NSpec.VsAdapter.IntegrationTests.TestData;
+using NSpec.VsAdapter.Settings;
 using NSpec.VsAdapter.TestAdapter;
 using NUnit.Framework;
 using System;
@@ -29,7 +30,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Discovery
                 TestConstants.SampleSystemDllPath,
             };
 
-            IDiscoveryContext discoveryContext = null;
+            var discoveryContext = new EmptyDiscoveryContext();
 
             var consoleLogger = new ConsoleLogger();
 

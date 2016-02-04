@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using NSpec.VsAdapter.Discovery;
 using NSpec.VsAdapter.Logging;
+using NSpec.VsAdapter.Settings;
 using NSpec.VsAdapter.TestAdapter;
 using NSubstitute;
 using NUnit.Framework;
@@ -103,15 +104,17 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     return testCase;
                 });
 
+            var settingsRepository = autoSubstitute.Resolve<ISettingsRepository>();
+
             var messageLogger = autoSubstitute.Resolve<IMessageLogger>();
 
             outputLogger = autoSubstitute.Resolve<IOutputLogger>();
             var loggerFactory = autoSubstitute.Resolve<ILoggerFactory>();
-            loggerFactory.CreateOutput(Arg.Any<IMessageLogger>()).Returns(outputLogger);
+            loggerFactory.CreateOutput(messageLogger, Arg.Any<IAdapterSettings>()).Returns(outputLogger);
 
-            discoverer = new MultiSourceTestDiscoverer(sources, binaryTestDiscoverer, testCaseMapper, loggerFactory);
+            discoverer = new MultiSourceTestDiscoverer(sources, binaryTestDiscoverer, testCaseMapper, settingsRepository, loggerFactory);
 
-            discoverer.DiscoverTests(discoverySink, messageLogger);
+            discoverer.DiscoverTests(discoverySink, messageLogger, autoSubstitute.Resolve<IDiscoveryContext>());
         }
 
         [TearDown]

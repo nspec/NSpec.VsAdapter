@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using NSpec.VsAdapter.Execution;
 using NSpec.VsAdapter.Logging;
+using NSpec.VsAdapter.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,10 @@ namespace NSpec.VsAdapter.TestAdapter
     {
         public MultiSourceTestExecutor(IEnumerable<string> sources,
             IBinaryTestExecutor binaryTestExecutor, 
-            IProgressRecorderFactory progressRecorderFactory, 
+            IProgressRecorderFactory progressRecorderFactory,
+            ISettingsRepository settingsRepository,
             ILoggerFactory loggerFactory)
-            : this(binaryTestExecutor, progressRecorderFactory, loggerFactory)
+            : this(binaryTestExecutor, progressRecorderFactory, settingsRepository, loggerFactory)
         {
             this.testableItems = sources.Select(source => new SourceTestableItem(source));
 
@@ -25,9 +27,10 @@ namespace NSpec.VsAdapter.TestAdapter
 
         public MultiSourceTestExecutor(IEnumerable<TestCase> tests,
             IBinaryTestExecutor binaryTestExecutor, 
-            IProgressRecorderFactory progressRecorderFactory, 
+            IProgressRecorderFactory progressRecorderFactory,
+            ISettingsRepository settingsRepository,
             ILoggerFactory loggerFactory)
-            : this(binaryTestExecutor, progressRecorderFactory, loggerFactory)
+            : this(binaryTestExecutor, progressRecorderFactory, settingsRepository, loggerFactory)
         {
             var testCaseGroupsBySource = tests.GroupBy(t => t.Source);
 
@@ -40,20 +43,21 @@ namespace NSpec.VsAdapter.TestAdapter
 
         MultiSourceTestExecutor(
             IBinaryTestExecutor binaryTestExecutor, 
-            IProgressRecorderFactory progressRecorderFactory, 
+            IProgressRecorderFactory progressRecorderFactory,
+            ISettingsRepository settingsRepository,
             ILoggerFactory loggerFactory)
         {
             this.binaryTestExecutor = binaryTestExecutor;
             this.progressRecorderFactory = progressRecorderFactory;
+            this.settingsRepository = settingsRepository;
             this.loggerFactory = loggerFactory;
         }
 
-        public void RunTests(IFrameworkHandle frameworkHandle)
+        public void RunTests(IFrameworkHandle frameworkHandle, IRunContext runContext)
         {
-            // TODO logger depends on settings, but settings change with binary source path
-            // probably move settings from c'tor dependency to property dependency on logger
+            var settings = settingsRepository.Load(runContext);
 
-            var outputLogger = loggerFactory.CreateOutput(frameworkHandle);
+            var outputLogger = loggerFactory.CreateOutput(frameworkHandle, settings);
 
             outputLogger.Info(String.Format("Execution by {0} started", sourceDescription));
 
@@ -89,6 +93,7 @@ namespace NSpec.VsAdapter.TestAdapter
         readonly string sourceDescription;
         readonly IBinaryTestExecutor binaryTestExecutor;
         readonly IProgressRecorderFactory progressRecorderFactory;
+        readonly ISettingsRepository settingsRepository;
         readonly ILoggerFactory loggerFactory;
 
         interface ITestableItem

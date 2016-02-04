@@ -10,18 +10,16 @@ namespace NSpec.VsAdapter.Logging
 {
     public class LoggerFactory : ILoggerFactory
     {
-        public LoggerFactory(IAdapterInfo adapterInfo, ISettingsRepository settings)
+        public LoggerFactory(IAdapterInfo adapterInfo)
         {
             this.adapterInfo = adapterInfo;
-            this.settings = settings;
         }
 
-        public IOutputLogger CreateOutput(IMessageLogger messageLogger)
+        public IOutputLogger CreateOutput(IMessageLogger messageLogger, IAdapterSettings settings)
         {
             return new OutputLogger(messageLogger, adapterInfo, settings);
         }
 
         readonly IAdapterInfo adapterInfo;
-        readonly ISettingsRepository settings;
     }
 }

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+  <!-- Parameters used by tests at runtime -->
+  <TestRunParameters>
+    <Parameter name="webAppUrl" value="http://localhost" />
+    <Parameter name="webAppUserName" value="Admin" />
+    <Parameter name="webAppPassword" value="Password" />
+  </TestRunParameters>
+
+  <!-- Adapter Specific sections -->
+
+  <!-- NSpec VS Adapter -->
+  <NSpec.VsAdapter>
+    <LogLevel>Debug</LogLevel>
+  </NSpec.VsAdapter>
+
+</RunSettings>
