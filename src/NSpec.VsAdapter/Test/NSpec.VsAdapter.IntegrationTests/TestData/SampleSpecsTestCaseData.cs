@@ -113,6 +113,34 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                 },
                             }
                         },
+                        {
+                            "method_context_5. sub context 5-1",
+                            new Dictionary<string, TestCase>()
+                            {
+                                {
+                                    "child example 5-1A",
+                                    new TestCase(
+                                        "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A.", 
+                                        Constants.ExecutorUri, specAssemblyPath)
+                                    {
+                                        DisplayName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A.", 
+                                        CodeFilePath = sourceCodeFilePath,
+                                        LineNumber = 48,
+                                    }
+                                },
+                                {
+                                    "child example 5-1B",
+                                    new TestCase(
+                                        "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.", 
+                                        Constants.ExecutorUri, specAssemblyPath)
+                                    {
+                                        DisplayName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.", 
+                                        CodeFilePath = sourceCodeFilePath,
+                                        LineNumber = 50,
+                                    }
+                                },
+                            }
+                        },
                     }
                 },
             };

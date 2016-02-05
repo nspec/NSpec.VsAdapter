@@ -37,7 +37,7 @@ namespace NSpec.VsAdapter.Execution
 
             var executionReporter = new ExecutionReporter(progressRecorder, executedExampleMapper);
 
-            var contextExecutor = new ContextExecutor(executionReporter);
+            var contextExecutor = new ContextExecutor(executionReporter, logger);
 
             int count = contextExecutor.Execute(runnableContexts);
 

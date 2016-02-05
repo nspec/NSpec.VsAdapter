@@ -19,11 +19,11 @@ namespace NSpec.VsAdapter.Common
 
             var contextBuilder = new ContextBuilder(finder, conventions);
 
-            var contexts = contextBuilder.Contexts();
+            var contextCollection = contextBuilder.Contexts();
 
-            contexts.Build();
+            contextCollection.Build();
 
-            return contexts;
+            return contextCollection;
         }
     }
 }

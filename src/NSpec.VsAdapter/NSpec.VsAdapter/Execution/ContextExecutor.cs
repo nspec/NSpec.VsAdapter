@@ -1,5 +1,6 @@
 ﻿using NSpec.Domain;
 using NSpec.Domain.Formatters;
+using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +10,35 @@ namespace NSpec.VsAdapter.Execution
 {
     public class ContextExecutor
     {
-        public ContextExecutor(ILiveFormatter executionReporter)
+        public ContextExecutor(ILiveFormatter executionReporter, ICrossDomainLogger logger)
         {
             this.executionReporter = executionReporter;
+            this.logger = logger;
         }
 
-        public int Execute(IEnumerable<Context> contextsToRun)
+        public int Execute(IEnumerable<RunnableContext> runnableContexts)
         {
-            // TODO implement execution cancel
+            // TODO implement execution canceling
 
-            int count = 0;
+            int totalExamplecount = 0;
 
-            foreach (var context in contextsToRun)
+            foreach (var runnableContext in runnableContexts)
             {
-                context.Run(executionReporter, false);
+                logger.Debug(String.Format("Start executing tests in context '{0}'", runnableContext.Name));
 
-                context.AssignExceptions();
+                runnableContext.Run(executionReporter);
 
-                count += context.AllExamples().Count();
+                int contextExampleCount = runnableContext.ExampleCount;
+
+                logger.Debug(String.Format("Done executing {0} tests in context '{1}'", contextExampleCount, runnableContext.Name));
+
+                totalExamplecount += contextExampleCount;
             }
 
-            return count;
+            return totalExamplecount;
         }
 
         readonly ILiveFormatter executionReporter;
+        readonly ICrossDomainLogger logger;
     }
 }

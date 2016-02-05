@@ -56,6 +56,13 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             };
 
             someContextCollection = new ContextCollection(someContexts);
+
+            var dummyInstance = new nspec();
+
+            foreach (var ctx in someContextCollection)
+            {
+                ctx.Build(dummyInstance);
+            }
         }
 
         [SetUp]
@@ -82,9 +89,11 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         [Test]
         public void it_should_return_all_contexts()
         {
-            var actualContexts = runnableContextFinder.Find(somePath, RunnableContextFinder.RunAll);
+            var expected = someContexts.Select(ctx => new RunnableContext(ctx));
 
-            actualContexts.ShouldBeEquivalentTo(someContexts);
+            var actual = runnableContextFinder.Find(somePath, RunnableContextFinder.RunAll);
+
+            actual.ShouldBeEquivalentTo(expected);
         }
     }
 
@@ -106,9 +115,11 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 someContexts[2],
             };
 
-            var actualContexts = runnableContextFinder.Find(somePath, exampleNames);
+            var expected = expectedContexts.Select(ctx => new SelectedRunnableContext(ctx));
 
-            actualContexts.ShouldBeEquivalentTo(expectedContexts);
+            var actual = runnableContextFinder.Find(somePath, exampleNames);
+
+            actual.ShouldBeEquivalentTo(expected);
         }
     }
 
@@ -148,9 +159,11 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 someContexts[2],
             };
 
-            var actualContexts = runnableContextFinder.Find(somePath, exampleNames);
+            var expected = expectedContexts.Select(ctx => new SelectedRunnableContext(ctx));
 
-            actualContexts.ShouldBeEquivalentTo(expectedContexts);
+            var actual = runnableContextFinder.Find(somePath, exampleNames);
+
+            actual.ShouldBeEquivalentTo(expected);
         }
     }
 }

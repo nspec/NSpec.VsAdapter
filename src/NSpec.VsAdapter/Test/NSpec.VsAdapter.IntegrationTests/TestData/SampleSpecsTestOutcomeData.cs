@@ -35,6 +35,14 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     "nspec. ParentSpec. ChildSpec. method context 4. child example 4A.", 
                     TestOutcome.Passed
                 },
+                {
+                    "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A.", 
+                    TestOutcome.Passed
+                },
+                {
+                    "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.", 
+                    TestOutcome.Passed
+                },
             };
         }
     }

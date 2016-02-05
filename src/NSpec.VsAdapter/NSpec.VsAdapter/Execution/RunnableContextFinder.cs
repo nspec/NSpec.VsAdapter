@@ -22,24 +22,32 @@ namespace NSpec.VsAdapter.Execution
             this.contextFinder = contextFinder;
         }
 
-        public IEnumerable<Context> Find(string binaryPath, string[] exampleFullNames)
+        public IEnumerable<RunnableContext> Find(string binaryPath, string[] exampleFullNames)
         {
             var contextCollection = contextFinder.BuildContextCollection(binaryPath);
 
+            IEnumerable<RunnableContext> runnableContexts;
+
             if (exampleFullNames == RunAll)
             {
-                return (IEnumerable<Context>)contextCollection;
+                IEnumerable<Context> allContexts = contextCollection;
+
+                runnableContexts = allContexts.Select(ctx => new RunnableContext(ctx));
             }
+            else
+            {
+                // original idea taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Executor.cs
 
-            // original idea taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Executor.cs
+                var allExamples = contextCollection.SelectMany(ctx => ctx.AllExamples());
 
-            var allExamples = contextCollection.SelectMany(ctx => ctx.AllExamples());
+                var selectedNames = new HashSet<string>(exampleFullNames);
 
-            var selectedNames = new HashSet<string>(exampleFullNames);
+                var selectedExamples = allExamples.Where(exm => selectedNames.Contains(exm.FullName()));
 
-            var runnableExamples = allExamples.Where(exm => selectedNames.Contains(exm.FullName()));
+                var selectedContexts = selectedExamples.Select(exm => exm.Context).Distinct();
 
-            var runnableContexts = runnableExamples.Select(exm => exm.Context).Distinct();
+                runnableContexts = selectedContexts.Select(ctx => new SelectedRunnableContext(ctx));
+            }
 
             return runnableContexts;
         }

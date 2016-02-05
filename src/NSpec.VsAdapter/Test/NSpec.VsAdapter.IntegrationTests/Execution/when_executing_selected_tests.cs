@@ -19,12 +19,15 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         {
             selectedTestCases = new TestCase[]
             {
-                // this is example sits in a context with another example, that should be executed as well
+                // this example sits in a context with another sibling example, that should be executed as well
                 SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. method context 1. parent example 1B."],
 
                 SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. method context 2. parent example 2A."],
 
                 SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped."],
+
+                // this example sits in a sub-context, within a method context, and with another sibling example
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A."],
             };
 
             runningTestCases = new TestCase[]
@@ -35,6 +38,9 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
                 SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. method context 2. parent example 2A."],
 
                 SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped."],
+
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A."],
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B."],
             };
         }
 
