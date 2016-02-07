@@ -11,11 +11,20 @@ namespace NSpec.VsAdapter.Settings
     {
         public IAdapterSettings Load(IDiscoveryContext discoveryContext)
         {
-            // TODO test that SettingsRepository.Load does not throw when GetSettings throws
+            IAdapterSettingsProvider settingsProvider;
 
-            var settingsProvider = discoveryContext.RunSettings.GetSettings(AdapterSettings.RunSettingsXmlNode) as AdapterSettingsProvider;
+            try
+            {
+                settingsProvider = discoveryContext.RunSettings.GetSettings(AdapterSettings.RunSettingsXmlNode) as IAdapterSettingsProvider;
+            }
+            catch (Exception)
+            {
+                // Swallow exception, probably cannot even log at this time
 
-            var settings = (settingsProvider != null ?  settingsProvider.Settings : new AdapterSettings());
+                settingsProvider = null;
+            }
+
+            var settings = (settingsProvider != null ? settingsProvider.Settings : new AdapterSettings());
 
             return settings;
         }

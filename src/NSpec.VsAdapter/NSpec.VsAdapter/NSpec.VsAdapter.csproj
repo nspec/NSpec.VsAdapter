@@ -143,6 +143,7 @@
     <Compile Include="Logging\ExceptionLogInfo.cs" />
     <Compile Include="Settings\AdapterSettingsProvider.cs" />
     <Compile Include="Settings\IAdapterSettings.cs" />
+    <Compile Include="Settings\IAdapterSettingsProvider.cs" />
     <Compile Include="Settings\ISettingsRepository.cs" />
     <Compile Include="Settings\AdapterSettings.cs" />
     <Compile Include="Settings\SettingsRepository.cs" />
