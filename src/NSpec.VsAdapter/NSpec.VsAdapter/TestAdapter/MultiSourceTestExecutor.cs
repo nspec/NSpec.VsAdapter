@@ -37,8 +37,6 @@ namespace NSpec.VsAdapter.TestAdapter
             this.testableItems = testCaseGroupsBySource.Select(group => new TestCaseGroupTestableItem(group));
 
             this.sourceDescription = "TestCases";
-
-            this.isCanceled = false;
         }
 
         MultiSourceTestExecutor(
@@ -51,6 +49,8 @@ namespace NSpec.VsAdapter.TestAdapter
             this.progressRecorderFactory = progressRecorderFactory;
             this.settingsRepository = settingsRepository;
             this.loggerFactory = loggerFactory;
+
+            this.isCanceled = false;
         }
 
         public void RunTests(IFrameworkHandle frameworkHandle, IRunContext runContext)
@@ -74,6 +74,8 @@ namespace NSpec.VsAdapter.TestAdapter
                     }
 
                     progressRecorder.BinaryPath = item.BinaryPath;
+
+                    // TODO pass canceler to ITestableItem.Execute
 
                     item.Execute(binaryTestExecutor, progressRecorder, outputLogger, crossDomainLogger);
                 }
@@ -120,6 +122,8 @@ namespace NSpec.VsAdapter.TestAdapter
                 IProgressRecorder progressRecorder,
                 IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger)
             {
+                // TODO pass canceler to binaryTestExecutor.Execute
+
                 binaryTestExecutor.Execute(BinaryPath, progressRecorder, outputLogger, crossDomainLogger);
             }
 
@@ -141,6 +145,8 @@ namespace NSpec.VsAdapter.TestAdapter
                 IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger)
             {
                 var testCaseFullNames = testCaseGroup.Select(tc => tc.FullyQualifiedName);
+
+                // TODO pass canceler to binaryTestExecutor.Execute
 
                 binaryTestExecutor.Execute(BinaryPath, testCaseFullNames, progressRecorder, outputLogger, crossDomainLogger);
             }

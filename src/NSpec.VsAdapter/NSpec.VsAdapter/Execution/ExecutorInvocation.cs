@@ -27,6 +27,8 @@ namespace NSpec.VsAdapter.Execution
 
         public int Execute()
         {
+            // TODO pass canceler to ContextExecutor ctor
+
             logger.Debug(String.Format("Start executing tests in '{0}'", binaryPath));
 
             var runnableContextFinder = new RunnableContextFinder();

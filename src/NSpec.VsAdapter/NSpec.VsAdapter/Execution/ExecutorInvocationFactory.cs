@@ -9,6 +9,8 @@ namespace NSpec.VsAdapter.Execution
 {
     public class ExecutorInvocationFactory : IExecutorInvocationFactory
     {
+        // TODO pass canceler to ExecutorInvocation ctor
+
         public IExecutorInvocation Create(string binaryPath, 
             IProgressRecorder progressRecorder, ICrossDomainLogger logger)
         {
