@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.TestAdapter
 {
-    // TODO rename to something like NSpecVsAdapterTestExecutor
-
     [ExtensionUri(Constants.ExecutorUriString)]
     public class NSpecTestExecutor : ITestExecutor, IDisposable
     {

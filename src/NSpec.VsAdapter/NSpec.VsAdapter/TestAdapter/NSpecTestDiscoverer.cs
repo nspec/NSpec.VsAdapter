@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.TestAdapter
 {
-    // TODO rename to something like NSpecVsAdapterTestDiscoverer
-
     [FileExtension(Constants.DllExtension)]
     [FileExtension(Constants.ExeExtension)]
     [DefaultExecutorUri(Constants.ExecutorUriString)]
