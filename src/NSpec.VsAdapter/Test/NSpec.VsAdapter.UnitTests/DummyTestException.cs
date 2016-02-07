@@ -8,5 +8,8 @@ namespace NSpec.VsAdapter.UnitTests
 {
     class DummyTestException : ApplicationException
     {
+        public DummyTestException() : base() { }
+
+        public DummyTestException(string message) : base(message) { }
     }
 }

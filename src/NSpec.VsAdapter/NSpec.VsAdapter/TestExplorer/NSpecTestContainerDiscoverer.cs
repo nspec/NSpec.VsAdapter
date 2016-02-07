@@ -14,7 +14,8 @@ namespace NSpec.VsAdapter.TestExplorer
 {
     public class NSpecTestContainerDiscoverer : ITestContainerDiscoverer, IDisposable
     {
-        // used by Visual Studio test infrastructure, by integration tests
+        // Visual Studio test infrastructure requires a default constructor
+        // Integration tests use this as well
         public NSpecTestContainerDiscoverer()
         {
             var scope = DIContainer.Instance.BeginScope();
@@ -27,7 +28,7 @@ namespace NSpec.VsAdapter.TestExplorer
             Initialize(testBinaryNotifier, containerFactory);
         }
 
-        // used by unit tests
+        // Unit tests need a constructor with injected dependencies
         public NSpecTestContainerDiscoverer(
             ITestBinaryNotifier testBinaryNotifier, 
             ITestContainerFactory containerFactory)

@@ -10,13 +10,14 @@ namespace NSpec.VsAdapter.Execution
 {
     public class RunnableContextFinder
     {
-        // used by Visual Studio test infrastructure, by integration tests
+        // Visual Studio test infrastructure requires a default constructor
+        // Integration tests use this as well
         public RunnableContextFinder()
             : this(new ContextFinder())
         {
         }
 
-        // used by unit tests
+        // Unit tests need a constructor with injected dependencies
         public RunnableContextFinder(IContextFinder contextFinder)
         {
             this.contextFinder = contextFinder;

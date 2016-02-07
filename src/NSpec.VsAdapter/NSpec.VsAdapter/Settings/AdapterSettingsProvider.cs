@@ -13,26 +13,48 @@ namespace NSpec.VsAdapter.Settings
     [SettingsName(AdapterSettings.RunSettingsXmlNode)]
     public class AdapterSettingsProvider : ISettingsProvider
     {
+        // Visual Studio test infrastructure requires a default constructor
         public AdapterSettingsProvider()
+            : this(new XmlSerializer(typeof(AdapterSettings)))
+        {
+        }
+
+        // Unit tests need a constructor with injected dependencies
+        public AdapterSettingsProvider(XmlSerializer serializer)
         {
             // initialize default settings, if requested before load
             Settings = new AdapterSettings();
 
-            serializer = new XmlSerializer(typeof(AdapterSettings));
+            this.serializer = serializer;
         }
 
         public AdapterSettings Settings { get; private set; }
 
         public void Load(XmlReader reader)
         {
-            // TODO test that AdapterSettingsProvider.Load does not throw when deserialize fails
-
-            ValidateArg.NotNull(reader, "reader");
-
-            if (reader.Read() && reader.Name == AdapterSettings.RunSettingsXmlNode)
+            if (reader == null)
             {
-                // store settings locally
-                Settings = serializer.Deserialize(reader) as AdapterSettings;
+                Settings = new AdapterSettings();
+                return;
+            }
+
+            try
+            {
+                if (reader.Read() && reader.Name == AdapterSettings.RunSettingsXmlNode)
+                {
+                    // store settings locally
+                    Settings = serializer.Deserialize(reader) as AdapterSettings;
+                }
+                else
+                {
+                    Settings = new AdapterSettings();
+                }
+            }
+            catch (Exception)
+            {
+                // Swallow exception, probably cannot even log at this time
+
+                Settings = new AdapterSettings();
             }
         }
 
