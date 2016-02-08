@@ -29,8 +29,6 @@ Currently supported settings are:
 | Name | Type | Values | Description |
 |----------|--------|---------------------------------|-----------------------------------------------------------------------------------------|
 | LogLevel | String | Trace, Debug, Info, Warn, Error | Minimum log level to show. Log messages with a level lower than this will not be shown. |
-|  |  |  |  |
-|  |  |  |  |
 
 An example of such a file can be found in test source code at [src/NSpec.VsAdapter/Test/Samples/SolutionItems/samples.runsettings](https://github.com/BrainCrumbz/NSpec.VsAdapter/blob/master/src/NSpec.VsAdapter/Test/Samples/SolutionItems/samples.runsettings)
 
