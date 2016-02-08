@@ -4,7 +4,13 @@ A test adapter to run NSpec tests from Test Explorer in Visual Studio 2013 and l
 
 ## Project status 
 
-This project is currently in early stage of development.
+This project is currently in early stage of development. It has been tried against real-life projects, but it might not be ready yet to be used as your *one and only* NSpec test runner.
+
+## Setup
+
+Download VSIX extension file from [Releases page](https://github.com/BrainCrumbz/NSpec.VsAdapter/releases), picking the most recent version available. For regular usage, downloading `NSpec.VsAdapter.Release.vsix` version is fine. Double click on VSIX file to install it in your Visual Studio environment. That's it.
+
+Alternatively, if you want to notify issues you found while running tests, you could try downloading the debug version  `NSpec.VsAdapter.Debug.vsix` or go the full route and [run adapter from its source code](https://github.com/BrainCrumbz/NSpec.VsAdapter#contributing).
 
 ## Configuration
 
