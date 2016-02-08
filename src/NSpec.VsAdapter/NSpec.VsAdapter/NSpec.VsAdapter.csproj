@@ -92,6 +92,7 @@
     <Compile Include="Execution\ExecutedExample.cs" />
     <Compile Include="Execution\ExecutedExampleMapper.cs" />
     <Compile Include="Execution\IExecutedExampleMapper.cs" />
+    <Compile Include="Execution\IExecutionCanceler.cs" />
     <Compile Include="Execution\ProgressRecorder.cs" />
     <Compile Include="Execution\ProgressRecorderFactory.cs" />
     <Compile Include="Execution\ExecutionReporter.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Settings\ISettingsRepository.cs" />
     <Compile Include="Settings\AdapterSettings.cs" />
     <Compile Include="Settings\SettingsRepository.cs" />
+    <Compile Include="Execution\ExecutionCanceler.cs" />
     <Compile Include="TestAdapter\IMultiSourceTestDiscoverer.cs" />
     <Compile Include="TestAdapter\IMultiSourceTestExecutor.cs" />
     <Compile Include="TestAdapter\IMultiSourceTestDiscovererFactory.cs" />

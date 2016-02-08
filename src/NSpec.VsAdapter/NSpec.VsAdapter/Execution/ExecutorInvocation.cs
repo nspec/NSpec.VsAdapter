@@ -11,24 +11,27 @@ namespace NSpec.VsAdapter.Execution
     public class ExecutorInvocation : IExecutorInvocation
     {
         public ExecutorInvocation(string binaryPath, 
-            IProgressRecorder progressRecorder, ICrossDomainLogger logger)
-            : this(binaryPath, RunnableContextFinder.RunAll, progressRecorder, logger)
+            IProgressRecorder progressRecorder, 
+            IExecutionCanceler canceler,
+            ICrossDomainLogger logger)
+            : this(binaryPath, RunnableContextFinder.RunAll, progressRecorder, canceler, logger)
         {
         }
 
-        public ExecutorInvocation(string binaryPath, string[] exampleFullNames, 
-            IProgressRecorder progressRecorder, ICrossDomainLogger logger)
+        public ExecutorInvocation(string binaryPath, string[] exampleFullNames,
+            IProgressRecorder progressRecorder, 
+            IExecutionCanceler canceler, 
+            ICrossDomainLogger logger)
         {
             this.binaryPath = binaryPath;
             this.exampleFullNames = exampleFullNames;
             this.progressRecorder = progressRecorder;
+            this.canceler = canceler;
             this.logger = logger;
         }
 
         public int Execute()
         {
-            // TODO pass canceler to ContextExecutor ctor
-
             logger.Debug(String.Format("Start executing tests in '{0}'", binaryPath));
 
             var runnableContextFinder = new RunnableContextFinder();
@@ -39,7 +42,7 @@ namespace NSpec.VsAdapter.Execution
 
             var executionReporter = new ExecutionReporter(progressRecorder, executedExampleMapper);
 
-            var contextExecutor = new ContextExecutor(executionReporter, logger);
+            var contextExecutor = new ContextExecutor(executionReporter, canceler, logger);
 
             int count = contextExecutor.Execute(runnableContexts);
 
@@ -51,6 +54,7 @@ namespace NSpec.VsAdapter.Execution
         readonly string binaryPath;
         readonly string[] exampleFullNames;
         readonly IProgressRecorder progressRecorder;
+        readonly IExecutionCanceler canceler;
         readonly ICrossDomainLogger logger;
     }
 }

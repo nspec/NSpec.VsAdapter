@@ -10,20 +10,24 @@ namespace NSpec.VsAdapter.Execution
 {
     public class ContextExecutor
     {
-        public ContextExecutor(ILiveFormatter executionReporter, ICrossDomainLogger logger)
+        public ContextExecutor(ILiveFormatter executionReporter, IExecutionCanceler canceler, ICrossDomainLogger logger)
         {
             this.executionReporter = executionReporter;
+            this.canceler = canceler;
             this.logger = logger;
         }
 
-        public int Execute(IEnumerable<RunnableContext> runnableContexts)
+        public int Execute(IEnumerable<IRunnableContext> runnableContexts)
         {
-            // TODO implement execution canceling
-
             int totalExamplecount = 0;
 
             foreach (var runnableContext in runnableContexts)
             {
+                if (canceler.IsCanceled)
+                {
+                    break;
+                }
+
                 logger.Debug(String.Format("Start executing tests in context '{0}'", runnableContext.Name));
 
                 runnableContext.Run(executionReporter);
@@ -39,6 +43,7 @@ namespace NSpec.VsAdapter.Execution
         }
 
         readonly ILiveFormatter executionReporter;
+        readonly IExecutionCanceler canceler;
         readonly ICrossDomainLogger logger;
     }
 }

@@ -63,6 +63,8 @@ namespace NSpec.VsAdapter.TestAdapter
 
             isCanceled = false;
 
+            canceler = new ExecutionCanceler(false);
+
             using (var progressRecorder = progressRecorderFactory.Create((ITestExecutionRecorder)frameworkHandle))
             using (var crossDomainLogger = new CrossDomainLogger(outputLogger))
             {
@@ -75,9 +77,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
                     progressRecorder.BinaryPath = item.BinaryPath;
 
-                    // TODO pass canceler to ITestableItem.Execute
-
-                    item.Execute(binaryTestExecutor, progressRecorder, outputLogger, crossDomainLogger);
+                    item.Execute(binaryTestExecutor, progressRecorder, canceler, outputLogger, crossDomainLogger);
                 }
             }
 
@@ -87,9 +87,15 @@ namespace NSpec.VsAdapter.TestAdapter
         public void CancelRun()
         {
             isCanceled = true;
+
+            if (canceler != null)
+            {
+                canceler.CancelRun();
+            }
         }
 
         bool isCanceled;
+        ExecutionCanceler canceler;
 
         readonly IEnumerable<ITestableItem> testableItems;
         readonly string sourceDescription;
@@ -104,7 +110,8 @@ namespace NSpec.VsAdapter.TestAdapter
 
             void Execute(
                 IBinaryTestExecutor binaryTestExecutor,
-                IProgressRecorder progressRecorder,
+                IProgressRecorder progressRecorder, 
+                IExecutionCanceler canceler,
                 IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger);
         }
 
@@ -119,12 +126,12 @@ namespace NSpec.VsAdapter.TestAdapter
 
             public void Execute(
                 IBinaryTestExecutor binaryTestExecutor,
-                IProgressRecorder progressRecorder,
+                IProgressRecorder progressRecorder, 
+                IExecutionCanceler canceler,
                 IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger)
             {
-                // TODO pass canceler to binaryTestExecutor.Execute
-
-                binaryTestExecutor.Execute(BinaryPath, progressRecorder, outputLogger, crossDomainLogger);
+                binaryTestExecutor.Execute(BinaryPath, 
+                    progressRecorder, canceler, outputLogger, crossDomainLogger);
             }
 
             readonly string source;
@@ -141,14 +148,14 @@ namespace NSpec.VsAdapter.TestAdapter
 
             public void Execute(
                 IBinaryTestExecutor binaryTestExecutor,
-                IProgressRecorder progressRecorder,
+                IProgressRecorder progressRecorder, 
+                IExecutionCanceler canceler,
                 IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger)
             {
                 var testCaseFullNames = testCaseGroup.Select(tc => tc.FullyQualifiedName);
 
-                // TODO pass canceler to binaryTestExecutor.Execute
-
-                binaryTestExecutor.Execute(BinaryPath, testCaseFullNames, progressRecorder, outputLogger, crossDomainLogger);
+                binaryTestExecutor.Execute(BinaryPath, testCaseFullNames, 
+                    progressRecorder, canceler, outputLogger, crossDomainLogger);
             }
 
             readonly IGrouping<string, TestCase> testCaseGroup;

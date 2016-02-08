@@ -113,6 +113,7 @@
     <Compile Include="Discovery\DiscoveredExampleMapper_desc.cs" />
     <Compile Include="DummyTestException.cs" />
     <Compile Include="Execution\BinaryTestExecutor_desc.cs" />
+    <Compile Include="Execution\ContextExecutor_desc.cs" />
     <Compile Include="Execution\CrossDomainExecutor_desc.cs" />
     <Compile Include="Execution\ExecutedExampleMapper_desc.cs" />
     <Compile Include="Execution\ExecutionReporter_desc.cs" />

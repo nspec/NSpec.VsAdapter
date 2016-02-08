@@ -8,16 +8,25 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public class RunnableContext
+    public interface IRunnableContext
+    {
+        string Name { get; }
+
+        int ExampleCount { get; }
+
+        void Run(ILiveFormatter formatter);
+    }
+
+    public class RunnableContext : IRunnableContext
     {
         public RunnableContext(Context context)
         {
             this.context = context;
         }
 
-        public string Name { get { return context.Name; } }
+        public virtual string Name { get { return context.Name; } }
 
-        public int ExampleCount { get { return context.AllExamples().Count(); } }
+        public virtual int ExampleCount { get { return context.AllExamples().Count(); } }
 
         public virtual void Run(ILiveFormatter formatter)
         {
@@ -29,7 +38,7 @@ namespace NSpec.VsAdapter.Execution
         protected readonly Context context;
     }
 
-    public class SelectedRunnableContext : RunnableContext
+    public class SelectedRunnableContext : RunnableContext, IRunnableContext
     {
         public SelectedRunnableContext(Context context)
             : base(context)

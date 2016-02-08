@@ -9,12 +9,12 @@ namespace NSpec.VsAdapter.Execution
 {
     public interface IBinaryTestExecutor
     {
-        int Execute(string binaryPath, 
-            IProgressRecorder progressRecorder, 
+        int Execute(string binaryPath,
+            IProgressRecorder progressRecorder, IExecutionCanceler canceler, 
             IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger);
 
-        int Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
-            IProgressRecorder progressRecorder,
+        int Execute(string binaryPath, IEnumerable<string> testCaseFullNames,
+            IProgressRecorder progressRecorder, IExecutionCanceler canceler,
             IOutputLogger outputLogger, ICrossDomainLogger crossDomainLogger);
     }
 }

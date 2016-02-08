@@ -23,6 +23,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         protected IExecutorInvocationFactory executorInvocationFactory;
         protected IExecutorInvocation executorInvocation;
         protected IProgressRecorder progressRecorder;
+        protected IExecutionCanceler canceler;
         protected IOutputLogger logger;
         protected ICrossDomainLogger crossDomainLogger;
         protected int actualCount;
@@ -44,6 +45,8 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             executorInvocation = autoSubstitute.Resolve<IExecutorInvocation>();
 
             progressRecorder = autoSubstitute.Resolve<IProgressRecorder>();
+            canceler = autoSubstitute.Resolve<IExecutionCanceler>();
+
             logger = autoSubstitute.Resolve<IOutputLogger>();
             crossDomainLogger = autoSubstitute.Resolve<ICrossDomainLogger>();
 
@@ -64,14 +67,14 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             base.before_each();
 
             executorInvocationFactory
-                .Create(somePath, progressRecorder, Arg.Any<ICrossDomainLogger>())
+                .Create(somePath, progressRecorder, canceler, Arg.Any<ICrossDomainLogger>())
                 .Returns(executorInvocation);
         }
 
         [Test]
         public void it_should_request_invocation_by_source()
         {
-            executorInvocationFactory.Received().Create(somePath, progressRecorder, Arg.Any<ICrossDomainLogger>());
+            executorInvocationFactory.Received().Create(somePath, progressRecorder, canceler, Arg.Any<ICrossDomainLogger>());
         }
     }
 
@@ -85,7 +88,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
 
-            actualCount = executor.Execute(somePath, progressRecorder, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, progressRecorder, canceler, logger, crossDomainLogger);
         }
 
         [Test]
@@ -106,7 +109,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            actualCount = executor.Execute(somePath, progressRecorder, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, progressRecorder, canceler, logger, crossDomainLogger);
         }
 
         [Test]
@@ -129,14 +132,17 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             base.before_each();
 
             executorInvocationFactory
-                .Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), progressRecorder, Arg.Any<ICrossDomainLogger>())
+                .Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), 
+                progressRecorder, canceler, Arg.Any<ICrossDomainLogger>())
                 .Returns(executorInvocation);
         }
 
         [Test]
         public void it_should_request_invocation_by_testcase()
         {
-            executorInvocationFactory.Received().Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)), progressRecorder, Arg.Any<ICrossDomainLogger>());
+            executorInvocationFactory.Received()
+                .Create(somePath, Arg.Is<string[]>(names => names.SequenceEqual(testCaseFullNames)),
+                progressRecorder, canceler, Arg.Any<ICrossDomainLogger>());
         }
     }
 
@@ -150,7 +156,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
             crossDomainExecutor.Run(somePath, executorInvocation.Execute).Returns(expectedCount);
 
-            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, canceler, logger, crossDomainLogger);
         }
 
         [Test]
@@ -171,7 +177,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 throw new DummyTestException();
             });
 
-            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, logger, crossDomainLogger);
+            actualCount = executor.Execute(somePath, testCaseFullNames, progressRecorder, canceler, logger, crossDomainLogger);
         }
 
         [Test]

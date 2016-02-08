@@ -11,16 +11,16 @@ namespace NSpec.VsAdapter.Execution
     {
         // TODO pass canceler to ExecutorInvocation ctor
 
-        public IExecutorInvocation Create(string binaryPath, 
-            IProgressRecorder progressRecorder, ICrossDomainLogger logger)
+        public IExecutorInvocation Create(string binaryPath,
+            IProgressRecorder progressRecorder, IExecutionCanceler canceler, ICrossDomainLogger logger)
         {
-            return new ExecutorInvocation(binaryPath, progressRecorder, logger);
+            return new ExecutorInvocation(binaryPath, progressRecorder, canceler, logger);
         }
 
-        public IExecutorInvocation Create(string binaryPath, string[] exampleFullNames, 
-            IProgressRecorder progressRecorder, ICrossDomainLogger logger)
+        public IExecutorInvocation Create(string binaryPath, string[] exampleFullNames,
+            IProgressRecorder progressRecorder, IExecutionCanceler canceler, ICrossDomainLogger logger)
         {
-            return new ExecutorInvocation(binaryPath, exampleFullNames, progressRecorder, logger);
+            return new ExecutorInvocation(binaryPath, exampleFullNames, progressRecorder, canceler, logger);
         }
     }
 }

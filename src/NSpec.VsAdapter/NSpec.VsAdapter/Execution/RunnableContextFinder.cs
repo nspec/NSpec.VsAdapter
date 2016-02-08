@@ -23,11 +23,11 @@ namespace NSpec.VsAdapter.Execution
             this.contextFinder = contextFinder;
         }
 
-        public IEnumerable<RunnableContext> Find(string binaryPath, string[] exampleFullNames)
+        public IEnumerable<IRunnableContext> Find(string binaryPath, string[] exampleFullNames)
         {
             var contextCollection = contextFinder.BuildContextCollection(binaryPath);
 
-            IEnumerable<RunnableContext> runnableContexts;
+            IEnumerable<IRunnableContext> runnableContexts;
 
             if (exampleFullNames == RunAll)
             {

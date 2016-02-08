@@ -87,9 +87,8 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             binaryTestExecutor
                 .When(exc => exc.Execute(
                     Arg.Any<string>(), 
-                    progressRecorder, 
-                    outputLogger, 
-                    Arg.Any<ICrossDomainLogger>()))
+                    progressRecorder, Arg.Any<IExecutionCanceler>(),
+                    outputLogger, Arg.Any<ICrossDomainLogger>()))
                 .Do(callInfo =>
                 {
                     var source = callInfo.Arg<string>();
@@ -114,6 +113,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
                 Arg.Any<IProgressRecorder>(),
+                Arg.Any<IExecutionCanceler>(),
                 outputLogger,
                 Arg.Any<ICrossDomainLogger>());
         }
@@ -124,6 +124,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
                 progressRecorder,
+                Arg.Any<IExecutionCanceler>(),
                 Arg.Any<IOutputLogger>(), Arg.Any<ICrossDomainLogger>());
         }
 
@@ -217,11 +218,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             binaryTestExecutor
                 .When(exc => exc.Execute(
-                    Arg.Any<string>(), 
-                    Arg.Any<IEnumerable<string>>(), 
-                    progressRecorder, 
-                    outputLogger,
-                    Arg.Any<ICrossDomainLogger>()))
+                    Arg.Any<string>(), Arg.Any<IEnumerable<string>>(),
+                    progressRecorder, Arg.Any<IExecutionCanceler>(),
+                    outputLogger, Arg.Any<ICrossDomainLogger>()))
                 .Do(callInfo =>
                 {
                     var source = callInfo.Arg<string>();
@@ -249,6 +248,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 Arg.Any<string>(), 
                 Arg.Any<IEnumerable<string>>(),
                 Arg.Any<IProgressRecorder>(), 
+                Arg.Any<IExecutionCanceler>(),
                 outputLogger,
                 Arg.Any<ICrossDomainLogger>());
         }
@@ -259,7 +259,8 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             binaryTestExecutor.Received().Execute(
                 Arg.Any<string>(),
                 Arg.Any<IEnumerable<string>>(),
-                progressRecorder, 
+                progressRecorder,
+                Arg.Any<IExecutionCanceler>(),
                 Arg.Any<IOutputLogger>(), Arg.Any<ICrossDomainLogger>());
         }
 
@@ -279,6 +280,13 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         [Ignore("Cannot figure out how to block & sync to inner RunTests loop")]
         public void it_should_quit_execution()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Test]
+        [Ignore("Cannot figure out how to block & sync to inner RunTests loop")]
+        public void it_should_update_canceler()
         {
             throw new NotImplementedException();
         }

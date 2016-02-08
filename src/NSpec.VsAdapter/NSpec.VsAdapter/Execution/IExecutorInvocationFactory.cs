@@ -9,10 +9,10 @@ namespace NSpec.VsAdapter.Execution
 {
     public interface IExecutorInvocationFactory
     {
-        IExecutorInvocation Create(string binaryPath, 
-            IProgressRecorder progressRecorder, ICrossDomainLogger logger);
+        IExecutorInvocation Create(string binaryPath,
+            IProgressRecorder progressRecorder, IExecutionCanceler canceler, ICrossDomainLogger logger);
 
-        IExecutorInvocation Create(string binaryPath, string[] exampleFullNames, 
-            IProgressRecorder progressRecorder, ICrossDomainLogger logger);
+        IExecutorInvocation Create(string binaryPath, string[] exampleFullNames,
+            IProgressRecorder progressRecorder, IExecutionCanceler canceler, ICrossDomainLogger logger);
     }
 }

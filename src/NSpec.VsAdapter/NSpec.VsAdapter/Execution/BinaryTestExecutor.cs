@@ -15,27 +15,26 @@ namespace NSpec.VsAdapter.Execution
             this.executorInvocationFactory = executorInvocationFactory;
         }
 
-        // TODO pass canceler to executorInvocationFactory.Create
-
-        public int Execute(string binaryPath, IProgressRecorder progressRecorder,
+        public int Execute(string binaryPath,
+            IProgressRecorder progressRecorder, IExecutionCanceler canceler,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
             logger.Info(String.Format("Executing all tests in binary '{0}'", binaryPath));
 
-            var executorInvocation = executorInvocationFactory.Create(binaryPath, progressRecorder, crossDomainLogger);
+            var executorInvocation = executorInvocationFactory.Create(binaryPath, progressRecorder, canceler, crossDomainLogger);
 
             return CrossDomainExecute(binaryPath, executorInvocation, logger);
         }
 
-        public int Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
-            IProgressRecorder progressRecorder,
+        public int Execute(string binaryPath, IEnumerable<string> testCaseFullNames,
+            IProgressRecorder progressRecorder, IExecutionCanceler canceler,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
             logger.Info(String.Format("Executing selected tests in binary '{0}'", binaryPath));
 
             var exampleFullNames = testCaseFullNames.ToArray();
 
-            var executorInvocation = executorInvocationFactory.Create(binaryPath, exampleFullNames, progressRecorder, crossDomainLogger);
+            var executorInvocation = executorInvocationFactory.Create(binaryPath, exampleFullNames, progressRecorder, canceler, crossDomainLogger);
 
             return CrossDomainExecute(binaryPath, executorInvocation, logger);
         }
