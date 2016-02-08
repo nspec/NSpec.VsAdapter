@@ -79,6 +79,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionItems\SolutionAssemblyInfo.cs">
+      <Link>Properties\SolutionAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AdapterInfo.cs" />
     <Compile Include="Common\ContextFinder.cs" />
     <Compile Include="Common\IContextFinder.cs" />

@@ -100,6 +100,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SolutionItems\SolutionAssemblyInfo.cs">
+      <Link>Properties\SolutionAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="CrossDomain\CrossDomainRunner_desc_base.cs" />
     <Compile Include="Discovery\CrossDomainCollector_desc.cs" />
     <Compile Include="Discovery\BinaryTestDiscoverer_desc.cs" />

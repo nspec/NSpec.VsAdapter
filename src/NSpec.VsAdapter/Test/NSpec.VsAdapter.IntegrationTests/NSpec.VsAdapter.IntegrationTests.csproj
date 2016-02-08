@@ -55,6 +55,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SolutionItems\SolutionAssemblyInfo.cs">
+      <Link>Properties\SolutionAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="DummyTestException.cs" />
     <Compile Include="EmptySettingsContext.cs" />

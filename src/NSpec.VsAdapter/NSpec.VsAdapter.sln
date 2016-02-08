@@ -36,6 +36,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		Test\Samples\SolutionItems\samples.runsettings = Test\Samples\SolutionItems\samples.runsettings
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{7601B71F-97E7-429D-8CCB-1C81EDFD45DB}"
+	ProjectSection(SolutionItems) = preProject
+		SolutionItems\SolutionAssemblyInfo.cs = SolutionItems\SolutionAssemblyInfo.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
