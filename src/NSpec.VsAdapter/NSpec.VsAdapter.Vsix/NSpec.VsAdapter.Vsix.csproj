@@ -34,7 +34,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NSpec.VsAdapter.Vsix</RootNamespace>
-    <AssemblyName>NSpec.VsAdapter.Vsix</AssemblyName>
+    <AssemblyName>NSpec.VsAdapter</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
