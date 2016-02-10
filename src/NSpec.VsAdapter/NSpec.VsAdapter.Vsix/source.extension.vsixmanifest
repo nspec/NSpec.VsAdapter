@@ -7,6 +7,7 @@
     <MoreInfo>https://github.com/BrainCrumbz/NSpec.VsAdapter</MoreInfo>
     <License>License.txt</License>
     <Icon>Assets\Logo\NSpecVsAdapterLogo32x32.png</Icon>
+    <PreviewImage>Assets\Preview\NSpecVsAdapterPreview200x200.png</PreviewImage>
     <Tags>nspec test adapter runner bdd tdd</Tags>
   </Metadata>
   <Installation>
