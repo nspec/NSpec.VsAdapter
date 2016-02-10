@@ -12,7 +12,7 @@
 
   <!-- NSpec VS Adapter -->
   <NSpec.VsAdapter>
-    <LogLevel>Debug</LogLevel>
+    <LogLevel>Trace</LogLevel>
   </NSpec.VsAdapter>
 
 </RunSettings>
