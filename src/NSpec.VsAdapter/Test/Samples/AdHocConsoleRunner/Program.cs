@@ -43,7 +43,8 @@ namespace AdHocConsoleRunner
             var results = runner.Run(testCollection);
 
             //console write line to pause the exe
-            System.Console.ReadLine();
+            Console.WriteLine(Environment.NewLine + "Press <enter> to quit...");
+            Console.ReadLine();
         }
     }
 }
