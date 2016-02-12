@@ -18,7 +18,7 @@ namespace NSpec.VsAdapter.UnitTests.CrossDomain
         protected AutoSubstitute autoSubstitute;
         protected IAppDomainFactory appDomainFactory;
         protected IProxyFactory<T> proxyFactory;
-        protected MarshalingProxy<T> crossDomainProxy;
+        protected Proxy<T> crossDomainProxy;
         protected ITargetAppDomain targetDomain;
         protected IOutputLogger logger;
         protected Func<T> targetOperation;
@@ -35,7 +35,7 @@ namespace NSpec.VsAdapter.UnitTests.CrossDomain
             proxyFactory = autoSubstitute
                 .Resolve<IProxyFactory<T>>();
 
-            crossDomainProxy = Substitute.For<MarshalingProxy<T>>();
+            crossDomainProxy = Substitute.For<Proxy<T>>();
 
             targetDomain = Substitute.For<ITargetAppDomain>();
 

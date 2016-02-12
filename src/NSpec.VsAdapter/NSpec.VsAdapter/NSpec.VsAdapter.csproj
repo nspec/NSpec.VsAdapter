@@ -132,7 +132,7 @@
     <Compile Include="CrossDomain\IProxyFactory.cs" />
     <Compile Include="CrossDomain\ITargetAppDomain.cs" />
     <Compile Include="CrossDomain\ProxyFactory.cs" />
-    <Compile Include="CrossDomain\MarshalingProxy.cs" />
+    <Compile Include="CrossDomain\Proxy.cs" />
     <Compile Include="CrossDomain\CrossDomainRunner.cs" />
     <Compile Include="CrossDomain\TargetAppDomain.cs" />
     <Compile Include="Discovery\DiscoveredExample.cs" />

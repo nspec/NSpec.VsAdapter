@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.CrossDomain
 {
-    public class MarshalingProxy<TResult> : MarshalByRefObject, IDisposable
+    public class Proxy<TResult> : MarshalByRefObject, IDisposable
     {
         public override object InitializeLifetimeService()
         {

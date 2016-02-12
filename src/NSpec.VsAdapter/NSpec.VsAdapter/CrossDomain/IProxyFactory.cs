@@ -8,6 +8,6 @@ namespace NSpec.VsAdapter.CrossDomain
 {
     public interface IProxyFactory<TResult>
     {
-        MarshalingProxy<TResult> CreateProxy(ITargetAppDomain targetDomain);
+        Proxy<TResult> CreateProxy(ITargetAppDomain targetDomain);
     }
 }
