@@ -17,7 +17,7 @@ namespace NSpec.VsAdapter.UnitTests.CrossDomain
     {
         protected AutoSubstitute autoSubstitute;
         protected IAppDomainFactory appDomainFactory;
-        protected IMarshalingFactory<T> marshalingFactory;
+        protected IProxyFactory<T> proxyFactory;
         protected MarshalingProxy<T> crossDomainProxy;
         protected ITargetAppDomain targetDomain;
         protected IOutputLogger logger;
@@ -32,8 +32,8 @@ namespace NSpec.VsAdapter.UnitTests.CrossDomain
 
             appDomainFactory = autoSubstitute.Resolve<IAppDomainFactory>();
 
-            marshalingFactory = autoSubstitute
-                .Resolve<IMarshalingFactory<T>>();
+            proxyFactory = autoSubstitute
+                .Resolve<IProxyFactory<T>>();
 
             crossDomainProxy = Substitute.For<MarshalingProxy<T>>();
 
@@ -59,7 +59,7 @@ namespace NSpec.VsAdapter.UnitTests.CrossDomain
 
             appDomainFactory.Create(somePath).Returns(targetDomain);
 
-            marshalingFactory.CreateProxy(targetDomain).Returns(crossDomainProxy);
+            proxyFactory.CreateProxy(targetDomain).Returns(crossDomainProxy);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace NSpec.VsAdapter.UnitTests.CrossDomain
 
             appDomainFactory.Create(null).ReturnsForAnyArgs(targetDomain);
 
-            marshalingFactory.CreateProxy(null).ReturnsForAnyArgs(_ =>
+            proxyFactory.CreateProxy(null).ReturnsForAnyArgs(_ =>
             {
                 throw new DummyTestException();
             });
@@ -132,7 +132,7 @@ namespace NSpec.VsAdapter.UnitTests.CrossDomain
 
             appDomainFactory.Create(null).ReturnsForAnyArgs(targetDomain);
 
-            marshalingFactory.CreateProxy(null).ReturnsForAnyArgs(crossDomainProxy);
+            proxyFactory.CreateProxy(null).ReturnsForAnyArgs(crossDomainProxy);
 
             crossDomainProxy.Execute(null).ReturnsForAnyArgs(_ =>
             {

@@ -13,8 +13,8 @@ namespace NSpec.VsAdapter.Execution
     {
         public CrossDomainExecutor(
             IAppDomainFactory appDomainFactory,
-            IMarshalingFactory<int> marshalingFactory)
-            : base(appDomainFactory, marshalingFactory)
+            IProxyFactory<int> proxyFactory)
+            : base(appDomainFactory, proxyFactory)
         {
         }
     }

@@ -13,7 +13,7 @@ namespace NSpec.VsAdapter.CrossDomain
     {
         public ITargetAppDomain Create(string binaryPath)
         {
-            const string targetDomainName = "NSpec.VsAdapter.AppDomainFactory.Create";
+            const string targetDomainName = "NSpec.VsAdapter.AppDomainFactory";
             const Evidence useCurrentDomainEvidence = null;
 
             binaryPath = Path.GetFullPath(binaryPath);

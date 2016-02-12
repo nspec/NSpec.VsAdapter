@@ -129,9 +129,9 @@
     <Compile Include="Discovery\ICrossDomainCollector.cs" />
     <Compile Include="Discovery\IBinaryTestDiscoverer.cs" />
     <Compile Include="CrossDomain\ICrossDomainRunner.cs" />
-    <Compile Include="CrossDomain\IMarshalingFactory.cs" />
+    <Compile Include="CrossDomain\IProxyFactory.cs" />
     <Compile Include="CrossDomain\ITargetAppDomain.cs" />
-    <Compile Include="CrossDomain\MarshalingFactory.cs" />
+    <Compile Include="CrossDomain\ProxyFactory.cs" />
     <Compile Include="CrossDomain\MarshalingProxy.cs" />
     <Compile Include="CrossDomain\CrossDomainRunner.cs" />
     <Compile Include="CrossDomain\TargetAppDomain.cs" />
