@@ -73,8 +73,6 @@ namespace NSpec.VsAdapter
             builder.RegisterType<MultiSourceTestExecutorFactory>().As<IMultiSourceTestExecutorFactory>().InstancePerLifetimeScope();
             builder.RegisterType<BinaryTestExecutor>().As<IBinaryTestExecutor>().InstancePerLifetimeScope();
             builder.RegisterType<ProgressRecorderFactory>().As<IProgressRecorderFactory>().InstancePerLifetimeScope();
-            builder.RegisterType<CrossDomainExecutor>().As<ICrossDomainExecutor>().InstancePerLifetimeScope();
-            builder.RegisterType<ExecutorInvocationFactory>().As<IExecutorInvocationFactory>().InstancePerLifetimeScope();
             builder.RegisterType<TestResultMapper>().As<ITestResultMapper>().InstancePerLifetimeScope();
         }
 
@@ -82,6 +80,7 @@ namespace NSpec.VsAdapter
         {
             builder.RegisterType<AppDomainFactory>().As<IAppDomainFactory>().InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(ProxyFactory<>)).As(typeof(IProxyFactory<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(ProxyableFactory<>)).As(typeof(IProxyableFactory<>)).InstancePerLifetimeScope();
             builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
             builder.RegisterType<SettingsRepository>().As<ISettingsRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();

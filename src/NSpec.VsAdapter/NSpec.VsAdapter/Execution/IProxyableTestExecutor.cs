@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public interface IExecutorInvocationFactory
+    public interface IProxyableTestExecutor
     {
-        IExecutorInvocation Create(string binaryPath, 
+        int ExecuteAll(string binaryPath, 
             IProgressRecorder progressRecorder, ICrossDomainLogger logger);
 
-        IExecutorInvocation Create(string binaryPath, string[] exampleFullNames, 
+        int ExecuteSelection(string binaryPath, string[] exampleFullNames, 
             IProgressRecorder progressRecorder, ICrossDomainLogger logger);
     }
 }
