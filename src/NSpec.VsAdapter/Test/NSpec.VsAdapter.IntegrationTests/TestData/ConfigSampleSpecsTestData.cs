@@ -46,8 +46,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     {
                         FullyQualifiedName = "nspec. desc SystemWithSettings. method context. should return app settings value.", 
                         Outcome = TestOutcome.Passed,
-                        Source = specAssemblyPath,
-                        ExecutorUri = Constants.ExecutorUri,
                     }
                 },
             };

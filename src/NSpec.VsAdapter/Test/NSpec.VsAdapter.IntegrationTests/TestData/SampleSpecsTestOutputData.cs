@@ -23,8 +23,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     {
                         FullyQualifiedName = "nspec. ParentSpec. method context 1. parent example 1A.", 
                         Outcome = TestOutcome.Passed,
-                        Source = specAssemblyPath,
-                        ExecutorUri = Constants.ExecutorUri,
                     }
                 },
                 {
@@ -33,8 +31,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     {
                         FullyQualifiedName = "nspec. ParentSpec. method context 1. parent example 1B.", 
                         Outcome = TestOutcome.Passed,
-                        Source = specAssemblyPath,
-                        ExecutorUri = Constants.ExecutorUri,
                     }
                 },
                 {
@@ -43,8 +39,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     {
                         FullyQualifiedName = "nspec. ParentSpec. method context 2. parent example 2A.", 
                         Outcome = TestOutcome.Passed,
-                        Source = specAssemblyPath,
-                        ExecutorUri = Constants.ExecutorUri,
                     }
                 },
                 {
@@ -53,8 +47,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     {
                         FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped.", 
                         Outcome = TestOutcome.Skipped,
-                        Source = specAssemblyPath,
-                        ExecutorUri = Constants.ExecutorUri,
                     }
                 },
                 {
@@ -63,8 +55,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     {
                         FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 4. child example 4A.", 
                         Outcome = TestOutcome.Passed,
-                        Source = specAssemblyPath,
-                        ExecutorUri = Constants.ExecutorUri,
                     }
                 },
                 {
@@ -73,8 +63,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     {
                         FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing.", 
                         Outcome = TestOutcome.Failed,
-                        Source = specAssemblyPath,
-                        ExecutorUri = Constants.ExecutorUri,
                         ErrorMessage = "it[\"child example 5-1A failing\"] = { systemUnderTest.IsAlwaysTrue() should be False but was True",
                     }
                 },
@@ -84,8 +72,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     {
                         FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.", 
                         Outcome = TestOutcome.Passed,
-                        Source = specAssemblyPath,
-                        ExecutorUri = Constants.ExecutorUri,
                     }
                 },
             };

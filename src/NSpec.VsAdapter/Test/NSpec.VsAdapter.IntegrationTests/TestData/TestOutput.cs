@@ -14,9 +14,5 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
         public TestOutcome Outcome { get; set; }
 
         public string ErrorMessage { get; set; }
-
-        public string Source { get; set; }
-
-        public Uri ExecutorUri { get; set; }
     }
 }
