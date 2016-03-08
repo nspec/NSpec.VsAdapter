@@ -124,7 +124,7 @@ namespace NSpec.VsAdapter.TestAdapter
             {
                 // TODO pass canceler to binaryTestExecutor.Execute
 
-                binaryTestExecutor.Execute(BinaryPath, progressRecorder, outputLogger, crossDomainLogger);
+                binaryTestExecutor.ExecuteAll(BinaryPath, progressRecorder, outputLogger, crossDomainLogger);
             }
 
             readonly string source;
@@ -148,7 +148,7 @@ namespace NSpec.VsAdapter.TestAdapter
 
                 // TODO pass canceler to binaryTestExecutor.Execute
 
-                binaryTestExecutor.Execute(BinaryPath, testCaseFullNames, progressRecorder, outputLogger, crossDomainLogger);
+                binaryTestExecutor.ExecuteSelected(BinaryPath, testCaseFullNames, progressRecorder, outputLogger, crossDomainLogger);
             }
 
             readonly IGrouping<string, TestCase> testCaseGroup;

@@ -85,7 +85,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             executedSources = new List<string>();
 
             binaryTestExecutor
-                .When(exc => exc.Execute(
+                .When(exc => exc.ExecuteAll(
                     Arg.Any<string>(), 
                     progressRecorder, 
                     outputLogger, 
@@ -111,7 +111,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_pass_message_logger()
         {
-            binaryTestExecutor.Received().Execute(
+            binaryTestExecutor.Received().ExecuteAll(
                 Arg.Any<string>(),
                 Arg.Any<IProgressRecorder>(),
                 outputLogger,
@@ -121,7 +121,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_pass_execution_observer()
         {
-            binaryTestExecutor.Received().Execute(
+            binaryTestExecutor.Received().ExecuteAll(
                 Arg.Any<string>(),
                 progressRecorder,
                 Arg.Any<IOutputLogger>(), Arg.Any<ICrossDomainLogger>());
@@ -216,7 +216,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
             executedTests = new Dictionary<string, IEnumerable<string>>();
 
             binaryTestExecutor
-                .When(exc => exc.Execute(
+                .When(exc => exc.ExecuteSelected(
                     Arg.Any<string>(), 
                     Arg.Any<IEnumerable<string>>(), 
                     progressRecorder, 
@@ -245,7 +245,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_pass_message_logger()
         {
-            binaryTestExecutor.Received().Execute(
+            binaryTestExecutor.Received().ExecuteSelected(
                 Arg.Any<string>(), 
                 Arg.Any<IEnumerable<string>>(),
                 Arg.Any<IProgressRecorder>(), 
@@ -256,7 +256,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         [Test]
         public void it_should_pass_execution_observer()
         {
-            binaryTestExecutor.Received().Execute(
+            binaryTestExecutor.Received().ExecuteSelected(
                 Arg.Any<string>(),
                 Arg.Any<IEnumerable<string>>(),
                 progressRecorder, 

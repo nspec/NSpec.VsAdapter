@@ -16,11 +16,7 @@ namespace NSpec.VsAdapter.Execution
             this.proxyableFactory = proxyableFactory;
         }
 
-        // TODO build some ExecutionContext or ExecutionScenario, or one of two descendants: 
-        // AllScenario and SelectedScenario. Any of them would store all input parameters
-        // and return/perform its own specific "operation"
-
-        public int Execute(string binaryPath, IProgressRecorder progressRecorder,
+        public int ExecuteAll(string binaryPath, IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
             Func<ProxyableTestExecutor, int> operation = (proxyableExecutor) =>
@@ -31,7 +27,7 @@ namespace NSpec.VsAdapter.Execution
             return ExecuteScenario("all", operation, binaryPath, logger);
         }
 
-        public int Execute(string binaryPath, IEnumerable<string> testCaseFullNames, 
+        public int ExecuteSelected(string binaryPath, IEnumerable<string> testCaseFullNames, 
             IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
