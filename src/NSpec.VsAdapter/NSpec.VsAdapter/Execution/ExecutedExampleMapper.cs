@@ -16,8 +16,13 @@ namespace NSpec.VsAdapter.Execution
                 FullName = example.FullName(),
                 Pending = example.Pending,
                 Failed = example.Failed(),
-                Exception = example.Exception,
             };
+
+            if (example.Exception != null)
+            {
+                executed.ExceptionMessage = example.Exception.Message;
+                executed.ExceptionStackTrace = example.Exception.StackTrace;
+            }
 
             return executed;
         }

@@ -40,10 +40,12 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         [Ignore("Yet to be implemented")]
         public void it_should_end_all_examples()
         {
-            var expected = SampleSpecsTestOutcomeData.ByTestCaseFullName;
+            var expected = SampleSpecsTestOutputData.ByTestCaseFullName
+                .ToList()
+                .Select(pair => new Tuple<string, TestOutcome>(pair.Value.FullyQualifiedName, pair.Value.Outcome));
 
             var actual = handle.EndedTestInfo
-                .ToDictionary(info => info.Item1.FullyQualifiedName, info => info.Item2);
+                .Select(testInfo => new Tuple<string, TestOutcome>(testInfo.Item1.FullyQualifiedName, testInfo.Item2));
 
             actual.ShouldAllBeEquivalentTo(expected);
         }
@@ -51,8 +53,8 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         [Test]
         public void it_should_report_result_of_all_examples()
         {
-            Func<TestCase, TestResult> mapToTestResult = 
-                tc => MapTestCaseToResult(SampleSpecsTestOutcomeData.ByTestCaseFullName, tc);
+            Func<TestCase, TestResult> mapToTestResult =
+                tc => MapTestCaseToResult(SampleSpecsTestOutputData.ByTestCaseFullName, tc);
 
             var expected = SampleSpecsTestCaseData.All.Select(mapToTestResult);
 

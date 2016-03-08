@@ -24,8 +24,8 @@ namespace NSpec.VsAdapter.TestAdapter
             else if (executedExample.Failed)
             {
                 testResult.Outcome = TestOutcome.Failed;
-                testResult.ErrorMessage = executedExample.Exception.Message;
-                testResult.ErrorStackTrace = executedExample.Exception.StackTrace;
+                testResult.ErrorMessage = executedExample.ExceptionMessage;
+                testResult.ErrorStackTrace = executedExample.ExceptionStackTrace;
             }
             else
             {

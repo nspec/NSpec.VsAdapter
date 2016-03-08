@@ -15,6 +15,8 @@ namespace NSpec.VsAdapter.Execution
 
         public bool Failed { get; set; }
 
-        public Exception Exception { get; set; }
+        public string ExceptionMessage { get; set; }
+
+        public string ExceptionStackTrace { get; set; }
     }
 }

@@ -79,7 +79,8 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             {
                 FullName = someExample.FullName(),
                 Failed = true,
-                Exception = someError,
+                ExceptionMessage = someError.Message,
+                ExceptionStackTrace = someError.StackTrace,
             };
 
             var actual = mapper.FromExample(someExample);

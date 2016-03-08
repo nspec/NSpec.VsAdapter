@@ -71,7 +71,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
             var selectedFullNames = runningTestCases.Select(tc => tc.FullyQualifiedName);
             
             Func<TestCase, TestResult> mapToTestResult =
-                tc => MapTestCaseToResult(SampleSpecsTestOutcomeData.ByTestCaseFullName, tc);
+                tc => MapTestCaseToResult(SampleSpecsTestOutputData.ByTestCaseFullName, tc);
 
             IEnumerable<TestResult> expected = SampleSpecsTestCaseData
                 .ByTestCaseFullName.Where(pair =>

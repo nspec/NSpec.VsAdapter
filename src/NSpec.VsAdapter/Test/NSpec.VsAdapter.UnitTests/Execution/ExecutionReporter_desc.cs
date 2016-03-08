@@ -66,7 +66,8 @@ namespace NSpec.VsAdapter.UnitTests.Execution
             {
                 FullName = someExample.FullName(),
                 Failed = true,
-                Exception = someExample.Exception,
+                ExceptionMessage = someExample.Exception.Message,
+                ExceptionStackTrace = someExample.Exception.StackTrace,
             };
 
             executedExampleMapper.FromExample(someExample).Returns(someExecutedExample);

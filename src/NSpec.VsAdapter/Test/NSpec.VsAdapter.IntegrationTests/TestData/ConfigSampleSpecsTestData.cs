@@ -30,17 +30,25 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
         }
     }
 
-    public static class ConfigSampleSpecsTestOutcomeData
+    public static class ConfigSampleSpecsTestOutputData
     {
-        public readonly static Dictionary<string, TestOutcome> ByTestCaseFullName;
+        public readonly static Dictionary<string, TestOutput> ByTestCaseFullName;
 
-        static ConfigSampleSpecsTestOutcomeData()
+        static ConfigSampleSpecsTestOutputData()
         {
-            ByTestCaseFullName = new Dictionary<string, TestOutcome>()
+            string specAssemblyPath = TestConstants.ConfigSampleSpecsDllPath;
+
+            ByTestCaseFullName = new Dictionary<string, TestOutput>()
             {
                 {
                     "nspec. desc SystemWithSettings. method context. should return app settings value.", 
-                    TestOutcome.Passed
+                    new TestOutput()
+                    {
+                        FullyQualifiedName = "nspec. desc SystemWithSettings. method context. should return app settings value.", 
+                        Outcome = TestOutcome.Passed,
+                        Source = specAssemblyPath,
+                        ExecutorUri = Constants.ExecutorUri,
+                    }
                 },
             };
         }
