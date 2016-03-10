@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.UnitTests
 {
-    class DummyTestException : ApplicationException
+    public class DummyTestException : ApplicationException
     {
         public DummyTestException() : base() { }
 

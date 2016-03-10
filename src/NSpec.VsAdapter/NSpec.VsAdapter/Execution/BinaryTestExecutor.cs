@@ -10,7 +10,7 @@ namespace NSpec.VsAdapter.Execution
 {
     public class BinaryTestExecutor : IBinaryTestExecutor
     {
-        public BinaryTestExecutor(IAppDomainFactory appDomainFactory, IProxyableFactory<ProxyableTestExecutor> proxyableFactory)
+        public BinaryTestExecutor(IAppDomainFactory appDomainFactory, IProxyableFactory<IProxyableTestExecutor> proxyableFactory)
         {
             this.appDomainFactory = appDomainFactory;
             this.proxyableFactory = proxyableFactory;
@@ -19,7 +19,7 @@ namespace NSpec.VsAdapter.Execution
         public int ExecuteAll(string binaryPath, IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
-            Func<ProxyableTestExecutor, int> operation = (proxyableExecutor) =>
+            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
             {
                 return proxyableExecutor.ExecuteAll(binaryPath, progressRecorder, crossDomainLogger);
             };
@@ -33,7 +33,7 @@ namespace NSpec.VsAdapter.Execution
         {
             string[] exampleFullNames = testCaseFullNames.ToArray();
 
-            Func<ProxyableTestExecutor, int> operation = (proxyableExecutor) =>
+            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
             {
                 return proxyableExecutor.ExecuteSelection(binaryPath, exampleFullNames, progressRecorder, crossDomainLogger);
             };
@@ -43,7 +43,7 @@ namespace NSpec.VsAdapter.Execution
 
         // TODO pass canceler to proxyableExecutor
 
-        int ExecuteScenario(string description, Func<ProxyableTestExecutor, int> operation, string binaryPath, IOutputLogger logger)
+        int ExecuteScenario(string description, Func<IProxyableTestExecutor, int> operation, string binaryPath, IOutputLogger logger)
         {
             logger.Info(String.Format("Executing {0} tests in binary '{1}'", description, binaryPath));
 
@@ -72,6 +72,6 @@ namespace NSpec.VsAdapter.Execution
         }
 
         readonly IAppDomainFactory appDomainFactory;
-        readonly IProxyableFactory<ProxyableTestExecutor> proxyableFactory;
+        readonly IProxyableFactory<IProxyableTestExecutor> proxyableFactory;
     }
 }

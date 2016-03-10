@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public interface IProxyableTestExecutor
+    public interface IProxyableTestExecutor : IDisposable
     {
         int ExecuteAll(string binaryPath, 
             IProgressRecorder progressRecorder, ICrossDomainLogger logger);
