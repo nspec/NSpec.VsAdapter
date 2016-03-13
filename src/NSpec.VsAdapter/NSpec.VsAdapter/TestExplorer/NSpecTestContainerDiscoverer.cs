@@ -18,7 +18,7 @@ namespace NSpec.VsAdapter.TestExplorer
         // Integration tests use this as well
         public NSpecTestContainerDiscoverer()
         {
-            var scope = DIContainer.Instance.BeginScope();
+            var scope = DependencyContainer.Instance.BeginScope();
 
             disposables.Add(scope); ;
 

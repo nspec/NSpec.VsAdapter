@@ -17,9 +17,9 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter
 {
-    class DIContainer : IDisposable
+    class DependencyContainer : IDisposable
     {
-        private DIContainer()
+        private DependencyContainer()
         {
             var builder = new ContainerBuilder();
 
@@ -86,11 +86,11 @@ namespace NSpec.VsAdapter
             builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();
         }
 
-        public static DIContainer Instance 
+        public static DependencyContainer Instance 
         {
             get { return instanceHolder.Value; }
         }
 
-        static readonly Lazy<DIContainer> instanceHolder = new Lazy<DIContainer>(() => new DIContainer(), false);
+        static readonly Lazy<DependencyContainer> instanceHolder = new Lazy<DependencyContainer>(() => new DependencyContainer(), false);
     }
 }

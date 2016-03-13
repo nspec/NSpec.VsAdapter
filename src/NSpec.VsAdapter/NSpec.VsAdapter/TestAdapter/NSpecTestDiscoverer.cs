@@ -19,7 +19,7 @@ namespace NSpec.VsAdapter.TestAdapter
         // Visual Studio test infrastructure requires a default constructor
         public NSpecTestDiscoverer()
         {
-            var scope = DIContainer.Instance.BeginScope();
+            var scope = DependencyContainer.Instance.BeginScope();
 
             disposable = scope;
 

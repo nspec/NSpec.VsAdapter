@@ -111,7 +111,7 @@
     <Compile Include="Logging\ICrossDomainLogger.cs" />
     <Compile Include="Logging\LoggerFactory.cs" />
     <Compile Include="Discovery\DebugInfoProvider.cs" />
-    <Compile Include="DIContainer.cs" />
+    <Compile Include="DependencyContainer.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="IAdapterInfo.cs" />
     <Compile Include="Discovery\IDebugInfoProvider.cs" />
