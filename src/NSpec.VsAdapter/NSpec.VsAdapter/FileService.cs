@@ -6,6 +6,8 @@ using System.Text;
 
 namespace NSpec.VsAdapter
 {
+    // TODO move to Common directory
+
     public class FileService : IFileService
     {
         public bool Exists(string path)
