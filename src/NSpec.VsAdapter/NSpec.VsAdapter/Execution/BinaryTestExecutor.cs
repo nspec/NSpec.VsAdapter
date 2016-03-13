@@ -10,7 +10,7 @@ namespace NSpec.VsAdapter.Execution
 {
     public class BinaryTestExecutor : IBinaryTestExecutor
     {
-        public BinaryTestExecutor(IAppDomainFactory appDomainFactory, IProxyableFactory<IProxyableTestExecutor> proxyableFactory)
+        public BinaryTestExecutor(IAppDomainFactory appDomainFactory, IProxyableFactory<ProxyableTestExecutor> proxyableFactory)
         {
             this.appDomainFactory = appDomainFactory;
             this.proxyableFactory = proxyableFactory;
@@ -72,6 +72,6 @@ namespace NSpec.VsAdapter.Execution
         }
 
         readonly IAppDomainFactory appDomainFactory;
-        readonly IProxyableFactory<IProxyableTestExecutor> proxyableFactory;
+        readonly IProxyableFactory<ProxyableTestExecutor> proxyableFactory;
     }
 }
