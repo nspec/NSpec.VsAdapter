@@ -28,7 +28,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         public void it_should_access_app_settings()
         {
             Func<TestCase, TestResult> mapToTestResult =
-                tc => MapTestCaseToResult(ConfigSampleSpecsTestOutcomeData.ByTestCaseFullName, tc);
+                tc => MapTestCaseToResult(ConfigSampleSpecsTestOutputData.ByTestCaseFullName, tc);
 
             var expected = ConfigSampleSpecsTestCaseData.All.Select(mapToTestResult);
 

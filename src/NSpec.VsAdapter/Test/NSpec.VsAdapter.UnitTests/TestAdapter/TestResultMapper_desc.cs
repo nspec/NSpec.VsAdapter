@@ -70,7 +70,8 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 FullName = "nspec. some context. some failing example.",
                 Pending = false,
                 Failed = true,
-                Exception = someError,
+                ExceptionMessage = someError.Message,
+                ExceptionStackTrace = someError.StackTrace,
             };
 
             var someTestCase = BuildTestCase(someExample);

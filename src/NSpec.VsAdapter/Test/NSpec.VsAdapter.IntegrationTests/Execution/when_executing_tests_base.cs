@@ -1,6 +1,7 @@
 ﻿using FluentAssertions.Equivalency;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+using NSpec.VsAdapter.IntegrationTests.TestData;
 using NSpec.VsAdapter.TestAdapter;
 using NUnit.Framework;
 using System;
@@ -38,11 +39,14 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
             executor.Dispose();
         }
 
-        protected static TestResult MapTestCaseToResult(Dictionary<string, TestOutcome> outcomeByFullNameMap, TestCase testCase)
+        protected static TestResult MapTestCaseToResult(Dictionary<string, TestOutput> outputByFullNameMap, TestCase testCase)
         {
+            var testOutput = outputByFullNameMap[testCase.FullyQualifiedName];
+
             var testResult = new TestResult(testCase)
             {
-                Outcome = outcomeByFullNameMap[testCase.FullyQualifiedName],
+                Outcome = testOutput.Outcome,
+                ErrorMessage = testOutput.ErrorMessage,
             };
 
             return testResult;
@@ -53,7 +57,6 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
             return opts
                 .Including(tr => tr.Outcome)
                 .Including(tr => tr.ErrorMessage)
-                .Including(tr => tr.ErrorStackTrace)
                 .Including(tr => tr.TestCase.FullyQualifiedName)
                 .Including(tr => tr.TestCase.ExecutorUri)
                 .Including(tr => tr.TestCase.Source);

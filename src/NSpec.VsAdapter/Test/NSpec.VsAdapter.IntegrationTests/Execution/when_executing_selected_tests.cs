@@ -27,7 +27,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
                 SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped."],
 
                 // this example sits in a sub-context, within a method context, and with another sibling example
-                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A."],
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing."],
             };
 
             runningTestCases = new TestCase[]
@@ -39,7 +39,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
 
                 SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped."],
 
-                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A."],
+                SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing."],
                 SampleSpecsTestCaseData.ByTestCaseFullName["nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B."],
             };
         }
@@ -71,7 +71,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
             var selectedFullNames = runningTestCases.Select(tc => tc.FullyQualifiedName);
             
             Func<TestCase, TestResult> mapToTestResult =
-                tc => MapTestCaseToResult(SampleSpecsTestOutcomeData.ByTestCaseFullName, tc);
+                tc => MapTestCaseToResult(SampleSpecsTestOutputData.ByTestCaseFullName, tc);
 
             IEnumerable<TestResult> expected = SampleSpecsTestCaseData
                 .ByTestCaseFullName.Where(pair =>

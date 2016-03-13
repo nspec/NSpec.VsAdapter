@@ -45,7 +45,7 @@ namespace SampleSpecs
         { // # 45
             context["sub context 5-1"] = () =>
             {
-                it["child example 5-1A"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 48
+                it["child example 5-1A failing"] = () => { systemUnderTest.IsAlwaysTrue().ShouldBeFalse(); }; // # 48
 
                 it["child example 5-1B"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 50
             };
