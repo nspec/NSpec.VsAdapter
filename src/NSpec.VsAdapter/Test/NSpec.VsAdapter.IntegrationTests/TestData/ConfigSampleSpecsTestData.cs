@@ -22,7 +22,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     "nspec. desc SystemWithSettings. method context. should return app settings value.", 
                     Constants.ExecutorUri, specAssemblyPath)
                 {
-                    DisplayName = "nspec. desc SystemWithSettings. method context. should return app settings value.", 
+                    DisplayName = "desc SystemWithSettings › method context › should return app settings value.", 
                     CodeFilePath = sourceCodeFilePath,
                     LineNumber = 19,
                 }
