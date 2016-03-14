@@ -36,7 +36,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         [TearDown]
         public virtual void after_each()
         {
-            executor.Dispose();
+            if (executor != null) executor.Dispose();
         }
 
         protected static TestResult MapTestCaseToResult(Dictionary<string, TestOutput> outputByFullNameMap, TestCase testCase)

@@ -11,16 +11,16 @@ namespace NSpec.VsAdapter.CrossDomain
         // initial implementation taken from 
         // http://thevalerios.net/matt/2008/06/run-anonymous-methods-in-another-appdomain/
 
-        public CrossDomainRunner(IAppDomainFactory appDomainFactory, IMarshalingFactory<TResult> marshalingFactory)
+        public CrossDomainRunner(IAppDomainFactory appDomainFactory, IProxyFactory<TResult> proxyFactory)
         {
             this.appDomainFactory = appDomainFactory;
-            this.marshalingFactory = marshalingFactory;
+            this.proxyFactory = proxyFactory;
         }
 
         public virtual TResult Run(string binaryPath, Func<TResult> targetOperation)
         {
             using (var targetDomain = appDomainFactory.Create(binaryPath))
-            using (var crossDomainProxy = marshalingFactory.CreateProxy(targetDomain))
+            using (var crossDomainProxy = proxyFactory.CreateProxy(targetDomain))
             {
                 TResult result = crossDomainProxy.Execute(targetOperation);
 
@@ -29,6 +29,6 @@ namespace NSpec.VsAdapter.CrossDomain
         }
 
         readonly IAppDomainFactory appDomainFactory;
-        readonly IMarshalingFactory<TResult> marshalingFactory;
+        readonly IProxyFactory<TResult> proxyFactory;
     }
 }

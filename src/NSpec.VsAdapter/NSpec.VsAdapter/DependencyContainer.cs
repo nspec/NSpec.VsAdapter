@@ -17,9 +17,9 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter
 {
-    class DIContainer : IDisposable
+    class DependencyContainer : IDisposable
     {
-        private DIContainer()
+        private DependencyContainer()
         {
             var builder = new ContainerBuilder();
 
@@ -73,25 +73,24 @@ namespace NSpec.VsAdapter
             builder.RegisterType<MultiSourceTestExecutorFactory>().As<IMultiSourceTestExecutorFactory>().InstancePerLifetimeScope();
             builder.RegisterType<BinaryTestExecutor>().As<IBinaryTestExecutor>().InstancePerLifetimeScope();
             builder.RegisterType<ProgressRecorderFactory>().As<IProgressRecorderFactory>().InstancePerLifetimeScope();
-            builder.RegisterType<CrossDomainExecutor>().As<ICrossDomainExecutor>().InstancePerLifetimeScope();
-            builder.RegisterType<ExecutorInvocationFactory>().As<IExecutorInvocationFactory>().InstancePerLifetimeScope();
             builder.RegisterType<TestResultMapper>().As<ITestResultMapper>().InstancePerLifetimeScope();
         }
 
         static void RegisterCommon(ContainerBuilder builder)
         {
             builder.RegisterType<AppDomainFactory>().As<IAppDomainFactory>().InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(MarshalingFactory<>)).As(typeof(IMarshalingFactory<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(ProxyFactory<>)).As(typeof(IProxyFactory<>)).InstancePerLifetimeScope();
+            builder.RegisterType<ProxyableTestExecutorFactory>().As<IProxyableFactory<IProxyableTestExecutor>>().InstancePerLifetimeScope();
             builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
             builder.RegisterType<SettingsRepository>().As<ISettingsRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();
         }
 
-        public static DIContainer Instance 
+        public static DependencyContainer Instance 
         {
             get { return instanceHolder.Value; }
         }
 
-        static readonly Lazy<DIContainer> instanceHolder = new Lazy<DIContainer>(() => new DIContainer(), false);
+        static readonly Lazy<DependencyContainer> instanceHolder = new Lazy<DependencyContainer>(() => new DependencyContainer(), false);
     }
 }

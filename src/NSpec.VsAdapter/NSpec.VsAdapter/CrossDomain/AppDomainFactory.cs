@@ -13,12 +13,12 @@ namespace NSpec.VsAdapter.CrossDomain
     {
         public ITargetAppDomain Create(string binaryPath)
         {
-            const string targetDomainName = "NSpec.VsAdapter.AppDomainFactory.Create";
+            const string targetDomainName = "NSpec.VsAdapter.AppDomainFactory";
             const Evidence useCurrentDomainEvidence = null;
 
-            binaryPath = Path.GetFullPath(binaryPath);
+            string binaryFullPath = Path.GetFullPath(binaryPath);
 
-            string configFilePath = binaryPath + ".config";
+            string configFilePath = binaryFullPath + ".config";
 
             Assembly currentAssembly = Assembly.GetExecutingAssembly();
 
@@ -27,57 +27,13 @@ namespace NSpec.VsAdapter.CrossDomain
                 ConfigurationFile = configFilePath,
                 ApplicationBase = Path.GetDirectoryName(currentAssembly.Location)
             };
-            // TODO verifiy if PrivateBinPath should be set as well
+            // TODO verify if PrivateBinPath should be set as well
 
             var appDomain = AppDomain.CreateDomain(targetDomainName, useCurrentDomainEvidence, targetDomainSetup);
 
-            var resolveHandler = new AssemblyResolveHandler(binaryPath);
-
-            appDomain.AssemblyResolve += resolveHandler.Failed;
-
-            var targetDomain = new TargetAppDomain(appDomain, resolveHandler.Failed);
+            var targetDomain = new TargetAppDomain(appDomain);
 
             return targetDomain;
-        }
-
-        [Serializable]
-        class AssemblyResolveHandler
-        {
-            public AssemblyResolveHandler(string binaryPath)
-            {
-                this.binaryPath = binaryPath;
-            }
-
-            public Assembly Failed(object sender, ResolveEventArgs eventArgs)
-            {
-                var name = eventArgs.Name;
-
-                var argNameForResolve = name.ToLower();
-
-                if (argNameForResolve.Contains(","))
-                {
-                    name = argNameForResolve.Split(',').First() + ".dll";
-                }
-                else if (!argNameForResolve.EndsWith(".dll") && !argNameForResolve.Contains(".resource"))
-                {
-                    name += ".dll";
-                }
-                else if (argNameForResolve.Contains(".resource"))
-                {
-                    name = argNameForResolve.Substring(0, argNameForResolve.IndexOf(".resource")) + ".xml";
-                }
-
-                var missing = Path.Combine(Path.GetDirectoryName(binaryPath), name);
-
-                if (File.Exists(missing))
-                {
-                    return Assembly.LoadFrom(missing);
-                }
-
-                return null;
-            }
-
-            string binaryPath;
         }
     }
 }

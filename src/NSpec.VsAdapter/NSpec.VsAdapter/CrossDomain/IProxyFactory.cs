@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.CrossDomain
 {
-    public interface IMarshalingFactory<TResult>
+    public interface IProxyFactory<TResult>
     {
-        MarshalingProxy<TResult> CreateProxy(ITargetAppDomain targetDomain);
+        Proxy<TResult> CreateProxy(ITargetAppDomain targetDomain);
     }
 }

@@ -13,8 +13,8 @@ namespace NSpec.VsAdapter.Discovery
     {
         public CrossDomainCollector(
             IAppDomainFactory appDomainFactory,
-            IMarshalingFactory<IEnumerable<DiscoveredExample>> marshalingFactory)
-            : base(appDomainFactory, marshalingFactory) 
+            IProxyFactory<IEnumerable<DiscoveredExample>> proxyFactory)
+            : base(appDomainFactory, proxyFactory) 
         {
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NSpec.VsAdapter.CrossDomain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting;
@@ -7,29 +8,11 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Logging
 {
-    public class CrossDomainLogger : MarshalByRefObject, ICrossDomainLogger, IDisposable
+    public class CrossDomainLogger : Proxyable, ICrossDomainLogger
     {
         public CrossDomainLogger(IOutputLogger outputLogger)
         {
             this.outputLogger = outputLogger;
-        }
-
-        // MarshalByRefObject
-
-        public override object InitializeLifetimeService()
-        {
-            // Claim an infinite lease lifetime by returning null here. 
-            // To prevent memory leaks as a side effect, instance creators 
-            // *must* Dispose() in order to explicitly end the lifetime.
-
-            return null;
-        }
-
-        // IDisposable
-
-        public virtual void Dispose()
-        {
-            RemotingServices.Disconnect(this);
         }
 
         // ICrossDomainLogger

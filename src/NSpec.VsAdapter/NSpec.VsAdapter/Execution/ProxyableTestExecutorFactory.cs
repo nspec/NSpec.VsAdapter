@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
-    public interface ICrossDomainExecutor : ICrossDomainRunner<int>
+    public class ProxyableTestExecutorFactory : ProxyableFactory<ProxyableTestExecutor, IProxyableTestExecutor>
     {
     }
 }
