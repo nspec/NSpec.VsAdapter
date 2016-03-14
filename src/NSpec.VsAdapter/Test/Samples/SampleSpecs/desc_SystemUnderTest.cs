@@ -36,20 +36,21 @@ namespace SampleSpecs
             it["child example 3A skipped"] = todo; // # 36
         } // # 37
 
+        [Tag("Tag_with_underscores")]
         void method_context_4()
-        { // # 40
-            it["child example 4A"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 41
-        } // # 42
+        { // # 41
+            it["child example 4A"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 42
+        } // # 43
 
         void method_context_5()
-        { // # 45
+        { // # 46
             context["sub context 5-1"] = () =>
             {
-                it["child example 5-1A failing"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeFalse(); // # 48
+                it["child example 5-1A failing"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeFalse(); // # 49
 
-                it["child example 5-1B"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 50
+                it["child example 5-1B"] = () => systemUnderTest.IsAlwaysTrue().ShouldBeTrue(); // # 51
             };
-        } // # 52
+        } // # 53
     }
 
     // Do not move the preceding spec classes around, to avoid rewriting line numbers

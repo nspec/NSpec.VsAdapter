@@ -18,12 +18,16 @@ namespace NSpec.VsAdapter.TestAdapter
                     LineNumber = discoveredExample.SourceLineNumber,
                 };
 
-            var traits = discoveredExample.Tags.Select(tag => new Trait(tag, null));
+            var traits = discoveredExample.Tags
+                .Select(tag => tag.Replace('_', ' '))
+                .Select(tag => new Trait(tag, null));
 
             testCase.Traits.AddRange(traits);
 
             return testCase;
         }
+
+        // beautification idea taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/TestCaseDTO.cs
 
         string BeautifyForDisplay(string fullName)
         {

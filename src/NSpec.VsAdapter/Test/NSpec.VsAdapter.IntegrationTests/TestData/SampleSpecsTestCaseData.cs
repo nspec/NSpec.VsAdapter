@@ -108,7 +108,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                     {
                                         DisplayName = "ParentSpec › ChildSpec › method context 4 › child example 4A.",
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 41,
+                                        LineNumber = 42,
                                     }
                                 },
                             }
@@ -125,7 +125,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                     {
                                         DisplayName = "ParentSpec › ChildSpec › method context 5 › sub context 5-1 › child example 5-1A failing.", 
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 48,
+                                        LineNumber = 49,
                                     }
                                 },
                                 {
@@ -136,7 +136,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                     {
                                         DisplayName = "ParentSpec › ChildSpec › method context 5 › sub context 5-1 › child example 5-1B.", 
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 50,
+                                        LineNumber = 51,
                                     }
                                 },
                             }
@@ -173,6 +173,9 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
 
             All.Where(tc => tc.FullyQualifiedName.Contains("method context 3"))
                 .Do(tc => tc.Traits.Add("Tag-Child-example-skipped", null));
+
+            All.Where(tc => tc.FullyQualifiedName.Contains("method context 4"))
+                .Do(tc => tc.Traits.Add("Tag with underscores", null));
         }
 
         // adapted from https://github.com/mattflo/NSpec/blob/master/NSpec/Extensions.cs

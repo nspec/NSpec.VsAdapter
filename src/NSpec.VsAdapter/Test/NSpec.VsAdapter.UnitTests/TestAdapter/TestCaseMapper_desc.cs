@@ -37,7 +37,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 SourceAssembly = @".\some\path\to\library.dll",
                 Tags = new string[] 
                 { 
-                    "tag1", "tag2", "tag3", 
+                    "tag1", "tag2", "tag3_with_underscore", "tag4-with-dash", 
                 },
             };
 
@@ -51,8 +51,13 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     LineNumber = discoveredExample.SourceLineNumber,
                 };
 
-            var traits = discoveredExample.Tags.Select(tag => new Trait(tag, null));
-            expectedTestCase.Traits.AddRange(traits);
+            var expectedTraits = new string[] 
+                { 
+                    "tag1", "tag2", "tag3 with underscore", "tag4-with-dash", 
+                }
+                .Select(tag => new Trait(tag, null));
+
+            expectedTestCase.Traits.AddRange(expectedTraits);
         }
 
         [TearDown]
