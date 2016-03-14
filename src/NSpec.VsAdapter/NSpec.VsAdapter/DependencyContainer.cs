@@ -80,6 +80,7 @@ namespace NSpec.VsAdapter
         static void RegisterCommon(ContainerBuilder builder)
         {
             builder.RegisterType<AppDomainFactory>().As<IAppDomainFactory>().InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(CrossDomainRunner<,>)).As(typeof(ICrossDomainRunner<,>)).InstancePerLifetimeScope();
             builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
             builder.RegisterType<SettingsRepository>().As<ISettingsRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();

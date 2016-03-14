@@ -10,16 +10,15 @@ namespace NSpec.VsAdapter.Execution
 {
     public class BinaryTestExecutor : IBinaryTestExecutor
     {
-        public BinaryTestExecutor(IAppDomainFactory appDomainFactory, IProxyableFactory<IProxyableTestExecutor> proxyableFactory)
+        public BinaryTestExecutor(ICrossDomainRunner<IProxyableTestExecutor, int> remoteRunner)
         {
-            this.appDomainFactory = appDomainFactory;
-            this.proxyableFactory = proxyableFactory;
+            this.remoteRunner = remoteRunner;
         }
 
         public int ExecuteAll(string binaryPath, IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
-            RemoteOperation operation = (proxyableExecutor) =>
+            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
             {
                 return proxyableExecutor.ExecuteAll(binaryPath, progressRecorder, crossDomainLogger);
             };
@@ -33,7 +32,7 @@ namespace NSpec.VsAdapter.Execution
         {
             string[] exampleFullNames = testCaseFullNames.ToArray();
 
-            RemoteOperation operation = (proxyableExecutor) =>
+            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
             {
                 return proxyableExecutor.ExecuteSelection(binaryPath, exampleFullNames, progressRecorder, crossDomainLogger);
             };
@@ -43,37 +42,24 @@ namespace NSpec.VsAdapter.Execution
 
         // TODO pass canceler to proxyableExecutor
 
-        int RunRemoteOperation(string description, RemoteOperation operation, string binaryPath, IOutputLogger logger)
+        int RunRemoteOperation(string description, Func<IProxyableTestExecutor, int> operation, string binaryPath, IOutputLogger logger)
         {
             logger.Info(String.Format("Executing {0} tests in binary '{1}'", description, binaryPath));
 
-            int count;
-
-            try
+            int count = remoteRunner.Run(binaryPath, operation, (ex, path) =>
             {
-                using (var targetDomain = appDomainFactory.Create(binaryPath))
-                using (var proxyableTestExecutor = proxyableFactory.CreateProxy(targetDomain))
-                {
-                    count = operation(proxyableTestExecutor);
-                }
-            }
-            catch (Exception ex)
-            {
-                count = 0;
-
                 // report problem and return for the next assembly, without crashing the test execution process
-                var message = String.Format("Exception thrown while executing tests in binary '{0}'", binaryPath);
+                var message = String.Format("Exception thrown while executing tests in binary '{0}'", path);
                 logger.Error(ex, message);
-            }
+
+                return 0;
+            });
 
             logger.Info(String.Format("Executed {0} tests in binary '{1}'", count, binaryPath));
 
             return count;
         }
 
-        readonly IAppDomainFactory appDomainFactory;
-        readonly IProxyableFactory<IProxyableTestExecutor> proxyableFactory;
-
-        delegate int RemoteOperation(IProxyableTestExecutor proxyableTestExecutor);
+        readonly ICrossDomainRunner<IProxyableTestExecutor, int> remoteRunner;
     }
 }
