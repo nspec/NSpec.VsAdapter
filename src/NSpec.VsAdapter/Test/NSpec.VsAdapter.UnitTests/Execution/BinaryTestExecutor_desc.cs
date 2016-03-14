@@ -22,6 +22,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
         protected AutoSubstitute autoSubstitute;
         protected ICrossDomainRunner<IProxyableTestExecutor, int> remoteRunner;
+        protected IProxyableTestExecutor proxyableExecutor;
         protected IProgressRecorder progressRecorder;
         protected IOutputLogger logger;
         protected ICrossDomainLogger crossDomainLogger;
@@ -44,6 +45,8 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         public virtual void before_each()
         {
             autoSubstitute = new AutoSubstitute();
+
+            proxyableExecutor = Substitute.For<IProxyableTestExecutor>();
 
             remoteRunner = autoSubstitute.SubstituteFor<ICrossDomainRunner<IProxyableTestExecutor, int>>();
 
@@ -76,7 +79,13 @@ namespace NSpec.VsAdapter.UnitTests.Execution
                 .Run(somePath,
                     Arg.Any<Func<IProxyableTestExecutor, int>>(),
                     Arg.Any<Func<Exception, string, int>>())
-                .Returns(expected);
+                .Returns(callInfo =>
+                {
+                    var path = callInfo.Arg<string>();
+                    var operation = callInfo.Arg<Func<IProxyableTestExecutor, int>>();
+
+                    return operation(proxyableExecutor);
+                });
         }
 
         [Test]
@@ -92,6 +101,8 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             base.before_each();
 
+            proxyableExecutor.ExecuteAll(somePath, progressRecorder, crossDomainLogger).Returns(expected);
+
             actual = executor.ExecuteAll(somePath, progressRecorder, logger, crossDomainLogger);
         }
     }
@@ -101,6 +112,9 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         public override void before_each()
         {
             base.before_each();
+
+            proxyableExecutor.ExecuteSelection(somePath, Arg.Is<string[]>(CompareToTestCaseFullNames),
+                progressRecorder, crossDomainLogger).Returns(expected);
 
             actual = executor.ExecuteSelected(somePath, testCaseFullNames, progressRecorder, logger, crossDomainLogger);
         }

@@ -21,6 +21,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
         protected AutoSubstitute autoSubstitute;
         protected ICrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]> remoteRunner;
+        protected IProxyableTestDiscoverer proxyableDiscoverer;
         protected IFileService fileService;
         protected IOutputLogger logger;
         protected ICrossDomainLogger crossDomainLogger;
@@ -41,6 +42,8 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         public virtual void before_each()
         {
             autoSubstitute = new AutoSubstitute();
+
+            proxyableDiscoverer = Substitute.For<IProxyableTestDiscoverer>();
 
             remoteRunner = autoSubstitute.SubstituteFor<
                 ICrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]>>();
@@ -76,11 +79,19 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         {
             base.before_each();
 
+            proxyableDiscoverer.Discover(somePath, crossDomainLogger).Returns(someDiscoveredExamples);
+
             remoteRunner
-                .Run(somePath, 
+                .Run(somePath,
                     Arg.Any<Func<IProxyableTestDiscoverer, DiscoveredExample[]>>(),
                     Arg.Any<Func<Exception, string, DiscoveredExample[]>>())
-                .Returns(someDiscoveredExamples);
+                .Returns(callInfo =>
+                {
+                    var path = callInfo.Arg<string>();
+                    var operation = callInfo.Arg<Func<IProxyableTestDiscoverer, DiscoveredExample[]>>();
+
+                    return operation(proxyableDiscoverer);
+                });
 
             actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
         }
