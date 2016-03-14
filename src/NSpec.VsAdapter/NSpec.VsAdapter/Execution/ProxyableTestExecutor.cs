@@ -27,7 +27,7 @@ namespace NSpec.VsAdapter.Execution
         {
             string scenario = (exampleFullNames == RunnableContextFinder.RunAll ? "all" : "selected");
 
-            logger.Debug(String.Format("Start executing {0} tests locally in '{1}'", scenario, binaryPath));
+            logger.Debug(String.Format("Start executing {0} tests locally in binary '{1}'", scenario, binaryPath));
 
             int count;
 
@@ -52,12 +52,12 @@ namespace NSpec.VsAdapter.Execution
                 count = 0;
 
                 var exInfo = new ExceptionLogInfo(ex);
-                var message = String.Format("Exception thrown while executing tests in binary '{0}'", binaryPath);
+                var message = String.Format("Exception thrown while executing tests locally in binary '{0}'", binaryPath);
 
                 logger.Error(exInfo, message);
             }
 
-            logger.Debug(String.Format("Finish executing {0} tests locally in '{1}'", count, binaryPath));
+            logger.Debug(String.Format("Finish executing {0} tests locally in binary '{1}'", count, binaryPath));
 
             return count;
         }
