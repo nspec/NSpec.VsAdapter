@@ -19,7 +19,7 @@ namespace NSpec.VsAdapter.Execution
         public int ExecuteAll(string binaryPath, IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
-            CrossDomainRunner<IProxyableTestExecutor, int>.RemoteOperation operation = (proxyableExecutor) =>
+            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
             {
                 return proxyableExecutor.ExecuteAll(binaryPath, progressRecorder, crossDomainLogger);
             };
@@ -33,7 +33,7 @@ namespace NSpec.VsAdapter.Execution
         {
             string[] exampleFullNames = testCaseFullNames.ToArray();
 
-            CrossDomainRunner<IProxyableTestExecutor, int>.RemoteOperation operation = (proxyableExecutor) =>
+            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
             {
                 return proxyableExecutor.ExecuteSelection(binaryPath, exampleFullNames, progressRecorder, crossDomainLogger);
             };
@@ -43,7 +43,7 @@ namespace NSpec.VsAdapter.Execution
 
         // TODO pass canceler to proxyableExecutor
 
-        int RunRemoteOperation(string description, CrossDomainRunner<IProxyableTestExecutor, int>.RemoteOperation operation, string binaryPath, IOutputLogger logger)
+        int RunRemoteOperation(string description, Func<IProxyableTestExecutor, int> operation, string binaryPath, IOutputLogger logger)
         {
             logger.Info(String.Format("Executing {0} tests in binary '{1}'", description, binaryPath));
 

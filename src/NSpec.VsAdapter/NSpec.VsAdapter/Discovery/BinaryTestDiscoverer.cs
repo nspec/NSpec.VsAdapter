@@ -30,7 +30,7 @@ namespace NSpec.VsAdapter.Discovery
             }
             else
             {
-                CrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]>.RemoteOperation operation = (proxyableTestDiscoverer) =>
+                Func<IProxyableTestDiscoverer, DiscoveredExample[]> operation = (proxyableTestDiscoverer) =>
                 {
                     return proxyableTestDiscoverer.Discover(binaryPath, crossDomainLogger);
                 };
@@ -39,7 +39,7 @@ namespace NSpec.VsAdapter.Discovery
             }
         }
 
-        IEnumerable<DiscoveredExample> RunRemoteOperation(CrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]>.RemoteOperation operation, string binaryPath, IOutputLogger logger)
+        IEnumerable<DiscoveredExample> RunRemoteOperation(Func<IProxyableTestDiscoverer, DiscoveredExample[]> operation, string binaryPath, IOutputLogger logger)
         {
             logger.Info(String.Format("Discovering tests in binary '{0}'", binaryPath));
 

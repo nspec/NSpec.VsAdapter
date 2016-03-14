@@ -20,10 +20,9 @@ namespace NSpec.VsAdapter.CrossDomain
             this.proxyableFactory = proxyableFactory;
         }
 
-        public delegate TResult RemoteOperation(TProxyable proxyable);
-        public delegate TResult FailureCallback(Exception ex, string binaryPath);
-
-        public TResult Run(string binaryPath, RemoteOperation operation, FailureCallback fail)
+        public TResult Run(string binaryPath, 
+            Func<TProxyable, TResult> operation, 
+            Func<Exception, string, TResult> fail)
         {
             try
             {
@@ -45,10 +44,5 @@ namespace NSpec.VsAdapter.CrossDomain
 
         readonly IAppDomainFactory appDomainFactory;
         readonly IProxyableFactory<TProxyable> proxyableFactory;
-
-        public TResult Run(string binaryPath, Func<TProxyable, TResult> operation, Func<Exception, string, TResult> fail)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
