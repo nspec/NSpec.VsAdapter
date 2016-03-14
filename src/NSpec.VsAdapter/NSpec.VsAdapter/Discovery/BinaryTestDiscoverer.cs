@@ -1,4 +1,5 @@
-﻿using NSpec.VsAdapter.Logging;
+﻿using NSpec.VsAdapter.CrossDomain;
+using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,9 +11,11 @@ namespace NSpec.VsAdapter.Discovery
 {
     public class BinaryTestDiscoverer : IBinaryTestDiscoverer
     {
-        public BinaryTestDiscoverer(ICrossDomainCollector crossDomainCollector, IFileService fileService)
+        public BinaryTestDiscoverer(IAppDomainFactory appDomainFactory, IProxyableFactory<IProxyableTestDiscoverer> proxyableFactory, 
+            IFileService fileService)
         {
-            this.crossDomainCollector = crossDomainCollector;
+            this.appDomainFactory = appDomainFactory;
+            this.proxyableFactory = proxyableFactory;
             this.fileService = fileService;
         }
 
@@ -25,29 +28,43 @@ namespace NSpec.VsAdapter.Discovery
 
                 return new DiscoveredExample[0];
             }
+            else
+            {
+                RemoteOperation operation = (proxyableTestDiscoverer) =>
+                {
+                    return proxyableTestDiscoverer.Discover(binaryPath, crossDomainLogger);
+                };
+
+                return RunRemoteOperation(operation, binaryPath, logger);
+            }
+        }
+
+        IEnumerable<DiscoveredExample> RunRemoteOperation(RemoteOperation operation, string binaryPath, IOutputLogger logger)
+        {
+            logger.Info(String.Format("Discovering tests in binary '{0}'", binaryPath));
+
+            IEnumerable<DiscoveredExample> discoveredExamples;
 
             try
             {
-                logger.Info(String.Format("Discovering tests in binary '{0}'", binaryPath));
-
-                var collectorInvocation = new CollectorInvocation(binaryPath, crossDomainLogger);
-
-                var discoveredExamples = crossDomainCollector.Run(binaryPath, collectorInvocation.Collect);
-
-                logger.Info(String.Format("Found {0} tests", discoveredExamples.Count()));
-
-                return discoveredExamples;
+                using (var targetDomain = appDomainFactory.Create(binaryPath))
+                using (var proxyableTestDiscoverer = proxyableFactory.CreateProxy(targetDomain))
+                {
+                    discoveredExamples = operation(proxyableTestDiscoverer);
+                }
             }
             catch (Exception ex)
             {
+                discoveredExamples = new DiscoveredExample[0];
+
                 // report problem and return for the next assembly, without crashing the test discovery process
-
                 var message = String.Format("Exception thrown while discovering tests in binary '{0}'", binaryPath);
-                
                 logger.Error(ex, message);
-
-                return new DiscoveredExample[0];
             }
+
+            logger.Info(String.Format("Found {0} tests in binary '{1}'", discoveredExamples.Count(), binaryPath));
+
+            return discoveredExamples;
         }
 
         bool NSpecLibraryFound(string binaryPath)
@@ -59,7 +76,10 @@ namespace NSpec.VsAdapter.Discovery
             return fileService.Exists(nspecLibraryPath);
         }
 
-        readonly ICrossDomainCollector crossDomainCollector;
+        readonly IAppDomainFactory appDomainFactory;
+        readonly IProxyableFactory<IProxyableTestDiscoverer> proxyableFactory;
         readonly IFileService fileService;
+
+        delegate DiscoveredExample[] RemoteOperation(IProxyableTestDiscoverer proxyableTestDiscoverer);
     }
 }

@@ -44,7 +44,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Discovery
         [TearDown]
         public virtual void after_each()
         {
-            discoverer.Dispose();
+            if (discoverer != null) discoverer.Dispose();
         }
 
         [Test]

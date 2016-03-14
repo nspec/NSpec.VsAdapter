@@ -1,5 +1,6 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
+using NSpec.VsAdapter.CrossDomain;
 using NSpec.VsAdapter.Discovery;
 using NSpec.VsAdapter.Logging;
 using NSubstitute;
@@ -19,10 +20,15 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         protected BinaryTestDiscoverer discoverer;
 
         protected AutoSubstitute autoSubstitute;
+        protected IAppDomainFactory appDomainFactory;
+        protected ITargetAppDomain targetDomain;
+        protected IProxyableFactory<IProxyableTestDiscoverer> proxyableFactory;
+        protected IProxyableTestDiscoverer proxyableDiscoverer;
         protected IFileService fileService;
-        protected ICrossDomainCollector crossDomainCollector;
         protected IOutputLogger logger;
         protected ICrossDomainLogger crossDomainLogger;
+
+        protected IEnumerable<DiscoveredExample> actuals;
 
         protected readonly DiscoveredExample[] someDiscoveredExamples = new DiscoveredExample[] 
         { 
@@ -39,8 +45,15 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         {
             autoSubstitute = new AutoSubstitute();
 
+            targetDomain = Substitute.For<ITargetAppDomain>();
+            appDomainFactory = autoSubstitute.Resolve<IAppDomainFactory>();
+            appDomainFactory.Create(somePath).Returns(targetDomain);
+
+            proxyableDiscoverer = Substitute.For<IProxyableTestDiscoverer>();
+            proxyableFactory = autoSubstitute.Resolve<IProxyableFactory<IProxyableTestDiscoverer>>();
+            proxyableFactory.CreateProxy(targetDomain).Returns(proxyableDiscoverer);
+
             fileService = autoSubstitute.Resolve<IFileService>();
-            crossDomainCollector = autoSubstitute.Resolve<ICrossDomainCollector>();
 
             logger = autoSubstitute.Resolve<IOutputLogger>();
             crossDomainLogger = autoSubstitute.Resolve<ICrossDomainLogger>();
@@ -71,47 +84,82 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         {
             base.before_each();
 
-            crossDomainCollector.Run(null, null).ReturnsForAnyArgs(callInfo =>
-                {
-                    string binaryPath = callInfo.Arg<string>();
+            proxyableDiscoverer.Discover(somePath, crossDomainLogger).Returns(someDiscoveredExamples);
 
-                    return (binaryPath == somePath ? someDiscoveredExamples : new DiscoveredExample[0]);
-                });
+            actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
         }
 
         [Test]
         public void it_should_return_collected_specifications()
         {
-            discoverer.Discover(somePath, logger, crossDomainLogger).Should().BeEquivalentTo(someDiscoveredExamples);
+            var expecteds = someDiscoveredExamples;
+
+            actuals.Should().BeEquivalentTo(expecteds);
         }
     }
 
-    public class BinaryTestDiscoverer_when_discovery_fails : BinaryTestDiscoverer_when_nspec_found
+    public abstract class BinaryTestDiscoverer_when_discovery_fails : BinaryTestDiscoverer_when_nspec_found
     {
-        IEnumerable<DiscoveredExample> discoveredExamples;
-
-        public override void before_each()
-        {
-            base.before_each();
-
-            crossDomainCollector.Run(null, null).ReturnsForAnyArgs(_ =>
-                {
-                    throw new DummyTestException();
-                });
-
-            discoveredExamples = discoverer.Discover(somePath, logger, crossDomainLogger);
-        }
+        protected DummyTestException ex;
 
         [Test]
         public void it_should_return_empty_spec_list()
         {
-            discoveredExamples.Should().BeEmpty();
+            actuals.Should().BeEmpty();
         }
 
         [Test]
         public void it_should_log_error_and_exception()
         {
-            logger.Received(1).Error(Arg.Any<DummyTestException>(), Arg.Any<string>());
+            logger.Received(1).Error(ex, Arg.Any<string>());
+        }
+    }
+
+    public class BinaryTestDiscoverer_when_creating_appdomain_fails : BinaryTestDiscoverer_when_discovery_fails
+    {
+        public override void before_each()
+        {
+            base.before_each();
+
+            appDomainFactory.Create(somePath).Returns(_ =>
+            {
+                ex = new DummyTestException();
+                throw ex;
+            });
+
+            actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
+        }
+    }
+
+    public class BinaryTestDiscoverer_when_creating_proxyable_fails : BinaryTestDiscoverer_when_discovery_fails
+    {
+        public override void before_each()
+        {
+            base.before_each();
+
+            proxyableFactory.CreateProxy(targetDomain).Returns(_ =>
+            {
+                ex = new DummyTestException();
+                throw ex;
+            });
+
+            actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
+        }
+    }
+
+    public class BinaryTestDiscoverer_when_discovering_locally_fails : BinaryTestDiscoverer_when_discovery_fails
+    {
+        public override void before_each()
+        {
+            base.before_each();
+
+            proxyableDiscoverer.Discover(somePath, crossDomainLogger).Returns(_ =>
+            {
+                ex = new DummyTestException();
+                throw ex;
+            });
+
+            actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
         }
     }
 
@@ -123,18 +171,18 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
             fileService.Exists(nspecPath).Returns(false);
 
-            crossDomainCollector.Run(null, null).ReturnsForAnyArgs(callInfo =>
+            proxyableDiscoverer.Discover(null, null).ReturnsForAnyArgs(_ =>
             {
-                string binaryPath = callInfo.Arg<string>();
-
-                return (binaryPath == somePath ? someDiscoveredExamples : new DiscoveredExample[0]);
+                throw new DummyTestException();
             });
+
+            actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
         }
 
         [Test]
         public void it_should_skip_binary()
         {
-            discoverer.Discover(somePath, logger, crossDomainLogger).Should().BeEmpty();
+            actuals.Should().BeEmpty();
         }
     }
 }

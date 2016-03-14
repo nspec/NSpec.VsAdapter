@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Discovery
 {
-    [Serializable]
+    [Serializable]  // TODO check if needed
     public class DiscoveredExample
     {
         public string FullName { get; set; }

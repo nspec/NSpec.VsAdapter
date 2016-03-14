@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// TODO check for deletion
+#if false
 namespace NSpec.VsAdapter.UnitTests.CrossDomain
 {
     [TestFixture]
@@ -169,3 +171,4 @@ namespace NSpec.VsAdapter.UnitTests.CrossDomain
         }
     }
 }
+#endif

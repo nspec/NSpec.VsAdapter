@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// TODO check for deletion
+#if false
 namespace NSpec.VsAdapter.CrossDomain
 {
     public class CrossDomainRunner<TResult> : ICrossDomainRunner<TResult>
@@ -32,3 +34,4 @@ namespace NSpec.VsAdapter.CrossDomain
         readonly IProxyFactory<TResult> proxyFactory;
     }
 }
+#endif

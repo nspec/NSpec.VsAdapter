@@ -176,7 +176,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         }
     }
 
-    public class BinaryTestExecutor_when_executing_all_fails : BinaryTestExecutor_when_executing_fails
+    public class BinaryTestExecutor_when_executing_all_locally_fails : BinaryTestExecutor_when_executing_fails
     {
         public override void before_each()
         {
@@ -204,7 +204,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         }
     }
 
-    public class BinaryTestExecutor_when_executing_a_selection_fails : BinaryTestExecutor_when_executing_fails
+    public class BinaryTestExecutor_when_executing_a_selection_locally_fails : BinaryTestExecutor_when_executing_fails
     {
         public override void before_each()
         {

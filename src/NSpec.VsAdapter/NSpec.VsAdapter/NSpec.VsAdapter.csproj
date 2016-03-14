@@ -89,6 +89,9 @@
     <Compile Include="CrossDomain\Proxyable.cs" />
     <Compile Include="CrossDomain\ProxyableFactory.cs" />
     <Compile Include="Discovery\ExampleFinder.cs" />
+    <Compile Include="Discovery\IProxyableTestDiscoverer.cs" />
+    <Compile Include="Discovery\ProxyableTestDiscoverer.cs" />
+    <Compile Include="Discovery\ProxyableTestDiscovererFactory.cs" />
     <Compile Include="Execution\ContextExecutor.cs" />
     <Compile Include="Execution\BinaryTestExecutor.cs" />
     <Compile Include="Execution\ExecutedExample.cs" />
@@ -118,14 +121,10 @@
     <Compile Include="Discovery\IDebugInfoProvider.cs" />
     <Compile Include="Logging\IOutputLogger.cs" />
     <Compile Include="CrossDomain\AppDomainFactory.cs" />
-    <Compile Include="Discovery\CollectorInvocation.cs" />
-    <Compile Include="Discovery\CrossDomainCollector.cs" />
     <Compile Include="Discovery\BinaryTestDiscoverer.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Discovery\DiscoveredExampleMapper.cs" />
     <Compile Include="CrossDomain\IAppDomainFactory.cs" />
-    <Compile Include="Discovery\ICollectorInvocation.cs" />
-    <Compile Include="Discovery\ICrossDomainCollector.cs" />
     <Compile Include="Discovery\IBinaryTestDiscoverer.cs" />
     <Compile Include="CrossDomain\ICrossDomainRunner.cs" />
     <Compile Include="CrossDomain\IProxyFactory.cs" />
