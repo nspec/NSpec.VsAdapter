@@ -116,7 +116,7 @@
     <Compile Include="Logging\LoggerFactory.cs" />
     <Compile Include="Discovery\DebugInfoProvider.cs" />
     <Compile Include="DependencyContainer.cs" />
-    <Compile Include="FileService.cs" />
+    <Compile Include="Common\FileService.cs" />
     <Compile Include="IAdapterInfo.cs" />
     <Compile Include="Discovery\IDebugInfoProvider.cs" />
     <Compile Include="Logging\IOutputLogger.cs" />
@@ -164,7 +164,7 @@
     <Compile Include="ProjectObservation\Solution\ISolutionProvider.cs" />
     <Compile Include="ProjectObservation\ITestBinaryNotifier.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="IFileService.cs" />
+    <Compile Include="Common\IFileService.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer.cs" />
     <Compile Include="TestExplorer\NSpecTestContainerDiscoverer.cs" />
     <Compile Include="TestExplorer\NSpecTestContainerFactory.cs" />

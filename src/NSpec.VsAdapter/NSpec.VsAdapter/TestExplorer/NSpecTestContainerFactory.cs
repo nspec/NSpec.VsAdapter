@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestWindow.Extensibility;
+using NSpec.VsAdapter.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

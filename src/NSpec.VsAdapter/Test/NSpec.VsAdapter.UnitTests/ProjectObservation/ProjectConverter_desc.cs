@@ -1,6 +1,7 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using Microsoft.VisualStudio.Shell.Interop;
+using NSpec.VsAdapter.Common;
 using NSpec.VsAdapter.ProjectObservation;
 using NSpec.VsAdapter.ProjectObservation.Projects;
 using NSubstitute;

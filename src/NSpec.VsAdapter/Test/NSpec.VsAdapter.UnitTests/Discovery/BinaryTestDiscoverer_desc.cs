@@ -1,5 +1,6 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
+using NSpec.VsAdapter.Common;
 using NSpec.VsAdapter.CrossDomain;
 using NSpec.VsAdapter.Discovery;
 using NSpec.VsAdapter.Logging;

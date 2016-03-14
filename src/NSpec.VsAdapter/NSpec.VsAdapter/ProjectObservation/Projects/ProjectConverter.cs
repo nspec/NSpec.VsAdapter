@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.Shell.Interop;
+using NSpec.VsAdapter.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;

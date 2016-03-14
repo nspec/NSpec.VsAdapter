@@ -4,10 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace NSpec.VsAdapter
+namespace NSpec.VsAdapter.Common
 {
-    // TODO move to Common directory
-
     public class FileService : IFileService
     {
         public bool Exists(string path)

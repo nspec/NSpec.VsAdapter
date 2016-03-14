@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using NSpec.VsAdapter.Common;
 using NSpec.VsAdapter.CrossDomain;
 using NSpec.VsAdapter.Discovery;
 using NSpec.VsAdapter.Execution;

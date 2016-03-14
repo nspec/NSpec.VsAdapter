@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
+using NSpec.VsAdapter.Common;
 using NSpec.VsAdapter.TestExplorer;
 using NSubstitute;
 using NUnit.Framework;
