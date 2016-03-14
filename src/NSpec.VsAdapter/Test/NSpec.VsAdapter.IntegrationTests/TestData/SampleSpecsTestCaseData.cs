@@ -37,7 +37,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                         "nspec. ParentSpec. method context 1. parent example 1A.", 
                                         Constants.ExecutorUri, specAssemblyPath)
                                     {
-                                        DisplayName = "nspec. ParentSpec. method context 1. parent example 1A.",
+                                        DisplayName = "ParentSpec › method context 1 › parent example 1A.",
                                         CodeFilePath = sourceCodeFilePath,
                                         LineNumber = 19,
                                     }
@@ -48,7 +48,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                         "nspec. ParentSpec. method context 1. parent example 1B.", 
                                         Constants.ExecutorUri, specAssemblyPath)
                                     {
-                                        DisplayName = "nspec. ParentSpec. method context 1. parent example 1B.",
+                                        DisplayName = "ParentSpec › method context 1 › parent example 1B.",
                                         CodeFilePath = sourceCodeFilePath,
                                         LineNumber = 21,
                                     }
@@ -65,7 +65,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                         "nspec. ParentSpec. method context 2. parent example 2A.", 
                                         Constants.ExecutorUri, specAssemblyPath)
                                     {
-                                        DisplayName = "nspec. ParentSpec. method context 2. parent example 2A.",
+                                        DisplayName = "ParentSpec › method context 2 › parent example 2A.",
                                         CodeFilePath = sourceCodeFilePath,
                                         LineNumber = 26,
                                     }
@@ -88,7 +88,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                         "nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped.", 
                                         Constants.ExecutorUri, specAssemblyPath)
                                     {
-                                        DisplayName = "nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped.",
+                                        DisplayName = "ParentSpec › ChildSpec › method context 3 › child example 3A skipped.",
                                         // no source code info available for pending tests
                                         CodeFilePath = String.Empty,
                                         LineNumber = 0,
@@ -106,9 +106,9 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                         "nspec. ParentSpec. ChildSpec. method context 4. child example 4A.", 
                                         Constants.ExecutorUri, specAssemblyPath)
                                     {
-                                        DisplayName = "nspec. ParentSpec. ChildSpec. method context 4. child example 4A.",
+                                        DisplayName = "ParentSpec › ChildSpec › method context 4 › child example 4A.",
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 41,
+                                        LineNumber = 42,
                                     }
                                 },
                             }
@@ -123,9 +123,9 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                         "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing.", 
                                         Constants.ExecutorUri, specAssemblyPath)
                                     {
-                                        DisplayName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing.", 
+                                        DisplayName = "ParentSpec › ChildSpec › method context 5 › sub context 5-1 › child example 5-1A failing.", 
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 48,
+                                        LineNumber = 49,
                                     }
                                 },
                                 {
@@ -134,9 +134,9 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                         "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.", 
                                         Constants.ExecutorUri, specAssemblyPath)
                                     {
-                                        DisplayName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.", 
+                                        DisplayName = "ParentSpec › ChildSpec › method context 5 › sub context 5-1 › child example 5-1B.", 
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 50,
+                                        LineNumber = 51,
                                     }
                                 },
                             }
@@ -173,6 +173,9 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
 
             All.Where(tc => tc.FullyQualifiedName.Contains("method context 3"))
                 .Do(tc => tc.Traits.Add("Tag-Child-example-skipped", null));
+
+            All.Where(tc => tc.FullyQualifiedName.Contains("method context 4"))
+                .Do(tc => tc.Traits.Add("Tag with underscores", null));
         }
 
         // adapted from https://github.com/mattflo/NSpec/blob/master/NSpec/Extensions.cs

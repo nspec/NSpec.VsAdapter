@@ -31,13 +31,13 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             discoveredExample = new DiscoveredExample()
             {
-                FullName = "some-test-full-name",
+                FullName = "nspec. L1 context. L2 context. example name.",
                 SourceFilePath = @".\some\path\to\source\code.cs",
                 SourceLineNumber = 123,
                 SourceAssembly = @".\some\path\to\library.dll",
                 Tags = new string[] 
                 { 
-                    "tag1", "tag2", "tag3", 
+                    "tag1", "tag2", "tag3_with_underscore", "tag4-with-dash", 
                 },
             };
 
@@ -46,13 +46,18 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 Constants.ExecutorUri,
                 discoveredExample.SourceAssembly)
                 {
-                    DisplayName = discoveredExample.FullName,
+                    DisplayName = "L1 context › L2 context › example name.",
                     CodeFilePath = discoveredExample.SourceFilePath,
                     LineNumber = discoveredExample.SourceLineNumber,
                 };
 
-            var traits = discoveredExample.Tags.Select(tag => new Trait(tag, null));
-            expectedTestCase.Traits.AddRange(traits);
+            var expectedTraits = new string[] 
+                { 
+                    "tag1", "tag2", "tag3 with underscore", "tag4-with-dash", 
+                }
+                .Select(tag => new Trait(tag, null));
+
+            expectedTestCase.Traits.AddRange(expectedTraits);
         }
 
         [TearDown]
