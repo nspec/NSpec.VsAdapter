@@ -10,10 +10,9 @@ namespace NSpec.VsAdapter.Execution
 {
     public class BinaryTestExecutor : IBinaryTestExecutor
     {
-        public BinaryTestExecutor(IAppDomainFactory appDomainFactory, IProxyableFactory<IProxyableTestExecutor> proxyableFactory)
+        public BinaryTestExecutor(ICrossDomainRunner<IProxyableTestExecutor, int> remoteRunner)
         {
-            this.appDomainFactory = appDomainFactory;
-            this.proxyableFactory = proxyableFactory;
+            this.remoteRunner = remoteRunner;
         }
 
         public int ExecuteAll(string binaryPath, IProgressRecorder progressRecorder,
@@ -47,8 +46,6 @@ namespace NSpec.VsAdapter.Execution
         {
             logger.Info(String.Format("Executing {0} tests in binary '{1}'", description, binaryPath));
 
-            var remoteRunner = new CrossDomainRunner<IProxyableTestExecutor, int>(appDomainFactory, proxyableFactory);
-
             int count = remoteRunner.Run(binaryPath, operation, (ex, path) =>
             {
                 // report problem and return for the next assembly, without crashing the test execution process
@@ -63,7 +60,6 @@ namespace NSpec.VsAdapter.Execution
             return count;
         }
 
-        readonly IAppDomainFactory appDomainFactory;
-        readonly IProxyableFactory<IProxyableTestExecutor> proxyableFactory;
+        readonly ICrossDomainRunner<IProxyableTestExecutor, int> remoteRunner;
     }
 }

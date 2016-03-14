@@ -21,14 +21,11 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         protected BinaryTestExecutor executor;
 
         protected AutoSubstitute autoSubstitute;
-        protected IAppDomainFactory appDomainFactory;
-        protected ITargetAppDomain targetDomain;
-        protected IProxyableFactory<IProxyableTestExecutor> proxyableFactory;
-        protected IProxyableTestExecutor proxyableExecutor;
+        protected ICrossDomainRunner<IProxyableTestExecutor, int> remoteRunner;
         protected IProgressRecorder progressRecorder;
         protected IOutputLogger logger;
         protected ICrossDomainLogger crossDomainLogger;
-        protected int actualCount;
+        protected int actual;
 
         protected const string somePath = @".\path\to\some\dummy-library.dll";
 
@@ -48,15 +45,10 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             autoSubstitute = new AutoSubstitute();
 
-            targetDomain = Substitute.For<ITargetAppDomain>();
-            appDomainFactory = autoSubstitute.Resolve<IAppDomainFactory>();
-            appDomainFactory.Create(somePath).Returns(targetDomain);
-
-            proxyableExecutor = Substitute.For<IProxyableTestExecutor>();
-            proxyableFactory = autoSubstitute.Resolve<IProxyableFactory<IProxyableTestExecutor>>();
-            proxyableFactory.CreateProxy(targetDomain).Returns(proxyableExecutor);
+            remoteRunner = autoSubstitute.SubstituteFor<ICrossDomainRunner<IProxyableTestExecutor, int>>();
 
             progressRecorder = autoSubstitute.Resolve<IProgressRecorder>();
+
             logger = autoSubstitute.Resolve<IOutputLogger>();
             crossDomainLogger = autoSubstitute.Resolve<ICrossDomainLogger>();
 
@@ -74,24 +66,23 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
     public abstract class BinaryTestExecutor_when_executing_succeeds : BinaryTestExecutor_desc_base
     {
-        protected const int expectedCount = 17;
+        protected const int expected = 17;
+
+        public override void before_each()
+        {
+            base.before_each();
+
+            remoteRunner
+                .Run(somePath,
+                    Arg.Any<Func<IProxyableTestExecutor, int>>(),
+                    Arg.Any<Func<Exception, string, int>>())
+                .Returns(expected);
+        }
 
         [Test]
         public void it_should_return_nr_of_tests_ran()
         {
-            actualCount.Should().Be(expectedCount);
-        }
-
-        [Test]
-        public void it_should_dispose_target_app_domain()
-        {
-            targetDomain.Received(1).Dispose();
-        }
-
-        [Test]
-        public void it_should_dispose_proxyable_executor()
-        {
-            proxyableExecutor.Received(1).Dispose();
+            actual.Should().Be(expected);
         }
     }
 
@@ -101,9 +92,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             base.before_each();
 
-            proxyableExecutor.ExecuteAll(somePath, progressRecorder, crossDomainLogger).Returns(expectedCount);
-
-            actualCount = executor.ExecuteAll(somePath, progressRecorder, logger, crossDomainLogger);
+            actual = executor.ExecuteAll(somePath, progressRecorder, logger, crossDomainLogger);
         }
     }
 
@@ -113,66 +102,43 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             base.before_each();
 
-            proxyableExecutor.ExecuteSelection(somePath,
-                Arg.Is<string[]>(CompareToTestCaseFullNames),
-                progressRecorder, crossDomainLogger).Returns(expectedCount);
-
-            actualCount = executor.ExecuteSelected(somePath, testCaseFullNames, progressRecorder, logger, crossDomainLogger);
+            actual = executor.ExecuteSelected(somePath, testCaseFullNames, progressRecorder, logger, crossDomainLogger);
         }
     }
 
     public abstract class BinaryTestExecutor_when_executing_fails : BinaryTestExecutor_desc_base
     {
-        protected DummyTestException ex;
+        protected DummyTestException expectedEx;
+
+        public override void before_each()
+        {
+            base.before_each();
+
+            expectedEx = new DummyTestException();
+
+            remoteRunner
+                .Run(somePath,
+                    Arg.Any<Func<IProxyableTestExecutor, int>>(),
+                    Arg.Any<Func<Exception, string, int>>())
+                .Returns(callInfo =>
+                {
+                    var path = callInfo.Arg<string>();
+                    var fail = callInfo.Arg<Func<Exception, string, int>>();
+
+                    return fail(expectedEx, path);
+                });
+        }
 
         [Test]
         public void it_should_return_zero_tests_ran()
         {
-            actualCount.Should().Be(0);
+            actual.Should().Be(0);
         }
 
         [Test]
-        public void it_should_log_error_and_exception()
+        public void it_should_log_error_with_exception()
         {
-            logger.Received(1).Error(ex, Arg.Any<string>());
-        }
-    }
-
-    public class BinaryTestExecutor_when_creating_appdomain_fails : BinaryTestExecutor_when_executing_fails
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            appDomainFactory.Create(somePath).Returns(_ =>
-            {
-                ex = new DummyTestException();
-                throw ex;
-            });
-
-            actualCount = executor.ExecuteAll(somePath, progressRecorder, logger, crossDomainLogger);
-        }
-    }
-
-    public class BinaryTestExecutor_when_creating_proxyable_fails : BinaryTestExecutor_when_executing_fails
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            proxyableFactory.CreateProxy(targetDomain).Returns(_ =>
-            {
-                ex = new DummyTestException();
-                throw ex;
-            });
-
-            actualCount = executor.ExecuteAll(somePath, progressRecorder, logger, crossDomainLogger);
-        }
-
-        [Test]
-        public void it_should_dispose_target_app_domain()
-        {
-            targetDomain.Received(1).Dispose();
+            logger.Received(1).Error(expectedEx, Arg.Any<string>());
         }
     }
 
@@ -182,25 +148,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             base.before_each();
 
-            proxyableExecutor.ExecuteAll(somePath, progressRecorder, crossDomainLogger).Returns(_ =>
-            {
-                ex = new DummyTestException();
-                throw ex;
-            });
-
-            actualCount = executor.ExecuteAll(somePath, progressRecorder, logger, crossDomainLogger);
-        }
-
-        [Test]
-        public void it_should_dispose_target_app_domain()
-        {
-            targetDomain.Received(1).Dispose();
-        }
-
-        [Test]
-        public void it_should_dispose_proxyable_executor()
-        {
-            proxyableExecutor.Received(1).Dispose();
+            actual = executor.ExecuteAll(somePath, progressRecorder, logger, crossDomainLogger);
         }
     }
 
@@ -210,27 +158,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
         {
             base.before_each();
 
-            proxyableExecutor.ExecuteSelection(somePath,
-                Arg.Is<string[]>(CompareToTestCaseFullNames), 
-                progressRecorder, crossDomainLogger).Returns(_ =>
-            {
-                ex = new DummyTestException();
-                throw ex;
-            });
-
-            actualCount = executor.ExecuteSelected(somePath, testCaseFullNames, progressRecorder, logger, crossDomainLogger);
-        }
-
-        [Test]
-        public void it_should_dispose_target_app_domain()
-        {
-            targetDomain.Received(1).Dispose();
-        }
-
-        [Test]
-        public void it_should_dispose_proxyable_executor()
-        {
-            proxyableExecutor.Received(1).Dispose();
+            actual = executor.ExecuteSelected(somePath, testCaseFullNames, progressRecorder, logger, crossDomainLogger);
         }
     }
 }

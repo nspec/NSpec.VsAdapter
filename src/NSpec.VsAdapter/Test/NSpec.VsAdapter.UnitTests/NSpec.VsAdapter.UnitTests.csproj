@@ -103,7 +103,7 @@
     <Compile Include="..\..\SolutionItems\SolutionAssemblyInfo.cs">
       <Link>Properties\SolutionAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CrossDomain\CrossDomainRunner_desc_base.cs" />
+    <Compile Include="CrossDomain\CrossDomainRunner_desc.cs" />
     <Compile Include="Discovery\BinaryTestDiscoverer_desc.cs" />
     <Compile Include="Discovery\DebugInfoProvider_desc.cs" />
     <Compile Include="Discovery\SampleSpecs\SampleDebugInfo.cs" />

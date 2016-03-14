@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.CrossDomain
 {
-    // TODO rename to RemoteDomainRunner or TargetDomainRunner. Same for interface.
-
     public class CrossDomainRunner<TProxyable, TResult> : ICrossDomainRunner<TProxyable, TResult>
         where TProxyable : IDisposable
     {

@@ -11,11 +11,10 @@ namespace NSpec.VsAdapter.Discovery
 {
     public class BinaryTestDiscoverer : IBinaryTestDiscoverer
     {
-        public BinaryTestDiscoverer(IAppDomainFactory appDomainFactory, IProxyableFactory<IProxyableTestDiscoverer> proxyableFactory, 
+        public BinaryTestDiscoverer(ICrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]> remoteRunner, 
             IFileService fileService)
         {
-            this.appDomainFactory = appDomainFactory;
-            this.proxyableFactory = proxyableFactory;
+            this.remoteRunner = remoteRunner;
             this.fileService = fileService;
         }
 
@@ -43,8 +42,6 @@ namespace NSpec.VsAdapter.Discovery
         {
             logger.Info(String.Format("Discovering tests in binary '{0}'", binaryPath));
 
-            var remoteRunner = new CrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]>(appDomainFactory, proxyableFactory);
-
             IEnumerable<DiscoveredExample> discoveredExamples = remoteRunner.Run(binaryPath, operation, (ex, path) =>
             {
                 // report problem and return for the next assembly, without crashing the test discovery process
@@ -68,8 +65,7 @@ namespace NSpec.VsAdapter.Discovery
             return fileService.Exists(nspecLibraryPath);
         }
 
-        readonly IAppDomainFactory appDomainFactory;
-        readonly IProxyableFactory<IProxyableTestDiscoverer> proxyableFactory;
+        readonly ICrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]> remoteRunner;
         readonly IFileService fileService;
     }
 }

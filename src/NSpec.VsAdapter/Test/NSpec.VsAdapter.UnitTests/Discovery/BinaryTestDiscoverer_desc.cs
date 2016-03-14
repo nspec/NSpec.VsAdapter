@@ -20,10 +20,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         protected BinaryTestDiscoverer discoverer;
 
         protected AutoSubstitute autoSubstitute;
-        protected IAppDomainFactory appDomainFactory;
-        protected ITargetAppDomain targetDomain;
-        protected IProxyableFactory<IProxyableTestDiscoverer> proxyableFactory;
-        protected IProxyableTestDiscoverer proxyableDiscoverer;
+        protected ICrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]> remoteRunner;
         protected IFileService fileService;
         protected IOutputLogger logger;
         protected ICrossDomainLogger crossDomainLogger;
@@ -45,13 +42,8 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         {
             autoSubstitute = new AutoSubstitute();
 
-            targetDomain = Substitute.For<ITargetAppDomain>();
-            appDomainFactory = autoSubstitute.Resolve<IAppDomainFactory>();
-            appDomainFactory.Create(somePath).Returns(targetDomain);
-
-            proxyableDiscoverer = Substitute.For<IProxyableTestDiscoverer>();
-            proxyableFactory = autoSubstitute.Resolve<IProxyableFactory<IProxyableTestDiscoverer>>();
-            proxyableFactory.CreateProxy(targetDomain).Returns(proxyableDiscoverer);
+            remoteRunner = autoSubstitute.SubstituteFor<
+                ICrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]>>();
 
             fileService = autoSubstitute.Resolve<IFileService>();
 
@@ -84,7 +76,11 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         {
             base.before_each();
 
-            proxyableDiscoverer.Discover(somePath, crossDomainLogger).Returns(someDiscoveredExamples);
+            remoteRunner
+                .Run(somePath, 
+                    Arg.Any<Func<IProxyableTestDiscoverer, DiscoveredExample[]>>(),
+                    Arg.Any<Func<Exception, string, DiscoveredExample[]>>())
+                .Returns(someDiscoveredExamples);
 
             actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
         }
@@ -98,9 +94,30 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         }
     }
 
-    public abstract class BinaryTestDiscoverer_when_discovery_fails : BinaryTestDiscoverer_when_nspec_found
+    public class BinaryTestDiscoverer_when_discovery_fails : BinaryTestDiscoverer_when_nspec_found
     {
-        protected DummyTestException ex;
+        DummyTestException expectedEx;
+
+        public override void before_each()
+        {
+            base.before_each();
+
+            expectedEx = new DummyTestException();
+
+            remoteRunner
+                .Run(somePath,
+                    Arg.Any<Func<IProxyableTestDiscoverer, DiscoveredExample[]>>(),
+                    Arg.Any<Func<Exception, string, DiscoveredExample[]>>())
+                .Returns(callInfo =>
+                {
+                    var path = callInfo.Arg<string>();
+                    var fail = callInfo.Arg<Func<Exception, string, DiscoveredExample[]>>();
+
+                    return fail(expectedEx, path);
+                });
+
+            actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
+        }
 
         [Test]
         public void it_should_return_empty_spec_list()
@@ -109,57 +126,9 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         }
 
         [Test]
-        public void it_should_log_error_and_exception()
+        public void it_should_log_error_with_exception()
         {
-            logger.Received(1).Error(ex, Arg.Any<string>());
-        }
-    }
-
-    public class BinaryTestDiscoverer_when_creating_appdomain_fails : BinaryTestDiscoverer_when_discovery_fails
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            appDomainFactory.Create(somePath).Returns(_ =>
-            {
-                ex = new DummyTestException();
-                throw ex;
-            });
-
-            actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
-        }
-    }
-
-    public class BinaryTestDiscoverer_when_creating_proxyable_fails : BinaryTestDiscoverer_when_discovery_fails
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            proxyableFactory.CreateProxy(targetDomain).Returns(_ =>
-            {
-                ex = new DummyTestException();
-                throw ex;
-            });
-
-            actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
-        }
-    }
-
-    public class BinaryTestDiscoverer_when_discovering_locally_fails : BinaryTestDiscoverer_when_discovery_fails
-    {
-        public override void before_each()
-        {
-            base.before_each();
-
-            proxyableDiscoverer.Discover(somePath, crossDomainLogger).Returns(_ =>
-            {
-                ex = new DummyTestException();
-                throw ex;
-            });
-
-            actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
+            logger.Received(1).Error(expectedEx, Arg.Any<string>());
         }
     }
 
@@ -171,10 +140,16 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
             fileService.Exists(nspecPath).Returns(false);
 
-            proxyableDiscoverer.Discover(null, null).ReturnsForAnyArgs(_ =>
-            {
-                throw new DummyTestException();
-            });
+            var unexpectedExamples = someDiscoveredExamples;
+
+            remoteRunner
+                .Run(Arg.Any<string>(),
+                    Arg.Any<Func<IProxyableTestDiscoverer, DiscoveredExample[]>>(),
+                    Arg.Any<Func<Exception, string, DiscoveredExample[]>>())
+                .Returns(_ =>
+                {
+                    return unexpectedExamples;
+                });
 
             actuals = discoverer.Discover(somePath, logger, crossDomainLogger);
         }
