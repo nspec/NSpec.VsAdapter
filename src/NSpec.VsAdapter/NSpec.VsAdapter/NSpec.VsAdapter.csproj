@@ -103,6 +103,7 @@
     <Compile Include="Execution\IProgressRecorderFactory.cs" />
     <Compile Include="Execution\NSpecResult.cs" />
     <Compile Include="Execution\ProxyableTestExecutor.cs" />
+    <Compile Include="Execution\ProxyableTestExecutorFactory.cs" />
     <Compile Include="Execution\RunnableContexts.cs" />
     <Compile Include="Execution\RunnableContextFinder.cs" />
     <Compile Include="Logging\CrossDomainLogger.cs" />

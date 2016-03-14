@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.CrossDomain
 {
-    public interface IProxyableFactory<T>
+    public interface IProxyableFactory<TProxyable>
     {
-        T CreateProxy(ITargetAppDomain targetDomain);
+        TProxyable CreateProxy(ITargetAppDomain targetDomain);
     }
 }

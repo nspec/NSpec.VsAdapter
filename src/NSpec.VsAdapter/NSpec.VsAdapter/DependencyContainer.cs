@@ -80,7 +80,7 @@ namespace NSpec.VsAdapter
         {
             builder.RegisterType<AppDomainFactory>().As<IAppDomainFactory>().InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(ProxyFactory<>)).As(typeof(IProxyFactory<>)).InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(ProxyableFactory<>)).As(typeof(IProxyableFactory<>)).InstancePerLifetimeScope();
+            builder.RegisterType<ProxyableTestExecutorFactory>().As<IProxyableFactory<IProxyableTestExecutor>>().InstancePerLifetimeScope();
             builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
             builder.RegisterType<SettingsRepository>().As<ISettingsRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();
