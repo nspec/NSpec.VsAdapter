@@ -31,7 +31,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
 
             discoveredExample = new DiscoveredExample()
             {
-                FullName = "some-test-full-name",
+                FullName = "nspec. L1 context. L2 context. example name.",
                 SourceFilePath = @".\some\path\to\source\code.cs",
                 SourceLineNumber = 123,
                 SourceAssembly = @".\some\path\to\library.dll",
@@ -46,7 +46,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 Constants.ExecutorUri,
                 discoveredExample.SourceAssembly)
                 {
-                    DisplayName = discoveredExample.FullName,
+                    DisplayName = "L1 context › L2 context › example name.",
                     CodeFilePath = discoveredExample.SourceFilePath,
                     LineNumber = discoveredExample.SourceLineNumber,
                 };

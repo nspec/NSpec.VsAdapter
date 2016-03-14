@@ -13,7 +13,7 @@ namespace NSpec.VsAdapter.TestAdapter
         {
             var testCase = new TestCase(discoveredExample.FullName, Constants.ExecutorUri, discoveredExample.SourceAssembly)
                 {
-                    DisplayName = discoveredExample.FullName,
+                    DisplayName = BeautifyForDisplay(discoveredExample.FullName),
                     CodeFilePath = discoveredExample.SourceFilePath,
                     LineNumber = discoveredExample.SourceLineNumber,
                 };
@@ -23,6 +23,27 @@ namespace NSpec.VsAdapter.TestAdapter
             testCase.Traits.AddRange(traits);
 
             return testCase;
+        }
+
+        string BeautifyForDisplay(string fullName)
+        {
+            string displayName;
+
+            // chop leading, redundant 'nspec. ' context
+
+            const string nspecPrefix = @"nspec. ";
+            const int prefixLength = 7;
+
+            displayName = fullName.StartsWith(nspecPrefix) ? fullName.Substring(prefixLength) : fullName;
+
+            // replace context separator
+
+            const string originalSeparator = @". ";
+            const string displaySeparator = @" › ";
+
+            displayName = displayName.Replace(originalSeparator, displaySeparator);
+
+            return displayName;
         }
     }
 }
