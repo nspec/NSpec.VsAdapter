@@ -19,12 +19,12 @@ namespace NSpec.VsAdapter.Execution
         public int ExecuteAll(string binaryPath, IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
-            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
+            RemoteOperation operation = (proxyableExecutor) =>
             {
                 return proxyableExecutor.ExecuteAll(binaryPath, progressRecorder, crossDomainLogger);
             };
 
-            return ExecuteScenario("all", operation, binaryPath, logger);
+            return RunRemoteOperation("all", operation, binaryPath, logger);
         }
 
         public int ExecuteSelected(string binaryPath, IEnumerable<string> testCaseFullNames, 
@@ -33,17 +33,17 @@ namespace NSpec.VsAdapter.Execution
         {
             string[] exampleFullNames = testCaseFullNames.ToArray();
 
-            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
+            RemoteOperation operation = (proxyableExecutor) =>
             {
                 return proxyableExecutor.ExecuteSelection(binaryPath, exampleFullNames, progressRecorder, crossDomainLogger);
             };
 
-            return ExecuteScenario("selected", operation, binaryPath, logger);
+            return RunRemoteOperation("selected", operation, binaryPath, logger);
         }
 
         // TODO pass canceler to proxyableExecutor
 
-        int ExecuteScenario(string description, Func<IProxyableTestExecutor, int> operation, string binaryPath, IOutputLogger logger)
+        int RunRemoteOperation(string description, RemoteOperation operation, string binaryPath, IOutputLogger logger)
         {
             logger.Info(String.Format("Executing {0} tests in binary '{1}'", description, binaryPath));
 
@@ -73,5 +73,7 @@ namespace NSpec.VsAdapter.Execution
 
         readonly IAppDomainFactory appDomainFactory;
         readonly IProxyableFactory<IProxyableTestExecutor> proxyableFactory;
+
+        delegate int RemoteOperation(IProxyableTestExecutor proxyableTestExecutor);
     }
 }

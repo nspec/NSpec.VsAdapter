@@ -28,7 +28,19 @@ namespace NSpec.VsAdapter.Discovery
 
                 return new DiscoveredExample[0];
             }
+            else
+            {
+                RemoteOperation operation = (proxyableTestDiscoverer) =>
+                {
+                    return proxyableTestDiscoverer.Discover(binaryPath, crossDomainLogger);
+                };
 
+                return RunRemoteOperation(operation, binaryPath, logger);
+            }
+        }
+
+        IEnumerable<DiscoveredExample> RunRemoteOperation(RemoteOperation operation, string binaryPath, IOutputLogger logger)
+        {
             logger.Info(String.Format("Discovering tests in binary '{0}'", binaryPath));
 
             IEnumerable<DiscoveredExample> discoveredExamples;
@@ -38,7 +50,7 @@ namespace NSpec.VsAdapter.Discovery
                 using (var targetDomain = appDomainFactory.Create(binaryPath))
                 using (var proxyableTestDiscoverer = proxyableFactory.CreateProxy(targetDomain))
                 {
-                    discoveredExamples = proxyableTestDiscoverer.Discover(binaryPath, crossDomainLogger);
+                    discoveredExamples = operation(proxyableTestDiscoverer);
                 }
             }
             catch (Exception ex)
@@ -67,5 +79,7 @@ namespace NSpec.VsAdapter.Discovery
         readonly IAppDomainFactory appDomainFactory;
         readonly IProxyableFactory<IProxyableTestDiscoverer> proxyableFactory;
         readonly IFileService fileService;
+
+        delegate DiscoveredExample[] RemoteOperation(IProxyableTestDiscoverer proxyableTestDiscoverer);
     }
 }
