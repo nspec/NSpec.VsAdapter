@@ -63,14 +63,15 @@ namespace NSpec.VsAdapter
         static void RegisterDiscoverer(ContainerBuilder builder)
         {
             builder.RegisterType<MultiSourceTestDiscovererFactory>().As<IMultiSourceTestDiscovererFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<ProxyableTestDiscovererFactory>().As<IProxyableFactory<IProxyableTestDiscoverer>>().InstancePerLifetimeScope();
             builder.RegisterType<BinaryTestDiscoverer>().As<IBinaryTestDiscoverer>().InstancePerLifetimeScope();
-            builder.RegisterType<CrossDomainCollector>().As<ICrossDomainCollector>().InstancePerLifetimeScope();
             builder.RegisterType<TestCaseMapper>().As<ITestCaseMapper>().InstancePerLifetimeScope();
         }
 
         static void RegisterExecutor(ContainerBuilder builder)
         {
             builder.RegisterType<MultiSourceTestExecutorFactory>().As<IMultiSourceTestExecutorFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<ProxyableTestExecutorFactory>().As<IProxyableFactory<IProxyableTestExecutor>>().InstancePerLifetimeScope();
             builder.RegisterType<BinaryTestExecutor>().As<IBinaryTestExecutor>().InstancePerLifetimeScope();
             builder.RegisterType<ProgressRecorderFactory>().As<IProgressRecorderFactory>().InstancePerLifetimeScope();
             builder.RegisterType<TestResultMapper>().As<ITestResultMapper>().InstancePerLifetimeScope();
@@ -79,8 +80,6 @@ namespace NSpec.VsAdapter
         static void RegisterCommon(ContainerBuilder builder)
         {
             builder.RegisterType<AppDomainFactory>().As<IAppDomainFactory>().InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(ProxyFactory<>)).As(typeof(IProxyFactory<>)).InstancePerLifetimeScope();
-            builder.RegisterType<ProxyableTestExecutorFactory>().As<IProxyableFactory<IProxyableTestExecutor>>().InstancePerLifetimeScope();
             builder.RegisterType<AdapterInfo>().As<IAdapterInfo>().InstancePerLifetimeScope();
             builder.RegisterType<SettingsRepository>().As<ISettingsRepository>().InstancePerLifetimeScope();
             builder.RegisterType<LoggerFactory>().As<ILoggerFactory>().InstancePerLifetimeScope();

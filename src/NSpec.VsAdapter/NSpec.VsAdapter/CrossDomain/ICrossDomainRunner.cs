@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// TODO check for deletion
+#if false
 namespace NSpec.VsAdapter.CrossDomain
 {
     public interface ICrossDomainRunner<TResult>
@@ -11,3 +13,4 @@ namespace NSpec.VsAdapter.CrossDomain
         TResult Run(string binaryPath, Func<TResult> targetOperation);
     }
 }
+#endif

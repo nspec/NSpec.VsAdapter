@@ -5,6 +5,8 @@ using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 
+// TODO check for deletion
+#if false
 namespace NSpec.VsAdapter.CrossDomain
 {
     public class Proxy<TResult> : MarshalByRefObject, IDisposable
@@ -31,3 +33,4 @@ namespace NSpec.VsAdapter.CrossDomain
         }
     }
 }
+#endif
