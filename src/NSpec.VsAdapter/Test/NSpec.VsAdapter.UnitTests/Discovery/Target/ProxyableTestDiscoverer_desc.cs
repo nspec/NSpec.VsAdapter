@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NSpec.Domain;
 using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Discovery.Target;
 using NSpec.VsAdapter.Logging;
 using NSubstitute;
 using NUnit.Framework;
@@ -11,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.Discovery
+namespace NSpec.VsAdapter.UnitTests.Discovery.Target
 {
     [TestFixture]
     [Category("ProxyableTestDiscoverer")]

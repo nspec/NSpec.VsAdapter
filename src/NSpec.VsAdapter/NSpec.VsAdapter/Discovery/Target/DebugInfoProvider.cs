@@ -2,7 +2,7 @@
 using NSpec.VsAdapter.Logging;
 using System;
 
-namespace NSpec.VsAdapter.Discovery
+namespace NSpec.VsAdapter.Discovery.Target
 {
     public class DebugInfoProvider : IDebugInfoProvider
     {

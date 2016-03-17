@@ -1,5 +1,6 @@
 ﻿using NSpec.VsAdapter.Common;
 using NSpec.VsAdapter.CrossDomain;
+using NSpec.VsAdapter.Discovery.Target;
 using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;

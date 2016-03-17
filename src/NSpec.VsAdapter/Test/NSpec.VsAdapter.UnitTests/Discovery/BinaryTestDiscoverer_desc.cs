@@ -3,6 +3,7 @@ using FluentAssertions;
 using NSpec.VsAdapter.Common;
 using NSpec.VsAdapter.CrossDomain;
 using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Discovery.Target;
 using NSpec.VsAdapter.Logging;
 using NSubstitute;
 using NUnit.Framework;

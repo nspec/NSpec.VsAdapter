@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace NSpec.VsAdapter.Discovery
+namespace NSpec.VsAdapter.Discovery.Target
 {
     public class AsyncMethodHelper
     {

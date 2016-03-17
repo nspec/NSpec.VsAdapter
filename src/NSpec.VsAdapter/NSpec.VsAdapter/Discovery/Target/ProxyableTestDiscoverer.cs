@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.Discovery
+namespace NSpec.VsAdapter.Discovery.Target
 {
     public class ProxyableTestDiscoverer : Proxyable, IProxyableTestDiscoverer
     {

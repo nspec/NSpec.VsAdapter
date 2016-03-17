@@ -3,6 +3,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.Domain;
 using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Discovery.Target;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -12,7 +13,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.Discovery
+namespace NSpec.VsAdapter.UnitTests.Discovery.Target
 {
     [TestFixture]
     [Category("DiscoveredExampleMapper")]

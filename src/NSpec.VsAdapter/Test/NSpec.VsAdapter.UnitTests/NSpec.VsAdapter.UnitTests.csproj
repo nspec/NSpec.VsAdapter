@@ -105,12 +105,12 @@
     </Compile>
     <Compile Include="CrossDomain\CrossDomainRunner_desc.cs" />
     <Compile Include="Discovery\BinaryTestDiscoverer_desc.cs" />
-    <Compile Include="Discovery\DebugInfoProvider_desc.cs" />
-    <Compile Include="Discovery\ProxyableTestDiscoverer_desc.cs" />
+    <Compile Include="Discovery\Target\DebugInfoProvider_desc.cs" />
+    <Compile Include="Discovery\Target\ProxyableTestDiscoverer_desc.cs" />
     <Compile Include="Discovery\SampleSpecs\SampleDebugInfo.cs" />
     <Compile Include="Discovery\SampleSpecs\SpecSample.cs" />
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="Discovery\DiscoveredExampleMapper_desc.cs" />
+    <Compile Include="Discovery\Target\DiscoveredExampleMapper_desc.cs" />
     <Compile Include="DummyTestException.cs" />
     <Compile Include="Execution\BinaryTestExecutor_desc.cs" />
     <Compile Include="Execution\ExecutedExampleMapper_desc.cs" />
