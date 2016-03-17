@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Discovery
 {
-    public class DiscoveredExampleMapper
+    public class DiscoveredExampleMapper : IDiscoveredExampleMapper
     {
         public DiscoveredExampleMapper(string binaryPath, IDebugInfoProvider debugInfoProvider)
         {

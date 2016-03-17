@@ -8,6 +8,15 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
+    // TODO make it testable
+    /* - Probably with a production parameterless c'tor, and a unit test dedicated c'tor
+     * - Injected dependencies: 
+     *   - IRunnableContextFinder, 
+     *   - IExecutedExampleMapper, 
+     *   - IExecutionReporterFactory, 
+     *   - IContextExecutorFactory
+     * */
+
     public class ProxyableTestExecutor : Proxyable, IProxyableTestExecutor
     {
         public int ExecuteAll(string binaryPath, 
