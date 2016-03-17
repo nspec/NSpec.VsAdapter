@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Discovery
 {
-    public class ExampleFinder
+    public class ExampleFinder : IExampleFinder
     {
         public IEnumerable<ExampleBase> Find(string binaryPath)
         {

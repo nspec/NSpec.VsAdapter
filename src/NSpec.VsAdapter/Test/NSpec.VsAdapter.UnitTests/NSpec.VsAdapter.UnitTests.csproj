@@ -106,6 +106,7 @@
     <Compile Include="CrossDomain\CrossDomainRunner_desc.cs" />
     <Compile Include="Discovery\BinaryTestDiscoverer_desc.cs" />
     <Compile Include="Discovery\DebugInfoProvider_desc.cs" />
+    <Compile Include="Discovery\ProxyableTestDiscoverer_desc.cs" />
     <Compile Include="Discovery\SampleSpecs\SampleDebugInfo.cs" />
     <Compile Include="Discovery\SampleSpecs\SpecSample.cs" />
     <Compile Include="DisposableExtensions.cs" />

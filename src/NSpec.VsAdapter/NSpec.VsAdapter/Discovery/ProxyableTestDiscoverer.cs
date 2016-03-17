@@ -10,6 +10,25 @@ namespace NSpec.VsAdapter.Discovery
 {
     public class ProxyableTestDiscoverer : Proxyable, IProxyableTestDiscoverer
     {
+        // Cross-domain instantiation requires a default constructor
+        public ProxyableTestDiscoverer()
+        {
+            this.exampleFinder = new ExampleFinder();
+            this.debugInfoProviderFactory = new DebugInfoProviderFactory();
+            this.discoveredExampleMapperFactory = new DiscoveredExampleMapperFactory();
+        }
+
+        // Unit tests need a constructor with injected dependencies
+        public ProxyableTestDiscoverer(
+            IExampleFinder exampleFinder, 
+            IDebugInfoProviderFactory debugInfoProviderFactory,
+            IDiscoveredExampleMapperFactory discoveredExampleMapperFactory)
+        {
+            this.exampleFinder = exampleFinder;
+            this.debugInfoProviderFactory = debugInfoProviderFactory;
+            this.discoveredExampleMapperFactory = discoveredExampleMapperFactory;
+        }
+
         public DiscoveredExample[] Discover(string binaryPath, ICrossDomainLogger logger)
         {
             logger.Debug(String.Format("Start discovering tests locally in binary '{0}'", binaryPath));
@@ -18,13 +37,11 @@ namespace NSpec.VsAdapter.Discovery
 
             try
             {
-                var exampleFinder = new ExampleFinder();
-
                 var examples = exampleFinder.Find(binaryPath);
 
-                var debugInfoProvider = new DebugInfoProvider(binaryPath, logger);
+                var debugInfoProvider = debugInfoProviderFactory.Create(binaryPath, logger);
 
-                var discoveredExampleMapper = new DiscoveredExampleMapper(binaryPath, debugInfoProvider);
+                var discoveredExampleMapper = discoveredExampleMapperFactory.Create(binaryPath, debugInfoProvider);
 
                 var discoveredExamples = examples.Select(discoveredExampleMapper.FromExample);
 
@@ -46,5 +63,9 @@ namespace NSpec.VsAdapter.Discovery
 
             return discoveredExampleArray;
         }
+
+        readonly IExampleFinder exampleFinder;
+        readonly IDebugInfoProviderFactory debugInfoProviderFactory;
+        readonly IDiscoveredExampleMapperFactory discoveredExampleMapperFactory;
     }
 }

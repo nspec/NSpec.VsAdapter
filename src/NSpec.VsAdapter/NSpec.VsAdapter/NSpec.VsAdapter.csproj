@@ -88,7 +88,13 @@
     <Compile Include="CrossDomain\IProxyableFactory.cs" />
     <Compile Include="CrossDomain\Proxyable.cs" />
     <Compile Include="CrossDomain\ProxyableFactory.cs" />
+    <Compile Include="Discovery\DebugInfoProviderFactory.cs" />
+    <Compile Include="Discovery\DiscoveredExampleMapperFactory.cs" />
     <Compile Include="Discovery\ExampleFinder.cs" />
+    <Compile Include="Discovery\IDebugInfoProviderFactory.cs" />
+    <Compile Include="Discovery\IDiscoveredExampleMapper.cs" />
+    <Compile Include="Discovery\IDiscoveredExampleMapperFactory.cs" />
+    <Compile Include="Discovery\IExampleFinder.cs" />
     <Compile Include="Discovery\IProxyableTestDiscoverer.cs" />
     <Compile Include="Discovery\ProxyableTestDiscoverer.cs" />
     <Compile Include="Discovery\ProxyableTestDiscovererFactory.cs" />
