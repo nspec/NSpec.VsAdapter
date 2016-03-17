@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace NSpec.VsAdapter.Discovery
+namespace NSpec.VsAdapter.Discovery.Target
 {
     public class DiscoveredExampleMapper : IDiscoveredExampleMapper
     {
