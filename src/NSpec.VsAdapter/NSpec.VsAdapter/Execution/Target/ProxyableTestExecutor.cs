@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.Execution
+namespace NSpec.VsAdapter.Execution.Target
 {
     // TODO make it testable
     /* - Probably with a production parameterless c'tor, and a unit test dedicated c'tor

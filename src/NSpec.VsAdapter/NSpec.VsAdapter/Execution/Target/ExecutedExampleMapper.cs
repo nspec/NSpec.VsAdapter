@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.Execution
+namespace NSpec.VsAdapter.Execution.Target
 {
     public class ExecutedExampleMapper : IExecutedExampleMapper
     {

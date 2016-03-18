@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NSpec.VsAdapter.CrossDomain;
 using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Execution.Target;
 using NSpec.VsAdapter.Logging;
 using NSubstitute;
 using NUnit.Framework;

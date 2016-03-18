@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NSpec.VsAdapter.Execution
+namespace NSpec.VsAdapter.Execution.Target
 {
     public class ContextExecutor
     {
