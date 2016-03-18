@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Core.Discovery;
 using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.Settings;
 using System;
