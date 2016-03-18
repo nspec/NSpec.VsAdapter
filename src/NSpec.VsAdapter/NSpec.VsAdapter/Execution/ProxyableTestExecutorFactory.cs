@@ -1,4 +1,5 @@
 ﻿using NSpec.VsAdapter.CrossDomain;
+using NSpec.VsAdapter.Execution.Target;
 using System;
 using System.Collections.Generic;
 using System.Linq;
