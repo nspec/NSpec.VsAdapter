@@ -9,7 +9,7 @@ using System.Reactive.Disposables;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Discovery
 {
     [FileExtension(Constants.DllExtension)]
     [FileExtension(Constants.ExeExtension)]

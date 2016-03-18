@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using NSpec.VsAdapter.IntegrationTests.TestData;
 using NSpec.VsAdapter.Settings;
-using NSpec.VsAdapter.TestAdapter;
+using NSpec.VsAdapter.TestAdapter.Discovery;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Execution
 {
     public interface IMultiSourceTestExecutor
     {

@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using NSpec.VsAdapter.Core.Discovery;
 using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.Settings;
-using NSpec.VsAdapter.TestAdapter;
+using NSpec.VsAdapter.TestAdapter.Discovery;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.TestAdapter
+namespace NSpec.VsAdapter.UnitTests.TestAdapter.Discovery
 {
     [TestFixture]
     [Category("MultiSourceTestDiscoverer")]
