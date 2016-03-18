@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Core.Execution.Target
 {
-    public class RunnableContextFinder
+    public class RunnableContextFinder : IRunnableContextFinder
     {
         // Visual Studio test infrastructure requires a default constructor
         // Integration tests use this as well

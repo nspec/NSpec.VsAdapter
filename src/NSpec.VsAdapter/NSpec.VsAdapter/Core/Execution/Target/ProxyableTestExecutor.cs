@@ -12,13 +12,22 @@ namespace NSpec.VsAdapter.Core.Execution.Target
     /* - Probably with a production parameterless c'tor, and a unit test dedicated c'tor
      * - Injected dependencies: 
      *   - IRunnableContextFinder, 
-     *   - IExecutedExampleMapper, 
      *   - IExecutionReporterFactory, 
      *   - IContextExecutorFactory
      * */
 
     public class ProxyableTestExecutor : Proxyable, IProxyableTestExecutor
     {
+        // Cross-domain instantiation requires a default constructor
+        public ProxyableTestExecutor()
+        {
+            this.runnableContextFinder = new RunnableContextFinder();
+            this.executionReporterFactory = new ExecutionReporterFactory();
+            this.contextExecutorFactory = new ContextExecutorFactory();
+        }
+
+        // Unit tests need a constructor with injected dependencies
+
         public int ExecuteAll(string binaryPath, 
             IProgressRecorder progressRecorder, ICrossDomainLogger logger)
         {
@@ -42,15 +51,11 @@ namespace NSpec.VsAdapter.Core.Execution.Target
 
             try
             {
-                var runnableContextFinder = new RunnableContextFinder();
-
                 var runnableContexts = runnableContextFinder.Find(binaryPath, exampleFullNames);
 
-                var executedExampleMapper = new ExecutedExampleMapper();
+                var executionReporter = executionReporterFactory.Create(progressRecorder);
 
-                var executionReporter = new ExecutionReporter(progressRecorder, executedExampleMapper);
-
-                var contextExecutor = new ContextExecutor(executionReporter, logger);
+                var contextExecutor = contextExecutorFactory.Create(executionReporter, logger);
 
                 count = contextExecutor.Execute(runnableContexts);
             }
@@ -70,5 +75,9 @@ namespace NSpec.VsAdapter.Core.Execution.Target
 
             return count;
         }
+
+        readonly IRunnableContextFinder runnableContextFinder;
+        readonly IExecutionReporterFactory executionReporterFactory;
+        readonly IContextExecutorFactory contextExecutorFactory;
     }
 }

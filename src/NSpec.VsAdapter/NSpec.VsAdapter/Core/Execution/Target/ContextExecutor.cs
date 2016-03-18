@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NSpec.VsAdapter.Core.Execution.Target
 {
-    public class ContextExecutor
+    public class ContextExecutor : IContextExecutor
     {
         public ContextExecutor(ILiveFormatter executionReporter, ICrossDomainLogger logger)
         {

@@ -89,9 +89,11 @@
     <Compile Include="Core\CrossDomain\Proxyable.cs" />
     <Compile Include="Core\CrossDomain\ProxyableFactory.cs" />
     <Compile Include="Core\Discovery\Target\AsyncMethodHelper.cs" />
+    <Compile Include="Core\Execution\Target\ContextExecutorFactory.cs" />
     <Compile Include="Core\Discovery\Target\DebugInfoProviderFactory.cs" />
     <Compile Include="Core\Discovery\Target\DiscoveredExampleMapperFactory.cs" />
     <Compile Include="Core\Discovery\Target\ExampleFinder.cs" />
+    <Compile Include="Core\Execution\Target\IContextExecutorFactory.cs" />
     <Compile Include="Core\Discovery\Target\IDebugInfoProviderFactory.cs" />
     <Compile Include="Core\Discovery\Target\IDiscoveredExampleMapper.cs" />
     <Compile Include="Core\Discovery\Target\IDiscoveredExampleMapperFactory.cs" />
@@ -103,7 +105,10 @@
     <Compile Include="Core\Execution\BinaryTestExecutor.cs" />
     <Compile Include="Core\Execution\ExecutedExample.cs" />
     <Compile Include="Core\Execution\Target\ExecutedExampleMapper.cs" />
+    <Compile Include="Core\Execution\Target\ExecutionReporterFactory.cs" />
+    <Compile Include="Core\Execution\Target\IContextExecutor.cs" />
     <Compile Include="Core\Execution\Target\IExecutedExampleMapper.cs" />
+    <Compile Include="Core\Execution\Target\IExecutionReporterFactory.cs" />
     <Compile Include="Core\Execution\Target\IProxyableTestExecutor.cs" />
     <Compile Include="Core\Execution\ProgressRecorder.cs" />
     <Compile Include="Core\Execution\ProgressRecorderFactory.cs" />
@@ -111,6 +116,7 @@
     <Compile Include="Core\Execution\IBinaryTestExecutor.cs" />
     <Compile Include="Core\Execution\IProgressRecorder.cs" />
     <Compile Include="Core\Execution\IProgressRecorderFactory.cs" />
+    <Compile Include="Core\Execution\Target\IRunnableContextFinder.cs" />
     <Compile Include="Core\Execution\Target\ProxyableTestExecutor.cs" />
     <Compile Include="Core\Execution\ProxyableTestExecutorFactory.cs" />
     <Compile Include="Core\Execution\Target\RunnableContexts.cs" />
