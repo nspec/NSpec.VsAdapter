@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using NSpec.Domain;
 using NSpec.VsAdapter.Core.Execution;
-using NSpec.VsAdapter.TestAdapter;
+using NSpec.VsAdapter.TestAdapter.Execution;
 using NSubstitute;
 using NUnit.Framework;
 using System;
