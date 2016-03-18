@@ -1,4 +1,4 @@
-﻿using NSpec.VsAdapter.CrossDomain;
+﻿using NSpec.VsAdapter.Core.CrossDomain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

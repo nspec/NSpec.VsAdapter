@@ -103,20 +103,20 @@
     <Compile Include="..\..\SolutionItems\SolutionAssemblyInfo.cs">
       <Link>Properties\SolutionAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CrossDomain\CrossDomainRunner_desc.cs" />
-    <Compile Include="Discovery\BinaryTestDiscoverer_desc.cs" />
-    <Compile Include="Discovery\Target\DebugInfoProvider_desc.cs" />
-    <Compile Include="Discovery\Target\ProxyableTestDiscoverer_desc.cs" />
-    <Compile Include="Discovery\SampleSpecs\SampleDebugInfo.cs" />
-    <Compile Include="Discovery\SampleSpecs\SpecSample.cs" />
+    <Compile Include="Core\CrossDomain\CrossDomainRunner_desc.cs" />
+    <Compile Include="Core\Discovery\BinaryTestDiscoverer_desc.cs" />
+    <Compile Include="Core\Discovery\Target\DebugInfoProvider_desc.cs" />
+    <Compile Include="Core\Discovery\Target\ProxyableTestDiscoverer_desc.cs" />
+    <Compile Include="Core\Discovery\SampleSpecs\SampleDebugInfo.cs" />
+    <Compile Include="Core\Discovery\SampleSpecs\SpecSample.cs" />
     <Compile Include="DisposableExtensions.cs" />
-    <Compile Include="Discovery\Target\DiscoveredExampleMapper_desc.cs" />
+    <Compile Include="Core\Discovery\Target\DiscoveredExampleMapper_desc.cs" />
     <Compile Include="DummyTestException.cs" />
-    <Compile Include="Execution\BinaryTestExecutor_desc.cs" />
-    <Compile Include="Execution\Target\ExecutedExampleMapper_desc.cs" />
-    <Compile Include="Execution\Target\ExecutionReporter_desc.cs" />
-    <Compile Include="Execution\ProgressRecorder_desc.cs" />
-    <Compile Include="Execution\Target\RunnableContextFinder_desc.cs" />
+    <Compile Include="Core\Execution\BinaryTestExecutor_desc.cs" />
+    <Compile Include="Core\Execution\Target\ExecutedExampleMapper_desc.cs" />
+    <Compile Include="Core\Execution\Target\ExecutionReporter_desc.cs" />
+    <Compile Include="Core\Execution\ProgressRecorder_desc.cs" />
+    <Compile Include="Core\Execution\Target\RunnableContextFinder_desc.cs" />
     <Compile Include="Logging\OutputLogger_desc.cs" />
     <Compile Include="Settings\AdapterSettingsProvider_desc.cs" />
     <Compile Include="Settings\SettingsRepository_desc.cs" />
