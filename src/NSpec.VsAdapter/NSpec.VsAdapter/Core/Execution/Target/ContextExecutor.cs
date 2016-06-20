@@ -8,6 +8,8 @@ using System.Text;
 
 namespace NSpec.VsAdapter.Core.Execution.Target
 {
+    // TODO add unit tests
+
     public class ContextExecutor : IContextExecutor
     {
         public ContextExecutor(ILiveFormatter executionReporter, ICrossDomainLogger logger)

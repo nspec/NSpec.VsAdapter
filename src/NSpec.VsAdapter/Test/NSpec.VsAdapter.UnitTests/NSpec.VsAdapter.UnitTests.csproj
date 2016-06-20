@@ -109,6 +109,7 @@
     <Compile Include="Core\Discovery\Target\ProxyableTestDiscoverer_desc.cs" />
     <Compile Include="Core\Discovery\SampleSpecs\SampleDebugInfo.cs" />
     <Compile Include="Core\Discovery\SampleSpecs\SpecSample.cs" />
+    <Compile Include="Core\Execution\Target\ProxyableTestExecutor_desc.cs" />
     <Compile Include="DisposableExtensions.cs" />
     <Compile Include="Core\Discovery\Target\DiscoveredExampleMapper_desc.cs" />
     <Compile Include="DummyTestException.cs" />

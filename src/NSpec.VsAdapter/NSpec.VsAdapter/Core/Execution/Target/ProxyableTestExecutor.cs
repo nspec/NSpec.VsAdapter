@@ -8,14 +8,6 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Core.Execution.Target
 {
-    // TODO make it testable
-    /* - Probably with a production parameterless c'tor, and a unit test dedicated c'tor
-     * - Injected dependencies: 
-     *   - IRunnableContextFinder, 
-     *   - IExecutionReporterFactory, 
-     *   - IContextExecutorFactory
-     * */
-
     public class ProxyableTestExecutor : Proxyable, IProxyableTestExecutor
     {
         // Cross-domain instantiation requires a default constructor
@@ -27,6 +19,15 @@ namespace NSpec.VsAdapter.Core.Execution.Target
         }
 
         // Unit tests need a constructor with injected dependencies
+        public ProxyableTestExecutor(
+            IRunnableContextFinder runnableContextFinder,
+            IExecutionReporterFactory executionReporterFactory,
+            IContextExecutorFactory contextExecutorFactory)
+        {
+            this.runnableContextFinder = runnableContextFinder;
+            this.executionReporterFactory = executionReporterFactory;
+            this.contextExecutorFactory = contextExecutorFactory;
+        }
 
         public int ExecuteAll(string binaryPath, 
             IProgressRecorder progressRecorder, ICrossDomainLogger logger)
