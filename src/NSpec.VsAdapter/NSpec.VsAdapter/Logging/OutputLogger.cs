@@ -136,14 +136,12 @@ namespace NSpec.VsAdapter.Logging
 
         void LogExceptionInfo(LogMethod logMethod, ExceptionLogInfo exceptionInfo, string message)
         {
+            logMethod(String.Format("{0} [ {1} ]", message, exceptionInfo.Type));
+
             if (debugMode)
             {
-                logMethod(message);
+                // when in debug mode, log additional exception details
                 logMethod(exceptionInfo.Content);
-            }
-            else
-            {
-                logMethod(String.Format("{0} [ {1} ]", message, exceptionInfo.Type));
             }
         }
 
@@ -157,7 +155,7 @@ namespace NSpec.VsAdapter.Logging
         readonly string adapterPrefix;
         readonly int minLogLevel;
 
-        readonly bool debugMode = 
+        readonly bool debugMode =
 #if DEBUG
             true;
 #else
