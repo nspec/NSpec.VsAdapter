@@ -12,8 +12,8 @@ namespace AdHocConsoleRunner
     {
         static void Main(string[] args)
         {
-            var assemblies = new Assembly[] 
-            { 
+            var assemblies = new Assembly[]
+            {
                 typeof(SampleSpecs.DummyPublicClass).Assembly,
                 typeof(ConfigSampleSpecs.DummyPublicClass).Assembly,
             };
@@ -25,16 +25,16 @@ namespace AdHocConsoleRunner
             //can determine the inheritance hierarchy
             var finder = new SpecFinder(types);
 
+            //create a dummy, pass-all, tags filter
+            var transparentTagsFilter = new Tags();
+
             //we've got our inheritance hierarchy,
             //now we can build our test tree using default conventions
             var builder = new ContextBuilder(finder, new DefaultConventions());
 
             //create the nspec runner with a
             //live formatter so we get console output
-            var runner = new ContextRunner(
-                           builder,
-                           new ConsoleFormatter(),
-                           false);
+            var runner = new ContextRunner(transparentTagsFilter, new ConsoleFormatter(), false);
 
             //create our final collection of concrete tests
             var testCollection = builder.Contexts().Build();
