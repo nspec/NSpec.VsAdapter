@@ -43,21 +43,23 @@ namespace NSpec.VsAdapter.Discovery
 
         static MethodInfo ReflectExampleMethod(ExampleBase example)
         {
-            const string privateMethodFieldName = "method";
-            const string privateActionFieldName = "action";
+            const string methodPrivateFieldName = "method";
+            const string actionPrivateFieldName = "action";
+
+            Type exampleType = example.GetType();
 
             MethodInfo info;
 
             if (example is MethodExample)
             {
-                info = example.GetType()
-                    .GetField(privateMethodFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                info = exampleType
+                    .GetField(methodPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(example) as MethodInfo;
             }
             else
             {
-                var action = example.GetType()
-                    .GetField(privateActionFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                var action = exampleType
+                    .GetField(actionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(example) as Action;
 
                 info = action.Method;
