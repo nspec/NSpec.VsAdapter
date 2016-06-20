@@ -69,7 +69,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
         public void it_should_report_result_of_selected_examples()
         {
             var selectedFullNames = runningTestCases.Select(tc => tc.FullyQualifiedName);
-            
+
             Func<TestCase, TestResult> mapToTestResult =
                 tc => MapTestCaseToResult(SampleSpecsTestOutputData.ByTestCaseFullName, tc);
 
