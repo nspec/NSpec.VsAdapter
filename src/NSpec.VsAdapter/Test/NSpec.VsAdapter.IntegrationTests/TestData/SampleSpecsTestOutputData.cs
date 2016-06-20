@@ -63,7 +63,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                     {
                         FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing.",
                         Outcome = TestOutcome.Failed,
-                        ErrorMessage = "it[\"child example 5-1A failing\"] = systemUnderTest.IsAlwaysTrue() should be False but was True",
+                        ErrorMessage = "it[\"child example 5-1A failing\"] = systemUnderTest.IsAlwaysTrue()\n    should be\nFalse\n    but was\nTrue",
                     }
                 },
                 {
