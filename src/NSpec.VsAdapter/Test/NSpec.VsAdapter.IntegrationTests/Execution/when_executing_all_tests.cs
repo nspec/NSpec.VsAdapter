@@ -12,8 +12,8 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
 {
     public class when_executing_all_tests : when_executing_tests_base
     {
-        readonly string[] sources = new string[] 
-        { 
+        readonly string[] sources = new string[]
+        {
             TestConstants.SampleSpecsDllPath,
             TestConstants.SampleSystemDllPath,
         };

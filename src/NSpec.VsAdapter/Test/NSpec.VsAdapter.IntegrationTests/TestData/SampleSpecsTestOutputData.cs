@@ -18,59 +18,59 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
             ByTestCaseFullName = new Dictionary<string, TestOutput>()
             {
                 {
-                    "nspec. ParentSpec. method context 1. parent example 1A.", 
+                    "nspec. ParentSpec. method context 1. parent example 1A.",
                     new TestOutput()
                     {
-                        FullyQualifiedName = "nspec. ParentSpec. method context 1. parent example 1A.", 
+                        FullyQualifiedName = "nspec. ParentSpec. method context 1. parent example 1A.",
                         Outcome = TestOutcome.Passed,
                     }
                 },
                 {
-                    "nspec. ParentSpec. method context 1. parent example 1B.", 
+                    "nspec. ParentSpec. method context 1. parent example 1B.",
                     new TestOutput()
                     {
-                        FullyQualifiedName = "nspec. ParentSpec. method context 1. parent example 1B.", 
+                        FullyQualifiedName = "nspec. ParentSpec. method context 1. parent example 1B.",
                         Outcome = TestOutcome.Passed,
                     }
                 },
                 {
-                    "nspec. ParentSpec. method context 2. parent example 2A.", 
+                    "nspec. ParentSpec. method context 2. parent example 2A.",
                     new TestOutput()
                     {
-                        FullyQualifiedName = "nspec. ParentSpec. method context 2. parent example 2A.", 
+                        FullyQualifiedName = "nspec. ParentSpec. method context 2. parent example 2A.",
                         Outcome = TestOutcome.Passed,
                     }
                 },
                 {
-                    "nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped.", 
+                    "nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped.",
                     new TestOutput()
                     {
-                        FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped.", 
+                        FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 3. child example 3A skipped.",
                         Outcome = TestOutcome.Skipped,
                     }
                 },
                 {
-                    "nspec. ParentSpec. ChildSpec. method context 4. child example 4A.", 
+                    "nspec. ParentSpec. ChildSpec. method context 4. child example 4A.",
                     new TestOutput()
                     {
-                        FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 4. child example 4A.", 
+                        FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 4. child example 4A.",
                         Outcome = TestOutcome.Passed,
                     }
                 },
                 {
-                    "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing.", 
+                    "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing.",
                     new TestOutput()
                     {
-                        FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing.", 
+                        FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1A failing.",
                         Outcome = TestOutcome.Failed,
                         ErrorMessage = "it[\"child example 5-1A failing\"] = systemUnderTest.IsAlwaysTrue() should be False but was True",
                     }
                 },
                 {
-                    "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.", 
+                    "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.",
                     new TestOutput()
                     {
-                        FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.", 
+                        FullyQualifiedName = "nspec. ParentSpec. ChildSpec. method context 5. sub context 5-1. child example 5-1B.",
                         Outcome = TestOutcome.Passed,
                     }
                 },
