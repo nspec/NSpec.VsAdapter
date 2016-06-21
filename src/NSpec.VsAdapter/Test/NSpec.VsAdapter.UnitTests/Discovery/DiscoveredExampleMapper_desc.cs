@@ -143,4 +143,49 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             actual.ShouldBeEquivalentTo(expected);
         }
     }
+
+    public class DiscoveredExampleMapper_when_example_is_async_runnable : DiscoveredExampleMapper_desc_base
+    {
+        AsyncExample example;
+
+        public override void before_each()
+        {
+            base.before_each();
+
+            Func<Task> someAsyncAction = async () => await Task.Run(() => { });
+
+            example = new AsyncExample(
+                "some-test-full-name",
+                "tag1 tag2_more tag3",
+                someAsyncAction);
+
+            string specClassName = this.GetType().ToString();
+            string exampleMethodName = someAsyncAction.Method.Name;
+
+            example.Context = context;
+
+            example.Spec = "some specification";
+
+            var navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
+
+            debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
+        }
+
+        [Test]
+        public void it_should_fill_all_details()
+        {
+            var expected = new DiscoveredExample()
+            {
+                FullName = example.FullName(),
+                SourceAssembly = someAssemblyPath,
+                SourceFilePath = someSourceCodePath,
+                SourceLineNumber = someLineNumber,
+                Tags = example.Tags.Select(tag => tag.Replace("_", " ")).ToArray(),
+            };
+
+            var actual = mapper.FromExample(example);
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+    }
 }
