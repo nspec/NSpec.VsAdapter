@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Discovery
@@ -12,13 +11,33 @@ namespace NSpec.VsAdapter.Discovery
     {
         public DiscoveredExampleMapper(string binaryPath, IDebugInfoProvider debugInfoProvider)
         {
+            typeNameToBodyGetterMap = new Dictionary<string, BaseExampleBodyGetter>()
+            {
+                {
+                    typeof(Example).Name,
+                    GetExampleBodyInfo
+                },
+                {
+                    typeof(MethodExample).Name,
+                    GetMethodExampleBodyInfo
+                },
+                {
+                    typeof(AsyncExample).Name,
+                    GetAsyncExampleBodyInfo
+                },
+                {
+                    typeof(AsyncMethodExample).Name,
+                    GetAsyncMethodExampleBodyInfo
+                },
+            };
+
             this.binaryPath = binaryPath;
             this.debugInfoProvider = debugInfoProvider;
         }
 
         public DiscoveredExample FromExample(ExampleBase example)
         {
-            var methodInfo = ReflectExampleMethod(example);
+            var methodInfo = GetFunctionBodyInfo(example);
 
             string specClassName = methodInfo.DeclaringType.FullName;
             string exampleMethodName = methodInfo.Name;
@@ -39,49 +58,86 @@ namespace NSpec.VsAdapter.Discovery
 
         readonly string binaryPath;
         readonly IDebugInfoProvider debugInfoProvider;
+        readonly Dictionary<string, BaseExampleBodyGetter> typeNameToBodyGetterMap;
 
-        // taken from https://github.com/BrainCrumbz/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Discoverer.cs
-
-        static MethodInfo ReflectExampleMethod(ExampleBase example)
+        MethodInfo GetFunctionBodyInfo(ExampleBase example)
         {
-            Type exampleType = example.GetType();
+            string exampleTypeName = example.GetType().Name;
 
-            MethodInfo info;
+            BaseExampleBodyGetter getFunctionBodyInfo;
 
-            // order is important: place child types at the top, parent types at the bottom
+            bool hasGetterForType = typeNameToBodyGetterMap.TryGetValue(exampleTypeName, out getFunctionBodyInfo);
 
-            if (example is MethodExample || example is AsyncMethodExample)
+            if (hasGetterForType)
             {
-                const string methodPrivateFieldName = "method";
+                var info = getFunctionBodyInfo(example);
 
-                info = exampleType
-                    .GetField(methodPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(example) as MethodInfo;
-            }
-            else if (example is AsyncExample)
-            {
-                const string asyncActionPrivateFieldName = "asyncAction";
-
-                var asyncAction = exampleType
-                    .GetField(asyncActionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(example) as Func<Task>;
-
-                info = asyncAction.Method;
-            }
-            else if (example is Example)
-            {
-                const string actionPrivateFieldName = "action";
-
-                var action = exampleType
-                    .GetField(actionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
-                    .GetValue(example) as Action;
-
-                info = action.Method;
+                return info;
             }
             else
             {
-                throw new ArgumentOutOfRangeException("example", String.Format("Unexpected example type: {0}", exampleType));
+                throw new ArgumentOutOfRangeException("example", String.Format("Unexpected example type: {0}", exampleTypeName));
             }
+        }
+
+        delegate MethodInfo BaseExampleBodyGetter(ExampleBase baseExample);
+
+        static MethodInfo GetExampleBodyInfo(ExampleBase baseExample)
+        {
+            // core logic taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Discoverer.cs
+
+            const string actionPrivateFieldName = "action";
+
+            Example example = (Example)baseExample;
+
+            var action = example.GetType()
+                .GetField(actionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(example) as Action;
+
+            var info = action.Method;
+
+            return info;
+        }
+
+        static MethodInfo GetMethodExampleBodyInfo(ExampleBase baseExample)
+        {
+            // core logic taken from https://github.com/osoftware/NSpecTestAdapter/blob/master/NSpec.TestAdapter/Discoverer.cs
+
+            const string methodInfoPrivateFieldName = "method";
+
+            MethodExample example = (MethodExample)baseExample;
+
+            var info = example.GetType()
+                .GetField(methodInfoPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(example) as MethodInfo;
+
+            return info;
+        }
+
+        static MethodInfo GetAsyncExampleBodyInfo(ExampleBase baseExample)
+        {
+            const string asyncActionPrivateFieldName = "asyncAction";
+
+            AsyncExample example = (AsyncExample)baseExample;
+
+            var asyncAction = example.GetType()
+                .GetField(asyncActionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(example) as Func<Task>;
+
+            var info = asyncAction.Method;
+
+            return info;
+        }
+
+        static MethodInfo GetAsyncMethodExampleBodyInfo(ExampleBase baseExample)
+        {
+            const string methodInfoPrivateFieldName = "method";
+
+            AsyncMethodExample example = (AsyncMethodExample)baseExample;
+
+            var info = example.GetType()
+                .GetField(methodInfoPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                .GetValue(example) as MethodInfo;
 
             return info;
         }
