@@ -21,8 +21,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
             string specAssemblyPath = TestConstants.SampleAsyncSpecsDllPath;
             string sourceCodeFilePath = TestUtils.FirstCharToLower(TestConstants.SampleAsyncSpecsSourcePath);
 
-            // TODO add method-level example too
-
             ByClassMethodExampleName = new Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>>()
             {
                 {
@@ -41,7 +39,24 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                     {
                                         DisplayName = "AsyncSpec › method context › async context example.",
                                         CodeFilePath = sourceCodeFilePath,
-                                        LineNumber = 26,
+                                        LineNumber = 27,
+                                    }
+                                },
+                            }
+                        },
+                        {
+                            "#CLASS_LEVEL_CONTEXT#",
+                            new Dictionary<string, TestCase>()
+                            {
+                                {
+                                    "async method example",
+                                    new TestCase(
+                                        "nspec. AsyncSpec. it async method example.",
+                                        Constants.ExecutorUri, specAssemblyPath)
+                                    {
+                                        DisplayName = "AsyncSpec › it async method example.",
+                                        CodeFilePath = sourceCodeFilePath,
+                                        LineNumber = 18,
                                     }
                                 },
                             }
@@ -56,6 +71,12 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                 .Select(byExampleName => byExampleName.Value);
 
             ByTestCaseFullName = All.ToDictionary(tc => tc.FullyQualifiedName, tc => tc);
+
+            // add implicit traits corresponding to class names
+            // add explicit traits corresponding to tags
+
+            All.Where(tc => tc.FullyQualifiedName.Contains("AsyncSpec"))
+                .Do(tc => tc.Traits.Add("AsyncSpec", null));
         }
     }
 

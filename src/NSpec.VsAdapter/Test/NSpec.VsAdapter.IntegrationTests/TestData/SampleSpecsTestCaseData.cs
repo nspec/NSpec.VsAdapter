@@ -152,7 +152,8 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
 
             ByTestCaseFullName = All.ToDictionary(tc => tc.FullyQualifiedName, tc => tc);
 
-            // add traits corresponding to tags
+            // add implicit traits corresponding to class names
+            // add explicit traits corresponding to tags
 
             All.Where(tc => tc.FullyQualifiedName.Contains("ParentSpec"))
                 .Do(tc => tc.Traits.Add("ParentSpec", null));

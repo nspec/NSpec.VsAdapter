@@ -23,12 +23,12 @@ namespace SampleAsyncSpecs
 
         void method_context()
         { // # 25
-            itAsync["async context example"] = async () => // # 26
-            {
+            itAsync["async context example"] = async () =>
+            { // # 27
                 bool actual = await systemUnderTest.IsAlwaysTrueAsync();
 
                 actual.ShouldBeTrue();
-            };
+            }; // # 31
         } // # 32
     }
 
