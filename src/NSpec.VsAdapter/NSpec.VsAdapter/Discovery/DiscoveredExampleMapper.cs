@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Discovery
 {
@@ -43,24 +44,43 @@ namespace NSpec.VsAdapter.Discovery
 
         static MethodInfo ReflectExampleMethod(ExampleBase example)
         {
-            const string privateMethodFieldName = "method";
-            const string privateActionFieldName = "action";
+            Type exampleType = example.GetType();
 
             MethodInfo info;
 
-            if (example is MethodExample)
+            // order is important: place child types at the top, parent types at the bottom
+
+            if (example is MethodExample || example is AsyncMethodExample)
             {
-                info = example.GetType()
-                    .GetField(privateMethodFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                const string methodPrivateFieldName = "method";
+
+                info = exampleType
+                    .GetField(methodPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(example) as MethodInfo;
             }
-            else
+            else if (example is AsyncExample)
             {
-                var action = example.GetType()
-                    .GetField(privateActionFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                const string asyncActionPrivateFieldName = "asyncAction";
+
+                var asyncAction = exampleType
+                    .GetField(asyncActionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(example) as Func<Task>;
+
+                info = asyncAction.Method;
+            }
+            else if (example is Example)
+            {
+                const string actionPrivateFieldName = "action";
+
+                var action = exampleType
+                    .GetField(actionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(example) as Action;
 
                 info = action.Method;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("example", String.Format("Unexpected example type: {0}", exampleType));
             }
 
             return info;

@@ -9,7 +9,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
 {
     public static class SampleSpecsTestCaseData
     {
-        public readonly static 
+        public readonly static
             Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>> ByClassMethodExampleName;
 
         public readonly static Dictionary<string, TestCase> ByTestCaseFullName;
@@ -152,7 +152,8 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
 
             ByTestCaseFullName = All.ToDictionary(tc => tc.FullyQualifiedName, tc => tc);
 
-            // add traits corresponding to tags
+            // add implicit traits corresponding to class names
+            // add explicit traits corresponding to tags
 
             All.Where(tc => tc.FullyQualifiedName.Contains("ParentSpec"))
                 .Do(tc => tc.Traits.Add("ParentSpec", null));
@@ -176,16 +177,6 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
 
             All.Where(tc => tc.FullyQualifiedName.Contains("method context 4"))
                 .Do(tc => tc.Traits.Add("Tag with underscores", null));
-        }
-
-        // adapted from https://github.com/mattflo/NSpec/blob/master/NSpec/Extensions.cs
-
-        public static IEnumerable<TestCase> Do(this IEnumerable<TestCase> source, Action<TestCase> action)
-        {
-            foreach (var t in source)
-                action(t);
-
-            return source;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 using NSpec.VsAdapter.IntegrationTests.TestData;
 using NSpec.VsAdapter.TestAdapter;
 using NUnit.Framework;
@@ -6,9 +6,11 @@ using System.Linq;
 
 namespace NSpec.VsAdapter.IntegrationTests.Discovery
 {
+    // TODO extract common logic with 'when_discovering_tests'
+
     [TestFixture]
     [Category("Integration.TestDiscovery")]
-    public class when_discovering_tests
+    public class when_discovering_async_tests
     {
         NSpecTestDiscoverer discoverer;
 
@@ -19,8 +21,8 @@ namespace NSpec.VsAdapter.IntegrationTests.Discovery
         {
             var sources = new string[]
             {
-                TestConstants.SampleSpecsDllPath,
-                TestConstants.SampleSystemDllPath,
+                TestConstants.SampleAsyncSpecsDllPath,
+                TestConstants.SampleAsyncSystemDllPath,
             };
 
             var discoveryContext = new EmptyDiscoveryContext();
@@ -43,7 +45,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Discovery
         [Test]
         public void it_should_find_all_examples_with_their_data()
         {
-            var expected = SampleSpecsTestCaseData.All;
+            var expected = SampleAsyncSpecsTestCaseData.All;
 
             var actual = sink.TestCases;
 
