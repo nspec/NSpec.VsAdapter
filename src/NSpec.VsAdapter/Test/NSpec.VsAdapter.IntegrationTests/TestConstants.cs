@@ -22,6 +22,11 @@ namespace NSpec.VsAdapter.IntegrationTests
             ConfigSampleSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\ConfigSampleSpecs\bin\Debug\ConfigSampleSpecs.dll");
 
             ConfigSampleSystemExePath = Path.Combine(TestFolderPath, @"Samples\ConfigSampleSystem\bin\Debug\ConfigSampleSystem.exe");
+
+            SampleAsyncSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\SampleAsyncSpecs\desc_AsyncSystemUnderTest.cs");
+            SampleAsyncSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\SampleAsyncSpecs\bin\Debug\SampleAsyncSpecs.dll");
+
+            SampleAsyncSystemDllPath = Path.Combine(TestFolderPath, @"Samples\SampleAsyncSystem\bin\Debug\SampleAsyncSystem.dll");
         }
 
         public static readonly string TestFolderPath;
@@ -39,5 +44,12 @@ namespace NSpec.VsAdapter.IntegrationTests
         public static readonly string ConfigSampleSpecsSourcePath;
 
         public static readonly string ConfigSampleSystemExePath;
+
+        // Sample Async System & Specs
+
+        public static readonly string SampleAsyncSpecsSourcePath;
+        public static readonly string SampleAsyncSpecsDllPath;
+
+        public static readonly string SampleAsyncSystemDllPath;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.IntegrationTests
 {
-    static class TestUtils
+    public static class TestUtils
     {
         public static string FirstCharToUpper(string original)
         {
@@ -29,6 +30,16 @@ namespace NSpec.VsAdapter.IntegrationTests
                 return char.ToLower(original[0]) + original.Substring(1);
 
             return original.ToLower();
+        }
+
+        // adapted from https://github.com/mattflo/NSpec/blob/master/NSpec/Extensions.cs
+
+        public static IEnumerable<TestCase> Do(this IEnumerable<TestCase> source, Action<TestCase> action)
+        {
+            foreach (var t in source)
+                action(t);
+
+            return source;
         }
     }
 }

@@ -57,6 +57,10 @@
       <Project>{b51bd897-01a8-4f16-af5a-2a18ea1f43c3}</Project>
       <Name>ConfigSampleSpecs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SampleAsyncSpecs\SampleAsyncSpecs.csproj">
+      <Project>{80876E7D-9EF1-48FF-BA0F-F0EFF0AE098A}</Project>
+      <Name>SampleAsyncSpecs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SampleSpecs\SampleSpecs.csproj">
       <Project>{2c743124-c1c6-4b5d-a6c5-16819a726919}</Project>
       <Name>SampleSpecs</Name>
