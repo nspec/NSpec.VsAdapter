@@ -88,10 +88,7 @@
     <Compile Include="Core\CrossDomain\IProxyableFactory.cs" />
     <Compile Include="Core\CrossDomain\Proxyable.cs" />
     <Compile Include="Core\CrossDomain\ProxyableFactory.cs" />
-<<<<<<< HEAD
     <Compile Include="Core\Discovery\Target\AsyncMethodHelper.cs" />
-=======
->>>>>>> origin/feat/unit-test-proxyables
     <Compile Include="Core\Execution\Target\ContextExecutorFactory.cs" />
     <Compile Include="Core\Discovery\Target\DebugInfoProviderFactory.cs" />
     <Compile Include="Core\Discovery\Target\DiscoveredExampleMapperFactory.cs" />

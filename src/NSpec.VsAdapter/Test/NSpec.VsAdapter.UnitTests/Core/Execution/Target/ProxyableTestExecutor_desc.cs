@@ -1,6 +1,7 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using NSpec.Domain;
+using NSpec.Domain.Formatters;
 using NSpec.VsAdapter.Core.Execution;
 using NSpec.VsAdapter.Core.Execution.Target;
 using NSpec.VsAdapter.Logging;
@@ -19,17 +20,18 @@ namespace NSpec.VsAdapter.UnitTests.Core.Execution.Target
     public abstract class ProxyableTestExecutor_desc_base
     {
         protected ProxyableTestExecutor executor;
-        
+
         protected AutoSubstitute autoSubstitute;
         protected IRunnableContextFinder runnableContextFinder;
         protected IExecutionReporterFactory executionReporterFactory;
         protected IContextExecutorFactory contextExecutorFactory;
         protected IProgressRecorder progressRecorder;
         protected ICrossDomainLogger crossDomainLogger;
+        protected ILiveFormatter executionReporter;
 
         protected int actual;
 
-        protected readonly string[] someExampleFullNames = 
+        protected readonly string[] someExampleFullNames =
         {
             "source-1-context-1-spec-A", "source-1-context-1-spec-B", "source-1-context-2-spec-C",
         };
@@ -39,7 +41,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Execution.Target
 
         public ProxyableTestExecutor_desc_base()
         {
-            Context[] someContexts = 
+            Context[] someContexts =
             {
                 new Context("context-1"),
                 new Context("context-2"),
@@ -59,6 +61,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Execution.Target
 
             progressRecorder = Substitute.For<IProgressRecorder>();
             crossDomainLogger = Substitute.For<ICrossDomainLogger>();
+            executionReporter = Substitute.For<ILiveFormatter>();
 
             runnableContextFinder.Find(somePath, someExampleFullNames).Returns(someRunnableContexts);
             executionReporterFactory.Create(progressRecorder).Returns(executionReporter);

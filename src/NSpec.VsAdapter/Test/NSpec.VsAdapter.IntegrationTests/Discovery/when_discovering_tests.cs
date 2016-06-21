@@ -1,12 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.VsAdapter.IntegrationTests.TestData;
-<<<<<<< HEAD
-=======
-using NSpec.VsAdapter.Settings;
-using NSpec.VsAdapter.TestAdapter.Discovery;
-using NUnit.Framework;
-using System;
->>>>>>> origin/feat/unit-test-proxyables
 using System.Collections.Generic;
 
 namespace NSpec.VsAdapter.IntegrationTests.Discovery
