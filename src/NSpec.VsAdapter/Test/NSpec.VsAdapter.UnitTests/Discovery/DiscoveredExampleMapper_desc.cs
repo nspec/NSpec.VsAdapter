@@ -8,6 +8,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -176,6 +177,42 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             };
 
             var actual = mapper.FromExample(example);
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+    }
+
+    public class DiscoveredExampleMapper_when_example_is_method_runnable : DiscoveredExampleMapper_desc_runnable_base
+    {
+        public void DummyMethod() { }
+
+        protected override FixtureData BuildFixtureData()
+        {
+            Action someAction = DummyMethod;
+
+            MethodInfo methodInfo = someAction.Method;
+
+            ExampleBase example = new MethodExample(
+                methodInfo,
+                "tag1 tag2_more tag3")
+            {
+                Context = context,
+                Spec = "some specification",
+            };
+
+            string exampleMethodName = methodInfo.Name;
+
+            return new FixtureData()
+            {
+                Instance = example,
+                MethodName = exampleMethodName,
+            };
+        }
+
+        [Test]
+        public void it_should_fill_all_details()
+        {
+            actual = mapper.FromExample(example);
 
             actual.ShouldBeEquivalentTo(expected);
         }
