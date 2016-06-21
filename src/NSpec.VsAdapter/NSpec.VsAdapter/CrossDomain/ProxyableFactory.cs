@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.CrossDomain
 {
-    public class ProxyableFactory<TProxyableImpl, TIProxyable> : IProxyableFactory<TIProxyable>
-        where TProxyableImpl : Proxyable, TIProxyable
+    public class ProxyableFactory<TImplementation, TInterface> : IProxyableFactory<TInterface>
+        where TImplementation : Proxyable, TInterface
     {
-        public TIProxyable CreateProxy(ITargetAppDomain targetDomain)
+        public TInterface CreateProxy(ITargetAppDomain targetDomain)
         {
-            var marshaledType = typeof(TProxyableImpl);
+            var marshaledType = typeof(TImplementation);
 
             var marshaledTypeName = marshaledType.FullName;
 
             var marshaledAssemblyName = marshaledType.Assembly.FullName;
 
-            var crossDomainProxy = (TProxyableImpl)targetDomain.CreateInstanceAndUnwrap(
+            var crossDomainProxy = (TImplementation)targetDomain.CreateInstanceAndUnwrap(
                 marshaledAssemblyName, marshaledTypeName);
 
             return crossDomainProxy;
