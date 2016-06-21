@@ -59,30 +59,24 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         }
     }
 
-    public class DiscoveredExampleMapper_when_example_is_runnable : DiscoveredExampleMapper_desc_base
+    public abstract class DiscoveredExampleMapper_desc_runnable_base : DiscoveredExampleMapper_desc_base
     {
-        readonly Example example;
-        readonly string specClassName;
-        readonly string exampleMethodName;
-        readonly DiaNavigationData navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
-        readonly DiscoveredExample expected;
+        protected readonly ExampleBase example;
+        protected readonly string specClassName;
+        protected readonly string exampleMethodName;
+        protected readonly DiaNavigationData navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
+        protected readonly DiscoveredExample expected;
 
-        public DiscoveredExampleMapper_when_example_is_runnable() : base()
+        protected DiscoveredExample actual;
+
+        public DiscoveredExampleMapper_desc_runnable_base() : base()
         {
-            Action someAction = () => { };
+            var fixtureData = BuildFixtureData();
 
-            example = new Example(
-                "some-test-full-name",
-                "tag1 tag2_more tag3",
-                someAction)
-            {
-                Context = context,
-                Spec = "some specification",
-            };
+            example = fixtureData.Instance;
+            exampleMethodName = fixtureData.MethodName;
 
             specClassName = this.GetType().ToString();
-
-            exampleMethodName = someAction.Method.Name;
 
             expected = new DiscoveredExample()
             {
@@ -101,10 +95,43 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
         }
 
+        protected abstract FixtureData BuildFixtureData();
+
+        protected class FixtureData
+        {
+            public ExampleBase Instance;
+            public string MethodName;
+        }
+    }
+
+    public class DiscoveredExampleMapper_when_example_is_runnable : DiscoveredExampleMapper_desc_runnable_base
+    {
+        protected override FixtureData BuildFixtureData()
+        {
+            Action someAction = () => { };
+
+            ExampleBase example = new Example(
+                "some-test-full-name",
+                "tag1 tag2_more tag3",
+                someAction)
+            {
+                Context = context,
+                Spec = "some specification",
+            };
+
+            string exampleMethodName = someAction.Method.Name;
+
+            return new FixtureData()
+            {
+                Instance = example,
+                MethodName = exampleMethodName,
+            };
+        }
+
         [Test]
         public void it_should_fill_all_details()
         {
-            var actual = mapper.FromExample(example);
+            actual = mapper.FromExample(example);
 
             actual.ShouldBeEquivalentTo(expected);
         }
@@ -154,19 +181,13 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         }
     }
 
-    public class DiscoveredExampleMapper_when_example_is_async_runnable : DiscoveredExampleMapper_desc_base
+    public class DiscoveredExampleMapper_when_example_is_async_runnable : DiscoveredExampleMapper_desc_runnable_base
     {
-        readonly AsyncExample example;
-        readonly string specClassName;
-        readonly string exampleMethodName;
-        readonly DiaNavigationData navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
-        readonly DiscoveredExample expected;
-
-        public DiscoveredExampleMapper_when_example_is_async_runnable() : base()
+        protected override FixtureData BuildFixtureData()
         {
             Func<Task> someAsyncAction = async () => await Task.Run(() => { });
 
-            example = new AsyncExample(
+            ExampleBase example = new AsyncExample(
                 "some-test-full-name",
                 "tag1 tag2_more tag3",
                 someAsyncAction)
@@ -175,31 +196,19 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
                 Spec = "some specification",
             };
 
-            specClassName = this.GetType().ToString();
+            string exampleMethodName = someAsyncAction.Method.Name;
 
-            exampleMethodName = someAsyncAction.Method.Name;
-
-            expected = new DiscoveredExample()
+            return new FixtureData()
             {
-                FullName = example.FullName(),
-                SourceAssembly = someAssemblyPath,
-                SourceFilePath = someSourceCodePath,
-                SourceLineNumber = someLineNumber,
-                Tags = example.Tags.Select(tag => tag.Replace("_", " ")).ToArray(),
+                Instance = example,
+                MethodName = exampleMethodName,
             };
-        }
-
-        public override void before_each()
-        {
-            base.before_each();
-
-            debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
         }
 
         [Test]
         public void it_should_fill_all_details()
         {
-            var actual = mapper.FromExample(example);
+            actual = mapper.FromExample(example);
 
             actual.ShouldBeEquivalentTo(expected);
         }
