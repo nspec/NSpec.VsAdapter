@@ -50,7 +50,7 @@ namespace NSpec.VsAdapter.Discovery
 
             // order is important: place child types at the top, parent types at the bottom
 
-            if (example is MethodExample)
+            if (example is MethodExample || example is AsyncMethodExample)
             {
                 const string methodPrivateFieldName = "method";
 
