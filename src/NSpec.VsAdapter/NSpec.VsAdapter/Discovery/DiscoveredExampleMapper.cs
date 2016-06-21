@@ -56,13 +56,17 @@ namespace NSpec.VsAdapter.Discovery
                     .GetField(methodPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(example) as MethodInfo;
             }
-            else
+            else if (example is Example)
             {
                 var action = exampleType
                     .GetField(actionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(example) as Action;
 
                 info = action.Method;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("example", String.Format("Unexpected example type: {0}", exampleType));
             }
 
             return info;
