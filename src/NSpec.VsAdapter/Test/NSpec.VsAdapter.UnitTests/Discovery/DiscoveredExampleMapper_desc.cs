@@ -21,7 +21,8 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
         protected AutoSubstitute autoSubstitute;
         protected IDebugInfoProvider debugInfoProvider;
-        protected Context context;
+
+        protected readonly Context context;
 
         // emulates private instance nspec.todo, defined in nspec ancestor
         protected readonly Action dummyTodo = () => { };
@@ -30,15 +31,18 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
         protected const string someSourceCodePath = @".\some\path\to\source\code.cs";
         protected const int someLineNumber = 123;
 
-        [SetUp]
-        public virtual void before_each()
+        public DiscoveredExampleMapper_desc_base()
         {
-            autoSubstitute = new AutoSubstitute();
-
             var parentContext = new Context("some parent context");
 
             context = new Context("some child context");
             context.Parent = parentContext;
+        }
+
+        [SetUp]
+        public virtual void before_each()
+        {
+            autoSubstitute = new AutoSubstitute();
 
             debugInfoProvider = autoSubstitute.Resolve<IDebugInfoProvider>();
 
@@ -57,35 +61,30 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
     public class DiscoveredExampleMapper_when_example_is_runnable : DiscoveredExampleMapper_desc_base
     {
-        Example example;
+        readonly Example example;
+        readonly string specClassName;
+        readonly string exampleMethodName;
+        readonly DiaNavigationData navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
+        readonly DiscoveredExample expected;
 
-        public override void before_each()
+        public DiscoveredExampleMapper_when_example_is_runnable() : base()
         {
-            base.before_each();
-
             Action someAction = () => { };
 
             example = new Example(
                 "some-test-full-name",
                 "tag1 tag2_more tag3",
-                someAction);
+                someAction)
+            {
+                Context = context,
+                Spec = "some specification",
+            };
 
-            string specClassName = this.GetType().ToString();
-            string exampleMethodName = someAction.Method.Name;
+            specClassName = this.GetType().ToString();
 
-            example.Context = context;
+            exampleMethodName = someAction.Method.Name;
 
-            example.Spec = "some specification";
-
-            var navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
-
-            debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
-        }
-
-        [Test]
-        public void it_should_fill_all_details()
-        {
-            var expected = new DiscoveredExample()
+            expected = new DiscoveredExample()
             {
                 FullName = example.FullName(),
                 SourceAssembly = someAssemblyPath,
@@ -93,7 +92,18 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
                 SourceLineNumber = someLineNumber,
                 Tags = example.Tags.Select(tag => tag.Replace("_", " ")).ToArray(),
             };
+        }
 
+        public override void before_each()
+        {
+            base.before_each();
+
+            debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
+        }
+
+        [Test]
+        public void it_should_fill_all_details()
+        {
             var actual = mapper.FromExample(example);
 
             actual.ShouldBeEquivalentTo(expected);
@@ -146,35 +156,30 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
     public class DiscoveredExampleMapper_when_example_is_async_runnable : DiscoveredExampleMapper_desc_base
     {
-        AsyncExample example;
+        readonly AsyncExample example;
+        readonly string specClassName;
+        readonly string exampleMethodName;
+        readonly DiaNavigationData navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
+        readonly DiscoveredExample expected;
 
-        public override void before_each()
+        public DiscoveredExampleMapper_when_example_is_async_runnable() : base()
         {
-            base.before_each();
-
             Func<Task> someAsyncAction = async () => await Task.Run(() => { });
 
             example = new AsyncExample(
                 "some-test-full-name",
                 "tag1 tag2_more tag3",
-                someAsyncAction);
+                someAsyncAction)
+            {
+                Context = context,
+                Spec = "some specification",
+            };
 
-            string specClassName = this.GetType().ToString();
-            string exampleMethodName = someAsyncAction.Method.Name;
+            specClassName = this.GetType().ToString();
 
-            example.Context = context;
+            exampleMethodName = someAsyncAction.Method.Name;
 
-            example.Spec = "some specification";
-
-            var navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
-
-            debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
-        }
-
-        [Test]
-        public void it_should_fill_all_details()
-        {
-            var expected = new DiscoveredExample()
+            expected = new DiscoveredExample()
             {
                 FullName = example.FullName(),
                 SourceAssembly = someAssemblyPath,
@@ -182,7 +187,18 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
                 SourceLineNumber = someLineNumber,
                 Tags = example.Tags.Select(tag => tag.Replace("_", " ")).ToArray(),
             };
+        }
 
+        public override void before_each()
+        {
+            base.before_each();
+
+            debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
+        }
+
+        [Test]
+        public void it_should_fill_all_details()
+        {
             var actual = mapper.FromExample(example);
 
             actual.ShouldBeEquivalentTo(expected);
