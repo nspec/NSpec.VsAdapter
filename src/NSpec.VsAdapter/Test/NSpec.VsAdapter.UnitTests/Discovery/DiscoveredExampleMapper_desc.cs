@@ -250,4 +250,43 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
             actual.ShouldBeEquivalentTo(expected);
         }
     }
+
+    public class DiscoveredExampleMapper_when_example_is_async_method_runnable : DiscoveredExampleMapper_desc_runnable_base
+    {
+        public async Task DummyMethodAsync()
+        {
+            await Task.Run(() => { });
+        }
+
+        protected override FixtureData BuildFixtureData()
+        {
+            Func<Task> someAsyncAction = DummyMethodAsync;
+
+            MethodInfo methodInfo = someAsyncAction.Method;
+
+            ExampleBase example = new AsyncMethodExample(
+                methodInfo,
+                "tag1 tag2_more tag3")
+            {
+                Context = context,
+                Spec = "some specification",
+            };
+
+            string exampleMethodName = someAsyncAction.Method.Name;
+
+            return new FixtureData()
+            {
+                Instance = example,
+                MethodName = exampleMethodName,
+            };
+        }
+
+        [Test]
+        public void it_should_fill_all_details()
+        {
+            actual = mapper.FromExample(example);
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+    }
 }
