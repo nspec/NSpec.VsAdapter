@@ -61,6 +61,7 @@
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="Discovery\CollectingSink.cs" />
     <Compile Include="Discovery\when_discovering_async_tests.cs" />
+    <Compile Include="Discovery\when_discovering_tests_base.cs" />
     <Compile Include="DummyTestException.cs" />
     <Compile Include="EmptySettingsContext.cs" />
     <Compile Include="Execution\CollectingFrameworkHandle.cs" />

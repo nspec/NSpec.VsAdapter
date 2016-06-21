@@ -14,7 +14,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
 {
     [TestFixture]
     [Category("Integration.TestExecution")]
-    public class when_executing_tests_base
+    public abstract class when_executing_tests_base
     {
         protected NSpecTestExecutor executor;
 

@@ -1,57 +1,23 @@
-using FluentAssertions;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.VsAdapter.IntegrationTests.TestData;
-using NSpec.VsAdapter.TestAdapter;
-using NUnit.Framework;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace NSpec.VsAdapter.IntegrationTests.Discovery
 {
-    // TODO extract common logic with 'when_discovering_tests'
-
-    [TestFixture]
-    [Category("Integration.TestDiscovery")]
-    public class when_discovering_async_tests
+    public class when_discovering_async_tests : when_discovering_tests_base
     {
-        NSpecTestDiscoverer discoverer;
-
-        CollectingSink sink;
-
-        [SetUp]
-        public virtual void before_each()
+        protected override string[] BuildSources()
         {
-            var sources = new string[]
+            return new string[]
             {
                 TestConstants.SampleAsyncSpecsDllPath,
                 TestConstants.SampleAsyncSystemDllPath,
             };
-
-            var discoveryContext = new EmptyDiscoveryContext();
-
-            var consoleLogger = new ConsoleLogger();
-
-            sink = new CollectingSink();
-
-            discoverer = new NSpecTestDiscoverer();
-
-            discoverer.DiscoverTests(sources, discoveryContext, consoleLogger, sink);
         }
 
-        [TearDown]
-        public virtual void after_each()
+        protected override IEnumerable<TestCase> BuildExpecteds()
         {
-            if (discoverer != null) discoverer.Dispose();
-        }
-
-        [Test]
-        public void it_should_find_all_examples_with_their_data()
-        {
-            var expected = SampleAsyncSpecsTestCaseData.All;
-
-            var actual = sink.TestCases;
-
-            actual.Should().HaveCount(expected.Count());
-
-            actual.ShouldAllBeEquivalentTo(expected);
+            return SampleAsyncSpecsTestCaseData.All;
         }
     }
 }
