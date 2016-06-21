@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Discovery
 {
@@ -43,21 +44,34 @@ namespace NSpec.VsAdapter.Discovery
 
         static MethodInfo ReflectExampleMethod(ExampleBase example)
         {
-            const string methodPrivateFieldName = "method";
-            const string actionPrivateFieldName = "action";
-
             Type exampleType = example.GetType();
 
             MethodInfo info;
 
+            // order is important: place child types at the top, parent types at the bottom
+
             if (example is MethodExample)
             {
+                const string methodPrivateFieldName = "method";
+
                 info = exampleType
                     .GetField(methodPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(example) as MethodInfo;
             }
+            else if (example is AsyncExample)
+            {
+                const string asyncActionPrivateFieldName = "asyncAction";
+
+                var asyncAction = exampleType
+                    .GetField(asyncActionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(example) as Func<Task>;
+
+                info = asyncAction.Method;
+            }
             else if (example is Example)
             {
+                const string actionPrivateFieldName = "action";
+
                 var action = exampleType
                     .GetField(actionPrivateFieldName, BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(example) as Action;
