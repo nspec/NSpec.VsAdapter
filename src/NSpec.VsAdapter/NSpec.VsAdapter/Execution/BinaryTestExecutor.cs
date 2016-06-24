@@ -3,8 +3,6 @@ using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Execution
 {
@@ -18,35 +16,32 @@ namespace NSpec.VsAdapter.Execution
         public int ExecuteAll(string binaryPath, IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
-            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
-            {
-                return proxyableExecutor.ExecuteAll(binaryPath, progressRecorder, crossDomainLogger);
-            };
+            var executionOperation = new BinaryExecutionOperation(binaryPath,
+                progressRecorder, crossDomainLogger);
 
-            return RunRemoteOperation("all", operation, binaryPath, logger);
+            return RunOperationRemotely("all", executionOperation, binaryPath, logger);
         }
 
-        public int ExecuteSelected(string binaryPath, IEnumerable<string> testCaseFullNames, 
+        public int ExecuteSelected(string binaryPath, IEnumerable<string> testCaseFullNames,
             IProgressRecorder progressRecorder,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
             string[] exampleFullNames = testCaseFullNames.ToArray();
 
-            Func<IProxyableTestExecutor, int> operation = (proxyableExecutor) =>
-            {
-                return proxyableExecutor.ExecuteSelection(binaryPath, exampleFullNames, progressRecorder, crossDomainLogger);
-            };
+            var executionOperation = new SelectionExecutionOperation(binaryPath, exampleFullNames,
+                progressRecorder, crossDomainLogger);
 
-            return RunRemoteOperation("selected", operation, binaryPath, logger);
+            return RunOperationRemotely("selected", executionOperation, binaryPath, logger);
         }
 
         // TODO pass canceler to proxyableExecutor
 
-        int RunRemoteOperation(string description, Func<IProxyableTestExecutor, int> operation, string binaryPath, IOutputLogger logger)
+        int RunOperationRemotely(string description,
+            IExecutionOperation executionOperation, string binaryPath, IOutputLogger logger)
         {
             logger.Info(String.Format("Executing {0} tests in binary '{1}'", description, binaryPath));
 
-            int count = remoteRunner.Run(binaryPath, operation, (ex, path) =>
+            int count = remoteRunner.Run(binaryPath, executionOperation.Run, (ex, path) =>
             {
                 // report problem and return for the next assembly, without crashing the test execution process
                 var message = String.Format("Exception thrown while executing tests in binary '{0}'", path);
@@ -61,5 +56,49 @@ namespace NSpec.VsAdapter.Execution
         }
 
         readonly ICrossDomainRunner<IProxyableTestExecutor, int> remoteRunner;
+
+        interface IExecutionOperation
+        {
+            int Run(IProxyableTestExecutor proxyableExecutor);
+        }
+
+        class BinaryExecutionOperation : IExecutionOperation
+        {
+            public BinaryExecutionOperation(string binaryPath,
+                IProgressRecorder progressRecorder, ICrossDomainLogger crossDomainLogger)
+            {
+                this.binaryPath = binaryPath;
+                this.progressRecorder = progressRecorder;
+                this.crossDomainLogger = crossDomainLogger;
+            }
+
+            public virtual int Run(IProxyableTestExecutor proxyableExecutor)
+            {
+                return proxyableExecutor.ExecuteAll(binaryPath, progressRecorder, crossDomainLogger);
+            }
+
+            protected readonly string binaryPath;
+            protected readonly IProgressRecorder progressRecorder;
+            protected readonly ICrossDomainLogger crossDomainLogger;
+        }
+
+        class SelectionExecutionOperation : BinaryExecutionOperation
+        {
+            public SelectionExecutionOperation(string binaryPath, string[] exampleFullNames,
+                IProgressRecorder progressRecorder, ICrossDomainLogger crossDomainLogger)
+                : base(binaryPath, progressRecorder, crossDomainLogger)
+            {
+                this.exampleFullNames = exampleFullNames;
+            }
+
+            public override int Run(IProxyableTestExecutor proxyableExecutor)
+            {
+                // do *not* call base implementation
+
+                return proxyableExecutor.ExecuteSelection(binaryPath, exampleFullNames, progressRecorder, crossDomainLogger);
+            }
+
+            readonly string[] exampleFullNames;
+        }
     }
 }

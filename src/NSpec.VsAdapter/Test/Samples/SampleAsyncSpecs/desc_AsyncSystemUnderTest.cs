@@ -34,6 +34,8 @@ namespace SampleAsyncSpecs
 
     // Do not move the preceding spec classes around, to avoid rewriting line numbers
 
+    // TODO add sample with `itAsync[...] = expectAsync<...>();` : is it possible to get source file path and line number?
+
     public class DummyPublicClass
     {
     }

@@ -5,52 +5,49 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.Discovery
 {
     public class BinaryTestDiscoverer : IBinaryTestDiscoverer
     {
-        public BinaryTestDiscoverer(ICrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]> remoteRunner, 
+        public BinaryTestDiscoverer(ICrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]> remoteRunner,
             IFileService fileService)
         {
             this.remoteRunner = remoteRunner;
             this.fileService = fileService;
         }
 
-        public IEnumerable<DiscoveredExample> Discover(string binaryPath, 
+        public IEnumerable<DiscoveredExample> Discover(string binaryPath,
             IOutputLogger logger, ICrossDomainLogger crossDomainLogger)
         {
             if (!NSpecLibraryFound(binaryPath))
             {
-                logger.Info(String.Format("Skipping binary '{0}' because it does not reference nspec library", binaryPath));
+                logger.Debug(String.Format("Skipping binary '{0}' because it does not reference nspec library", binaryPath));
 
                 return new DiscoveredExample[0];
             }
             else
             {
-                Func<IProxyableTestDiscoverer, DiscoveredExample[]> operation = (proxyableTestDiscoverer) =>
-                {
-                    return proxyableTestDiscoverer.Discover(binaryPath, crossDomainLogger);
-                };
+                var discoveryOperation = new BinaryDiscoveryOperation(binaryPath, crossDomainLogger);
 
-                return RunRemoteOperation(operation, binaryPath, logger);
+                return RunOperationRemotely(discoveryOperation, binaryPath, logger);
             }
         }
 
-        IEnumerable<DiscoveredExample> RunRemoteOperation(Func<IProxyableTestDiscoverer, DiscoveredExample[]> operation, string binaryPath, IOutputLogger logger)
+        IEnumerable<DiscoveredExample> RunOperationRemotely(
+            IDiscoveryOperation discoveryOperation, string binaryPath, IOutputLogger logger)
         {
             logger.Info(String.Format("Discovering tests in binary '{0}'", binaryPath));
 
-            IEnumerable<DiscoveredExample> discoveredExamples = remoteRunner.Run(binaryPath, operation, (ex, path) =>
-            {
-                // report problem and return for the next assembly, without crashing the test discovery process
-                var message = String.Format("Exception thrown while discovering tests in binary '{0}'", binaryPath);
-                logger.Error(ex, message);
+            IEnumerable<DiscoveredExample> discoveredExamples = remoteRunner.Run(binaryPath, discoveryOperation.Run,
+                (ex, path) =>
+                {
+                    // report problem and return for the next assembly, without crashing the test discovery process
+                    var message = String.Format("Exception thrown while discovering tests in binary '{0}'", binaryPath);
+                    logger.Error(ex, message);
 
-                return new DiscoveredExample[0];
-            });
+                    return new DiscoveredExample[0];
+                });
 
             logger.Info(String.Format("Found {0} tests in binary '{1}'", discoveredExamples.Count(), binaryPath));
 
@@ -68,5 +65,27 @@ namespace NSpec.VsAdapter.Discovery
 
         readonly ICrossDomainRunner<IProxyableTestDiscoverer, DiscoveredExample[]> remoteRunner;
         readonly IFileService fileService;
+
+        interface IDiscoveryOperation
+        {
+            DiscoveredExample[] Run(IProxyableTestDiscoverer proxyableDiscoverer);
+        }
+
+        class BinaryDiscoveryOperation : IDiscoveryOperation
+        {
+            public BinaryDiscoveryOperation(string binaryPath, ICrossDomainLogger crossDomainLogger)
+            {
+                this.binaryPath = binaryPath;
+                this.crossDomainLogger = crossDomainLogger;
+            }
+
+            public DiscoveredExample[] Run(IProxyableTestDiscoverer proxyableDiscoverer)
+            {
+                return proxyableDiscoverer.Discover(binaryPath, crossDomainLogger);
+            }
+
+            readonly string binaryPath;
+            readonly ICrossDomainLogger crossDomainLogger;
+        }
     }
 }
