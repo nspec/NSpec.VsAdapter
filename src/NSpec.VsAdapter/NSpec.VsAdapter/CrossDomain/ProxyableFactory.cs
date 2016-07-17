@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NSpec.VsAdapter.CrossDomain
+﻿namespace NSpec.VsAdapter.CrossDomain
 {
     public class ProxyableFactory<TImplementation, TInterface> : IProxyableFactory<TInterface>
         where TImplementation : Proxyable, TInterface

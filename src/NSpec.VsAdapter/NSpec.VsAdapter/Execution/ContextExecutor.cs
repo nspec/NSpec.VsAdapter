@@ -1,10 +1,7 @@
-﻿using NSpec.Domain;
-using NSpec.Domain.Formatters;
+﻿using NSpec.Domain.Formatters;
 using NSpec.VsAdapter.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace NSpec.VsAdapter.Execution
 {
