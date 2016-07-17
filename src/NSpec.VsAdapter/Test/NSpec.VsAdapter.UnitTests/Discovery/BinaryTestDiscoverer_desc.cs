@@ -1,8 +1,9 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using NSpec.VsAdapter.Common;
-using NSpec.VsAdapter.CrossDomain;
-using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Core.CrossDomain;
+using NSpec.VsAdapter.Core.Discovery;
+using NSpec.VsAdapter.Core.Discovery.Target;
 using NSpec.VsAdapter.Logging;
 using NSubstitute;
 using NUnit.Framework;
@@ -29,8 +30,8 @@ namespace NSpec.VsAdapter.UnitTests.Discovery
 
         protected IEnumerable<DiscoveredExample> actuals;
 
-        protected readonly DiscoveredExample[] someDiscoveredExamples = new DiscoveredExample[] 
-        { 
+        protected readonly DiscoveredExample[] someDiscoveredExamples = new DiscoveredExample[]
+        {
             new DiscoveredExample() { SourceFilePath = somePath, FullName = "source-1-spec-A", },
             new DiscoveredExample() { SourceFilePath = somePath, FullName = "source-1-spec-B", },
             new DiscoveredExample() { SourceFilePath = somePath, FullName = "source-1-spec-C", },

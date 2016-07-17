@@ -1,7 +1,8 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using NSpec.Domain;
-using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Core.Execution;
+using NSpec.VsAdapter.Core.Execution.Target;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -44,7 +45,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
     public class ExecutionReporter_when_writing_example : ExecutionReporter_desc_base
     {
         ExecutedExample someExecutedExample;
-        
+
         int someLevel = 123;
 
         public override void before_each()

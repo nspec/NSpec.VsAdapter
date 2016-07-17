@@ -2,7 +2,8 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.Domain;
-using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Core.Discovery;
+using NSpec.VsAdapter.Core.Discovery.Target;
 using NSubstitute;
 using NUnit.Framework;
 using System;

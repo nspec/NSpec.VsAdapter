@@ -3,7 +3,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Core.Execution;
 using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.Settings;
 using NSpec.VsAdapter.TestAdapter;

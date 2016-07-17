@@ -1,4 +1,4 @@
-﻿using NSpec.VsAdapter.CrossDomain;
+﻿using NSpec.VsAdapter.Core.CrossDomain;
 
 namespace NSpec.VsAdapter.Logging
 {

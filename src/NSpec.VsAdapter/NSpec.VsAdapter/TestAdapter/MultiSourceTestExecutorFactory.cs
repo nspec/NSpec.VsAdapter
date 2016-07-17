@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Core.Execution;
 using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.Settings;
 using System.Collections.Generic;

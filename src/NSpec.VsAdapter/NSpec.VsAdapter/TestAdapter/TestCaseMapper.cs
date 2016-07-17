@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Core.Discovery;
 using System.Linq;
 
 namespace NSpec.VsAdapter.TestAdapter

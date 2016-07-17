@@ -1,8 +1,10 @@
 ﻿using Autofac;
 using NSpec.VsAdapter.Common;
-using NSpec.VsAdapter.CrossDomain;
-using NSpec.VsAdapter.Discovery;
-using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Core.CrossDomain;
+using NSpec.VsAdapter.Core.Discovery;
+using NSpec.VsAdapter.Core.Discovery.Target;
+using NSpec.VsAdapter.Core.Execution;
+using NSpec.VsAdapter.Core.Execution.Target;
 using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.ProjectObservation;
 using NSpec.VsAdapter.ProjectObservation.Projects;

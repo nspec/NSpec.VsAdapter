@@ -1,7 +1,8 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
-using NSpec.VsAdapter.CrossDomain;
-using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Core.CrossDomain;
+using NSpec.VsAdapter.Core.Execution;
+using NSpec.VsAdapter.Core.Execution.Target;
 using NSpec.VsAdapter.Logging;
 using NSubstitute;
 using NUnit.Framework;
@@ -37,7 +38,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
 
         public BinaryTestExecutor_desc_base()
         {
-            CompareToTestCaseFullNames = 
+            CompareToTestCaseFullNames =
                 inputNames => testCaseFullNames.SequenceEqual(inputNames);
         }
 

@@ -1,7 +1,8 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using NSpec.VsAdapter.Discovery;
+using NSpec.VsAdapter.Core.Discovery;
+using NSpec.VsAdapter.Core.Discovery.Target;
 using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs;
 using NSubstitute;

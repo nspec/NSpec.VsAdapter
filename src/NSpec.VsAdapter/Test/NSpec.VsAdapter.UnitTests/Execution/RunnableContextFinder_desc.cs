@@ -2,7 +2,8 @@
 using FluentAssertions;
 using NSpec.Domain;
 using NSpec.VsAdapter.Common;
-using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Core.Execution;
+using NSpec.VsAdapter.Core.Execution.Target;
 using NSubstitute;
 using NUnit.Framework;
 using System;

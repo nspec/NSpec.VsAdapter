@@ -1,4 +1,4 @@
-﻿using NSpec.VsAdapter.Discovery;
+﻿using NSpec.VsAdapter.Core.Discovery;
 using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.Settings;
 using System.Collections.Generic;
