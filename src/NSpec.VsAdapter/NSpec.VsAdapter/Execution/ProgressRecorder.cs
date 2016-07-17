@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using NSpec.Domain;
 using NSpec.VsAdapter.CrossDomain;
-using NSpec.VsAdapter.TestAdapter.Execution;
+using NSpec.VsAdapter.TestAdapter;
 using System;
 using System.Collections.Generic;
 using System.Linq;

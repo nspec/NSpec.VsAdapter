@@ -121,14 +121,14 @@
     <Compile Include="Logging\OutputLogger_desc.cs" />
     <Compile Include="Settings\AdapterSettingsProvider_desc.cs" />
     <Compile Include="Settings\SettingsRepository_desc.cs" />
-    <Compile Include="TestAdapter\Execution\TestResultMapper_desc.cs" />
-    <Compile Include="TestAdapter\Execution\MultiSourceTestExecutor_desc.cs" />
-    <Compile Include="TestAdapter\Discovery\TestCaseMapper_desc.cs" />
+    <Compile Include="TestAdapter\TestResultMapper_desc.cs" />
+    <Compile Include="TestAdapter\MultiSourceTestExecutor_desc.cs" />
+    <Compile Include="TestAdapter\TestCaseMapper_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainer_desc.cs" />
     <Compile Include="TestExplorer\NSpecTestContainerDiscoverer_desc.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="TestAdapter\Discovery\MultiSourceTestDiscoverer_desc.cs" />
+    <Compile Include="TestAdapter\MultiSourceTestDiscoverer_desc.cs" />
     <Compile Include="ProjectObservation\TestBinaryNotifier_desc.cs" />
     <Compile Include="ProjectObservation\ProjectBuildNotifier_desc.cs" />
     <Compile Include="ProjectObservation\ProjectConverter_desc.cs" />

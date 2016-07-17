@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.TestAdapter.Execution
+namespace NSpec.VsAdapter.TestAdapter
 {
     public class TestResultMapper : ITestResultMapper
     {

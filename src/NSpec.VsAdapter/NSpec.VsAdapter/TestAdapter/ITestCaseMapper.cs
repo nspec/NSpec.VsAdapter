@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NSpec.VsAdapter.TestAdapter.Discovery
+namespace NSpec.VsAdapter.TestAdapter
 {
     public interface ITestCaseMapper
     {

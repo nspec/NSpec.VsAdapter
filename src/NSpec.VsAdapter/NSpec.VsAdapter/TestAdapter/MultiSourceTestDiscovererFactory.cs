@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.TestAdapter.Discovery
+namespace NSpec.VsAdapter.TestAdapter
 {
     public class MultiSourceTestDiscovererFactory : IMultiSourceTestDiscovererFactory
     {

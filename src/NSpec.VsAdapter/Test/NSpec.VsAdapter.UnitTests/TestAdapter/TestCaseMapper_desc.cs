@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.VsAdapter.Discovery;
-using NSpec.VsAdapter.TestAdapter.Discovery;
+using NSpec.VsAdapter.TestAdapter;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.TestAdapter.Discovery
+namespace NSpec.VsAdapter.UnitTests.TestAdapter
 {
     [TestFixture]
     [Category("TestCaseMapper")]

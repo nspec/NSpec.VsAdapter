@@ -1,6 +1,6 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using NSpec.VsAdapter.TestAdapter.Discovery;
+using NSpec.VsAdapter.TestAdapter;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;

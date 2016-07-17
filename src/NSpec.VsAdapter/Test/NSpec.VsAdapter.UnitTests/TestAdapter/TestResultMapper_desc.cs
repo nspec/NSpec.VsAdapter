@@ -3,7 +3,7 @@ using FluentAssertions;
 using FluentAssertions.Equivalency;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.VsAdapter.Execution;
-using NSpec.VsAdapter.TestAdapter.Execution;
+using NSpec.VsAdapter.TestAdapter;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.TestAdapter.Execution
+namespace NSpec.VsAdapter.UnitTests.TestAdapter
 {
     [TestFixture]
     [Category("TestResultMapper")]
