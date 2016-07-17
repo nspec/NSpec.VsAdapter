@@ -3,7 +3,7 @@ using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.Settings;
 using System.Collections.Generic;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Discovery
 {
     public class MultiSourceTestDiscovererFactory : IMultiSourceTestDiscovererFactory
     {

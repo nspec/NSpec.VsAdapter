@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System;
 using System.Collections.Generic;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Discovery
 {
     [FileExtension(Constants.DllExtension)]
     [FileExtension(Constants.ExeExtension)]

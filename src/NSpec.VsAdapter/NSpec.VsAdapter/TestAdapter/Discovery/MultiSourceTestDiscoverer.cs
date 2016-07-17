@@ -6,7 +6,7 @@ using NSpec.VsAdapter.Settings;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Discovery
 {
     public class MultiSourceTestDiscoverer : IMultiSourceTestDiscoverer
     {

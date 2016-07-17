@@ -2,7 +2,7 @@
 using NSpec.VsAdapter.Core.Discovery;
 using System.Linq;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Discovery
 {
     public class TestCaseMapper : ITestCaseMapper
     {

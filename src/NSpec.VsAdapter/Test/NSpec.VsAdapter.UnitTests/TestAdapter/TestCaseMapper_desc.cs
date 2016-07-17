@@ -2,13 +2,9 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.VsAdapter.Core.Discovery;
-using NSpec.VsAdapter.TestAdapter;
+using NSpec.VsAdapter.TestAdapter.Discovery;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.UnitTests.TestAdapter
 {
@@ -35,9 +31,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                 SourceFilePath = @".\some\path\to\source\code.cs",
                 SourceLineNumber = 123,
                 SourceAssembly = @".\some\path\to\library.dll",
-                Tags = new string[] 
-                { 
-                    "tag1", "tag2", "tag3_with_underscore", "tag4-with-dash", 
+                Tags = new string[]
+                {
+                    "tag1", "tag2", "tag3_with_underscore", "tag4-with-dash",
                 },
             };
 
@@ -51,9 +47,9 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
                     LineNumber = discoveredExample.SourceLineNumber,
                 };
 
-            var expectedTraits = new string[] 
-                { 
-                    "tag1", "tag2", "tag3 with underscore", "tag4-with-dash", 
+            var expectedTraits = new string[]
+                {
+                    "tag1", "tag2", "tag3 with underscore", "tag4-with-dash",
                 }
                 .Select(tag => new Trait(tag, null));
 
@@ -71,7 +67,7 @@ namespace NSpec.VsAdapter.UnitTests.TestAdapter
         {
             var testCase = mapper.FromDiscoveredExample(discoveredExample);
 
-            testCase.ShouldBeEquivalentTo(expectedTestCase, options => 
+            testCase.ShouldBeEquivalentTo(expectedTestCase, options =>
                 options.Excluding(tc => tc.Id));
         }
 

@@ -2,16 +2,12 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
-using NSpec.Domain;
 using NSpec.VsAdapter.Core.Execution;
-using NSpec.VsAdapter.TestAdapter;
+using NSpec.VsAdapter.TestAdapter.Execution;
 using NSubstitute;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.UnitTests.Execution
 {
@@ -68,7 +64,7 @@ namespace NSpec.VsAdapter.UnitTests.Execution
     public class ProgressRecorder_when_recording_executed_example : ProgressRecorder_desc
     {
         TestResult someTestResult;
-        
+
         const string somePath = @".\path\to\some\dummy-library.dll";
 
         public override void before_each()

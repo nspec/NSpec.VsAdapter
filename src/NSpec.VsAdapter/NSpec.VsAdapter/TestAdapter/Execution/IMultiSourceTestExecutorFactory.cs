@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Collections.Generic;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Execution
 {
     public interface IMultiSourceTestExecutorFactory
     {

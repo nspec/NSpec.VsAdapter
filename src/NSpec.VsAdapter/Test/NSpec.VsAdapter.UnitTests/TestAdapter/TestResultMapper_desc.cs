@@ -3,14 +3,8 @@ using FluentAssertions;
 using FluentAssertions.Equivalency;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.VsAdapter.Core.Execution;
-using NSpec.VsAdapter.TestAdapter;
-using NSubstitute;
+using NSpec.VsAdapter.TestAdapter.Execution;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.UnitTests.TestAdapter
 {

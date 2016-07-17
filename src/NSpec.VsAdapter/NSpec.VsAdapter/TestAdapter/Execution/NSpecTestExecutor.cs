@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using System;
 using System.Collections.Generic;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Execution
 {
     [ExtensionUri(Constants.ExecutorUriString)]
     public class NSpecTestExecutor : ITestExecutor, IDisposable

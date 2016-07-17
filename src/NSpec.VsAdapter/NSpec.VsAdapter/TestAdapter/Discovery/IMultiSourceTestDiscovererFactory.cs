@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Discovery
 {
     public interface IMultiSourceTestDiscovererFactory
     {

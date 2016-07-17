@@ -10,7 +10,8 @@ using NSpec.VsAdapter.ProjectObservation;
 using NSpec.VsAdapter.ProjectObservation.Projects;
 using NSpec.VsAdapter.ProjectObservation.Solution;
 using NSpec.VsAdapter.Settings;
-using NSpec.VsAdapter.TestAdapter;
+using NSpec.VsAdapter.TestAdapter.Discovery;
+using NSpec.VsAdapter.TestAdapter.Execution;
 using NSpec.VsAdapter.TestExplorer;
 using System;
 

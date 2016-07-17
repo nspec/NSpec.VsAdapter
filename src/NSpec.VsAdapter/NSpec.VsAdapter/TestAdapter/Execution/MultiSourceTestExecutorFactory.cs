@@ -4,7 +4,7 @@ using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.Settings;
 using System.Collections.Generic;
 
-namespace NSpec.VsAdapter.TestAdapter
+namespace NSpec.VsAdapter.TestAdapter.Execution
 {
     public class MultiSourceTestExecutorFactory : IMultiSourceTestExecutorFactory
     {
