@@ -9,7 +9,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace NSpec.VsAdapter.UnitTests.Execution
+namespace NSpec.VsAdapter.UnitTests.Core.Execution
 {
     [TestFixture]
     [Category("ProgressRecorder")]

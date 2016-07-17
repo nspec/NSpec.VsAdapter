@@ -1,17 +1,12 @@
 ﻿using AutofacContrib.NSubstitute;
-using FluentAssertions;
 using NSpec.Domain;
 using NSpec.VsAdapter.Core.Execution;
 using NSpec.VsAdapter.Core.Execution.Target;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.Execution
+namespace NSpec.VsAdapter.UnitTests.Core.Execution.Target
 {
     [TestFixture]
     [Category("ExecutionReporter")]

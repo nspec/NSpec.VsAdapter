@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs
+namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs
 {
     public static class SampleDebugInfo
     {
@@ -25,7 +25,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs
             ByClassMethodActionName = new Dictionary<string, Dictionary<string, Dictionary<string, DiaNavigationData>>>()
             {
                 { 
-                    "NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs.ParentSpec", 
+                    "NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs.ParentSpec", 
                     new Dictionary<string, Dictionary<string, DiaNavigationData>>()
                     {
                         {
@@ -55,7 +55,7 @@ namespace NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs
                     }
                 },
                 { 
-                    "NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs.ChildSpec", 
+                    "NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs.ChildSpec", 
                     new Dictionary<string, Dictionary<string, DiaNavigationData>>()
                     {
                         {

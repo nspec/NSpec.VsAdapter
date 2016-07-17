@@ -1,16 +1,11 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using NSpec.VsAdapter.Core.CrossDomain;
-using NSpec.VsAdapter.Logging;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.CrossDomain
+namespace NSpec.VsAdapter.UnitTests.Core.CrossDomain
 {
     [TestFixture]
     [Category("CrossDomainRunner")]

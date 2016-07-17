@@ -6,7 +6,7 @@ using NSpec.VsAdapter.TestAdapter.Discovery;
 using NUnit.Framework;
 using System.Linq;
 
-namespace NSpec.VsAdapter.UnitTests.TestAdapter
+namespace NSpec.VsAdapter.UnitTests.TestAdapter.Discovery
 {
     [TestFixture]
     [Category("TestCaseMapper")]

@@ -1,20 +1,13 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using NSpec.VsAdapter.Core.Discovery;
 using NSpec.VsAdapter.Core.Discovery.Target;
 using NSpec.VsAdapter.Logging;
-using NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs;
-using NSubstitute;
+using NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.Discovery
+namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 {
     [TestFixture]
     [Category("DebugInfoProvider")]

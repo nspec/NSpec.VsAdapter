@@ -12,7 +12,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NSpec.VsAdapter.UnitTests.TestAdapter
+namespace NSpec.VsAdapter.UnitTests.TestAdapter.Discovery
 {
     [TestFixture]
     [Category("MultiSourceTestDiscoverer")]

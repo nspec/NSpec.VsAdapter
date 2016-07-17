@@ -7,13 +7,10 @@ using NSpec.VsAdapter.Logging;
 using NSubstitute;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace NSpec.VsAdapter.UnitTests.Execution
+namespace NSpec.VsAdapter.UnitTests.Core.Execution
 {
     [TestFixture]
     [Category("BinaryTestExecutor")]

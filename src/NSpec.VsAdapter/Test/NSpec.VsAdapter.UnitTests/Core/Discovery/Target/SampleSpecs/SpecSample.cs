@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace NSpec.VsAdapter.UnitTests.Discovery.SampleSpecs
+namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs
 {
     class ParentSpec : nspec
     {

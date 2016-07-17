@@ -6,7 +6,7 @@ using NSpec.VsAdapter.Core.Execution;
 using NSpec.VsAdapter.TestAdapter.Execution;
 using NUnit.Framework;
 
-namespace NSpec.VsAdapter.UnitTests.TestAdapter
+namespace NSpec.VsAdapter.UnitTests.TestAdapter.Execution
 {
     [TestFixture]
     [Category("TestResultMapper")]

@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NSpec.VsAdapter.UnitTests.TestAdapter
+namespace NSpec.VsAdapter.UnitTests.TestAdapter.Execution
 {
     [TestFixture]
     [Category("MultiSourceTestExecutor")]
