@@ -1,7 +1,7 @@
 ﻿using AutofacContrib.NSubstitute;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using NSpec.VsAdapter.Core.Discovery;
+using NSpec.VsAdapter.Discovery;
 using NSpec.VsAdapter.TestAdapter.Discovery;
 using NUnit.Framework;
 using System;
