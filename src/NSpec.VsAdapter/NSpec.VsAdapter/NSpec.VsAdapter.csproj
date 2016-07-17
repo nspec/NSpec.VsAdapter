@@ -105,7 +105,6 @@
     <Compile Include="Core\Execution\IBinaryTestExecutor.cs" />
     <Compile Include="Core\Execution\IProgressRecorder.cs" />
     <Compile Include="Core\Execution\IProgressRecorderFactory.cs" />
-    <Compile Include="Core\Execution\Target\NSpecResult.cs" />
     <Compile Include="Core\Execution\Target\ProxyableTestExecutor.cs" />
     <Compile Include="Core\Execution\ProxyableTestExecutorFactory.cs" />
     <Compile Include="Core\Execution\Target\RunnableContexts.cs" />
