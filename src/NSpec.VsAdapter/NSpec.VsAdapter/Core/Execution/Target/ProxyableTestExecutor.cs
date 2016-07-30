@@ -6,13 +6,13 @@ namespace NSpec.VsAdapter.Core.Execution.Target
 {
     public class ProxyableTestExecutor : Proxyable, IProxyableTestExecutor
     {
-        public int ExecuteAll(string binaryPath, 
+        public int ExecuteAll(string binaryPath,
             IProgressRecorder progressRecorder, ICrossDomainLogger logger)
         {
             return Execute(binaryPath, RunnableContextFinder.RunAll, progressRecorder, logger);
         }
 
-        public int ExecuteSelection(string binaryPath, string[] exampleFullNames, 
+        public int ExecuteSelection(string binaryPath, string[] exampleFullNames,
             IProgressRecorder progressRecorder, ICrossDomainLogger logger)
         {
             return Execute(binaryPath, exampleFullNames, progressRecorder, logger);

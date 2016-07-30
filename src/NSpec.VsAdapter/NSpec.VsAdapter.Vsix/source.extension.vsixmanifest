@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="BrainCrumbz.NSpec.VsAdapter" Version="0.3.0" Language="en-US" Publisher="BrainCrumbz" />
+    <Identity Id="BrainCrumbz.NSpec.VsAdapter" Version="0.3.1" Language="en-US" Publisher="BrainCrumbz" />
     <DisplayName>NSpec VS Adapter</DisplayName>
     <Description xml:space="preserve">A test adapter to run NSpec tests from Test Explorer window in Visual Studio 2013 and later.</Description>
     <MoreInfo>https://github.com/BrainCrumbz/NSpec.VsAdapter</MoreInfo>
