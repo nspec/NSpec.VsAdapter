@@ -1,11 +1,5 @@
-﻿using Microsoft.VisualStudio.Shell.Interop;
-using NSpec.VsAdapter.Common;
-using System;
-using System.Collections.Generic;
+﻿using NSpec.VsAdapter.Common;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.ProjectObservation.Projects
 {

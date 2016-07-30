@@ -1,20 +1,19 @@
 ﻿using Autofac;
 using NSpec.VsAdapter.Common;
-using NSpec.VsAdapter.CrossDomain;
-using NSpec.VsAdapter.Discovery;
-using NSpec.VsAdapter.Execution;
+using NSpec.VsAdapter.Core.CrossDomain;
+using NSpec.VsAdapter.Core.Discovery;
+using NSpec.VsAdapter.Core.Discovery.Target;
+using NSpec.VsAdapter.Core.Execution;
+using NSpec.VsAdapter.Core.Execution.Target;
 using NSpec.VsAdapter.Logging;
 using NSpec.VsAdapter.ProjectObservation;
 using NSpec.VsAdapter.ProjectObservation.Projects;
 using NSpec.VsAdapter.ProjectObservation.Solution;
 using NSpec.VsAdapter.Settings;
-using NSpec.VsAdapter.TestAdapter;
+using NSpec.VsAdapter.TestAdapter.Discovery;
+using NSpec.VsAdapter.TestAdapter.Execution;
 using NSpec.VsAdapter.TestExplorer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter
 {

@@ -1,9 +1,4 @@
 ﻿using Microsoft.VisualStudio.Shell.Interop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.ProjectObservation
 {
@@ -11,7 +6,7 @@ namespace NSpec.VsAdapter.ProjectObservation
     {
         public string DescriptiveName { get; private set; }
 
-        public IVsHierarchy Hierarchy 
+        public IVsHierarchy Hierarchy
         {
             get { return hierarchy; }
             set
