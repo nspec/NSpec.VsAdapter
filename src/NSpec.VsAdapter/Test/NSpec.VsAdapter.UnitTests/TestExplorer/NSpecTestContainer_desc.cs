@@ -95,38 +95,53 @@ namespace NSpec.VsAdapter.UnitTests.TestExplorer
         }
 
         [Test]
-        [ExpectedException]
         public void it_should_throw_with_null_container_discoverer()
         {
-            new NSpecTestContainer(null, sourcePath, debugEngines, fileService);
+            Assert.That(() =>
+            {
+                new NSpecTestContainer(null, sourcePath, debugEngines, fileService);
+
+            }, Throws.Exception);
         }
 
         [Test]
-        [ExpectedException]
         public void it_should_throw_with_null_source()
         {
-            new NSpecTestContainer(containerDiscoverer, null, debugEngines, fileService);
+            Assert.That(() =>
+            {
+                new NSpecTestContainer(containerDiscoverer, null, debugEngines, fileService);
+
+            }, Throws.Exception);
         }
 
         [Test]
-        [ExpectedException]
         public void it_should_throw_with_empty_source()
         {
-            new NSpecTestContainer(containerDiscoverer, String.Empty, debugEngines, fileService);
+            Assert.That(() =>
+            {
+                new NSpecTestContainer(containerDiscoverer, String.Empty, debugEngines, fileService);
+
+            }, Throws.Exception);
         }
 
         [Test]
-        [ExpectedException]
         public void it_should_throw_with_null_engines()
         {
-            new NSpecTestContainer(containerDiscoverer, sourcePath, null, fileService);
+            Assert.That(() =>
+            {
+                new NSpecTestContainer(containerDiscoverer, sourcePath, null, fileService);
+
+            }, Throws.Exception);
         }
 
         [Test]
-        [ExpectedException]
         public void it_should_throw_with_null_fileservice()
         {
-            new NSpecTestContainer(containerDiscoverer, sourcePath, debugEngines, null);
+            Assert.That(() =>
+            {
+                new NSpecTestContainer(containerDiscoverer, sourcePath, debugEngines, null);
+
+            }, Throws.Exception);
         }
     }
 
