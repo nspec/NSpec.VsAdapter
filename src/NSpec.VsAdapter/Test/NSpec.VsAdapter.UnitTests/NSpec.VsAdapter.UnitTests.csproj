@@ -39,8 +39,8 @@
       <HintPath>..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutofacContrib.NSubstitute, Version=3.3.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutofacContrib.NSubstitute.3.3.6\lib\NET40\AutofacContrib.NSubstitute.dll</HintPath>
+    <Reference Include="AutofacContrib.NSubstitute, Version=3.3.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutofacContrib.NSubstitute.3.3.7\lib\NET40\AutofacContrib.NSubstitute.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FluentAssertions, Version=4.13.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
