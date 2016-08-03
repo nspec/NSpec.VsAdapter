@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,13 @@ namespace NSpec.VsAdapter.IntegrationTests
     {
         static TestConstants()
         {
-            TestFolderPath = TestUtils.FirstCharToUpper(Path.GetFullPath(@"..\..\..\"));
+            string thisProjectDllPath = Assembly.GetExecutingAssembly().Location;
+            var dllFileInfo = new FileInfo(thisProjectDllPath);
+
+            // move up from 'Test\ProjectDir\Bin\Debug\' to 'Test\'
+            var testFolderInfo = dllFileInfo.Directory.Parent.Parent.Parent;
+
+            TestFolderPath = TestUtils.FirstCharToUpper(testFolderInfo.FullName);
 
             SampleSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\SampleSpecs\desc_SystemUnderTest.cs");
             SampleSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\SampleSpecs\bin\Debug\SampleSpecs.dll");
