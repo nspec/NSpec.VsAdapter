@@ -9,7 +9,7 @@ namespace NSpec.VsAdapter.Core.Discovery.Target
 {
     public class DiscoveredExampleMapper
     {
-        public DiscoveredExampleMapper(string binaryPath, IDebugInfoProvider debugInfoProvider)
+        static DiscoveredExampleMapper()
         {
             typeNameToBodyGetterMap = new Dictionary<string, BaseExampleBodyGetter>()
             {
@@ -30,7 +30,10 @@ namespace NSpec.VsAdapter.Core.Discovery.Target
                     GetAsyncMethodExampleBodyInfo
                 },
             };
+        }
 
+        public DiscoveredExampleMapper(string binaryPath, IDebugInfoProvider debugInfoProvider)
+        {
             this.binaryPath = binaryPath;
             this.debugInfoProvider = debugInfoProvider;
         }
@@ -58,9 +61,9 @@ namespace NSpec.VsAdapter.Core.Discovery.Target
 
         readonly string binaryPath;
         readonly IDebugInfoProvider debugInfoProvider;
-        readonly Dictionary<string, BaseExampleBodyGetter> typeNameToBodyGetterMap;
+        static readonly Dictionary<string, BaseExampleBodyGetter> typeNameToBodyGetterMap;
 
-        MethodInfo GetFunctionBodyInfo(ExampleBase example)
+        static MethodInfo GetFunctionBodyInfo(ExampleBase example)
         {
             string exampleTypeName = example.GetType().Name;
 
