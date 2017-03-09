@@ -61,8 +61,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\SolutionItems\SolutionAssemblyInfo.cs">
-      <Link>Properties\SolutionAssemblyInfo.cs</Link>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -104,9 +104,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NSpec.VsAdapter\NSpec.VsAdapter.csproj">
-      <Project>{29D93D95-7371-4C78-B484-4A749FDEB0FF}</Project>
+      <Project>{29d93d95-7371-4c78-b484-4a749fdeb0ff}</Project>
       <Name>NSpec.VsAdapter</Name>
-      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -55,8 +55,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SolutionItems\SolutionAssemblyInfo.cs">
-      <Link>Properties\SolutionAssemblyInfo.cs</Link>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ConsoleLogger.cs" />
     <Compile Include="Discovery\CollectingSink.cs" />
@@ -80,13 +80,13 @@
     <Compile Include="Execution\when_executing_all_tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\NSpec.VsAdapter\NSpec.VsAdapter.csproj">
-      <Project>{29D93D95-7371-4C78-B484-4A749FDEB0FF}</Project>
-      <Name>NSpec.VsAdapter</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\..\src\NSpec.VsAdapter\NSpec.VsAdapter.csproj">
+      <Project>{29d93d95-7371-4c78-b484-4a749fdeb0ff}</Project>
+      <Name>NSpec.VsAdapter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
