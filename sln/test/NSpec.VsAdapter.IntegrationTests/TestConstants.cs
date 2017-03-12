@@ -15,7 +15,7 @@ namespace NSpec.VsAdapter.IntegrationTests
             string thisProjectDllPath = Assembly.GetExecutingAssembly().Location;
             var dllFileInfo = new FileInfo(thisProjectDllPath);
 
-            // move up from 'Test\ProjectDir\Bin\Debug\' to 'Test\'
+            // move up from 'test\ProjectDir\Bin\Debug\' to 'Test\'
             var testFolderInfo = dllFileInfo.Directory.Parent.Parent.Parent;
 
             TestFolderPath = TestUtils.FirstCharToUpper(testFolderInfo.FullName);
