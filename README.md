@@ -1,18 +1,22 @@
 # NSpec.VsAdapter
 
-A test adapter to run NSpec tests from Test Explorer in Visual Studio 2013 and later.
+NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in Visual Studio 2013 and Visual Studio 2015.
 
-## Project status 
+## Minimum requirements
 
-This project is currently in early stage of development. It has been tried against real-life projects, but it might not be ready yet to be used as your *one and only* NSpec test runner.
+It currently supports test projects based on .NET Framework 4.5 and later, and NSpec 1.0.7 and later. It can be installed in Visual Studio 2013 and 2015.
 
-## Setup
+## Usage
 
-Download VSIX extension file from [Releases page](https://github.com/BrainCrumbz/NSpec.VsAdapter/releases), picking the most recent version available. For regular usage, downloading `NSpec.VsAdapter.Release.vsix` version is fine. Double click on VSIX file to install it in your Visual Studio environment. That's it.
+### Setup
 
-Alternatively, if you want to notify issues you found while running tests, you could try downloading the debug version  `NSpec.VsAdapter.Debug.vsix` or go the full route and [run adapter from its source code](./CONTRIBUTING.md).
+Download VSIX extension file from [Releases page](https://github.com/BrainCrumbz/NSpec.VsAdapter/releases), picking the latest version available, and choosing the filename with a `Release` suffix: `NSpec.VsAdapter.Release.vsix`. Double click on VSIX file to install it in your Visual Studio environment. That's it.
 
-## Configuration
+### Launch
+
+Open a solution in Visual Studio with at least one NSpec test project, then build all. Open VS Test Explorer window and wait until list gets populated with test specifications from all projects. Click on *Run All* or select some tests to be run. You can also group specifications based on project, or `nspec`-derived class, or trait.
+
+### Configuration
 
 This Visual Studio test adapter can be configured by using a `.runsettings` file (see [MSDN](https://msdn.microsoft.com/en-us/library/jj635153.aspx)). Currently supported file format is:
 
@@ -38,10 +42,19 @@ Currently supported settings are:
 
 An example of such a file can be found in test source code at [src/NSpec.VsAdapter/Test/Samples/SolutionItems/samples.runsettings](./sln/test/Samples/samples.runsettings)
 
+## Breaking changes
+
+To check for potential breaking changes, see [BREAKING-CHANGES.md](./BREAKING-CHANGES.md).
+
 ## Contributing
 
-See [CONTRIBUTING](./CONTRIBUTING.md) doc page in this project.
+See [CONTRIBUTING](./CONTRIBUTING.md) doc page.
 
 ## License
 
-See [LICENSE.txt](./LICENSE.txt) in this project.
+[MIT](./LICENSE.txt).
+
+## Credits
+
+NSpec.VsAdapter is written by [BrainCrumbz](http://www.braincrumbz.com). It's shaped and
+benefited by hard work from our [contributors](https://github.com/BrainCrumbz/NSpec.VsAdapter/contributors).
