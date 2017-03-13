@@ -10,7 +10,7 @@ It currently supports test projects based on .NET Framework 4.5 and later, and N
 
 ### Setup
 
-Download VSIX extension file from [Releases page](https://github.com/BrainCrumbz/NSpec.VsAdapter/releases), picking the latest version available, and choosing the filename with a `Release` suffix: `NSpec.VsAdapter.Release.vsix`. Double click on VSIX file to install it in your Visual Studio environment. That's it.
+Download VSIX extension file from [Releases page](https://github.com/nspec/NSpec.VsAdapter/releases), picking the latest version available, and choosing the filename with a `Release` suffix: `NSpec.VsAdapter.Release.vsix`. Double click on VSIX file to install it in your Visual Studio environment. That's it.
 
 ### Launch
 
@@ -40,7 +40,7 @@ Currently supported settings are:
 |------|------|--------|-------------|
 | LogLevel | String | Trace, Debug, Info, Warn, Error | Minimum log level to show. Log messages with a level lower than this will not be shown. |
 
-An example of such a file can be found in test source code at [src/NSpec.VsAdapter/Test/Samples/SolutionItems/samples.runsettings](./sln/test/Samples/samples.runsettings)
+An example of such a file can be found in test source code at [sln/test/Samples/samples.runsettings](./sln/test/Samples/samples.runsettings).
 
 ## Breaking changes
 
@@ -57,4 +57,4 @@ See [CONTRIBUTING](./CONTRIBUTING.md) doc page.
 ## Credits
 
 NSpec.VsAdapter is written by [BrainCrumbz](http://www.braincrumbz.com). It's shaped and
-benefited by hard work from our [contributors](https://github.com/BrainCrumbz/NSpec.VsAdapter/contributors).
+benefited by hard work from our [contributors](https://github.com/nspec/NSpec.VsAdapter/contributors).
