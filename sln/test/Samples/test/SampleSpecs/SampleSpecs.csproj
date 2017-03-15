@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{80876E7D-9EF1-48FF-BA0F-F0EFF0AE098A}</ProjectGuid>
+    <ProjectGuid>{2C743124-C1C6-4B5D-A6C5-16819A726919}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SampleAsyncSpecs</RootNamespace>
-    <AssemblyName>SampleAsyncSpecs</AssemblyName>
+    <RootNamespace>SampleSpecs</RootNamespace>
+    <AssemblyName>SampleSpecs</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,11 +36,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NSpec, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\nspec.1.0.7\lib\NSpec.dll</HintPath>
+      <HintPath>..\..\..\..\packages\nspec.1.0.7\lib\NSpec.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Shouldly, Version=2.8.1.0, Culture=neutral, PublicKeyToken=6042cbcb05cbc941, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Shouldly.2.8.1\lib\net40\Shouldly.dll</HintPath>
+      <HintPath>..\..\..\..\packages\Shouldly.2.8.1\lib\net40\Shouldly.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -55,13 +55,13 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DebuggerShim.cs" />
-    <Compile Include="desc_AsyncSystemUnderTest.cs" />
+    <Compile Include="desc_SystemUnderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SampleAsyncSystem\SampleAsyncSystem.csproj">
-      <Project>{D96265E1-ECAE-4FEB-B9D4-9BAE991D6FCF}</Project>
-      <Name>SampleAsyncSystem</Name>
+    <ProjectReference Include="..\..\src\SampleSystem\SampleSystem.csproj">
+      <Project>{716E1B2B-C0F4-450F-BCD0-95CF829126B9}</Project>
+      <Name>SampleSystem</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -3,24 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSystem", "SampleSystem\SampleSystem.csproj", "{716E1B2B-C0F4-450F-BCD0-95CF829126B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSystem", "src\SampleSystem\SampleSystem.csproj", "{716E1B2B-C0F4-450F-BCD0-95CF829126B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSpecs", "SampleSpecs\SampleSpecs.csproj", "{2C743124-C1C6-4B5D-A6C5-16819A726919}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSpecs", "test\SampleSpecs\SampleSpecs.csproj", "{2C743124-C1C6-4B5D-A6C5-16819A726919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSystem", "ConfigSampleSystem\ConfigSampleSystem.csproj", "{E17B343A-3159-4BF9-9043-A5E0F626954A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSystem", "src\ConfigSampleSystem\ConfigSampleSystem.csproj", "{E17B343A-3159-4BF9-9043-A5E0F626954A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSpecs", "ConfigSampleSpecs\ConfigSampleSpecs.csproj", "{B51BD897-01A8-4F16-AF5A-2A18EA1F43C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSpecs", "test\ConfigSampleSpecs\ConfigSampleSpecs.csproj", "{B51BD897-01A8-4F16-AF5A-2A18EA1F43C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdHocConsoleRunner", "AdHocConsoleRunner\AdHocConsoleRunner.csproj", "{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdHocConsoleRunner", "test\AdHocConsoleRunner\AdHocConsoleRunner.csproj", "{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34F9A67E-68F1-4AAC-A3EE-272428AC7968}"
 	ProjectSection(SolutionItems) = preProject
 		SolutionItems\samples.runsettings = SolutionItems\samples.runsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAsyncSystem", "SampleAsyncSystem\SampleAsyncSystem.csproj", "{D96265E1-ECAE-4FEB-B9D4-9BAE991D6FCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAsyncSystem", "src\SampleAsyncSystem\SampleAsyncSystem.csproj", "{D96265E1-ECAE-4FEB-B9D4-9BAE991D6FCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAsyncSpecs", "SampleAsyncSpecs\SampleAsyncSpecs.csproj", "{80876E7D-9EF1-48FF-BA0F-F0EFF0AE098A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAsyncSpecs", "test\SampleAsyncSpecs\SampleAsyncSpecs.csproj", "{80876E7D-9EF1-48FF-BA0F-F0EFF0AE098A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{04213045-0AD4-4A81-9C17-D2611A998361}"
 EndProject

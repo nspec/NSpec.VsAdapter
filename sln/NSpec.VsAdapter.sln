@@ -27,19 +27,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSpec.VsAdapter.UnitTests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSpec.VsAdapter.IntegrationTests", "test\NSpec.VsAdapter.IntegrationTests\NSpec.VsAdapter.IntegrationTests.csproj", "{3D3C02A5-774D-4659-BDDE-3AF3CC2675CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSystem", "test\Samples\SampleSystem\SampleSystem.csproj", "{716E1B2B-C0F4-450F-BCD0-95CF829126B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSystem", "test\Samples\src\SampleSystem\SampleSystem.csproj", "{716E1B2B-C0F4-450F-BCD0-95CF829126B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSpecs", "test\Samples\SampleSpecs\SampleSpecs.csproj", "{2C743124-C1C6-4B5D-A6C5-16819A726919}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleSpecs", "test\Samples\test\SampleSpecs\SampleSpecs.csproj", "{2C743124-C1C6-4B5D-A6C5-16819A726919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAsyncSystem", "test\Samples\SampleAsyncSystem\SampleAsyncSystem.csproj", "{D96265E1-ECAE-4FEB-B9D4-9BAE991D6FCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAsyncSystem", "test\Samples\src\SampleAsyncSystem\SampleAsyncSystem.csproj", "{D96265E1-ECAE-4FEB-B9D4-9BAE991D6FCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAsyncSpecs", "test\Samples\SampleAsyncSpecs\SampleAsyncSpecs.csproj", "{80876E7D-9EF1-48FF-BA0F-F0EFF0AE098A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAsyncSpecs", "test\Samples\test\SampleAsyncSpecs\SampleAsyncSpecs.csproj", "{80876E7D-9EF1-48FF-BA0F-F0EFF0AE098A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSystem", "test\Samples\ConfigSampleSystem\ConfigSampleSystem.csproj", "{E17B343A-3159-4BF9-9043-A5E0F626954A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSystem", "test\Samples\src\ConfigSampleSystem\ConfigSampleSystem.csproj", "{E17B343A-3159-4BF9-9043-A5E0F626954A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSpecs", "test\Samples\ConfigSampleSpecs\ConfigSampleSpecs.csproj", "{B51BD897-01A8-4F16-AF5A-2A18EA1F43C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigSampleSpecs", "test\Samples\test\ConfigSampleSpecs\ConfigSampleSpecs.csproj", "{B51BD897-01A8-4F16-AF5A-2A18EA1F43C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdHocConsoleRunner", "test\Samples\AdHocConsoleRunner\AdHocConsoleRunner.csproj", "{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdHocConsoleRunner", "test\Samples\test\AdHocConsoleRunner\AdHocConsoleRunner.csproj", "{FF4AD74A-0B1F-40E6-BF9A-7BC82DE96E8D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0F8197F5-69C1-48A4-A52E-FAD21EBD30D0}"
 EndProject

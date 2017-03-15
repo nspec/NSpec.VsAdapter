@@ -15,25 +15,25 @@ namespace NSpec.VsAdapter.IntegrationTests
             string thisProjectDllPath = Assembly.GetExecutingAssembly().Location;
             var dllFileInfo = new FileInfo(thisProjectDllPath);
 
-            // move up from 'test\ProjectDir\Bin\Debug\' to 'Test\'
+            // move up from 'test\ProjectDir\Bin\Debug\' to 'test\'
             var testFolderInfo = dllFileInfo.Directory.Parent.Parent.Parent;
 
             TestFolderPath = TestUtils.FirstCharToUpper(testFolderInfo.FullName);
 
-            SampleSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\SampleSpecs\desc_SystemUnderTest.cs");
-            SampleSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\SampleSpecs\bin\Debug\SampleSpecs.dll");
+            SampleSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\test\SampleSpecs\desc_SystemUnderTest.cs");
+            SampleSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\test\SampleSpecs\bin\Debug\SampleSpecs.dll");
 
-            SampleSystemDllPath = Path.Combine(TestFolderPath, @"Samples\SampleSystem\bin\Debug\SampleSystem.dll");
+            SampleSystemDllPath = Path.Combine(TestFolderPath, @"Samples\src\SampleSystem\bin\Debug\SampleSystem.dll");
 
-            ConfigSampleSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\ConfigSampleSpecs\desc_SystemWithSettings.cs");
-            ConfigSampleSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\ConfigSampleSpecs\bin\Debug\ConfigSampleSpecs.dll");
+            ConfigSampleSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\test\ConfigSampleSpecs\desc_SystemWithSettings.cs");
+            ConfigSampleSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\test\ConfigSampleSpecs\bin\Debug\ConfigSampleSpecs.dll");
 
-            ConfigSampleSystemExePath = Path.Combine(TestFolderPath, @"Samples\ConfigSampleSystem\bin\Debug\ConfigSampleSystem.exe");
+            ConfigSampleSystemExePath = Path.Combine(TestFolderPath, @"Samples\src\ConfigSampleSystem\bin\Debug\ConfigSampleSystem.exe");
 
-            SampleAsyncSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\SampleAsyncSpecs\desc_AsyncSystemUnderTest.cs");
-            SampleAsyncSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\SampleAsyncSpecs\bin\Debug\SampleAsyncSpecs.dll");
+            SampleAsyncSpecsSourcePath = Path.Combine(TestFolderPath, @"Samples\test\SampleAsyncSpecs\desc_AsyncSystemUnderTest.cs");
+            SampleAsyncSpecsDllPath = Path.Combine(TestFolderPath, @"Samples\test\SampleAsyncSpecs\bin\Debug\SampleAsyncSpecs.dll");
 
-            SampleAsyncSystemDllPath = Path.Combine(TestFolderPath, @"Samples\SampleAsyncSystem\bin\Debug\SampleAsyncSystem.dll");
+            SampleAsyncSystemDllPath = Path.Combine(TestFolderPath, @"Samples\src\SampleAsyncSystem\bin\Debug\SampleAsyncSystem.dll");
         }
 
         public static readonly string TestFolderPath;
