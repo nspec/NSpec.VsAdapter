@@ -1,6 +1,6 @@
 # NSpec.VsAdapter
 
-NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in Visual Studio 2013 and Visual Studio 2015.
+NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in Visual Studio 2013 and Visual Studio 2015 (integration with Visual Studio 2017 is in progress).
 
 ## Minimum requirements
 
@@ -11,6 +11,8 @@ It currently supports test projects based on .NET Framework 4.5 and later, and N
 ### Setup
 
 Download VSIX extension file from [Releases page](https://github.com/nspec/NSpec.VsAdapter/releases), picking the latest version available, and choosing the filename with a `Release` suffix: `NSpec.VsAdapter.Release.vsix`. Double click on VSIX file to install it in your Visual Studio environment. That's it.
+
+It will soon be available from Visual Studio gallery and for direct install from within *VS Extensions and Updates*.
 
 ### Launch
 
