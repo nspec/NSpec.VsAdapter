@@ -8,11 +8,11 @@ It currently supports test projects based on .NET Framework 4.5 and later, and N
 
 ## Usage
 
-### Setup
+### Installation
 
-Download VSIX extension file from [Releases page](https://github.com/nspec/NSpec.VsAdapter/releases), picking the latest version available, and choosing the filename with a `Release` suffix: `NSpec.VsAdapter.Release.vsix`. Double click on VSIX file to install it in your Visual Studio environment. That's it.
+Open *Extensions and Updates* window from within Visual Studio and type `nspec vs` in search field, then download this extension showing on top. That's it.
 
-It will soon be available from Visual Studio gallery and for direct install from within *VS Extensions and Updates*.
+When you want to install this extension on more than one Visual Studio version at once, or when you don't have Visual Studio already open, you can browse to [this extension page](https://marketplace.visualstudio.com/items?itemName=GiuseppePiscopo.NSpecVSAdapter) on Visual Studio marketplace, download it locally to your machine and double click on grabbed VSIX file.
 
 ### Launch
 
