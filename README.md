@@ -4,7 +4,7 @@ NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in Visua
 
 ## Minimum requirements
 
-It currently supports test projects based on .NET Framework 4.5 and later, and NSpec 1.0.7 and later. It can be installed in Visual Studio 2013 and 2015.
+It currently supports test projects based on .NET Framework 4.5 and later, and NSpec 1.0.x. It can be installed in Visual Studio 2013 and 2015.
 
 ## Usage
 
