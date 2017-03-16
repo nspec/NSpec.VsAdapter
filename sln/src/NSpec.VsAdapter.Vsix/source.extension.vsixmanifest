@@ -4,9 +4,9 @@
     <Identity Id="BrainCrumbz.NSpec.VsAdapter" Version="0.3.2" Language="en-US" Publisher="BrainCrumbz" />
     <DisplayName>NSpec VS Adapter</DisplayName>
     <Description xml:space="preserve">A test adapter to run NSpec tests from Test Explorer window in Visual Studio 2013 and later.</Description>
-    <MoreInfo>https://github.com/BrainCrumbz/NSpec.VsAdapter</MoreInfo>
+    <MoreInfo>https://github.com/nspec/NSpec.VsAdapter</MoreInfo>
     <License>License.txt</License>
-    <Icon>Assets\Logo\NSpecVsAdapterLogo32x32.png</Icon>
+    <Icon>Assets\Logo\NSpecVsAdapterLogo90x90.png</Icon>
     <PreviewImage>Assets\Preview\NSpecVsAdapterPreview200x200.png</PreviewImage>
     <Tags>nspec test adapter runner bdd tdd</Tags>
   </Metadata>
