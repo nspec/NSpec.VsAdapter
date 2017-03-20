@@ -22,14 +22,14 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         protected AutoSubstitute autoSubstitute;
         protected IDebugInfoProvider debugInfoProvider;
 
+        protected ExampleBase example;
+        protected string exampleMethodName;
         protected DiscoveredExample actual;
+        protected DiscoveredExample expected;
 
         protected readonly Context context;
-        protected readonly ExampleBase example;
         protected readonly string specClassName;
-        protected readonly string exampleMethodName;
         protected readonly DiaNavigationData navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
-        protected readonly DiscoveredExample expected;
 
         // emulates private instance nspec.todo, defined in nspec ancestor
         protected readonly Action dummyTodo = () => { };
@@ -45,6 +45,11 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
             context = new Context("some child context");
             context.Parent = parentContext;
 
+            specClassName = this.GetType().ToString();
+        }
+
+        void InitTestData()
+        {
             var fixtureData = BuildFixtureData();
 
             example = fixtureData.Instance;
@@ -52,8 +57,6 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
             example.Spec = "some specification";
 
             exampleMethodName = fixtureData.MethodName;
-
-            specClassName = this.GetType().ToString();
 
             expected = new DiscoveredExample()
             {
@@ -69,6 +72,8 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         public virtual void before_each()
         {
             autoSubstitute = new AutoSubstitute();
+
+            InitTestData();
 
             debugInfoProvider = autoSubstitute.Resolve<IDebugInfoProvider>();
 
