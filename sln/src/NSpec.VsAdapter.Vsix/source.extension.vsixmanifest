@@ -8,7 +8,7 @@
     <License>LICENSE.txt</License>
     <Icon>Assets\NSpecVsAdapterLogo90x90.png</Icon>
     <PreviewImage>Assets\NSpecVsAdapterPreview200x200.png</PreviewImage>
-    <Tags>nspec test adapter runner bdd tdd</Tags>
+    <Tags>test, Unit Testing, Testing, adapter, TDD, Unit Test, BDD, mocha, nspec, RSpec</Tags>
   </Metadata>
   <Installation>
     <InstallationTarget Version="[12.0,14.0]" Id="Microsoft.VisualStudio.Pro" />
