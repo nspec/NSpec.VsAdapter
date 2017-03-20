@@ -23,12 +23,12 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         protected IDebugInfoProvider debugInfoProvider;
 
         protected ExampleBase example;
+        protected string specClassName;
         protected string exampleMethodName;
         protected DiscoveredExample actual;
         protected DiscoveredExample expected;
 
         protected readonly Context context;
-        protected readonly string specClassName;
         protected readonly DiaNavigationData navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
 
         // emulates private instance nspec.todo, defined in nspec ancestor
@@ -44,8 +44,6 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 
             context = new Context("some child context");
             context.Parent = parentContext;
-
-            specClassName = this.GetType().ToString();
         }
 
         void InitTestData()
@@ -55,6 +53,8 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
             example = fixtureData.Instance;
             example.Context = context;
             example.Spec = "some specification";
+
+            specClassName = fixtureData.ClassName;
 
             exampleMethodName = fixtureData.MethodName;
 
@@ -79,6 +79,8 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 
             var emptyNavigationData = new DiaNavigationData(String.Empty, 0, 0);
 
+            // always return empty navigation data, unless specific inputs are provided
+
             debugInfoProvider.GetNavigationData(null, null).ReturnsForAnyArgs(emptyNavigationData);
 
             debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
@@ -97,6 +99,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         protected class FixtureData
         {
             public ExampleBase Instance;
+            public string ClassName;
             public string MethodName;
         }
     }
@@ -117,6 +120,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
             return new FixtureData()
             {
                 Instance = someExample,
+                ClassName = someAction.Target.ToString(),
                 MethodName = someExampleMethodName,
             };
         }
@@ -147,7 +151,8 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
             return new FixtureData()
             {
                 Instance = someExample,
-                MethodName = someExampleMethodName,
+                ClassName = String.Empty,
+                MethodName = String.Empty,
             };
         }
 
@@ -188,6 +193,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
             return new FixtureData()
             {
                 Instance = someExample,
+                ClassName = someAction.Target.ToString(),
                 MethodName = someExampleMethodName,
             };
         }
@@ -217,6 +223,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
             return new FixtureData()
             {
                 Instance = someExample,
+                ClassName = someAsyncAction.Target.ToString(),
                 MethodName = someExampleMethodName,
             };
         }
@@ -252,6 +259,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
             return new FixtureData()
             {
                 Instance = someExample,
+                ClassName = someAsyncAction.Target.ToString(),
                 MethodName = someExampleMethodName,
             };
         }

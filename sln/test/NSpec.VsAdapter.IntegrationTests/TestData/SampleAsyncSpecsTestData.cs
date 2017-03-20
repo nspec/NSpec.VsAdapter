@@ -19,7 +19,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
         static SampleAsyncSpecsTestCaseData()
         {
             string specAssemblyPath = TestConstants.SampleAsyncSpecsDllPath;
-            string sourceCodeFilePath = TestUtils.FirstCharToLower(TestConstants.SampleAsyncSpecsSourcePath);
+            string sourceCodeFilePath = TestUtils.FirstCharToUpper(TestConstants.SampleAsyncSpecsSourcePath);
 
             ByClassMethodExampleName = new Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>>()
             {
