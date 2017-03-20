@@ -102,17 +102,17 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         {
             Action someAction = () => { };
 
-            ExampleBase example = new Example(
+            ExampleBase someExample = new Example(
                 "some-test-full-name",
                 "tag1 tag2_more tag3",
                 someAction);
 
-            string exampleMethodName = someAction.Method.Name;
+            string someExampleMethodName = someAction.Method.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Instance = someExample,
+                MethodName = someExampleMethodName,
             };
         }
 
@@ -131,18 +131,18 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         {
             Action someAction = dummyTodo;
 
-            ExampleBase example = new Example(
+            ExampleBase someExample = new Example(
                 "some-test-full-name",
                 "tag1 tag2_more tag3",
                 someAction,
                 pending: true);
 
-            string exampleMethodName = someAction.Method.Name;
+            string someExampleMethodName = someAction.Method.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Instance = someExample,
+                MethodName = someExampleMethodName,
             };
         }
 
@@ -158,7 +158,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
                 Tags = example.Tags.Select(tag => tag.Replace("_", " ")).ToArray(),
             };
 
-            var actual = mapper.FromExample(example);
+            actual = mapper.FromExample(example);
 
             actual.ShouldBeEquivalentTo(pendingExpected);
         }
@@ -174,16 +174,16 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 
             MethodInfo methodInfo = someAction.Method;
 
-            ExampleBase example = new MethodExample(
+            ExampleBase someExample = new MethodExample(
                 methodInfo,
                 "tag1 tag2_more tag3");
 
-            string exampleMethodName = methodInfo.Name;
+            string someExampleMethodName = methodInfo.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Instance = someExample,
+                MethodName = someExampleMethodName,
             };
         }
 
@@ -202,17 +202,17 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         {
             Func<Task> someAsyncAction = async () => await Task.Run(() => { });
 
-            ExampleBase example = new AsyncExample(
+            ExampleBase someExample = new AsyncExample(
                 "some-test-full-name",
                 "tag1 tag2_more tag3",
                 someAsyncAction);
 
-            string exampleMethodName = someAsyncAction.Method.Name;
+            string someExampleMethodName = someAsyncAction.Method.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Instance = someExample,
+                MethodName = someExampleMethodName,
             };
         }
 
@@ -238,16 +238,16 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 
             MethodInfo methodInfo = someAsyncAction.Method;
 
-            ExampleBase example = new AsyncMethodExample(
+            ExampleBase someExample = new AsyncMethodExample(
                 methodInfo,
                 "tag1 tag2_more tag3");
 
-            string exampleMethodName = someAsyncAction.Method.Name;
+            string someExampleMethodName = someAsyncAction.Method.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Instance = someExample,
+                MethodName = someExampleMethodName,
             };
         }
 
