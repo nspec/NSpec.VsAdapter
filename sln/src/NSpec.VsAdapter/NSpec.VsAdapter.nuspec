@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>NSpec.VsAdapter</id>
+    <version>0.2.1.0</version>
+    <title>NSpec VS Adapter</title>
+    <summary>NSpec test adapter for Visual Studio 2013 and later.</summary>
+    <description>
+NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer window in Visual Studio 2013 and Visual Studio 2015 (integration with Visual Studio 2017 is in progress).
+
+It currently supports test projects based on .NET Framework 4.5 and higher, and NSpec 1.0.x.
+    </description>
+    <authors>BrainCrumbz</authors>
+    <owners>BrainCrumbz</owners>
+    <licenseUrl>https://github.com/nspec/NSpec.VsAdapter/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/nspec/NSpec.VsAdapter</projectUrl>
+    <iconUrl>https://cdn.rawgit.com/nspec/NSpec.VsAdapter/master/sln/NSpecVsAdapterLogo90x90.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes></releaseNotes>
+    <tags>testing bdd tdd rspec mocha runner test</tags>
+    <language>en-US</language>
+    <dependencies>
+      <dependency id="Autofac" version="3.5.2" />
+      <dependency id="Newtonsoft.Json" version="9.0.1" />
+      <dependency id="nspec" version="1.0.7" />
+      <dependency id="Rx-Core" version="2.2.5" />
+      <dependency id="Rx-Interfaces" version="2.2.5" />
+      <dependency id="Rx-Linq" version="2.2.5" />
+      <dependency id="Rx-Main" version="2.2.5" />
+      <dependency id="Rx-PlatformServices" version="2.2.5" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\**" exclude="**\*.pdb;**\*.xml" target="tools"/>
+    <file src="..\..\..\LICENSE.txt" />
+  </files>
+</package>
