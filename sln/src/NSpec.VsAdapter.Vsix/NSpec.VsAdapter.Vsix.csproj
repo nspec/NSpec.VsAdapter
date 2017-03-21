@@ -75,15 +75,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Logo\NSpecVsAdapterLogo90x90.png">
+    <Content Include="..\..\..\LICENSE.txt">
+      <Link>LICENSE.txt</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Assets\Preview\NSpecVsAdapterPreview200x200.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="..\..\NSpecVsAdapterLogo90x90.png">
+      <Link>Assets\NSpecVsAdapterLogo90x90.png</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="License.txt">
+    <Content Include="Assets\NSpecVsAdapterPreview200x200.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

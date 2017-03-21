@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test Solution Items", "Test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7601B71F-97E7-429D-8CCB-1C81EDFD45DB}"
 	ProjectSection(SolutionItems) = preProject
+		NSpecVsAdapterLogo90x90.png = NSpecVsAdapterLogo90x90.png
 		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
@@ -44,6 +45,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0F8197F5-69C1-48A4-A52E-FAD21EBD30D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4B912E41-B967-4AA4-90DD-8951B964DC9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository Items", "Repository Items", "{A464FD79-D910-461C-AB8E-7691EA8EDB2D}"
+	ProjectSection(SolutionItems) = preProject
+		..\LICENSE.txt = ..\LICENSE.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
