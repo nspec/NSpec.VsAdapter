@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.IntegrationTests.TestData
 {
@@ -19,7 +17,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
         static SampleSpecsTestCaseData()
         {
             string specAssemblyPath = TestConstants.SampleSpecsDllPath;
-            string sourceCodeFilePath = TestUtils.FirstCharToUpper(TestConstants.SampleSpecsSourcePath);
+            string sourceCodeFilePath = TestUtils.FirstCharToLower(TestConstants.SampleSpecsSourcePath);
 
             ByClassMethodExampleName = new Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>>()
             {

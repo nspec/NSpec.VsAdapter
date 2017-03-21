@@ -1,9 +1,6 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.IntegrationTests.TestData
 {
@@ -19,7 +16,7 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
         static SampleAsyncSpecsTestCaseData()
         {
             string specAssemblyPath = TestConstants.SampleAsyncSpecsDllPath;
-            string sourceCodeFilePath = TestUtils.FirstCharToUpper(TestConstants.SampleAsyncSpecsSourcePath);
+            string sourceCodeFilePath = TestUtils.FirstCharToLower(TestConstants.SampleAsyncSpecsSourcePath);
 
             ByClassMethodExampleName = new Dictionary<string, Dictionary<string, Dictionary<string, TestCase>>>()
             {
