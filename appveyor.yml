@@ -1,0 +1,48 @@
+﻿version: '{build}'
+
+branches:
+  only:
+  - master
+  except:
+  - /gh-pages.*/
+
+nuget:
+  disable_publish_on_pr: true
+
+shallow_clone: true
+
+skip_commits:
+  message: /docs\(.*\):/
+  files:
+  - '*.md'
+  - examples/**
+
+install:
+- ps: sln\Set-BuildVersion.ps1
+
+build_script:
+- ps: sln\Build-Package.ps1
+
+test: off
+
+artifacts:
+- path: sln\src\NSpec.VsAdapter\publish\*.nupkg
+  name: NuGet package
+- path: sln\src\NSpec.VsAdapter.Vsix\Release\*.vsix
+  name: Marketplace extension
+
+deploy:
+- provider: NuGet
+  name: Development
+  server: https://www.myget.org/F/nspec/api/v2/package
+  api_key:
+    secure: fLdJBSqSl6dP8rxk7vNJMYQxGchdEfMpOSF0DxKJJMmyfMaW+0Gx139YA3QxwXWm
+  skip_symbols: true
+  on:
+    branch: master
+- provider: NuGet
+  name: Production
+  api_key:
+    secure: yC++3vJi0VQue3koutRC6PWdbN1uuXqXYvaAZTA3SZq6UKuJP5hKx6JhgkdOI8/M
+  on:
+    appveyor_repo_tag: true

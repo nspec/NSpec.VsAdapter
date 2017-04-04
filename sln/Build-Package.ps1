@@ -95,16 +95,13 @@ function TestProject([string]$projectPath) {
 	Exec { & $NUnitConsole $csprojFile --config=Release $resultOpts } "Testing $projectPath"
 }
 
-function PackProject([string]$projectPath, [string[]]$versionOpts) {
+function PackageProject([string]$projectPath, [string[]]$versionOpts) {
 	$projName = Split-Path $projectPath -Leaf
 	$nuspecFile = Join-Path $projectPath "$projName.nuspec"
 	$publishDir = Join-Path $projectPath "publish"
 
 	Exec {
-		& nuget pack $nuspecFile `
-			$versionOpts `
-			-outputdirectory $publishDir `
-			-properties Configuration=Release
+		& nuget pack $nuspecFile $versionOpts -outputdirectory $publishDir -properties Configuration=Release
 
 	} "Packaging $_"
 }
@@ -184,7 +181,7 @@ $versionOpts = GetVersionOptions
 @(
 	"src\NSpec.VsAdapter"
 
-) | ForEach-Object { PackProject $_ $versionOpts }
+) | ForEach-Object { PackageProject $_ $versionOpts }
 
 
 Pop-Location
