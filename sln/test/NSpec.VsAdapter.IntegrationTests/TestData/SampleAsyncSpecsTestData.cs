@@ -36,7 +36,12 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                     {
                                         DisplayName = "AsyncSpec › method context › async context example.",
                                         CodeFilePath = sourceCodeFilePath,
+                                        // some line numbers differ between Debug and Release builds
+#if DEBUG
                                         LineNumber = 27,
+#elif RELEASE
+                                        LineNumber = 28,
+#endif
                                     }
                                 },
                             }
@@ -53,7 +58,11 @@ namespace NSpec.VsAdapter.IntegrationTests.TestData
                                     {
                                         DisplayName = "AsyncSpec › it async method example.",
                                         CodeFilePath = sourceCodeFilePath,
+#if DEBUG
                                         LineNumber = 18,
+#elif RELEASE
+                                        LineNumber = 19,
+#endif
                                     }
                                 },
                             }

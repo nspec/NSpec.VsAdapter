@@ -44,9 +44,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Discovery
 
             var actuals = sink.TestCases;
 
-            actuals.Should().HaveCount(expecteds.Count());
-
-            actuals.ShouldAllBeEquivalentTo(expecteds);
+            actuals.ShouldAllBeEquivalentTo(expecteds, this.GetType().Name);
         }
 
         protected abstract string[] BuildSources();
