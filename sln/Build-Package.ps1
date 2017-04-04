@@ -77,7 +77,7 @@ function BuildProject([string]$projectPath) {
 	$projName = Split-Path $projectPath -Leaf
 	$csprojFile = Join-Path $projectPath "$projName.csproj"
 
-	Exec { & msbuild $csprojFile /t:build /p:Configuration=Release } "Building $projectPath"
+	Exec { & msbuild $csprojFile /t:build /p:Configuration=Release /v:minimal } "Building $projectPath"
 }
 
 function TestProject([string]$projectPath) {

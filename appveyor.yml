@@ -1,5 +1,7 @@
 ﻿version: '{build}'
 
+image: Visual Studio 2013
+
 branches:
   only:
   - master
