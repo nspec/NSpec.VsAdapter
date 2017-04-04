@@ -59,6 +59,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository Items", "Reposit
 		..\LICENSE.txt = ..\LICENSE.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B12697A8-65AF-413B-9948-5D25607D5116}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
