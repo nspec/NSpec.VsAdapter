@@ -20,6 +20,7 @@ skip_commits:
   - examples/**
 
 install:
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/install-nuget-3-4-4.ps1'))
 - ps: sln\Set-BuildVersion.ps1
 
 build_script:
