@@ -177,7 +177,7 @@ Push-Location sln
 
 # Package
 $versionOpts = GetVersionOptions
-New-Item -Path "src\NSpec.VsAdapter\publish" -ItemType directory -Force
+md -Path "src\NSpec.VsAdapter\publish" -Force
 
 @(
 	"src\NSpec.VsAdapter"

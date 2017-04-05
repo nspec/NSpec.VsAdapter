@@ -32,7 +32,7 @@ artifacts:
 - path: sln\src\NSpec.VsAdapter\publish\*.nupkg
   name: NuGet package
 - path: sln\src\NSpec.VsAdapter.Vsix\bin\Release\*.vsix
-  name: Marketplace extension
+  name: VS extension
 
 deploy:
 - provider: NuGet
