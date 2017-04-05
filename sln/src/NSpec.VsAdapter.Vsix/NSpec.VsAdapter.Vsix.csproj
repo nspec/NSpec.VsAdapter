@@ -23,7 +23,8 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <DeployVSTemplates>false</DeployVSTemplates>
+    <DeployExtension Condition="'$(AppVeyor)' != ''">false</DeployExtension>
+    <DeployVSTemplates Condition="'$(AppVeyor)' != ''">false</DeployVSTemplates>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
