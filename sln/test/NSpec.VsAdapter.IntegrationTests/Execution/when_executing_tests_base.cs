@@ -48,7 +48,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
             return testResult;
         }
 
-        protected static EquivalencyAssertionOptions<TestResult> TestResultMatchingOptions(EquivalencyAssertionOptions<TestResult> opts)
+        protected static EquivalencyAssertionOptions<TestResult> ConfigureTestResultMatching(EquivalencyAssertionOptions<TestResult> opts)
         {
             return opts
                 .Including(tr => tr.Outcome)

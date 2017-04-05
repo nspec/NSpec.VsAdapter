@@ -34,7 +34,7 @@ namespace NSpec.VsAdapter.IntegrationTests.Execution
 
             var actual = handle.Results;
 
-            actual.ShouldAllBeEquivalentTo(expected, TestResultMatchingOptions);
+            actual.ShouldAllBeEquivalentTo(expected, ConfigureTestResultMatching);
         }
     }
 }

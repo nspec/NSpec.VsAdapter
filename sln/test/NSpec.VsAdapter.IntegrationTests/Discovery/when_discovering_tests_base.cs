@@ -1,9 +1,11 @@
 using FluentAssertions;
+using FluentAssertions.Equivalency;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using NSpec.VsAdapter.TestAdapter.Discovery;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
+using System;
+using System.Text.RegularExpressions;
 
 namespace NSpec.VsAdapter.IntegrationTests.Discovery
 {
@@ -44,11 +46,41 @@ namespace NSpec.VsAdapter.IntegrationTests.Discovery
 
             var actuals = sink.TestCases;
 
-            actuals.ShouldAllBeEquivalentTo(expecteds, this.GetType().Name);
+            actuals.ShouldAllBeEquivalentTo(expecteds, ConfigureTestCaseMatching, this.GetType().Name);
         }
 
         protected abstract string[] BuildSources();
 
         protected abstract IEnumerable<TestCase> BuildExpecteds();
+
+        protected static EquivalencyAssertionOptions<TestCase> ConfigureTestCaseMatching(EquivalencyAssertionOptions<TestCase> opts)
+        {
+            return opts.Using(new CodeFilePathEquivalency());
+        }
+
+        protected class CodeFilePathEquivalency : IEquivalencyStep
+        {
+            public bool CanHandle(IEquivalencyValidationContext context, IEquivalencyAssertionOptions config)
+            {
+                return (context.SelectedMemberPath == "CodeFilePath");
+            }
+
+            public bool Handle(IEquivalencyValidationContext context, IEquivalencyValidator parent, IEquivalencyAssertionOptions config)
+            {
+                string actualCodeFilePath = (string)context.Subject;
+                string expectedCodeFilePath = (string)context.Expectation;
+
+                // avoid mismatches due to drive letter casing
+                if (leadingDriveRegex.IsMatch(expectedCodeFilePath))
+                {
+                    actualCodeFilePath = TestUtils.FirstCharToUpper(actualCodeFilePath);
+                    expectedCodeFilePath = TestUtils.FirstCharToUpper(expectedCodeFilePath);
+                }
+
+                return (actualCodeFilePath == expectedCodeFilePath);
+            }
+
+            readonly Regex leadingDriveRegex = new Regex(@"^[a-zA-Z]:\\");
+        }
     }
 }
