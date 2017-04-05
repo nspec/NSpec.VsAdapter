@@ -138,6 +138,12 @@ Push-Location sln
 
 
 # Restore
+# On AppVeyor VS 2013 image, there are issues when restoring single projects
+# For time being, switch to restoring solution
+@(
+	".\NSpec.VsAdapter.sln"
+) | ForEach-Object { Exec { & nuget restore $_ } "Restoring $_" }
+<#
 @(
 	"src\NSpec.VsAdapter",
 	"test\Samples\test\SampleSpecs",
@@ -148,7 +154,7 @@ Push-Location sln
 	"test\NSpec.VsAdapter.IntegrationTests"
 
 ) | ForEach-Object { RestoreProject $_ }
-
+#>
 
 # Build
 @(
