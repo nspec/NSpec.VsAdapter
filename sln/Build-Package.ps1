@@ -85,14 +85,8 @@ function TestProject([string]$projectPath) {
 	$csprojFile = Join-Path $projectPath "$projName.csproj"
 
 	$NUnitConsole = "packages\NUnit.ConsoleRunner.3.6.1\tools\nunit3-console"
-	$isContinuous = [bool]$env:APPVEYOR
-	if ($isContinuous) {
-		$resultOpts = "--result=TestResult.xml;format=AppVeyor"
-	} else {
-		$resultOpts = "--result=TestResult.xml"
-	}
 
-	Exec { & $NUnitConsole $csprojFile --config=Release $resultOpts } "Testing $projectPath"
+	Exec { & $NUnitConsole $csprojFile --config=Release } "Testing $projectPath"
 }
 
 function PackageProject([string]$projectPath, [string[]]$versionOpts) {
