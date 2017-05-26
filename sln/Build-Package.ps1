@@ -104,10 +104,10 @@ function PackageProject([string]$projectPath, [string[]]$versionOpts) {
 
 # Main
 
-# add Visual Studio 2013 MSBuild to system path if needed
+# add Visual Studio 2015 MSBuild to system path if needed
 if ((Get-Command "msbuild.exe" -ErrorAction SilentlyContinue) -eq $null)
 {
-   $env:Path += ";C:\Program Files (x86)\MSBuild\12.0\Bin"
+   $env:Path += ";C:\Program Files (x86)\MSBuild\14.0\Bin"
 }
 
 # move to global.json directory
