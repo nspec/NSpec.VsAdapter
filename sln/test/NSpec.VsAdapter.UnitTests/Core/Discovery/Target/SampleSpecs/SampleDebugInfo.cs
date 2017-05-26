@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs
 {
@@ -24,43 +21,43 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs
 
             ByClassMethodActionName = new Dictionary<string, Dictionary<string, Dictionary<string, DiaNavigationData>>>()
             {
-                { 
-                    "NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs.ParentSpec", 
+                {
+                    "NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs.ParentSpec",
                     new Dictionary<string, Dictionary<string, DiaNavigationData>>()
                     {
                         {
                             "method_context_1",
-                            new Dictionary<string, DiaNavigationData>() 
+                            new Dictionary<string, DiaNavigationData>()
                             {
                                 {
-                                    "<method_context_1>b__0",
+                                    "<method_context_1>b__2_0",
                                     new DiaNavigationData(sourceCodeFilePath, 19, 19)
                                 },
                                 {
-                                    "<method_context_1>b__1",
+                                    "<method_context_1>b__2_1",
                                     new DiaNavigationData(sourceCodeFilePath, 21, 21)
                                 },
                             }
                         },
                         {
                             "method_context_2",
-                            new Dictionary<string, DiaNavigationData>() 
+                            new Dictionary<string, DiaNavigationData>()
                             {
                                 {
-                                    "<method_context_2>b__2",
+                                    "<method_context_2>b__3_0",
                                     new DiaNavigationData(sourceCodeFilePath, 26, 26)
                                 },
                             }
                         },
                     }
                 },
-                { 
-                    "NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs.ChildSpec", 
+                {
+                    "NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs.ChildSpec",
                     new Dictionary<string, Dictionary<string, DiaNavigationData>>()
                     {
                         {
                             "method_context_3",
-                            new Dictionary<string, DiaNavigationData>() 
+                            new Dictionary<string, DiaNavigationData>()
                             {
                                 {
                                     "<method_context_3>b__0",
@@ -71,10 +68,10 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target.SampleSpecs
                         },
                         {
                             "method_context_4",
-                            new Dictionary<string, DiaNavigationData>() 
+                            new Dictionary<string, DiaNavigationData>()
                             {
                                 {
-                                    "<method_context_4>b__0",
+                                    "<method_context_4>b__1_0",
                                     new DiaNavigationData(sourceCodeFilePath, 41, 41)
                                 },
                             }

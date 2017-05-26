@@ -57,7 +57,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 
                             DiaNavigationData actual = provider.GetNavigationData(declaringClassName, actionName);
 
-                            actual.ShouldBeEquivalentTo(expected, 
+                            actual.ShouldBeEquivalentTo(expected,
                                 "ClassName: {0}, MethodName: {1}", declaringClassName, actionName);
                         });
                 });

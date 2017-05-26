@@ -22,13 +22,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         protected AutoSubstitute autoSubstitute;
         protected IDebugInfoProvider debugInfoProvider;
 
-        protected DiscoveredExample actual;
-
-        protected readonly Context context;
-        protected readonly ExampleBase example;
-        protected readonly string specClassName;
-        protected readonly string exampleMethodName;
-        protected readonly DiaNavigationData navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
+        protected readonly FixtureData fixtureData;
         protected readonly DiscoveredExample expected;
 
         // emulates private instance nspec.todo, defined in nspec ancestor
@@ -42,18 +36,14 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         {
             var parentContext = new Context("some parent context");
 
-            context = new Context("some child context");
+            var context = new Context("some child context");
             context.Parent = parentContext;
 
-            var fixtureData = BuildFixtureData();
+            fixtureData = BuildFixtureData();
 
-            example = fixtureData.Instance;
+            var example = fixtureData.Example;
             example.Context = context;
             example.Spec = "some specification";
-
-            exampleMethodName = fixtureData.MethodName;
-
-            specClassName = this.GetType().ToString();
 
             expected = new DiscoveredExample()
             {
@@ -72,11 +62,16 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 
             debugInfoProvider = autoSubstitute.Resolve<IDebugInfoProvider>();
 
+            string specClassName = this.GetType().ToString();
+            string exampleMethodName = fixtureData.MethodName;
+            var navigationData = new DiaNavigationData(someSourceCodePath, someLineNumber, someLineNumber + 4);
             var emptyNavigationData = new DiaNavigationData(String.Empty, 0, 0);
 
             debugInfoProvider.GetNavigationData(null, null).ReturnsForAnyArgs(emptyNavigationData);
 
-            debugInfoProvider.GetNavigationData(specClassName, exampleMethodName).Returns(navigationData);
+            debugInfoProvider.GetNavigationData(
+                Arg.Is<string>(arg => arg.StartsWith(specClassName, StringComparison.Ordinal)),
+                exampleMethodName).Returns(navigationData);
 
             mapper = new DiscoveredExampleMapper(someAssemblyPath, debugInfoProvider);
         }
@@ -91,7 +86,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 
         protected class FixtureData
         {
-            public ExampleBase Instance;
+            public ExampleBase Example;
             public string MethodName;
         }
     }
@@ -102,24 +97,24 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         {
             Action someAction = () => { };
 
-            ExampleBase example = new Example(
+            ExampleBase someExample = new Example(
                 "some-test-full-name",
                 "tag1 tag2_more tag3",
                 someAction);
 
-            string exampleMethodName = someAction.Method.Name;
+            string someMethodName = someAction.Method.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Example = someExample,
+                MethodName = someMethodName,
             };
         }
 
         [Test]
         public void it_should_fill_all_details()
         {
-            actual = mapper.FromExample(example);
+            var actual = mapper.FromExample(fixtureData.Example);
 
             actual.ShouldBeEquivalentTo(expected);
         }
@@ -131,18 +126,18 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         {
             Action someAction = dummyTodo;
 
-            ExampleBase example = new Example(
+            ExampleBase someExample = new Example(
                 "some-test-full-name",
                 "tag1 tag2_more tag3",
                 someAction,
                 pending: true);
 
-            string exampleMethodName = someAction.Method.Name;
+            string someMethodName = someAction.Method.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Example = someExample,
+                MethodName = someMethodName,
             };
         }
 
@@ -151,14 +146,14 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         {
             var pendingExpected = new DiscoveredExample()
             {
-                FullName = example.FullName(),
+                FullName = fixtureData.Example.FullName(),
                 SourceAssembly = someAssemblyPath,
                 SourceFilePath = String.Empty,
                 SourceLineNumber = 0,
-                Tags = example.Tags.Select(tag => tag.Replace("_", " ")).ToArray(),
+                Tags = fixtureData.Example.Tags.Select(tag => tag.Replace("_", " ")).ToArray(),
             };
 
-            var actual = mapper.FromExample(example);
+            var actual = mapper.FromExample(fixtureData.Example);
 
             actual.ShouldBeEquivalentTo(pendingExpected);
         }
@@ -174,23 +169,23 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 
             MethodInfo methodInfo = someAction.Method;
 
-            ExampleBase example = new MethodExample(
+            ExampleBase someExample = new MethodExample(
                 methodInfo,
                 "tag1 tag2_more tag3");
 
-            string exampleMethodName = methodInfo.Name;
+            string someMethodName = methodInfo.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Example = someExample,
+                MethodName = someMethodName,
             };
         }
 
         [Test]
         public void it_should_fill_all_details()
         {
-            actual = mapper.FromExample(example);
+            var actual = mapper.FromExample(fixtureData.Example);
 
             actual.ShouldBeEquivalentTo(expected);
         }
@@ -202,24 +197,24 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
         {
             Func<Task> someAsyncAction = async () => await Task.Run(() => { });
 
-            ExampleBase example = new AsyncExample(
+            ExampleBase someExample = new AsyncExample(
                 "some-test-full-name",
                 "tag1 tag2_more tag3",
                 someAsyncAction);
 
-            string exampleMethodName = someAsyncAction.Method.Name;
+            string someMethodName = someAsyncAction.Method.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Example = someExample,
+                MethodName = someMethodName,
             };
         }
 
         [Test]
         public void it_should_fill_all_details()
         {
-            actual = mapper.FromExample(example);
+            var actual = mapper.FromExample(fixtureData.Example);
 
             actual.ShouldBeEquivalentTo(expected);
         }
@@ -238,23 +233,23 @@ namespace NSpec.VsAdapter.UnitTests.Core.Discovery.Target
 
             MethodInfo methodInfo = someAsyncAction.Method;
 
-            ExampleBase example = new AsyncMethodExample(
+            ExampleBase someExample = new AsyncMethodExample(
                 methodInfo,
                 "tag1 tag2_more tag3");
 
-            string exampleMethodName = someAsyncAction.Method.Name;
+            string someMethodName = someAsyncAction.Method.Name;
 
             return new FixtureData()
             {
-                Instance = example,
-                MethodName = exampleMethodName,
+                Example = someExample,
+                MethodName = someMethodName,
             };
         }
 
         [Test]
         public void it_should_fill_all_details()
         {
-            actual = mapper.FromExample(example);
+            var actual = mapper.FromExample(fixtureData.Example);
 
             actual.ShouldBeEquivalentTo(expected);
         }
