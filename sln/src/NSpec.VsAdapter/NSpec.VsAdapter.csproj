@@ -109,7 +109,6 @@
     <Compile Include="Core\Execution\ProxyableTestExecutorFactory.cs" />
     <Compile Include="Core\Execution\Target\RunnableContexts.cs" />
     <Compile Include="Core\Execution\Target\RunnableContextFinder.cs" />
-    <Compile Include="DebuggerShim.cs" />
     <Compile Include="Logging\CrossDomainLogger.cs" />
     <Compile Include="Logging\IBaseLogger.cs" />
     <Compile Include="Logging\ILoggerFactory.cs" />

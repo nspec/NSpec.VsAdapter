@@ -19,6 +19,7 @@ It currently supports test projects based on .NET Framework 4.5 and higher, and 
     <releaseNotes></releaseNotes>
     <tags>testing bdd tdd rspec mocha runner test</tags>
     <language>en-US</language>
+    <developmentDependency>true</developmentDependency>
     <dependencies>
       <dependency id="Autofac" version="3.5.2" />
       <dependency id="Newtonsoft.Json" version="9.0.1" />
