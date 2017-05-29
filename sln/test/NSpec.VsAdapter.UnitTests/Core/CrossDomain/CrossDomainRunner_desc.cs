@@ -26,15 +26,15 @@ namespace NSpec.VsAdapter.UnitTests.Core.CrossDomain
         {
             autoSubstitute = new AutoSubstitute();
 
-            targetDomain = Substitute.For<ITargetAppDomain>();
+            targetDomain = autoSubstitute.Resolve<ITargetAppDomain>();
             appDomainFactory = autoSubstitute.Resolve<IAppDomainFactory>();
             appDomainFactory.Create(somePath).Returns(targetDomain);
 
-            proxyable = Substitute.For<IDummyProxyable>();
+            proxyable = autoSubstitute.Resolve<IDummyProxyable>();
             proxyableFactory = autoSubstitute.Resolve<IProxyableFactory<IDummyProxyable>>();
             proxyableFactory.CreateProxy(targetDomain).Returns(proxyable);
 
-            runner = autoSubstitute.Resolve<CrossDomainRunner<IDummyProxyable, float>>();
+            runner = new CrossDomainRunner<IDummyProxyable, float>(appDomainFactory, proxyableFactory);
 
             proxyable.PassInput(Arg.Any<float>()).Returns(callInfo =>
             {
@@ -58,7 +58,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.CrossDomain
     public class CrossDomainRunner_when_run_succeeds : CrossDomainRunner_desc_base
     {
         float actual;
-        
+
         protected const float expected = 456F;
 
         float RemoteOperation(IDummyProxyable someProxyable)
@@ -184,7 +184,7 @@ namespace NSpec.VsAdapter.UnitTests.Core.CrossDomain
         public override void before_each()
         {
             base.before_each();
-            
+
             actual = runner.Run(somePath, FailingRemoteOperation, FailCallback);
         }
 
