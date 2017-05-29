@@ -60,7 +60,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository Items", "Repository Items", "{A464FD79-D910-461C-AB8E-7691EA8EDB2D}"
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
+		..\BREAKING-CHANGES.md = ..\BREAKING-CHANGES.md
+		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
 		..\LICENSE.txt = ..\LICENSE.txt
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B12697A8-65AF-413B-9948-5D25607D5116}"
