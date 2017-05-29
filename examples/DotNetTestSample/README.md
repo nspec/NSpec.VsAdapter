@@ -1,5 +1,15 @@
 # DotNetTestSample
 
+**WORK IN PROGRESS**
+
+Here you will find a sample solution showing how a NSpec test project targeting .NET Core is setup.
+
+Solution is not ready yet. Please ignore it for time being.
+
+---
+
+**OBSOLETE DESCRIPTION**
+
 Sample solution showing how to setup NSpec with a .NET Core project and .NET Core tooling 1.0.0-preview2 (i.e. with *project.json*, not MSBuild).
 
 Highlights:
