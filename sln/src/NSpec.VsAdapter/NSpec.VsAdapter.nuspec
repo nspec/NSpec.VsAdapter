@@ -22,7 +22,7 @@ Support for MSBuild-based .NET Core projects is under development.
     <iconUrl>https://cdn.rawgit.com/nspec/NSpec.VsAdapter/master/sln/NSpecVsAdapterLogo90x90.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes></releaseNotes>
-    <tags>testing bdd tdd rspec mocha runner test</tags>
+    <tags>nspec test testing bdd tdd rspec mocha adapter runner</tags>
     <language>en-US</language>
     <developmentDependency>true</developmentDependency>
     <dependencies>
