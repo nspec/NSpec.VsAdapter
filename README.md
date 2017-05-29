@@ -1,6 +1,7 @@
 # NSpec.VsAdapter
 
 [![NuGet Version and Downloads count](https://buildstats.info/nuget/NSpec.VsAdapter)](https://www.nuget.org/packages/NSpec.VsAdapter) 
+[![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/version-short/GiuseppePiscopo.NSpecVSAdapter.svg)](https://marketplace.visualstudio.com/items?itemName=GiuseppePiscopo.NSpecVSAdapter) 
 [![Build status](https://ci.appveyor.com/api/projects/status/5mmtg044ds5xx8xr/branch/master?svg=true)](https://ci.appveyor.com/project/BrainCrumbz/nspec-vsadapter/branch/master)
 
 NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in 
@@ -58,7 +59,7 @@ tests to be run. You can also group specifications based on project, or
 See under [examples/](./examples):
 
 - [NetFrameworkSample](./examples/NetFrameworkSample)  
-Sample solution showing how is setup a NSpec test project targeting .NET Framework
+Sample solution showing how a NSpec test project targeting .NET Framework is setup
 
 ### Configuration
 
