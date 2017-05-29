@@ -14,7 +14,8 @@ NSpec 1.0.x.
 
 To run tests from old *project.json*-based .NET Core projects, please try 
 [NSpec dotnet test runner](https://www.nuget.org/packages/dotnet-test-nspec). 
-Support for *MSBuild*-based .NET Core projects is under development.
+
+**NOTE:** Support for *MSBuild*-based .NET Core projects is under development.
 
 ## Usage
 
@@ -36,9 +37,9 @@ click on grabbed VSIX file.
 
 Proceed as for any other package. You can open *Manage NuGet Packages ...* 
 from a project or solution and look for `NSpec.VsAdapter` in search field. 
-Or you open *Package Manager Console* and run `Install-Package NSpec.VsAdapter -ProjectName <YourProjectName>`.
+Or you can open *Package Manager Console* and run `Install-Package NSpec.VsAdapter -ProjectName <YourProjectName>`.
 
-In order to pick tests for whole solution, it is enough to install the package 
+In order to pick tests for whole solution, it is enough to install this package 
 in just one of your projects.
 
 ### Launch
@@ -73,8 +74,7 @@ Currently supported settings are:
 
 | Name | Type | Values | Description |
 |------|------|--------|-------------|
-| LogLevel | String | Trace, Debug, Info, Warn, Error | Minimum log level to 
-show. Log messages with a level lower than this will not be shown. |
+| LogLevel | String | Trace, Debug, Info, Warn, Error | Minimum log level to show. Log messages with a level lower than this will not be shown. |
 
 An example of such a file can be found in test source code at [sln/test/Samples/samples.runsettings](./sln/test/Samples/samples.runsettings).
 
