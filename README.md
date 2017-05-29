@@ -1,5 +1,8 @@
 # NSpec.VsAdapter
 
+[![NuGet Version and Downloads count](https://buildstats.info/nuget/NSpec.VsAdapter)](https://www.nuget.org/packages/NSpec.VsAdapter) 
+[![Build status](https://ci.appveyor.com/api/projects/status/5mmtg044ds5xx8xr/branch/master?svg=true)](https://ci.appveyor.com/project/BrainCrumbz/nspec-vsadapter/branch/master)
+
 NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in 
 Visual Studio. It runs tests in VS 2013, 2015 and 2017 from projects 
 targeting classic .NET Framework.
@@ -49,6 +52,13 @@ build all. Open VS Test Explorer window and wait until list gets populated
 with test specifications from all projects. Click on *Run All* or select some 
 tests to be run. You can also group specifications based on project, or 
 `nspec`-derived class, or trait.
+
+## Examples
+
+See under [examples/](./examples):
+
+- [NetFrameworkSample](./examples/NetFrameworkSample)  
+Sample solution showing how is setup a NSpec test project targeting .NET Framework
 
 ### Configuration
 
