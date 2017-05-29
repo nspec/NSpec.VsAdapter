@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>NSpec.VsAdapter</id>
-    <version>0.2.1.0</version>
+    <version>0.3.2.0</version>
     <title>NSpec VS Adapter</title>
     <summary>NSpec test adapter for Visual Studio 2013 and later.</summary>
     <description>
