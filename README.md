@@ -20,7 +20,7 @@ Edition and above. As a NuGet package, it can work in Visual Studio 2017,
 Community Edition and above.
 
 **NOTE:** To work with old *project.json*-based .NET Core projects, please try 
-[NSpec dotnet test runner](https://www.nuget.org/packages/dotnet-test-nspec). 
+[dotnet-test-nspec runner](https://www.nuget.org/packages/dotnet-test-nspec). 
 Support for *MSBuild*-based .NET Core projects is under development. 
 Again, support for VS 2017 Extension is under development as well.
 

@@ -10,7 +10,7 @@ NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in Visua
 
 It is available both as a Visual Studio Extension (for VS 2013, 2015) as well as a NuGet Package (for VS 2017). VS Extension for 2017 is under development. It currently supports test projects targeting .NET Framework 4.5 and later, and NSpec 1.0.x.
 
-NOTE: To work with old project.json-based .NET Core projects, please try NSpec dotnet test runner. Support for MSBuild-based .NET Core projects is under development. Support for VS 2017 Extension is under development as well.
+NOTE: To work with old project.json-based .NET Core projects, please try dotnet-test-nspec runner. Support for MSBuild-based .NET Core projects is under development. Support for VS 2017 Extension is under development as well.
     </description>
     <authors>BrainCrumbz</authors>
     <owners>BrainCrumbz</owners>
