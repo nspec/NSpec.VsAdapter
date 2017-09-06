@@ -5,21 +5,24 @@
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/5mmtg044ds5xx8xr/branch/master?svg=true)](https://ci.appveyor.com/project/BrainCrumbz/nspec-vsadapter/branch/master)
 
 NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in 
-Visual Studio. It runs tests in VS 2013, 2015 and 2017 from projects 
-targeting classic .NET Framework.
-
-It is available both as a [Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=GiuseppePiscopo.NSpecVSAdapter) (for VS 2013, 2015)
-as well as a [NuGet Package](https://www.nuget.org/packages/NSpec.VsAdapter) (for VS 2017).
+Visual Studio. It runs tests from projects targeting classic .NET Framework. 
+[Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=BrainCrumbz.NSpecVSAdapter) 
+(for VS 2013, 2015) as well as a [NuGet Package](https://www.nuget.org/packages/NSpec.VsAdapter) 
+(for VS 2017). VS Extension for 2017 is under development.
 
 ## Minimum requirements
 
 It currently supports test projects targeting .NET Framework 4.5 and later, and 
 NSpec 1.0.x.
 
-To run tests from old *project.json*-based .NET Core projects, please try 
-[NSpec dotnet test runner](https://www.nuget.org/packages/dotnet-test-nspec). 
+As an extension, it can work in Visual Studio 2013 and 2015, Community 
+Edition and above. As a NuGet package, it can work in Visual Studio 2017, 
+Community Edition and above.
 
-**NOTE:** Support for *MSBuild*-based .NET Core projects is under development.
+**NOTE:** To work with old *project.json*-based .NET Core projects, please try 
+[NSpec dotnet test runner](https://www.nuget.org/packages/dotnet-test-nspec). 
+Support for *MSBuild*-based .NET Core projects is under development. 
+Again, support for VS 2017 Extension is under development as well.
 
 ## Usage
 
@@ -33,7 +36,7 @@ That's it.
 
 When you want to install this extension on more than one Visual Studio version 
 at once, or when you don't have Visual Studio already open, you can browse to 
-[this extension page](https://marketplace.visualstudio.com/items?itemName=GiuseppePiscopo.NSpecVSAdapter) 
+[this extension page](https://marketplace.visualstudio.com/items?itemName=BrainCrumbz.NSpecVSAdapter) 
 on Visual Studio marketplace, download it locally to your machine and double 
 click on grabbed VSIX file.
 
