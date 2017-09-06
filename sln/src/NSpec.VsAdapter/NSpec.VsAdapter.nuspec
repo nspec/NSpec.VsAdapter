@@ -6,14 +6,11 @@
     <title>NSpec VS Adapter</title>
     <summary>NSpec test adapter for Visual Studio 2013 and later.</summary>
     <description>
-NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in Visual Studio. It runs tests in VS 2013, 2015 and 2017 from projects targeting classic .NET Framework.
+NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in Visual Studio. It runs tests from projects targeting classic .NET Framework.
 
-It is available both as a Visual Studio Extension (for VS 2013, 2015) as well as a NuGet Package (for VS 2017). It currently supports test projects targeting .NET Framework 4.5 and later, and NSpec 1.0.x.
+It is available both as a Visual Studio Extension (for VS 2013, 2015) as well as a NuGet Package (for VS 2017). VS Extension for 2017 is under development. It currently supports test projects targeting .NET Framework 4.5 and later, and NSpec 1.0.x.
 
-To run tests from old project.json-based .NET Core projects, please try NSpec dotnet test runner.
-
-NOTE:
-Support for MSBuild-based .NET Core projects is under development.
+NOTE: To work with old project.json-based .NET Core projects, please try NSpec dotnet test runner. Support for MSBuild-based .NET Core projects is under development. Support for VS 2017 Extension is under development as well.
     </description>
     <authors>BrainCrumbz</authors>
     <owners>BrainCrumbz</owners>

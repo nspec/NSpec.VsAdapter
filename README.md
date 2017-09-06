@@ -6,7 +6,7 @@
 
 NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in 
 Visual Studio. It runs tests from projects targeting classic .NET Framework. 
-[Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=BrainCrumbz.NSpecVSAdapter) 
+It is available both as a [Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=BrainCrumbz.NSpecVSAdapter) 
 (for VS 2013, 2015) as well as a [NuGet Package](https://www.nuget.org/packages/NSpec.VsAdapter) 
 (for VS 2017). VS Extension for 2017 is under development.
 
