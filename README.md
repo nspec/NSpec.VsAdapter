@@ -1,7 +1,7 @@
 # NSpec.VsAdapter
 
 [![NuGet Version and Downloads count](https://buildstats.info/nuget/NSpec.VsAdapter)](https://www.nuget.org/packages/NSpec.VsAdapter) 
-[![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/version-short/GiuseppePiscopo.NSpecVSAdapter.svg)](https://marketplace.visualstudio.com/items?itemName=GiuseppePiscopo.NSpecVSAdapter) 
+[![Visual Studio Marketplace](https://vsmarketplacebadge.apphb.com/version-short/BrainCrumbz.NSpecVSAdapter.svg)](https://marketplace.visualstudio.com/items?itemName=BrainCrumbz.NSpecVSAdapter) 
 [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/5mmtg044ds5xx8xr/branch/master?svg=true)](https://ci.appveyor.com/project/BrainCrumbz/nspec-vsadapter/branch/master)
 
 NSpec.VsAdapter is a test adapter to run NSpec tests from Test Explorer in 
