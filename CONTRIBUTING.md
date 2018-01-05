@@ -7,7 +7,7 @@ Or else, you could go the full route and run adapter from its source code in an 
 ## Minimum requirements
 
 * [Microsoft Visual Studio 2013 Community Edition](https://www.visualstudio.com/it-it/downloads/download-visual-studio-vs.aspx) at least is needed to open main solution.
-* [Microsoft Visual Studio 2013 SDK](https://www.microsoft.com/en-us/download/details.aspx?id=40758) must also be installed on development machine. That is **only** needed if you want to build the package from scratch, not if you just want to install the extension in VS and use it.
+* [Microsoft Visual Studio 2013 SDK](go.microsoft.com/?linkid=9832352) must also be installed on development machine. That is **only** needed if you want to build the package from scratch, not if you just want to install the extension in VS and use it.
   * We have not tested yet if package can be built also against Visual Studio *2015* SDK. BTW, there's an [open issue](#1) for that, if you feel like helping.
 * This project has unit and integration tests written in NUnit framework. NUnit Test Adapter is needed to run those tests under Visual Studio.
 
